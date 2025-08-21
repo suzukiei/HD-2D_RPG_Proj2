@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
+  m_Name: Character Data 1
+  m_EditorClassIdentifier: 
+  name: sumo
+  hp: 10
+  mp: 100
+  atk: 100
+  def: 100
+  spd: 10
+  CharacterObj: {fileID: 7333836060625140281, guid: eb0b17fc84f337546ae72afcd8386f75,
+    type: 3}
+  skills: []
+  statusEffects: {fileID: 0}
