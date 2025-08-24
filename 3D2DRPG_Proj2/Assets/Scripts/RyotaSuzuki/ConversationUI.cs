@@ -21,37 +21,63 @@ public class DialogueData
     }
 }
 
+[System.Serializable]
+public class DialogueLogEntry
+{
+    public string characterName;
+    public string dialogueText;
+    public string timestamp;
+    
+    public DialogueLogEntry(string name, string text)
+    {
+        characterName = name;
+        dialogueText = text;
+        timestamp = System.DateTime.Now.ToString("HH:mm:ss");
+    }
+}
+
 public class ConversationUI : MonoBehaviour
 {
     [Header("UI要素")]
-    public GameObject dialoguePanel;
-    public TextMeshProUGUI characterNameText;
-    public TextMeshProUGUI dialogueText;
-    public Image characterImage;
+    [SerializeField,Header("会話UIのパネル")]public GameObject dialoguePanel;
+    [SerializeField, Header("キャラクター名が入るテキストオブジェクト")] public TextMeshProUGUI characterNameText;
+    [SerializeField, Header("会話内容が入るテキストオブジェクト")] public TextMeshProUGUI dialogueText;
+    [SerializeField, Header("キャラクター画像")] public Image characterImage;
     
     [Header("アニメーション設定")]
-    public float fadeInDuration = 0.5f;
-    public float typewriterSpeed = 0.05f;
+    [Header("フェードイン設定設定")] public float fadeInDuration = 0.5f;
+    [Header("テキストの流れる速さ設定設定")] public float typewriterSpeed = 0.05f;
     
     [Header("CSVファイル設定")]
-    public string csvFolderName = "ScenarioCSV";
-    public string csvFileName = "scenario01.csv";
-    public bool useCSVFile = true;
+    [Header("CSVの格納されているフォルダ名")] public string csvFolderName = "ScenarioCSV";
+    [Header("CSVのファイル名")] public string csvFileName = "scenario01.csv";
+    [Header("CSVファイルを使用する？")] public bool useCSVFile = true;
+    
+    [Header("ログUI設定")]
+    [SerializeField, Header("ログビューアパネル")] public GameObject logPanel;
+    [SerializeField, Header("ログコンテンツ（スクロールビュー内）")] public Transform logContent;
+    [SerializeField, Header("ログエントリのプレハブ")] public GameObject logEntryPrefab;
+    [SerializeField, Header("ログビューアのスクロールビュー")] public ScrollRect logScrollRect;
     
     [Header("テスト用会話データ")]
     [TextArea(3, 10)]
     public List<string> testDialogues = new List<string>();
     
     private List<DialogueData> dialogues = new List<DialogueData>();
+    private List<DialogueLogEntry> dialogueLog = new List<DialogueLogEntry>();
     private int currentDialogueIndex = 0;
     private bool isTyping = false;
     private Coroutine typingCoroutine;
+    private const int MAX_LOG_ENTRIES = 50;
     
     void Start()
     {
         // 初期化
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
+            
+        if (logPanel != null)
+            logPanel.SetActive(false);
         
         // CSVファイルから読み込むかテストデータを使用するか
         if (useCSVFile)
@@ -246,6 +272,9 @@ public class ConversationUI : MonoBehaviour
             StopCoroutine(typingCoroutine);
             
         typingCoroutine = StartCoroutine(TypewriterEffect(data.dialogueText));
+        
+        // ログに追加
+        AddToLog(data.characterName, data.dialogueText);
     }
     
     IEnumerator TypewriterEffect(string text)
@@ -313,11 +342,166 @@ public class ConversationUI : MonoBehaviour
             StartDialogue();
         }
         
+        // ログビューアの表示切り替え：Lキー
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            ToggleLogViewer();
+        }
+        
         // 会話中の操作：スペースキーまたはマウスクリックで次の会話に進める
         if (dialoguePanel.activeInHierarchy && 
             (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
         {
             NextDialogue();
+        }
+        
+        // ログビューア中の操作：ESCキーで閉じる
+        if (logPanel != null && logPanel.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseLogViewer();
+        }
+    }
+    
+    // ログ機能
+    void AddToLog(string characterName, string dialogueText)
+    {
+        DialogueLogEntry newEntry = new DialogueLogEntry(characterName, dialogueText);
+        dialogueLog.Add(newEntry);
+        
+        // 最大件数を超えた場合は古いログを削除
+        if (dialogueLog.Count > MAX_LOG_ENTRIES)
+        {
+            dialogueLog.RemoveAt(0);
+        }
+        
+        Debug.Log($"ログに追加: {characterName} - {dialogueText}");
+    }
+    
+    public void ToggleLogViewer()
+    {
+        if (logPanel == null) return;
+        
+        if (logPanel.activeInHierarchy)
+        {
+            CloseLogViewer();
+        }
+        else
+        {
+            OpenLogViewer();
+        }
+    }
+    
+    public void OpenLogViewer()
+    {
+        if (logPanel == null) return;
+        
+        logPanel.SetActive(true);
+        RefreshLogDisplay();
+        
+        // ログパネルをフェードイン
+        CanvasGroup logCanvasGroup = logPanel.GetComponent<CanvasGroup>();
+        if (logCanvasGroup != null)
+        {
+            logCanvasGroup.alpha = 0;
+            logCanvasGroup.DOFade(1, fadeInDuration);
+        }
+    }
+    
+    public void CloseLogViewer()
+    {
+        if (logPanel == null) return;
+        
+        // ログパネルをフェードアウト
+        CanvasGroup logCanvasGroup = logPanel.GetComponent<CanvasGroup>();
+        if (logCanvasGroup != null)
+        {
+            logCanvasGroup.DOFade(0, fadeInDuration)
+                .OnComplete(() => {
+                    logPanel.SetActive(false);
+                });
+        }
+        else
+        {
+            logPanel.SetActive(false);
+        }
+    }
+    
+    void RefreshLogDisplay()
+    {
+        Debug.Log($"RefreshLogDisplay開始 - ログ件数: {dialogueLog.Count}");
+        Debug.Log($"logContent: {logContent}");
+        Debug.Log($"logEntryPrefab: {logEntryPrefab}");
+        
+        if (logContent == null || logEntryPrefab == null) 
+        {
+            Debug.LogError("logContentまたはlogEntryPrefabがnullです！");
+            return;
+        }
+        
+        // 既存のログエントリを削除
+        foreach (Transform child in logContent)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        // ログエントリを作成（新しい順に表示）
+        for (int i = dialogueLog.Count - 1; i >= 0; i--)
+        {
+            DialogueLogEntry entry = dialogueLog[i];
+            Debug.Log($"ログエントリ作成中: {entry.characterName} - {entry.dialogueText}");
+            
+            GameObject logEntry = Instantiate(logEntryPrefab, logContent);
+            Debug.Log($"プレハブ作成完了: {logEntry.name}");
+            
+            // 強制的に位置とサイズを設定
+            RectTransform rect = logEntry.GetComponent<RectTransform>();
+            if (rect != null)
+            {
+                rect.anchoredPosition = Vector2.zero;
+                rect.sizeDelta = new Vector2(400, 100);
+                Debug.Log($"RectTransform設定: {rect.anchoredPosition}, {rect.sizeDelta}");
+            }
+            else
+            {
+                // LogPrefab自体にRectTransformがない場合、子のCanvasを探す
+                RectTransform canvasRect = logEntry.GetComponentInChildren<RectTransform>();
+                if (canvasRect != null)
+                {
+                    canvasRect.sizeDelta = new Vector2(400, 100);
+                    Debug.Log($"子RectTransform設定: {canvasRect.sizeDelta}");
+                }
+            }
+            
+            // LogEntryUIコンポーネントがある場合はそれを使用
+            LogEntryUI logEntryUI = logEntry.GetComponent<LogEntryUI>();
+            if (logEntryUI != null)
+            {
+                Debug.Log("LogEntryUIコンポーネント使用");
+                int displayIndex = dialogueLog.Count - 1 - i;
+                bool isEvenRow = displayIndex % 2 == 0;
+                logEntryUI.SetupLogEntry(entry.timestamp, entry.characterName, entry.dialogueText, isEvenRow);
+            }
+            else
+            {
+                Debug.Log("フォールバック：直接テキスト設定");
+                // フォールバック：TextMeshProUGUIコンポーネントを直接設定
+                TextMeshProUGUI[] texts = logEntry.GetComponentsInChildren<TextMeshProUGUI>();
+                Debug.Log($"見つかったTextコンポーネント数: {texts.Length}");
+                if (texts.Length >= 3)
+                {
+                    texts[0].text = entry.timestamp;          // 時刻
+                    texts[1].text = entry.characterName;      // キャラクター名
+                    texts[2].text = entry.dialogueText;       // 会話内容
+                    Debug.Log($"テキスト設定完了: {texts[0].text}, {texts[1].text}, {texts[2].text}");
+                }
+            }
+        }
+        
+        // スクロールを最上部に移動
+        if (logScrollRect != null)
+        {
+            Canvas.ForceUpdateCanvases();
+            logScrollRect.verticalNormalizedPosition = 1f;
         }
     }
     
@@ -330,5 +514,13 @@ public class ConversationUI : MonoBehaviour
             LoadDialogueFromCSV();
             Debug.Log("CSVファイルを再読み込みしました。");
         }
+    }
+    
+    // エディタ用：ログをクリア
+    [ContextMenu("ログをクリア")]
+    public void ClearLog()
+    {
+        dialogueLog.Clear();
+        Debug.Log("ログをクリアしました。");
     }
 }
