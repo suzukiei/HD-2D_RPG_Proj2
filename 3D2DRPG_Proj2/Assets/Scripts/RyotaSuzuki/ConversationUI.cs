@@ -349,7 +349,9 @@ public class ConversationUI : MonoBehaviour
         }
         
         // 会話中の操作：スペースキーまたはマウスクリックで次の会話に進める
-        if (dialoguePanel.activeInHierarchy && 
+        // ログ表示中は会話操作を無効にする
+        bool isLogViewerOpen = logPanel != null && logPanel.activeInHierarchy;
+        if (dialoguePanel.activeInHierarchy && !isLogViewerOpen &&
             (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
         {
             NextDialogue();
