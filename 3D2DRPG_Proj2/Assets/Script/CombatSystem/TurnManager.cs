@@ -40,11 +40,10 @@ public class TurnManager : MonoBehaviour
         ListCollection.AddRange(players);
         ListCollection.AddRange(enemys);
         TurnList.Add(ListCollection[0]);
-        mapManager.appCharacter(ListCollection[0].vector3, ListCollection[0]);
+        mapManager.AppCharacter(ListCollection[0].vector3, ListCollection[0]);
         for (int i = 1; i < ListCollection.Count; i++)
         {
-            mapManager.appCharacter(ListCollection[i].vector3, ListCollection[i]);
-            Debug.Log("1");
+            mapManager.AppCharacter(ListCollection[i].vector3, ListCollection[i]);
             for (int j = 0; j < TurnList.Count; j++)
             {
                 if (ListCollection[i].spd > TurnList[j].spd)
@@ -59,6 +58,7 @@ public class TurnManager : MonoBehaviour
                 }
             }
         }
+        //StartTurn()
         //UIに指示
         //順番のデータをUIに渡す
         //ターン処理スタート
@@ -79,18 +79,21 @@ public class TurnManager : MonoBehaviour
                 TurnFlag = false;
                 //Turnリストを取得
                 var nextCharcterStatus = TurnList[TurnNamber];
+                //Characterのステータスを変更
+
                 ///True:Enemy False:Player
                 if(nextCharcterStatus.enemyCheckFalg)
                 {
                     //Enemy処理
 
-
-
-                }else
+                    Debug.Log("StartPlayer");
+                }
+                else
                 {
                     //Player処理
-
-
+                    PlayerManager.PlayerController(nextCharcterStatus);
+                    //
+                    Debug.Log("StartPlayer");
 
 
                 }

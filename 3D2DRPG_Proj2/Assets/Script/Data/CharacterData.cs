@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum StetasFlag
+{
+    none=0,
+    move,
+    select,
+    attack,
+    end
+}
 [CreateAssetMenu(menuName = "CharacterData")]
 public class CharacterData : ScriptableObject
 {
@@ -12,7 +20,7 @@ public class CharacterData : ScriptableObject
     public SkillData[] skills;
     public StatusEffectData statusEffects;
     public Vector3 vector3;
-    
+    public StetasFlag StetasFlags;
     public int attack(CharacterData enemy)
     {
         return 0;
