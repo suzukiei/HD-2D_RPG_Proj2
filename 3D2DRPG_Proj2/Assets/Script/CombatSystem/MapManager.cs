@@ -53,7 +53,7 @@ public class MapManager : MonoBehaviour
                 
         }
         //マップ範囲外か判定
-        Debug.Log(vector3.x + move.x.ToString());
+        //Debug.Log(vector3.x + move.x.ToString());
         if((int)(vector3.x + move.x) == _valueListList.Count||
            (int)(vector3.x + move.x) == -1||
            (int)(vector3.z + move.z) == -1||
@@ -73,21 +73,36 @@ public class MapManager : MonoBehaviour
         }
     }
     //マップで自分の場所から敵がいるかを確認
-    public List<CharacterData> GetCharacterDatas(Vector2 vector2)
+    public List<CharacterData> GetCharacterDatas(Vector3 vector3)
     {
-        List<CharacterData> CharacterDatas = new List<CharacterData>();
-        for (int i = -1; i < 1; i++)
+        Debug.Log("GetCharacterDatas");
+        List <CharacterData> CharacterDatas = new List<CharacterData>();
+        for (int i = -1; i <= 1; i++)
         {
-            for (int j = -1; j < 1; j++)
+            Debug.Log("A");
+            for (int j = -1; j <= 1; j++)
             {
+                Debug.Log("B");
+                //自分の位置は確認不要
                 if (i == 0 && j == 0)
                     continue;
-                if (_valueListList[(int)vector2.x].List[(int)vector2.y] != null)
+                //範囲外は確認しない
+                if ((int)(vector3.x + i) == _valueListList.Count ||
+                    (int)(vector3.x + i) == -1 ||
+                    (int)(vector3.z + j) == -1 ||
+                    (int)(vector3.z + j) == _valueListList.Count)
+                    continue;
+
+                if (_valueListList[(int)vector3.x+i].List[(int)vector3.z+j] != null)
                 {
-                    CharacterDatas.Add(_valueListList[(int)vector2.x].List[(int)vector2.y]);
+                    Debug.Log(_valueListList[(int)vector3.x + i].List[(int)vector3.z + j].enemyCheckFalg);
+                    if(_valueListList[(int)vector3.x + i].List[(int)vector3.z + j].enemyCheckFalg)
+                    CharacterDatas.Add(_valueListList[(int)vector3.x + i].List[(int)vector3.z + j]);
                 }
             }
         }
+        Debug.Log(CharacterDatas.Count);
+
         return CharacterDatas;
     }
 }

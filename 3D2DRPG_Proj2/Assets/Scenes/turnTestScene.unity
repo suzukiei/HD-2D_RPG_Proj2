@@ -875,6 +875,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8cdef13f5176d85439f5bd8b535dd680, type: 2}
   - {fileID: 11400000, guid: c3e43bb82dd8f8d43b767c6dc1456d09, type: 2}
   - {fileID: 11400000, guid: 3d8a2bcb8627c6c4f833b751a495801a, type: 2}
+  turnManager: {fileID: 1864808123}
   vector3s:
   - {x: 1, y: 0, z: 5}
   - {x: 2, y: 0, z: 5}
@@ -1994,6 +1995,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uITest: {fileID: 1566565442}
   mapManager: {fileID: 722606598}
+  turnManager: {fileID: 1864808123}
   characterData:
   - {fileID: 11400000, guid: fdfc2772cdd97584f9b41ecffe093f82, type: 2}
   - {fileID: 11400000, guid: a8840a6132af079479d5a4e77446714a, type: 2}

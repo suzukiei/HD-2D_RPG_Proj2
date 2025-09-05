@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Character Data
   m_EditorClassIdentifier: 
   name: sumo
+  enemyCheckFalg: 0
   hp: 10
   mp: 100
   atk: 100
@@ -20,5 +21,8 @@ MonoBehaviour:
   spd: 10
   CharacterObj: {fileID: 7333836060625140281, guid: eb0b17fc84f337546ae72afcd8386f75,
     type: 3}
-  skills: []
+  skills:
+  - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
   statusEffects: {fileID: 0}
+  CharacterTransfrom: {x: 1, y: 0, z: 1}
+  StetasFlags: 2

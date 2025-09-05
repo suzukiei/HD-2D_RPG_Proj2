@@ -40,10 +40,10 @@ public class TurnManager : MonoBehaviour
         ListCollection.AddRange(players);
         ListCollection.AddRange(enemys);
         TurnList.Add(ListCollection[0]);
-        mapManager.AppCharacter(ListCollection[0].vector3, ListCollection[0]);
+        mapManager.AppCharacter(ListCollection[0].CharacterTransfrom, ListCollection[0]);
         for (int i = 1; i < ListCollection.Count; i++)
         {
-            mapManager.AppCharacter(ListCollection[i].vector3, ListCollection[i]);
+            mapManager.AppCharacter(ListCollection[i].CharacterTransfrom, ListCollection[i]);
             for (int j = 0; j < TurnList.Count; j++)
             {
                 if (ListCollection[i].spd > TurnList[j].spd)
@@ -71,11 +71,12 @@ public class TurnManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
             //次の処理を待つ
             if (TurnFlag)
             {
-                Debug.Log("ターン処理中");
+
+                Debug.Log("ターン処理中:"+ TurnNamber);
                 TurnFlag = false;
                 //Turnリストを取得
                 var nextCharcterStatus = TurnList[TurnNamber];
@@ -85,12 +86,13 @@ public class TurnManager : MonoBehaviour
                 if(nextCharcterStatus.enemyCheckFalg)
                 {
                     //Enemy処理
-
+                    EnemyManager.Test();
                     Debug.Log("StartPlayer");
                 }
                 else
                 {
                     //Player処理
+                    nextCharcterStatus.StetasFlags = StetasFlag.move;
                     PlayerManager.PlayerController(nextCharcterStatus);
                     //
                     Debug.Log("StartPlayer");
@@ -100,7 +102,7 @@ public class TurnManager : MonoBehaviour
 
                 //ターンの順番
                 //ターンチェンジ
-                if (TurnNamber < TurnList.Count)
+                if (TurnNamber < TurnList.Count-1)
                     TurnNamber++;
                 else
                     TurnNamber = 0;
@@ -117,7 +119,7 @@ public class TurnManager : MonoBehaviour
     
     public void FlagChange()
     {
-
+        TurnFlag = true;
     }
 
 

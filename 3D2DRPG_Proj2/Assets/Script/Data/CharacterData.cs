@@ -19,7 +19,7 @@ public class CharacterData : ScriptableObject
     public GameObject CharacterObj;
     public SkillData[] skills;
     public StatusEffectData statusEffects;
-    public Vector3 vector3;
+    public Vector3 CharacterTransfrom;
     public StetasFlag StetasFlags;
     public int attack(CharacterData enemy)
     {
