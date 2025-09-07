@@ -401,8 +401,8 @@ MonoBehaviour:
   characterNameText: {fileID: 5984533620288360475}
   dialogueText: {fileID: 1877192570903680375}
   backgroundImage: {fileID: 6328036834475095222}
-  evenRowColor: {r: 1, g: 1, b: 1, a: 0.1}
-  oddRowColor: {r: 0.9, g: 0.9, b: 0.9, a: 0.1}
+  evenRowColor: {r: 0, g: 0, b: 0, a: 1}
+  oddRowColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &5989463435657145154
 GameObject:
   m_ObjectHideFlags: 0

@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 7987060977126826150}
   - component: {fileID: 4784282822036876959}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: KaiwaUICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
