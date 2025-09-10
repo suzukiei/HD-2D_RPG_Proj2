@@ -395,13 +395,17 @@ public class ConversationUI : MonoBehaviour
         }
     }
 
-    public void OpenLogViewer()
+        public void OpenLogViewer()
     {
         if (logPanel == null) return;
-
+        
         logPanel.SetActive(true);
+        
+        // スクロールバーを非表示にする
+        HideScrollbars();
+        
         RefreshLogDisplay();
-
+        
         // ログパネルをフェードイン
         CanvasGroup logCanvasGroup = logPanel.GetComponent<CanvasGroup>();
         if (logCanvasGroup != null)
@@ -572,6 +576,34 @@ public class ConversationUI : MonoBehaviour
         animSequence.Play();
     }
 
+    /// <summary>
+    /// スクロールバーを非表示にする
+    /// </summary>
+    private void HideScrollbars()
+    {
+        if (logScrollRect != null)
+        {
+            // 垂直スクロールバーを非表示
+            if (logScrollRect.verticalScrollbar != null)
+            {
+                logScrollRect.verticalScrollbar.gameObject.SetActive(false);
+            }
+            
+            // 水平スクロールバーを非表示
+            if (logScrollRect.horizontalScrollbar != null)
+            {
+                logScrollRect.horizontalScrollbar.gameObject.SetActive(false);
+            }
+        }
+        
+        // 念のため、子オブジェクトからScrollbarを探して非表示にする
+        Scrollbar[] scrollbars = logPanel.GetComponentsInChildren<Scrollbar>();
+        foreach (Scrollbar scrollbar in scrollbars)
+        {
+            scrollbar.gameObject.SetActive(false);
+        }
+    }
+    
     // エディタ用：CSVファイルの再読み込み
     [ContextMenu("CSVファイルを再読み込み")]
     public void ReloadCSV()
