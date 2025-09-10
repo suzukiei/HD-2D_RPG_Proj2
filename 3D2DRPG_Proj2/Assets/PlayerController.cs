@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.W))
         {
-            this.transform.Translate(0, 0, 0.01f);
+            this.transform.Translate(0, 0, 0.05f);
         }
         if (Input.GetKey(KeyCode.S))
         {
