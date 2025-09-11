@@ -577,12 +577,16 @@ public class ConversationUI : MonoBehaviour
     }
 
     /// <summary>
-    /// スクロールバーを非表示にする
+    /// スクロールバーを非表示にして、縦スクロールのみに制限する
     /// </summary>
     private void HideScrollbars()
     {
         if (logScrollRect != null)
         {
+            // 横スクロールを無効にして縦スクロールのみにする
+            logScrollRect.horizontal = false;
+            logScrollRect.vertical = true;
+            
             // 垂直スクロールバーを非表示
             if (logScrollRect.verticalScrollbar != null)
             {

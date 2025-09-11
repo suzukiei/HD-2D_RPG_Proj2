@@ -1184,7 +1184,7 @@ MonoBehaviour:
   m_ScrollSensitivity: 1
   m_Viewport: {fileID: 1837871580}
   m_HorizontalScrollbar: {fileID: 1966997057}
-  m_VerticalScrollbar: {fileID: 2010998028}
+  m_VerticalScrollbar: {fileID: 0}
   m_HorizontalScrollbarVisibility: 2
   m_VerticalScrollbarVisibility: 2
   m_HorizontalScrollbarSpacing: -3
