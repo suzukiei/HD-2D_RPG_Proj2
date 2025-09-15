@@ -21,10 +21,17 @@ public class SkillSelectionUI : MonoBehaviour
     [SerializeField] private Color selectedColor = Color.yellow;
     [SerializeField] private string cursorSymbol = "▶";
 
+    [Header("プレイヤーステータスパネル")]
+    [SerializeField] private PlayerStatusPanel playerStatusPanel;
+
+    [Header("UnityEvents")]
+    [SerializeField] private UnityEvent<PlayerData> OnCharacterSelected;
+
     private List<SkillData> currentSkills;
     private UnityEvent<int> currentCallback;
     private int currentSelection = 0;
     private bool isActive = false;
+    private PlayerData currentCharacterData;
 
     void Start()
     {
@@ -73,6 +80,49 @@ public class SkillSelectionUI : MonoBehaviour
 
         // 入力処理を開始
         StartCoroutine(HandleInput());
+    }
+
+    /// <summary>
+    /// キャラクター情報付きで技選択UIを表示（オーバーロード）
+    /// </summary>
+    /// <param name="skills">選択可能な技のリスト</param>
+    /// <param name="characterData">表示するキャラクターのデータ</param>
+    /// <param name="onSkillSelected">技が選択されたときのコールバック</param>
+    public void ShowSkillSelection(List<SkillData> skills, PlayerData characterData, UnityEvent<int> onSkillSelected)
+    {
+        // キャラクターデータを設定
+        SetCharacterData(characterData);
+        
+        // 通常の技選択表示
+        ShowSkillSelection(skills, onSkillSelected);
+    }
+
+    /// <summary>
+    /// キャラクターデータを設定してステータスパネルを更新
+    /// </summary>
+    /// <param name="characterData">設定するキャラクターデータ</param>
+    public void SetCharacterData(PlayerData characterData)
+    {
+        currentCharacterData = characterData;
+        
+        // ステータスパネルを更新
+        if (playerStatusPanel != null && characterData != null)
+        {
+            playerStatusPanel.UpdatePlayerStatus(characterData);
+        }
+        
+        // UnityEventを発火
+        OnCharacterSelected?.Invoke(characterData);
+    }
+
+    /// <summary>
+    /// キャラクターインデックスからダミーデータを設定（UnityEventから呼び出し可能）
+    /// </summary>
+    /// <param name="characterIndex">キャラクターのインデックス（0-2）</param>
+    public void SetCharacterByIndex(int characterIndex)
+    {
+        PlayerData dummyData = PlayerData.CreateDummyData(characterIndex);
+        SetCharacterData(dummyData);
     }
 
     /// <summary>
@@ -202,5 +252,34 @@ public class SkillSelectionUI : MonoBehaviour
     public bool IsActive()
     {
         return isActive;
+    }
+
+    /// <summary>
+    /// 現在設定されているキャラクターデータを取得
+    /// </summary>
+    public PlayerData GetCurrentCharacterData()
+    {
+        return currentCharacterData;
+    }
+
+    /// <summary>
+    /// テスト用：ダミーキャラクターでステータス表示をテスト
+    /// </summary>
+    [ContextMenu("テスト用キャラクター0")]
+    public void TestCharacter0()
+    {
+        SetCharacterByIndex(0);
+    }
+
+    [ContextMenu("テスト用キャラクター1")]
+    public void TestCharacter1()
+    {
+        SetCharacterByIndex(1);
+    }
+
+    [ContextMenu("テスト用キャラクター2")]
+    public void TestCharacter2()
+    {
+        SetCharacterByIndex(2);
     }
 }

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameField.unity
     guid: b054707bbd5418f43be6dbad6ff419fb
+  - enabled: 1
+    path: Assets/Scenes/turnTestScene.unity
+    guid: 6b3e90be9ce609841a4d3fb204c2b70d
   m_configObjects: {}
