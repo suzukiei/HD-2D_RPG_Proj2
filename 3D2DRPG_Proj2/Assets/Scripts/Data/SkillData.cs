@@ -24,5 +24,9 @@ public class SkillData : ScriptableObject
             
         }
     }
+    public virtual void Use(CharacterData user, CharacterData target)
+    {
+        // ƒXƒLƒ‹‚ÌŒø‰Êˆ—
+    }
 }
 

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Skill Data
   m_EditorClassIdentifier: 
   name: 
-  mpCost: 0
+  mpCost: 5
   power: 4
   targetType: 
