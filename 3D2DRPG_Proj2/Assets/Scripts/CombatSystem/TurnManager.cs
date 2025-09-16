@@ -14,7 +14,7 @@ public class TurnManager : MonoBehaviour
     [SerializeField, Header("エネミーのデータ")]
     public List<GameObject> enemys;
     [SerializeField, Header("ターン順リスト")]
-    private List<GameObject> turnList = new List<GameObject>();
+    public List<GameObject> turnList = new List<GameObject>();
     private int turnNumber = 0;
     public bool turnFlag;
 
@@ -60,17 +60,31 @@ public class TurnManager : MonoBehaviour
             // 次の処理を待つ
             if (turnFlag)
             {
+                //ターン処理
+                if(players.Count == 0 || enemys.Count == 0)
+                {
+                    EndTurnManager();
+                    yield break;
+                    break;
+                }
                 Debug.Log("ターン処理中:" + turnNumber);
+                // フラグを折る
                 turnFlag = false;
                 // Turnリストを取得
                 var nextCharacterStatus = turnList[turnNumber];
                 // Characterのステータスを変更
-
+                if (nextCharacterStatus == null)
+                {
+                    Debug.Log("ターン対象が存在しません");
+                    turnFlag = true;
+                    turnNumber = (turnNumber + 1) % turnList.Count;
+                    continue;
+                }
                 // True:Enemy False:Player
                 if (nextCharacterStatus.GetComponent<Character>().enemyCheckFlag)
                 {
                     // Enemy処理
-                    enemyManager.Test();
+                    enemyManager.Test(nextCharacterStatus.GetComponent<Character>());
                     Debug.Log("StartEnemy");
                 }
                 else
@@ -83,7 +97,12 @@ public class TurnManager : MonoBehaviour
 
                 // ターンの順番
                 // ターンチェンジ
-                turnNumber = (turnNumber + 1) % turnList.Count;
+                turnNumber++;
+                if (turnNumber >= turnList.Count)
+                {
+                    turnNumber = 0;
+                }
+                //turnNumber = (turnNumber + 1) % turnList.Count;
             }
             else
             {
@@ -98,4 +117,24 @@ public class TurnManager : MonoBehaviour
     {
         turnFlag = true;
     }
+
+    //勝利、敗北時に呼び出す
+    public void EndTurnManager()
+    {
+        //敗北判定
+        if(players.Count == 0)
+        {
+            Debug.Log("敗北");
+            //敗北処理
+        }
+        //敗北判定
+        if(enemys.Count == 0)
+        {
+            Debug.Log("勝利");
+            //勝利処理
+        }
+        //コルーチン停止
+        StopAllCoroutines();
+    }
+
 }

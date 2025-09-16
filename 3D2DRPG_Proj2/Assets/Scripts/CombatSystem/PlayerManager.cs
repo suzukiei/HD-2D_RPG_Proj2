@@ -90,9 +90,9 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case StatusFlag.End:
+                selectedCharacter.StatusFlag = StatusFlag.None;
                 // ターン終了処理
                 turnManager.FlagChange();
-                selectedCharacter.StatusFlag = StatusFlag.None;
                 break;
         }
 
@@ -121,8 +121,19 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void OnSkillSelected(int index)
     {
-        if (index < 0 || index >= selectedCharacter.skills.Length) return;
-        if (selectedCharacter.skills[index] == null) return; // nullチェック追加
+        if (index < 0 || index >= selectedCharacter.skills.Length)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Select;
+            isActionPending = true;
+            return;
+        }
+
+        if (selectedCharacter.skills[index] == null)// nullチェック追加
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Select;
+            isActionPending = true;
+            return;
+        } 
         selectedSkill = selectedCharacter.skills[index];
         selectedCharacter.StatusFlag = StatusFlag.Attack;
         isActionPending = true;
@@ -133,7 +144,12 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void OnAttackSelected(List<Character> enemies, int index)
     {
-        if (index < 0 || index >= enemies.Count) return;
+        if (index < 0 || index >= enemies.Count)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Attack;
+            isActionPending = true;
+            return;
+        }
         var enemy = enemies[index];
         ApplyAttack(enemy, selectedSkill);
         selectedCharacter.StatusFlag = StatusFlag.End;
@@ -153,6 +169,8 @@ public class PlayerManager : MonoBehaviour
             // エネミー死亡時の処理（未実装）
             //エネミーの体力を0にする
             enemy.hp = 0;
+            turnManager.enemys.Remove(enemy.gameObject);
+            turnManager.turnList.Remove(enemy.gameObject);
             //エネミーのGameObjectを破壊する
             Destroy(enemy.CharacterObj);
 
