@@ -1849,14 +1849,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 722606597}
-  - component: {fileID: 722606598}
   m_Layer: 0
   m_Name: MapManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &722606597
 Transform:
   m_ObjectHideFlags: 0
@@ -1908,62 +1907,6 @@ Transform:
   - {fileID: 1561397272}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &722606598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 722606596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293b2c8e65ad9ec43a6aca53c6d210f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _valueListList:
-  - List:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  - List:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  - List:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  - List:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  - List:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  - List:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-  MaxRange: {x: 0, y: 0}
 --- !u!1 &745215963
 GameObject:
   m_ObjectHideFlags: 0
@@ -1993,19 +1936,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc37d9c899f0d574ab0f86d781fed1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uITest: {fileID: 1566565442}
-  mapManager: {fileID: 722606598}
+  uiTest: {fileID: 1566565442}
   turnManager: {fileID: 1864808123}
-  characterData:
+  playerCharacters:
   - {fileID: 11400000, guid: fdfc2772cdd97584f9b41ecffe093f82, type: 2}
   - {fileID: 11400000, guid: a8840a6132af079479d5a4e77446714a, type: 2}
   - {fileID: 11400000, guid: ce69fe77855455e499efed043eb05095, type: 2}
-  vector3s:
+  spawnPositions:
   - {x: 1, y: 0, z: 0}
   - {x: 2, y: 0, z: 0}
   - {x: 3, y: 0, z: 0}
-  StartFlag: 1
-  character: {fileID: 0}
 --- !u!4 &745215965
 Transform:
   m_ObjectHideFlags: 0
@@ -4315,13 +4255,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e3ddb0d525c6742b2829ef349c79e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapManager: {fileID: 722606598}
-  PlayerManager: {fileID: 745215964}
-  EnemyManager: {fileID: 333137748}
+  playerManager: {fileID: 745215964}
+  enemyManager: {fileID: 333137748}
   players: []
   enemys: []
-  TurnList: []
-  TurnFlag: 0
+  turnList: []
+  turnFlag: 0
 --- !u!1 &1892460513
 GameObject:
   m_ObjectHideFlags: 0
