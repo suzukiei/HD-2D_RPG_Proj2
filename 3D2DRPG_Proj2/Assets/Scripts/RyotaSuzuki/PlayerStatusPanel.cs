@@ -58,7 +58,7 @@ public class PlayerStatusPanel : MonoBehaviour
         InitializeBars();
         
         // ダミーデータで初期化（テスト用）
-        UpdatePlayerStatus(PlayerData.CreateDummyData(0));
+        //UpdatePlayerStatus(PlayerData.CreateDummyData(0));
     }
 
     /// <summary>

@@ -25,7 +25,11 @@ public class Character: MonoBehaviour
         atk = characterData.atk;
         def = characterData.def;
         spd = characterData.spd;
-        CharacterObj= this.gameObject;
+        maxHp = characterData.maxHp;
+        maxMp = characterData.maxMp;
+        exp = characterData.exp;
+        level = characterData.level;
+        CharacterObj = this.gameObject;
         skills = characterData.skills;
         statusEffects= characterData.statusEffects;
         CharacterTransfrom= characterData.CharacterTransfrom;

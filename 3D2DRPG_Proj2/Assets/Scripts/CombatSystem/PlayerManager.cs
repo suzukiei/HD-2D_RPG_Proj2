@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using DG.Tweening;
+using Unity.VisualScripting;
 
 /// <summary>
 /// プレイヤーの戦闘行動を管理するクラス
@@ -9,13 +11,21 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField, Header("UIテスト用")]
     private UITest uiTest;
+    [SerializeField, Header("選択用UI")] 
+    private SkillSelectionUI skillSelectionUI;
     [SerializeField, Header("ターン管理")]
     private TurnManager turnManager;
     [SerializeField, Header("プレイヤーキャラクター一覧")]
     private List<CharacterData> playerCharacters;
     [SerializeField, Header("キャラクター初期配置座標")]
     private List<Vector3> spawnPositions;
-
+    [SerializeField, Header("プレイヤーステータス")]
+    private List<PlayerStatusPanel> playerStatusPanel;
+    
+    [SerializeField, Header("キャラクター戦闘開始位置")]
+    private Vector3 ActionPosition;
+    [SerializeField, Header("キャラクター初期位置")]
+    private Vector3 StartPosition;
     // キャラクターのGameObject格納用
     private List<GameObject> characterObjects = new List<GameObject>();
 
@@ -46,6 +56,10 @@ public class PlayerManager : MonoBehaviour
             obj.AddComponent<Character>().init(playerCharacters[i]);
             obj.transform.parent = transform;
             characterObjects.Add(obj);
+            // ターン管理にキャラクターを登録
+            playerStatusPanel [i].gameObject.SetActive(true);
+            PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
+            playerStatusPanel[i].UpdatePlayerStatus(playerData);
         }
     }
 
@@ -54,22 +68,33 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        // UIのプレイヤーステータス更新s
+        PlayerUIUpdate();
         if (!isActionPending) return;
 
         // キャラクターの状態に応じて処理を分岐
         switch (selectedCharacter.StatusFlag)
         {
             case StatusFlag.Move:
-                // 移動アニメーション処理（未実装）
-
+                //初期位置を保存
+                StartPosition = selectedCharacter.CharacterObj.transform.position;
+                // キャラクターを行動位置に移動
+                selectedCharacter.CharacterObj.transform.DOMove(ActionPosition, 1f).OnComplete(() =>
+                {
+                    selectedCharacter.StatusFlag = StatusFlag.Select;
+                    isActionPending = true;
+                }); ;
                 break;
 
             case StatusFlag.Select:
                 // スキル選択フェーズ
-                var skills = selectedCharacter.skills;
-                var selectEvent = new UnityEvent<int>();
-                selectEvent.AddListener(OnSkillSelected);
-                uiTest.Inputs(selectEvent, skills.Length-1);
+                List<SkillData> skills= new List<SkillData>();
+                skills.AddRange (selectedCharacter.skills);
+                // UnityEventを作成してコールバックを設定
+                UnityEvent<int> callback = new UnityEvent<int>();
+                callback.AddListener(OnSkillSelected);
+                // 技選択UIを表示
+                skillSelectionUI.ShowSkillSelection(skills, callback);
                 break;
 
             case StatusFlag.Attack:
@@ -90,19 +115,34 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case StatusFlag.End:
-                selectedCharacter.StatusFlag = StatusFlag.None;
-                // ターン終了処理
-                turnManager.FlagChange();
+                selectedCharacter.CharacterObj.transform.DOMove(StartPosition, 1f).OnComplete(() =>
+                {
+                    selectedCharacter.StatusFlag = StatusFlag.None;
+                    // ターン終了処理
+                    turnManager.FlagChange();
+                }); ;
                 break;
         }
 
         // 行動完了後フラグを下げる
         isActionPending = false;
         //テストコード
-        if(selectedCharacter.StatusFlag == StatusFlag.Move)
+        //if(selectedCharacter.StatusFlag == StatusFlag.Move)
+        //{
+        //    selectedCharacter.StatusFlag = StatusFlag.Select;
+        //    isActionPending = true;
+        //}
+    }
+    /// <summary>
+    /// UIのプレイヤーステータス更新
+    /// </summary>
+    public void PlayerUIUpdate()
+    {
+
+        for (int i = 0; i < characterObjects.Count; i++)
         {
-            selectedCharacter.StatusFlag = StatusFlag.Select;
-            isActionPending = true;
+            PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
+            playerStatusPanel[i].UpdatePlayerStatus(playerData);
         }
     }
 
@@ -111,6 +151,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void StartPlayerAction(Character character)
     {
+
         selectedCharacter = character;
         selectedCharacter.StatusFlag = StatusFlag.Move;
         isActionPending = true;
