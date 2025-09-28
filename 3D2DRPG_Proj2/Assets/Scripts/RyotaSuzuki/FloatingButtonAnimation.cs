@@ -50,7 +50,7 @@ namespace RyotaSuzuki
 
         [Header("デバッグ設定")]
         [SerializeField, Header("デバッグログを表示する？")] 
-        private bool showDebugLog = false;
+        private bool showDebugLog = true;
 
         private RectTransform rectTransform;
         private Canvas parentCanvas;
@@ -67,6 +67,11 @@ namespace RyotaSuzuki
             if (autoStart)
             {
                 StartFloatingAnimation();
+            }
+            
+            if (showDebugLog)
+            {
+                Debug.Log($"[FloatingButtonAnimation] {gameObject.name}: Start完了 - autoStart: {autoStart}, timeScale: {Time.timeScale}");
             }
         }
 
@@ -199,12 +204,17 @@ namespace RyotaSuzuki
             }
         }
 
-        /// <summary>
+                /// <summary>
         /// フローティングアニメーションを開始します
         /// </summary>
         public void StartFloatingAnimation()
         {
             if (rectTransform == null) return;
+
+            if (showDebugLog)
+            {
+                Debug.Log($"[FloatingButtonAnimation] {gameObject.name}: StartFloatingAnimation呼び出し - timeScale: {Time.timeScale}");
+            }
 
             // 既存のアニメーションを停止
             StopFloatingAnimation();
@@ -220,14 +230,20 @@ namespace RyotaSuzuki
                 originalPosition.y + floatDistance : 
                 originalPosition.y - floatDistance;
 
+            if (showDebugLog)
+            {
+                Debug.Log($"[FloatingButtonAnimation] {gameObject.name}: アニメーション設定 - 元位置: {originalPosition.y}, 目標: {targetY}, 距離: {floatDistance}");
+            }
+
             // 上下にループするアニメーションを作成
             floatingTween = rectTransform.DOAnchorPosY(targetY, duration)
                 .SetEase(easeType)
                 .SetLoops(-1, LoopType.Yoyo)  // 無限ループ、ヨーヨー効果
+                .SetUpdate(true)  // Time.timeScale = 0でも動作するように
                 .OnStart(() => {
                     isAnimating = true;
                     if (showDebugLog)
-                        Debug.Log($"[FloatingButtonAnimation] {gameObject.name}: アニメーション開始 - 方向: {(shouldMoveUp ? "上" : "下")}");
+                        Debug.Log($"[FloatingButtonAnimation] {gameObject.name}: アニメーション開始 - 方向: {(shouldMoveUp ? "上" : "下")}, timeScale: {Time.timeScale}");
                 })
                 .OnKill(() => {
                     isAnimating = false;
@@ -346,7 +362,7 @@ namespace RyotaSuzuki
                     {
                         StartFloatingAnimation();
                     }
-                });
+                }).SetUpdate(true);
 
                 if (showDebugLog)
                 {
@@ -404,7 +420,7 @@ namespace RyotaSuzuki
                     {
                         StartFloatingAnimation();
                     }
-                });
+                }).SetUpdate(true);
             }
         }
     }
