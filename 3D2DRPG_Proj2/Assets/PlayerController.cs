@@ -1,9 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    [SerializeField,Header("歩きの速度"),Range(0,10)]
+    private float Speed;
+
+    [SerializeField, Header("ダッシュの速度"), Range(1, 5)]
+    private float DashSpeed;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,19 +24,35 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
-            this.transform.Translate(0.01f, 0, 0);
+            if (Input.GetKey(KeyCode.LeftShift))
+                {
+                this.transform.Translate(Speed * DashSpeed *Time.deltaTime, 0, 0);
+                }
+            this.transform.Translate(Speed*Time.deltaTime, 0, 0);
         }
         if (Input.GetKey(KeyCode.A))
         {
-            this.transform.Translate(-0.01f, 0, 0);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                this.transform.Translate(-(Speed * DashSpeed * Time.deltaTime), 0, 0);
+            }
+            this.transform.Translate(-(Speed * Time.deltaTime), 0, 0);
         }
         if (Input.GetKey(KeyCode.W))
         {
-            this.transform.Translate(0, 0, 0.05f);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                this.transform.Translate(0, 0, Speed * DashSpeed * Time.deltaTime);
+            }
+            this.transform.Translate(0, 0, Speed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            this.transform.Translate(0, 0, -0.01f);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                this.transform.Translate(0, 0, -(Speed * DashSpeed * Time.deltaTime));
+            }
+            this.transform.Translate(0, 0, -(Speed * Time.deltaTime));
         }
     }
 }

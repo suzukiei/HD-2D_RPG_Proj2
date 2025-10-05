@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4059249375937667679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5061251467956364390}
+  - component: {fileID: 7565794340120703431}
+  m_Layer: 0
+  m_Name: MenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5061251467956364390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059249375937667679}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 743.6256, y: 532.3304, z: 320.0188}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7565794340120703431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059249375937667679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51be284d2c3be7b408ab96b145801883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuUICanvas: {fileID: 0}
+  menuUIPanel: {fileID: 0}
+  backgroundPanel: {fileID: 0}
+  itemButton: {fileID: 0}
+  soubiButton: {fileID: 0}
+  tsuikaKoukaButton: {fileID: 0}
+  closeButton: {fileID: 0}
+  itemPanel: {fileID: 0}
+  soubiPanel: {fileID: 0}
+  tsuikaKoukaPanel: {fileID: 0}
+  fadeInDuration: 0.3
+  fadeOutDuration: 0.2
+  panelSwitchDuration: 0.25
+  showDebugLog: 1

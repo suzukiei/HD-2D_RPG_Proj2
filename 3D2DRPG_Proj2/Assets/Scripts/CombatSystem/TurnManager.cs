@@ -1,126 +1,140 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class TurnManager : MonoBehaviour
 {
-    //仮でPlayerをPlayerManagerと読んでいるがPlayerManagerを後で作成して管理した方がよろしいかも
-    [SerializeField, Header("マップマネージャー")]
-    private MapManager mapManager;
     [SerializeField, Header("プレイヤーマネージャー")]
-    private Player PlayerManager;
+    private PlayerManager playerManager;
+    [SerializeField, Header("エネミーマネージャー")]
+    private EnemyManager enemyManager;
     [SerializeField, Header("プレイヤーのデータ")]
-    private Enemy EnemyManager;
-    [SerializeField, Header("プレイヤーのデータ")]
-    private List<CharacterData> players;
+    public List<GameObject> players;
     [SerializeField, Header("エネミーのデータ")]
-    private List<CharacterData> enemys;
-    [SerializeField, Header("")]
-    private List<CharacterData> TurnList;
-    private int TurnNamber = 0;
-    public bool TurnFlag;
+    public List<GameObject> enemys;
+    [SerializeField, Header("ターン順リスト")]
+    public List<GameObject> turnList = new List<GameObject>();
+    private int turnNumber = 0;
+    public bool turnFlag;
 
     private void Start()
     {
-        //変数の初期化
-        TurnFlag = true;
-        TurnNamber = 0;
+        // 変数の初期化
+        turnFlag = true;
+        turnNumber = 0;
 
-        //初期化
+        // 初期化
         Initialization();
     }
+
     private void Initialization()
     {
-        //プレイヤーを取得
-        players = PlayerManager.GetCharacterData();
-        //エネミーを取得
-        enemys = EnemyManager.GetEnemyData();
-        //statusを貰って着て並び替える
-        List<CharacterData> ListCollection = new List<CharacterData>();
-        ListCollection.AddRange(players);
-        ListCollection.AddRange(enemys);
-        TurnList.Add(ListCollection[0]);
-        mapManager.AppCharacter(ListCollection[0].CharacterTransfrom, ListCollection[0]);
-        for (int i = 1; i < ListCollection.Count; i++)
-        {
-            mapManager.AppCharacter(ListCollection[i].CharacterTransfrom, ListCollection[i]);
-            for (int j = 0; j < TurnList.Count; j++)
-            {
-                if (ListCollection[i].spd > TurnList[j].spd)
-                {
-                    TurnList.Insert(j, ListCollection[i]);
-                    break;
-                }
-                if (TurnList.Count - 1 == j)
-                {
-                    TurnList.Add(ListCollection[i]);
-                    break;
-                }
-            }
-        }
-        //StartTurn()
-        //UIに指示
-        //順番のデータをUIに渡す
-        //ターン処理スタート
+        // プレイヤーを取得
+        players = playerManager.GetPlayerCharacters();
+        // エネミーを取得
+        enemys = enemyManager.GetEnemyData();
+
+        // プレイヤーとエネミーをまとめてSPD順に並び替える
+        turnList.Clear();
+        turnList.AddRange(players);
+        turnList.AddRange(enemys);
+
+        turnList.Sort((a, b) => b.GetComponent<Character>().spd.CompareTo(a.GetComponent<Character>().spd)); // SPD降順でソート
+
+        // Spd が高い順（降順）
+        //List<GameObject> sorted = turnList.OrderByDescending(c => c.GetComponent<Character>().Spd).ToList();
+        // UIに指示
+        // 順番のデータをUIに渡す
+        // ターン処理スタート
         StartCoroutine(TurnController());
     }
 
-    //ターン管理
-    //この処理Updateでもいいかも....
+    // ターン管理
+    // この処理Updateでもいいかも....
     private IEnumerator TurnController()
     {
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
-            //次の処理を待つ
-            if (TurnFlag)
+            // 次の処理を待つ
+            if (turnFlag)
             {
-
-                Debug.Log("ターン処理中:"+ TurnNamber);
-                TurnFlag = false;
-                //Turnリストを取得
-                var nextCharcterStatus = TurnList[TurnNamber];
-                //Characterのステータスを変更
-
-                ///True:Enemy False:Player
-                if(nextCharcterStatus.enemyCheckFalg)
+                //ターン処理
+                if(players.Count == 0 || enemys.Count == 0)
                 {
-                    //Enemy処理
-                    EnemyManager.Test();
-                    Debug.Log("StartPlayer");
+                    EndTurnManager();
+                    yield break;
+                    break;
+                }
+                Debug.Log("ターン処理中:" + turnNumber);
+                // フラグを折る
+                turnFlag = false;
+                // Turnリストを取得
+                var nextCharacterStatus = turnList[turnNumber];
+                // Characterのステータスを変更
+                if (nextCharacterStatus == null)
+                {
+                    Debug.Log("ターン対象が存在しません");
+                    turnFlag = true;
+                    turnNumber = (turnNumber + 1) % turnList.Count;
+                    continue;
+                }
+                // True:Enemy False:Player
+                if (nextCharacterStatus.GetComponent<Character>().enemyCheckFlag)
+                {
+                    // Enemy処理
+                    enemyManager.Test(nextCharacterStatus.GetComponent<Character>());
+                    Debug.Log("StartEnemy");
                 }
                 else
                 {
-                    //Player処理
-                    nextCharcterStatus.StetasFlags = StetasFlag.move;
-                    PlayerManager.PlayerController(nextCharcterStatus);
-                    //
+                    // Player処理
+                    nextCharacterStatus.GetComponent<Character>().StatusFlag = StatusFlag.Move;
+                    playerManager.StartPlayerAction(nextCharacterStatus.GetComponent<Character>());
                     Debug.Log("StartPlayer");
-
-
                 }
 
-                //ターンの順番
-                //ターンチェンジ
-                if (TurnNamber < TurnList.Count-1)
-                    TurnNamber++;
-                else
-                    TurnNamber = 0;
-            } else
+                // ターンの順番
+                // ターンチェンジ
+                turnNumber++;
+                if (turnNumber >= turnList.Count)
+                {
+                    turnNumber = 0;
+                }
+                //turnNumber = (turnNumber + 1) % turnList.Count;
+            }
+            else
             {
                 Debug.Log("ターン待ち");
             }
 
-           
-            //UIに現在のターン順次の順番を伝える
+            // UIに現在のターン順次の順番を伝える
         }
-
     }
-    
+
     public void FlagChange()
     {
-        TurnFlag = true;
+        turnFlag = true;
     }
 
+    //勝利、敗北時に呼び出す
+    public void EndTurnManager()
+    {
+        //敗北判定
+        if(players.Count == 0)
+        {
+            Debug.Log("敗北");
+            //敗北処理
+        }
+        //敗北判定
+        if(enemys.Count == 0)
+        {
+            Debug.Log("勝利");
+            //勝利処理
+        }
+        //コルーチン停止
+        StopAllCoroutines();
+    }
 
 }
