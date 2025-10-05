@@ -18,7 +18,7 @@ MonoBehaviour:
   mp: 100
   atk: 100
   def: 100
-  spd: 10
+  spd: 130
   maxHp: 1000
   maxMp: 10
   exp: 10

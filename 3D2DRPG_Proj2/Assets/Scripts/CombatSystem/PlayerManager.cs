@@ -111,7 +111,7 @@ public class PlayerManager : MonoBehaviour
 
                 var attackEvent = new UnityEvent<int>();
                 attackEvent.AddListener((index) => OnAttackSelected(enemies, index));
-                uiTest.Inputs(attackEvent, enemies.Count-1);
+                uiTest.Inputs(attackEvent, enemies.Count-1,enemies);
                 break;
 
             case StatusFlag.End:
@@ -191,8 +191,15 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
+        if(selectedCharacter.mp<selectedSkill.mpCost)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Select;
+            isActionPending = true;
+            return;
+        }
         var enemy = enemies[index];
         ApplyAttack(enemy, selectedSkill);
+        selectedCharacter.mp -= selectedSkill.mpCost;
         selectedCharacter.StatusFlag = StatusFlag.End;
         isActionPending = true;
     }

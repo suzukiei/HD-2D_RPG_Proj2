@@ -6,6 +6,8 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
     private List<CharacterData> enemyData;
+    [SerializeField, Header("攻撃方法をランダムにする")]
+    private bool AttackRandamFlag;
     [SerializeField]
     private TurnManager turnManager;
     [SerializeField]
@@ -77,15 +79,19 @@ public class EnemyManager : MonoBehaviour
         // ターゲット選択（現状: HP最小のプレイヤーを狙う。ランダムにしたい場合は Random.Range を使う）
         Character target = null;
         int minHp = int.MaxValue;
-        foreach (var p in playerCandidates)
+        if (!AttackRandamFlag)
         {
-            if (p == null) continue;
-            if (p.hp < minHp)
+            foreach (var p in playerCandidates)
             {
-                minHp = p.hp;
-                target = p;
+                if (p == null) continue;
+                if (p.hp < minHp)
+                {
+                    minHp = p.hp;
+                    target = p;
+                }
             }
         }
+    
         if (target == null)
         {
             // 保険でランダム

@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
   m_Name: Character Data 1
   m_EditorClassIdentifier: 
-  name: sumo
+  name: mosu
   enemyCheckFlag: 0
   hp: 100
   mp: 100
   atk: 100
   def: 100
-  spd: 10
+  spd: 120
   maxHp: 100
   maxMp: 10
   exp: 10
