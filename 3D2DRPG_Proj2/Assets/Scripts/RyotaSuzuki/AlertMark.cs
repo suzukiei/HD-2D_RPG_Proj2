@@ -66,3 +66,4 @@ public class AlertMark : MonoBehaviour
         transform.DOKill();
     }
 }
+

@@ -182,6 +182,10 @@ public class ConversationUI : MonoBehaviour
         {
             string name = fields[0].Replace("\"", ""); // クォートを削除
             string dialogue = fields[1].Replace("\"", ""); // クォートを削除
+            
+            // \nを実際の改行に変換
+            dialogue = dialogue.Replace("\\n", "\n");
+            
             return new DialogueData(name, dialogue);
         }
 
