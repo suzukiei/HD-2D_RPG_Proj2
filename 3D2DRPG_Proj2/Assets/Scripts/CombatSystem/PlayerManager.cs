@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using DG.Tweening;
 using Unity.VisualScripting;
+using Unity.Mathematics;
 
 /// <summary>
 /// プレイヤーの戦闘行動を管理するクラス
@@ -11,6 +12,8 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField, Header("UIテスト用")]
     private UITest uiTest;
+    [SerializeField,Header("ComboUI")]
+    private ComboAttack comboUI;
     [SerializeField, Header("選択用UI")] 
     private SkillSelectionUI skillSelectionUI;
     [SerializeField, Header("ターン管理")]
@@ -35,6 +38,8 @@ public class PlayerManager : MonoBehaviour
     private SkillData selectedSkill;
     // 行動待ちフラグ
     private bool isActionPending = false;
+    //選択しているエネミー
+    private Character selectedEnemy;
 
     /// <summary>
     /// キャラクターデータ取得用
@@ -197,11 +202,35 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
-        var enemy = enemies[index];
+
+        if (selectedSkill.canCombo)
+        {
+            selectedCharacter.mp -= selectedSkill.mpCost;
+            //コンボスキルの処理（未実装）
+            var attackEvent = new UnityEvent<int>();
+            attackEvent.AddListener((index) => OnComboApplyAttack());
+            var attackEnd = new UnityEvent<int>();
+            attackEnd.AddListener((index) => OnComboEnd());
+            selectedEnemy = enemies[index];
+            comboUI.Inputs(attackEvent, attackEnd,selectedSkill.maxcombo, selectedEnemy);
+        }
+        else
+        {
+            //通常スキルの処理  
+            var enemy = enemies[index];
+            ApplyAttack(enemy, selectedSkill);
+            selectedCharacter.mp -= selectedSkill.mpCost;
+            selectedCharacter.StatusFlag = StatusFlag.End;
+            isActionPending = true;
+        }
+
+    }
+
+    public void OnComboApplyAttack()
+    {
+        var enemy = selectedEnemy;
         ApplyAttack(enemy, selectedSkill);
-        selectedCharacter.mp -= selectedSkill.mpCost;
-        selectedCharacter.StatusFlag = StatusFlag.End;
-        isActionPending = true;
+        //selectedCharacter.mp -= selectedSkill.mpCost;
     }
 
     /// <summary>
@@ -211,7 +240,8 @@ public class PlayerManager : MonoBehaviour
     {
         if (enemy == null || skill == null) return; // nullチェック追加
 
-        enemy.hp -= skill.power;
+        var hp =enemy.hp - skill.power;
+        enemy.hp =(int)math.floor(hp);
         if (enemy.hp <= 0)
         {
             // エネミー死亡時の処理（未実装）
@@ -223,5 +253,11 @@ public class PlayerManager : MonoBehaviour
             Destroy(enemy.CharacterObj);
 
         }
+    }
+
+    private void OnComboEnd()
+    {
+        selectedCharacter.StatusFlag = StatusFlag.End;
+        isActionPending = true;
     }
 }

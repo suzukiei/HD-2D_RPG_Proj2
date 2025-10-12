@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -72,7 +73,7 @@ public class EnemyManager : MonoBehaviour
             }
             if (avail.Count > 0)
             {
-                chosenSkill = avail[Random.Range(0, avail.Count)];
+                chosenSkill = avail[UnityEngine.Random.Range(0, avail.Count)];
             }
         }
 
@@ -95,7 +96,7 @@ public class EnemyManager : MonoBehaviour
         if (target == null)
         {
             // 保険でランダム
-            target = playerCandidates[Random.Range(0, playerCandidates.Count)];
+            target = playerCandidates[UnityEngine.Random.Range(0, playerCandidates.Count)];
         }
 
         // 攻撃実行
@@ -114,7 +115,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (target == null) return;
 
-        int power = 0;
+        float power = 0;
         if (skill != null)
         {
             power = skill.power;
@@ -125,7 +126,8 @@ public class EnemyManager : MonoBehaviour
             power = attacker != null ? attacker.atk : 1;
         }
 
-        target.hp -= power;
+        var targethp =target.hp - power;
+       target.hp=(int)math.floor(targethp);
         Debug.Log($"{attacker.name} が {target.name} に {power} ダメージ。残りHP: {target.hp}");
 
         if (target.hp <= 0)

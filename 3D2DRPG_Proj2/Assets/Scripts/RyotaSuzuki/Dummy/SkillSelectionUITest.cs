@@ -149,7 +149,7 @@ public class SkillSelectionUITest : MonoBehaviour
             skill.name = data.name;
             skill.mpCost = data.mpCost;
             skill.power = data.power;
-            skill.targetType = data.targetType;
+            //skill.targetType = data.targetType;
             testSkills.Add(skill);
         }
         

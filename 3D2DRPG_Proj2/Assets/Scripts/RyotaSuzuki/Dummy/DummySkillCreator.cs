@@ -42,7 +42,7 @@ public class DummySkillCreator : MonoBehaviour
             skill.name = skillData.name;
             skill.mpCost = skillData.mpCost;
             skill.power = skillData.power;
-            skill.targetType = skillData.targetType;
+            //skill.targetType = skillData.targetType;
             
             string assetPath = $"{folderPath}/{skillData.name}.asset";
             AssetDatabase.CreateAsset(skill, assetPath);

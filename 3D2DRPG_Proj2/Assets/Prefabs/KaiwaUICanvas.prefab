@@ -468,7 +468,13 @@ MonoBehaviour:
   characterImage: {fileID: 0}
   fadeInDuration: 0.5
   typewriterSpeed: 0.05
+  logEntrySlideInDuration: 0.3
+  logEntryAnimationDelay: 0.1
   csvFolderName: ScenarioCSV
   csvFileName: scenario02.csv
   useCSVFile: 1
+  logPanel: {fileID: 0}
+  logContent: {fileID: 0}
+  logEntryPrefab: {fileID: 0}
+  logScrollRect: {fileID: 0}
   testDialogues: []

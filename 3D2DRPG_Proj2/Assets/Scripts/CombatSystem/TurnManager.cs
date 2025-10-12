@@ -65,7 +65,7 @@ public class TurnManager : MonoBehaviour
                 {
                     EndTurnManager();
                     yield break;
-                    break;
+                    //break;
                 }
                 Debug.Log("ターン処理中:" + turnNumber);
                 // フラグを折る
@@ -98,6 +98,8 @@ public class TurnManager : MonoBehaviour
                 // ターンの順番
                 // ターンチェンジ
                 turnNumber++;
+
+
                 if (turnNumber >= turnList.Count)
                 {
                     turnNumber = 0;
