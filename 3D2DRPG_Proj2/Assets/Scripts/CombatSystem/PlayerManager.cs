@@ -12,9 +12,9 @@ public class PlayerManager : MonoBehaviour
 {
     [SerializeField, Header("UIテスト用")]
     private UITest uiTest;
-    [SerializeField,Header("ComboUI")]
+    [SerializeField, Header("ComboUI")]
     private ComboAttack comboUI;
-    [SerializeField, Header("選択用UI")] 
+    [SerializeField, Header("選択用UI")]
     private SkillSelectionUI skillSelectionUI;
     [SerializeField, Header("ターン管理")]
     private TurnManager turnManager;
@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour
     private List<Vector3> spawnPositions;
     [SerializeField, Header("プレイヤーステータス")]
     private List<PlayerStatusPanel> playerStatusPanel;
-    
+
     [SerializeField, Header("キャラクター戦闘開始位置")]
     private Vector3 ActionPosition;
     [SerializeField, Header("キャラクター初期位置")]
@@ -62,7 +62,7 @@ public class PlayerManager : MonoBehaviour
             obj.transform.parent = transform;
             characterObjects.Add(obj);
             // ターン管理にキャラクターを登録
-            playerStatusPanel [i].gameObject.SetActive(true);
+            playerStatusPanel[i].gameObject.SetActive(true);
             PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
             playerStatusPanel[i].UpdatePlayerStatus(playerData);
         }
@@ -93,8 +93,8 @@ public class PlayerManager : MonoBehaviour
 
             case StatusFlag.Select:
                 // スキル選択フェーズ
-                List<SkillData> skills= new List<SkillData>();
-                skills.AddRange (selectedCharacter.skills);
+                List<SkillData> skills = new List<SkillData>();
+                skills.AddRange(selectedCharacter.skills);
                 // UnityEventを作成してコールバックを設定
                 UnityEvent<int> callback = new UnityEvent<int>();
                 callback.AddListener(OnSkillSelected);
@@ -116,7 +116,40 @@ public class PlayerManager : MonoBehaviour
 
                 var attackEvent = new UnityEvent<int>();
                 attackEvent.AddListener((index) => OnAttackSelected(enemies, index));
-                uiTest.Inputs(attackEvent, enemies.Count-1,enemies);
+                uiTest.Inputs(attackEvent, enemies.Count - 1, enemies);
+                break;
+
+            case StatusFlag.Heal:
+                // Heel対象ファイズ対象選択フェーズ
+                List<Character> characters = new List<Character>();
+                foreach (var characterObj in turnManager.players)
+                {
+                    var characterData = characterObj.GetComponent<Character>();
+                    if (characterData != null)
+                    {
+                        characters.Add(characterData);
+                    }
+                }
+
+                var healEvent = new UnityEvent<int>();
+                healEvent.AddListener((index) => OnHealSelected(characters, index));
+                uiTest.Inputs(healEvent, characters.Count - 1, characters);
+                break;
+            case StatusFlag.Buff:
+                // Heel対象ファイズ対象選択フェーズ
+                List<Character> buffcharacters = new List<Character>();
+                foreach (var characterObj in turnManager.players)
+                {
+                    var characterData = characterObj.GetComponent<Character>();
+                    if (characterData != null)
+                    {
+                        buffcharacters.Add(characterData);
+                    }
+                }
+
+                var buffhealEvent = new UnityEvent<int>();
+                buffhealEvent.AddListener((index) => OnHealSelected(buffcharacters, index));
+                uiTest.Inputs(buffhealEvent, buffcharacters.Count - 1, buffcharacters);
                 break;
 
             case StatusFlag.End:
@@ -179,9 +212,28 @@ public class PlayerManager : MonoBehaviour
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
             return;
-        } 
+        }
         selectedSkill = selectedCharacter.skills[index];
-        selectedCharacter.StatusFlag = StatusFlag.Attack;
+        switch (selectedSkill.effectType)
+        {
+            case SkillEffectType.Attack:
+                selectedCharacter.StatusFlag = StatusFlag.Attack;
+                if (selectedSkill.targetScope == TargetScope.All)
+                    OnAttackSelected(null, 0);
+                    break;
+
+            case SkillEffectType.Heal:
+                selectedCharacter.StatusFlag = StatusFlag.Heal;
+                if (selectedSkill.targetScope == TargetScope.All)
+                    OnHealSelected(null, 0);
+                break;
+            case SkillEffectType.Buff:
+                //バフ処理未実装
+                selectedCharacter.StatusFlag = StatusFlag.Buff;
+                if (selectedSkill.targetScope == TargetScope.All)
+                    OnBuffSelected(null,0);
+                break;
+        }
         isActionPending = true;
     }
 
@@ -190,13 +242,31 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void OnAttackSelected(List<Character> enemies, int index)
     {
+        // 全体攻撃スキルの場合、すべての敵に攻撃を適用
+        if (selectedSkill.targetScope == TargetScope.All)
+        {
+            if (selectedCharacter.mp < selectedSkill.mpCost)
+            {
+                selectedCharacter.StatusFlag = StatusFlag.Select;
+                isActionPending = true;
+                return;
+            }
+            foreach (var enemy in enemies)
+            {
+                ApplyAttack(enemy, selectedSkill);
+            }
+            selectedCharacter.mp -= selectedSkill.mpCost;
+            selectedCharacter.StatusFlag = StatusFlag.End;
+            isActionPending = true;
+            return;
+        }
         if (index < 0 || index >= enemies.Count)
         {
             selectedCharacter.StatusFlag = StatusFlag.Attack;
             isActionPending = true;
             return;
         }
-        if(selectedCharacter.mp<selectedSkill.mpCost)
+        if (selectedCharacter.mp < selectedSkill.mpCost)
         {
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
@@ -212,7 +282,7 @@ public class PlayerManager : MonoBehaviour
             var attackEnd = new UnityEvent<int>();
             attackEnd.AddListener((index) => OnComboEnd());
             selectedEnemy = enemies[index];
-            comboUI.Inputs(attackEvent, attackEnd,selectedSkill.maxcombo, selectedEnemy);
+            comboUI.Inputs(attackEvent, attackEnd, selectedSkill.maxcombo, selectedEnemy);
         }
         else
         {
@@ -240,8 +310,8 @@ public class PlayerManager : MonoBehaviour
     {
         if (enemy == null || skill == null) return; // nullチェック追加
 
-        var hp =enemy.hp - skill.power;
-        enemy.hp =(int)math.floor(hp);
+        var hp = enemy.hp - skill.power;
+        enemy.hp = (int)math.floor(hp);
         if (enemy.hp <= 0)
         {
             // エネミー死亡時の処理（未実装）
@@ -259,5 +329,57 @@ public class PlayerManager : MonoBehaviour
     {
         selectedCharacter.StatusFlag = StatusFlag.End;
         isActionPending = true;
+    }
+    /// <summary>
+    /// 攻撃対象選択時のコールバック
+    /// </summary>
+    private void OnHealSelected(List<Character> characters, int index)
+    {
+        if (index < 0 || index >= characters.Count)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Heal;
+            isActionPending = true;
+            return;
+        }
+        if (selectedCharacter.mp < selectedSkill.mpCost)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Select;
+            isActionPending = true;
+            return;
+        }
+        if(selectedSkill.targetScope == TargetScope.All)
+        {
+            //全体回復スキルの処理
+            foreach(var getCharacter in characters)
+            {
+                ApplyHeal(getCharacter, selectedSkill);
+            }
+            selectedCharacter.mp -= selectedSkill.mpCost;
+            selectedCharacter.StatusFlag = StatusFlag.End;
+            isActionPending = true;
+            return;
+        }
+        //通常スキルの処理  
+        var character = characters[index];
+        ApplyHeal(character, selectedSkill);
+        selectedCharacter.mp -= selectedSkill.mpCost;
+        selectedCharacter.StatusFlag = StatusFlag.End;
+        isActionPending = true;
+    }
+    public void OnBuffSelected(List<Character> characters, int index)
+    {
+        selectedCharacter.StatusFlag = StatusFlag.End;
+        isActionPending = true;
+    }
+
+    private void ApplyHeal(Character character, SkillData skill)
+    {
+        if (character == null || skill == null) return; // nullチェック追加
+        var hp = character.hp + skill.power;
+        character.hp = (int)math.floor(hp);
+        if (character.hp > character.maxHp)
+        {
+            character.hp = character.maxHp;
+        }
     }
 }

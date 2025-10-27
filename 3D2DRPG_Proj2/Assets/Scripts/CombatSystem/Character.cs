@@ -35,4 +35,60 @@ public class Character: MonoBehaviour
         CharacterTransfrom= characterData.CharacterTransfrom;
         StatusFlag= characterData.StatusFlag;
     }
+    // ダメージ計算
+    public int Attack(Character enemy,SkillData skillData)
+    {
+        int damage = Mathf.Max(0, (int)skillData.power - enemy.def);
+        enemy.TakeDamage(damage);
+        return damage;
+    }
+
+    // ダメージを受ける
+    public void TakeDamage(int damage)
+    {
+        hp = Mathf.Max(0, hp - damage);
+    }
+
+    // HP/MP回復
+    public void Heal(int amount)
+    {
+        hp = Mathf.Min(maxHp, hp + amount);
+    }
+    public void RestoreMp(int amount)
+    {
+        mp = Mathf.Min(maxMp, mp + amount);
+    }
+
+    // レベルアップ
+    public void GainExp(int amount)
+    {
+        exp += amount;
+        if (exp >= ExpToLevelUp())
+        {
+            LevelUp();
+        }
+    }
+    private int ExpToLevelUp()
+    {
+        return level * 100; // 例: レベルごとに100ずつ必要
+    }
+    private void LevelUp()
+    {
+        level++;
+        exp = 0;
+        maxHp += 10;
+        maxMp += 5;
+        atk += 2;
+        def += 2;
+        spd += 1;
+        hp = maxHp;
+        mp = maxMp;
+    }
+
+    // ステータス異常付与
+    public void AddStatusEffect(StatusEffectData effect)
+    {
+        statusEffects = effect;
+    }
+
 }
