@@ -49,7 +49,7 @@ public class SkillData : ScriptableObject
     [Header("ó‘ÔˆÙíEŒø‰Ê")]
     //public StatusEffect inflictStatus;
     public float statusChance = 0f;
-    //public BuffType buffType;
+    public BuffBase buffEffect;
     public float buffValue = 0f;
     public int buffDuration = 0;
 }

@@ -41,6 +41,9 @@ public class PlayerManager : MonoBehaviour
     //選択しているエネミー
     private Character selectedEnemy;
 
+    //バフの効果を管理する変数
+    private List<BuffBase> activeBuffs = new List<BuffBase>();
+
     /// <summary>
     /// キャラクターデータ取得用
     /// </summary>
@@ -73,7 +76,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        // UIのプレイヤーステータス更新s
+        // UIのプレイヤーステータス更新
         PlayerUIUpdate();
         if (!isActionPending) return;
 
@@ -104,16 +107,7 @@ public class PlayerManager : MonoBehaviour
 
             case StatusFlag.Attack:
                 // 攻撃対象選択フェーズ
-                List<Character> enemies = new List<Character>();
-                foreach (var enemyObj in turnManager.enemys)
-                {
-                    var characterData = enemyObj.GetComponent<Character>();
-                    if (characterData != null)
-                    {
-                        enemies.Add(characterData);
-                    }
-                }
-
+                List<Character> enemies = getEnemy();
                 var attackEvent = new UnityEvent<int>();
                 attackEvent.AddListener((index) => OnAttackSelected(enemies, index));
                 uiTest.Inputs(attackEvent, enemies.Count - 1, enemies);
@@ -121,38 +115,41 @@ public class PlayerManager : MonoBehaviour
 
             case StatusFlag.Heal:
                 // Heel対象ファイズ対象選択フェーズ
-                List<Character> characters = new List<Character>();
-                foreach (var characterObj in turnManager.players)
-                {
-                    var characterData = characterObj.GetComponent<Character>();
-                    if (characterData != null)
-                    {
-                        characters.Add(characterData);
-                    }
-                }
-
+                List<Character> characters = getPlayer();
                 var healEvent = new UnityEvent<int>();
                 healEvent.AddListener((index) => OnHealSelected(characters, index));
                 uiTest.Inputs(healEvent, characters.Count - 1, characters);
                 break;
             case StatusFlag.Buff:
                 // Heel対象ファイズ対象選択フェーズ
-                List<Character> buffcharacters = new List<Character>();
-                foreach (var characterObj in turnManager.players)
+                switch (selectedSkill.buffEffect.buffRange)
                 {
-                    var characterData = characterObj.GetComponent<Character>();
-                    if (characterData != null)
-                    {
-                        buffcharacters.Add(characterData);
-                    }
+                    case BuffRange.Self:
+                        OnBuffSelected(null, 0);
+                        break;
+                    case BuffRange.AllAllies:
+                    case BuffRange.AllEnemies:
+                        OnBuffSelected(null, 0);
+                        break;
+                    case BuffRange.Ally:
+                        List<Character> buffcharacters = getPlayer();
+                        var buffEvent = new UnityEvent<int>();
+                        buffEvent.AddListener((index) => OnBuffSelected(buffcharacters, index));
+                        uiTest.Inputs(buffEvent, buffcharacters.Count - 1, buffcharacters);
+                        break;
+                    case BuffRange.Enemy:
+                        List<Character> buffenemies = getEnemy();
+                        var buffEvents = new UnityEvent<int>();
+                        buffEvents.AddListener((index) => OnBuffSelected(buffenemies, index));
+                        uiTest.Inputs(buffEvents, buffenemies.Count - 1, buffenemies);
+                        break;
                 }
-
-                var buffhealEvent = new UnityEvent<int>();
-                buffhealEvent.AddListener((index) => OnHealSelected(buffcharacters, index));
-                uiTest.Inputs(buffhealEvent, buffcharacters.Count - 1, buffcharacters);
                 break;
 
             case StatusFlag.End:
+                //バフ効果の管理
+                buffTurnManage();
+                // キャラクターを初期位置に戻す
                 selectedCharacter.CharacterObj.transform.DOMove(StartPosition, 1f).OnComplete(() =>
                 {
                     selectedCharacter.StatusFlag = StatusFlag.None;
@@ -164,12 +161,6 @@ public class PlayerManager : MonoBehaviour
 
         // 行動完了後フラグを下げる
         isActionPending = false;
-        //テストコード
-        //if(selectedCharacter.StatusFlag == StatusFlag.Move)
-        //{
-        //    selectedCharacter.StatusFlag = StatusFlag.Select;
-        //    isActionPending = true;
-        //}
     }
     /// <summary>
     /// UIのプレイヤーステータス更新
@@ -219,8 +210,10 @@ public class PlayerManager : MonoBehaviour
             case SkillEffectType.Attack:
                 selectedCharacter.StatusFlag = StatusFlag.Attack;
                 if (selectedSkill.targetScope == TargetScope.All)
-                    OnAttackSelected(null, 0);
-                    break;
+                {
+                    OnAttackSelected(getEnemy(), 0);
+                }
+                break;
 
             case SkillEffectType.Heal:
                 selectedCharacter.StatusFlag = StatusFlag.Heal;
@@ -228,10 +221,9 @@ public class PlayerManager : MonoBehaviour
                     OnHealSelected(null, 0);
                 break;
             case SkillEffectType.Buff:
-                //バフ処理未実装
                 selectedCharacter.StatusFlag = StatusFlag.Buff;
                 if (selectedSkill.targetScope == TargetScope.All)
-                    OnBuffSelected(null,0);
+                    OnBuffSelected(null, 0);
                 break;
         }
         isActionPending = true;
@@ -242,6 +234,19 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void OnAttackSelected(List<Character> enemies, int index)
     {
+
+        if (index < 0 || index >= enemies.Count)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Attack;
+            isActionPending = true;
+            return;
+        }
+        if (selectedCharacter.mp < selectedSkill.mpCost)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Select;
+            isActionPending = true;
+            return;
+        }
         // 全体攻撃スキルの場合、すべての敵に攻撃を適用
         if (selectedSkill.targetScope == TargetScope.All)
         {
@@ -260,19 +265,6 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
-        if (index < 0 || index >= enemies.Count)
-        {
-            selectedCharacter.StatusFlag = StatusFlag.Attack;
-            isActionPending = true;
-            return;
-        }
-        if (selectedCharacter.mp < selectedSkill.mpCost)
-        {
-            selectedCharacter.StatusFlag = StatusFlag.Select;
-            isActionPending = true;
-            return;
-        }
-
         if (selectedSkill.canCombo)
         {
             selectedCharacter.mp -= selectedSkill.mpCost;
@@ -347,10 +339,10 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
-        if(selectedSkill.targetScope == TargetScope.All)
+        if (selectedSkill.targetScope == TargetScope.All)
         {
             //全体回復スキルの処理
-            foreach(var getCharacter in characters)
+            foreach (var getCharacter in characters)
             {
                 ApplyHeal(getCharacter, selectedSkill);
             }
@@ -368,10 +360,29 @@ public class PlayerManager : MonoBehaviour
     }
     public void OnBuffSelected(List<Character> characters, int index)
     {
+        if (index < 0 || index >= characters.Count)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Buff;
+            isActionPending = true;
+            return;
+        }
+        if (selectedCharacter.mp < selectedSkill.mpCost)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Select;
+            isActionPending = true;
+            return;
+        }
+        //通常スキルの処理
+        var character = characters[index];
+        BuffBase buff = selectedSkill.buffEffect;
+        buffApply(buff, character);
+        selectedCharacter.mp -= selectedSkill.mpCost;
         selectedCharacter.StatusFlag = StatusFlag.End;
         isActionPending = true;
     }
-
+    /// <summary>
+    /// 回復処理
+    /// </summary>
     private void ApplyHeal(Character character, SkillData skill)
     {
         if (character == null || skill == null) return; // nullチェック追加
@@ -382,4 +393,95 @@ public class PlayerManager : MonoBehaviour
             character.hp = character.maxHp;
         }
     }
+    /// <summary>
+    /// 攻撃対象選択フェーズの敵キャラクター取得
+    /// </summary>
+    private List<Character> getEnemy()
+    {
+        // 攻撃対象選択フェーズ
+        List<Character> enemies = new List<Character>();
+        foreach (var enemyObj in turnManager.enemys)
+        {
+            var characterData = enemyObj.GetComponent<Character>();
+            if (characterData != null)
+            {
+                enemies.Add(characterData);
+            }
+        }
+        return enemies;
+    }
+    /// <summary>
+    /// 攻撃対象選択フェーズの味方キャラクター取得
+    /// </summary>
+    private List<Character> getPlayer()
+    {
+        // 攻撃対象選択フェーズ
+        List<Character> players = new List<Character>();
+        foreach (var playerObj in turnManager.players)
+        {
+            var characterData = playerObj.GetComponent<Character>();
+            if (characterData != null)
+            {
+                players.Add(characterData);
+            }
+        }
+        return players;
+    }
+
+    //バフ効果の適用
+    private void buffApply(BuffBase buff, Character target)
+    {
+        switch(buff.buffRange)
+        {
+            case BuffRange.Self:
+                target = selectedCharacter;
+                break;
+            case BuffRange.Ally:
+            case BuffRange.Enemy:
+                //単体選択処理(今のところはtargetで対応)
+                buff.Apply(target);
+                activeBuffs.Add(buff);
+                break;
+            case BuffRange.AllAllies:
+                var players = getPlayer();
+                foreach(var player in players)
+                {
+                    buff.Apply(player);
+                    activeBuffs.Add(buff);
+                }
+                break;
+            case BuffRange.AllEnemies:
+                var enemies = getEnemy();
+                foreach (var enemy in enemies)
+                {
+                    buff.Apply(enemy);
+                    activeBuffs.Add(buff);
+                }
+                break;
+        }
+
+    }
+    //バフ効果の解除
+    private void buffRemove(BuffBase buff)
+    {
+        buff.Remove();
+        activeBuffs.Remove(buff);
+    }
+    //バフの効果ターン管理
+    private void buffTurnManage()
+    {
+        //バフ効果ターンなのかを判定
+        for (int activeBuffCount = activeBuffs.Count - 1; activeBuffCount >= 0; activeBuffCount--)
+        {
+            BuffBase buff = activeBuffs[activeBuffCount];
+            buff.duration--;
+            if (buff.duration <= 0)
+            {
+                //バフ効果終了
+                buffRemove(buff);
+            }
+        }
+        //バフ効果ターン終了
+    }
+
 }
