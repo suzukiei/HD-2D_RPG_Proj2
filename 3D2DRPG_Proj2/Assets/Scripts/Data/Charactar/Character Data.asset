@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
   m_Name: Character Data
   m_EditorClassIdentifier: 
-  name: sumo
+  name: Plyaer1
   enemyCheckFlag: 0
   hp: 100
   mp: 100
@@ -23,7 +23,7 @@ MonoBehaviour:
   maxMp: 10
   exp: 10
   level: 10
-  CharacterObj: {fileID: 7333836060625140281, guid: eb0b17fc84f337546ae72afcd8386f75,
+  CharacterObj: {fileID: 7333836060625140281, guid: 13802adbece5a754f9a5c305138d6630,
     type: 3}
   skills:
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}

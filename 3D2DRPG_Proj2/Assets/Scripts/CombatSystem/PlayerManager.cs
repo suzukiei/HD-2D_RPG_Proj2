@@ -375,6 +375,7 @@ public class PlayerManager : MonoBehaviour
         //通常スキルの処理
         var character = characters[index];
         BuffBase buff = selectedSkill.buffEffect;
+        buff.duration = selectedSkill.buffDuration;
         buffApply(buff, character);
         selectedCharacter.mp -= selectedSkill.mpCost;
         selectedCharacter.StatusFlag = StatusFlag.End;
@@ -435,6 +436,8 @@ public class PlayerManager : MonoBehaviour
         {
             case BuffRange.Self:
                 target = selectedCharacter;
+                buff.Apply(target);
+                activeBuffs.Add(buff);
                 break;
             case BuffRange.Ally:
             case BuffRange.Enemy:
@@ -477,11 +480,11 @@ public class PlayerManager : MonoBehaviour
             buff.duration--;
             if (buff.duration <= 0)
             {
+                buff.duration = 0;
                 //バフ効果終了
                 buffRemove(buff);
             }
         }
         //バフ効果ターン終了
     }
-
 }

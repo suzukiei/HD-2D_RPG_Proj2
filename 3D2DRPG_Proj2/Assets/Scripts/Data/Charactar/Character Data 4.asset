@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
-  m_Name: Character Data 3
+  m_Name: Character Data 4
   m_EditorClassIdentifier: 
   name: sumo
   enemyCheckFlag: 1
@@ -18,18 +18,15 @@ MonoBehaviour:
   mp: 100
   atk: 100
   def: 100
-  spd: 110
+  spd: 130
   maxHp: 1000
   maxMp: 10
   exp: 10
   level: 10
-  CharacterObj: {fileID: 7333836060625140281, guid: eb0b17fc84f337546ae72afcd8386f75,
+  CharacterObj: {fileID: 7333836060625140281, guid: 499efc22926276d48a3d2f55c743509d,
     type: 3}
   skills:
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
-  - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
-  - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
-  - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
   statusEffects: {fileID: 0}
-  CharacterTransfrom: {x: 1, y: 0, z: 5}
+  CharacterTransfrom: {x: 2, y: 0, z: 5}
   StatusFlag: 0

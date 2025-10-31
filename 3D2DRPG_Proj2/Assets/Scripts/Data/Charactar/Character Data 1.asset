@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
-  m_Name: Character Data 2
+  m_Name: Character Data 1
   m_EditorClassIdentifier: 
-  name: omus
+  name: Plyaer2
   enemyCheckFlag: 0
   hp: 100
   mp: 100
   atk: 100
   def: 100
-  spd: 150
+  spd: 120
   maxHp: 100
   maxMp: 10
   exp: 10
   level: 10
-  CharacterObj: {fileID: 7333836060625140281, guid: eb0b17fc84f337546ae72afcd8386f75,
+  CharacterObj: {fileID: 7333836060625140281, guid: 14e6c60294595ec46a7a94d30b985e89,
     type: 3}
   skills:
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
-  - {fileID: 11400000, guid: d3af36cc263dc974795e1215d63c6aa2, type: 2}
-  - {fileID: 11400000, guid: d3af36cc263dc974795e1215d63c6aa2, type: 2}
+  - {fileID: 11400000, guid: d286022fd6472e240b7489ed5fa9e994, type: 2}
+  - {fileID: 11400000, guid: 7e30a3b62b67e5f42a177cdbd1bb2538, type: 2}
   statusEffects: {fileID: 0}
-  CharacterTransfrom: {x: 6, y: 0, z: 0}
-  StatusFlag: 0
+  CharacterTransfrom: {x: 4, y: 0, z: 0}
+  StatusFlag: 2
