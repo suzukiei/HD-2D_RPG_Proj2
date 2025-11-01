@@ -17,4 +17,5 @@ MonoBehaviour:
   buffRange: 1
   description: 
   sourceCharacter: {fileID: 0}
-  isFront: 1
+  isFront: 0
+  isBack: 0

@@ -3,8 +3,9 @@ using UnityEngine.Events;
 public class ComboAttack : MonoBehaviour
 {
     //public Animator animator;
-
-    [SerializeField] private float timingWindowStart = 0.4f; // 攻撃中のタイミング受付開始
+    [SerializeField,Header("ComboUI")]
+    private TimingUI timingUI;
+    [SerializeField] private float timingTime = 0.4f; // タイミング差分
     [SerializeField] private float timingWindowEnd = 0.6f;   // 攻撃中のタイミング受付終了
 
     private UnityEvent<int> onComboEnd;
@@ -20,20 +21,21 @@ public class ComboAttack : MonoBehaviour
         // 攻撃中の時間経過を管理
         if (canInput)
         {
+            var testing = timingUI.IsTimingSuccess();
             // 攻撃入力
-            if (Input.GetMouseButtonDown(0))
+            if (testing)
             {
                 TryAttack();
             }
             timer += Time.deltaTime;
-            Debug.Log(timer);
-            if (timer > timingWindowEnd)
+            //Debug.Log(timer);
+            if (timer > timingWindowEnd+timingTime)
             {
                 EndCombo(); // タイミングを逃したら終了
             }
         }
     }
-
+    // 攻撃入力を試みる
     private void TryAttack()
     {
         canInput = false;
@@ -44,9 +46,11 @@ public class ComboAttack : MonoBehaviour
         //}  else 
         //if (canInput)
         //{
+        Debug.Log("TryAttack");
         // タイミングよくクリックしたら次の攻撃へ
-        if (timer >= timingWindowStart && timer <= timingWindowEnd)
+        if (timingUI.isActive)
         {
+            Debug.Log(timingUI.isActive);
             NextAttack();
         }
         else
@@ -55,25 +59,28 @@ public class ComboAttack : MonoBehaviour
         }
         //}
     }
-
+    // コンボ攻撃開始
     private void StartAttack(int step)
     {
+      
         comboStep = step;
         //animator.SetTrigger($"Attack{step}");
         canInput = true;
         timer = 0f;
+        timingUI.Show(timingTime,timingWindowEnd);
     }
-
+    // 次の攻撃へ
     private void NextAttack()
     {
         comboStep++;
         
         Debug.Log(comboStep);
-        if (comboStep > maxComboStep) // 3段コンボ上限など
+        if (comboStep >= maxComboStep) // 3段コンボ上限など
         {
             EndCombo();
             return;
         }
+        timingUI.Show(timingTime, timingWindowEnd);
         onComboAttack.Invoke(0);
         //animator.SetTrigger($"Attack{comboStep}");
         timer = 0f;
@@ -82,6 +89,7 @@ public class ComboAttack : MonoBehaviour
 
     private void EndCombo()
     {
+        timingUI.Hide();
         comboStep = 1;
         onComboEnd.Invoke(0);
         canInput = false;

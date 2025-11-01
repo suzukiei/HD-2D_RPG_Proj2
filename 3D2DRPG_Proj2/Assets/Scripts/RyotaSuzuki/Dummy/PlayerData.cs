@@ -54,7 +54,7 @@ public class PlayerData
     /// </summary>
     public PlayerData (Character characterData)
     {
-        playerName = characterData.name;
+        playerName = characterData.charactername;
         level = characterData.level;
         currentHP = characterData.hp;
         maxHP = characterData.maxHp;

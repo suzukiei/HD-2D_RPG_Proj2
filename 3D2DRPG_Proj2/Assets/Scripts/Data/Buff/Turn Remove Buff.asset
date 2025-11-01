@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffName: 
   duration: 0
-  buffRange: 0
+  buffRange: 2
   description: 
   sourceCharacter: {fileID: 0}
   isFront: 0
-  isBack: 0
+  isBack: 1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
   m_Name: Character Data 1
   m_EditorClassIdentifier: 
-  name: Plyaer2
+  charactername: Player2
   enemyCheckFlag: 0
   hp: 100
   mp: 100
@@ -27,9 +27,8 @@ MonoBehaviour:
     type: 3}
   skills:
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
-  - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
+  - {fileID: 11400000, guid: 1381c0e3658634d43a988d49085f68e8, type: 2}
   - {fileID: 11400000, guid: d286022fd6472e240b7489ed5fa9e994, type: 2}
   - {fileID: 11400000, guid: 7e30a3b62b67e5f42a177cdbd1bb2538, type: 2}
-  statusEffects: {fileID: 0}
   CharacterTransfrom: {x: 4, y: 0, z: 0}
   StatusFlag: 2

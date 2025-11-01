@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
     private Character selectedEnemy;
 
     //バフの効果を管理する変数
-    private List<BuffBase> activeBuffs = new List<BuffBase>();
+    private List<BuffInstance> activeBuffs = new List<BuffInstance>();
 
     /// <summary>
     /// キャラクターデータ取得用
@@ -374,8 +374,8 @@ public class PlayerManager : MonoBehaviour
         }
         //通常スキルの処理
         var character = characters[index];
-        BuffBase buff = selectedSkill.buffEffect;
-        buff.duration = selectedSkill.buffDuration;
+        BuffInstance buff = new BuffInstance (selectedSkill.buffEffect);
+        buff.remainingTurns = selectedSkill.buffDuration;
         buffApply(buff, character);
         selectedCharacter.mp -= selectedSkill.mpCost;
         selectedCharacter.StatusFlag = StatusFlag.End;
@@ -430,7 +430,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     //バフ効果の適用
-    private void buffApply(BuffBase buff, Character target)
+    private void buffApply(BuffInstance buff, Character target)
     {
         switch(buff.buffRange)
         {
@@ -465,7 +465,7 @@ public class PlayerManager : MonoBehaviour
 
     }
     //バフ効果の解除
-    private void buffRemove(BuffBase buff)
+    private void buffRemove(BuffInstance buff)
     {
         buff.Remove();
         activeBuffs.Remove(buff);
@@ -476,11 +476,10 @@ public class PlayerManager : MonoBehaviour
         //バフ効果ターンなのかを判定
         for (int activeBuffCount = activeBuffs.Count - 1; activeBuffCount >= 0; activeBuffCount--)
         {
-            BuffBase buff = activeBuffs[activeBuffCount];
-            buff.duration--;
-            if (buff.duration <= 0)
+            BuffInstance buff = activeBuffs[activeBuffCount];
+            buff.TickTurn();
+            if (buff.IsExpired())
             {
-                buff.duration = 0;
                 //バフ効果終了
                 buffRemove(buff);
             }

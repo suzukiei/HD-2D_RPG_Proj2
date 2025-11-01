@@ -1,24 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Character: MonoBehaviour
 {
     private CharacterData characterData;
-    public string name;
+    public string charactername;
+    public Sprite characterIcon;
     public bool enemyCheckFlag;
     public int hp, mp, atk, def, spd;
     public int maxHp, maxMp;
     public int exp, level;
     public GameObject CharacterObj;
     public SkillData[] skills;
-    public StatusEffectData statusEffects;
     public Vector3 CharacterTransfrom;
     public StatusFlag StatusFlag;
     public void init(CharacterData _characterData)
     {
         characterData = _characterData;
-        name = characterData.name;
+        charactername = characterData.charactername;
+        characterIcon = characterData.characterIcon;
         enemyCheckFlag = characterData.enemyCheckFlag;
         hp = characterData.hp;
         mp = characterData.mp;
@@ -31,7 +34,6 @@ public class Character: MonoBehaviour
         level = characterData.level;
         CharacterObj = this.gameObject;
         skills = characterData.skills;
-        statusEffects= characterData.statusEffects;
         CharacterTransfrom= characterData.CharacterTransfrom;
         StatusFlag= characterData.StatusFlag;
     }
@@ -84,11 +86,4 @@ public class Character: MonoBehaviour
         hp = maxHp;
         mp = maxMp;
     }
-
-    // ステータス異常付与
-    public void AddStatusEffect(StatusEffectData effect)
-    {
-        statusEffects = effect;
-    }
-
 }

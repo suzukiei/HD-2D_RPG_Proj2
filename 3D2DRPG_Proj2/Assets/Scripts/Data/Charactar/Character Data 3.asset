@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
   m_Name: Character Data 3
   m_EditorClassIdentifier: 
-  name: sumo
+  charactername: Enemy
   enemyCheckFlag: 1
   hp: 100
   mp: 100
@@ -30,6 +30,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
-  statusEffects: {fileID: 0}
   CharacterTransfrom: {x: 1, y: 0, z: 5}
   StatusFlag: 0

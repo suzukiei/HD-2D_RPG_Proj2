@@ -129,6 +129,7 @@ public class PlayerStatusPanel : MonoBehaviour
     /// </summary>
     private void UpdateBasicInfo()
     {
+        Debug.Log($"Updating Basic Info: Name={currentPlayerData.playerName}, Level={currentPlayerData.level}");
         if (playerNameText != null)
             playerNameText.text = currentPlayerData.playerName;
 
