@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Character Data
   m_EditorClassIdentifier: 
   charactername: Player1
+  characterIcon: {fileID: 0}
   enemyCheckFlag: 0
   hp: 100
   mp: 100
@@ -20,7 +21,7 @@ MonoBehaviour:
   def: 100
   spd: 100
   maxHp: 100
-  maxMp: 10
+  maxMp: 100
   exp: 10
   level: 10
   CharacterObj: {fileID: 7333836060625140281, guid: 13802adbece5a754f9a5c305138d6630,
