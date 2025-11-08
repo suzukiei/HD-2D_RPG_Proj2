@@ -77,6 +77,7 @@ public class ConversationUI : MonoBehaviour
         // 初期化
         if (dialoguePanel != null)
             dialoguePanel.SetActive(false);
+            characterImage.enabled = false;
 
         if (logPanel != null)
             logPanel.SetActive(false);
@@ -186,9 +187,48 @@ public class ConversationUI : MonoBehaviour
             // \nを実際の改行に変換
             dialogue = dialogue.Replace("\\n", "\n");
             
-            return new DialogueData(name, dialogue);
+            // DialogueDataを作成
+            DialogueData data = new DialogueData(name, dialogue);
+            
+            // キャラ名から画像を読み込む（キャラ名_0のスプライト）
+            data.characterImage = LoadCharacterSprite(name);
+            
+            return data;
         }
 
+        return null;
+    }
+
+    /// <summary>
+    /// キャラ名からスプライト画像を読み込む
+    /// Resources/Image/Sanmenzu/{キャラ名}.png から {キャラ名}_0 のスプライトを取得
+    /// </summary>
+    Sprite LoadCharacterSprite(string characterName)
+    {
+        // Resources/Image/Sanmenzu/{キャラ名}_0 を読み込む
+        string spritePath = $"Image/Sanmenzu/{characterName}";
+        
+        // スライスされたスプライトを読み込む
+        Sprite[] sprites = Resources.LoadAll<Sprite>(spritePath);
+        
+        if (sprites != null && sprites.Length > 0)
+        {
+            // {キャラ名}_0 のスプライトを探す
+            foreach (Sprite sprite in sprites)
+            {
+                if (sprite.name == $"{characterName}_0")
+                {
+                    Debug.Log($"キャラ画像読み込み成功: {sprite.name}");
+                    return sprite;
+                }
+            }
+            
+            // _0が見つからなければ最初のスプライトを返す
+            Debug.Log($"キャラ画像読み込み（最初のスプライト）: {sprites[0].name}");
+            return sprites[0];
+        }
+        
+        Debug.LogWarning($"キャラ画像が見つかりません: {spritePath}");
         return null;
     }
 
@@ -237,7 +277,7 @@ public class ConversationUI : MonoBehaviour
 
         currentDialogueIndex = 0;
         dialoguePanel.SetActive(true);
-
+        characterImage.enabled = true;
         // パネルをフェードイン
         CanvasGroup canvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
         if (canvasGroup != null)
@@ -333,10 +373,13 @@ public class ConversationUI : MonoBehaviour
                 .OnComplete(() => {
                     dialoguePanel.SetActive(false);
                 });
+
+            characterImage.enabled = false;
         }
         else
         {
             dialoguePanel.SetActive(false);
+            characterImage.enabled = false;
         }
     }
 
