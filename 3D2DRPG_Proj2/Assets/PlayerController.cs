@@ -8,56 +8,64 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField,Header("�����̑��x"),Range(0,10)]
+    [SerializeField,Header("歩く速度"),Range(0,10)]
     private float Speed;
 
-    [SerializeField, Header("�_�b�V���̑��x"), Range(1, 10)]
+    [SerializeField, Header("走る速度"), Range(1, 5)]
 
 
-//    [SerializeField, Header("�E�_�E�b�E�V�E��E��E�̑��E�x"), Range(1, 5)]
+//    [SerializeField, Header("�E�_�E�b�E�V�E��E��E�̑��E�x"), Range(1, 5)]
     private float DashSpeed;
 
+    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         
+        // Rigidbodyの設定
+        if (rb != null)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotation; // 回転を固定
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 移動方向を計算
+        Vector3 moveDirection = Vector3.zero;
+
         if (Input.GetKey(KeyCode.D))
         {
-            if (Input.GetKey(KeyCode.LeftShift))
-                {
-                this.transform.Translate(Speed * DashSpeed *Time.deltaTime, 0, 0);
-                }
-            this.transform.Translate(Speed*Time.deltaTime, 0, 0);
+            moveDirection.z -= 1;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                this.transform.Translate(-(Speed * DashSpeed * Time.deltaTime), 0, 0);
-            }
-            this.transform.Translate(-(Speed * Time.deltaTime), 0, 0);
+            moveDirection.z = 1;
         }
         if (Input.GetKey(KeyCode.W))
         {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                this.transform.Translate(0, 0, Speed * DashSpeed * Time.deltaTime);
-            }
-            this.transform.Translate(0, 0, Speed * Time.deltaTime);
+            moveDirection.x += 1;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                this.transform.Translate(0, 0, -(Speed * DashSpeed * Time.deltaTime));
-            }
-            this.transform.Translate(0, 0, -(Speed * Time.deltaTime));
+            moveDirection.x -= 1;
+        }
+
+        // ダッシュ判定
+        float currentSpeed = Speed;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            currentSpeed *= DashSpeed;
+        }
+
+        // Rigidbodyで移動
+        if (rb != null && moveDirection != Vector3.zero)
+        {
+            Vector3 newPosition = rb.position + moveDirection.normalized * currentSpeed * Time.deltaTime;
+            rb.MovePosition(newPosition);
         }
     }
 
@@ -75,7 +83,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // GameManagerが存在しなぁE��合�E従来の方法でシーン遷移
+                // GameManagerが存在しなぁE��合�E従来の方法でシーン遷移
                 Debug.LogWarning("GameManagerが見つかりません。直接シーン遷移します、E");
                 SceneManager.LoadScene("turnTestScene");
             }
