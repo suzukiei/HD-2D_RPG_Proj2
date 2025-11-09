@@ -19,6 +19,8 @@ public class TurnManager : MonoBehaviour
     private List<GameObject> sortedTurnList = new List<GameObject>();// SPD順にソートされたリスト
     [SerializeField]
     private List<GameObject> nextTurnList = new List<GameObject>();// 次のターン用リスト
+    //現在のターンオブジェクト
+    public GameObject currentTurnObject;
     private bool turnChangeFlag = false; // ターン順変更フラグ
     private int turnNumber = 0; // 現在のターン数
     private bool turnFlag; // ターン処理中かどうかのフラグ
@@ -112,6 +114,7 @@ public class TurnManager : MonoBehaviour
                 turnFlag = false;
                 // Turnリストを取得
                 var nextCharacterStatus = sortedTurnList[turnNumber];
+                currentTurnObject = nextCharacterStatus;
                 // Characterのステータスを変更
                 if (nextCharacterStatus == null)
                 {
@@ -161,6 +164,7 @@ public class TurnManager : MonoBehaviour
                 }
                 else
                 {
+                    //UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
                     UIManager.Instance.NextTurn();
                 }
 

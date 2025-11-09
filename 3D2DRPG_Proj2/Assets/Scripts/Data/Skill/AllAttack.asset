@@ -19,7 +19,7 @@ MonoBehaviour:
   vfxPrefab: {fileID: 0}
   animationName: 
   effectType: 0
-  power: 10
+  power: 1
   mpCost: 12
   cooldown: 0
   hitCount: 1
@@ -35,5 +35,6 @@ MonoBehaviour:
   maxcombo: 3
   missCancel: 1
   statusChance: 0
+  buffEffect: {fileID: 0}
   buffValue: 0
   buffDuration: 0

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Attack Up Buff
   m_EditorClassIdentifier: 
   buffName: BUFF1
-  duration: 0
+  duration: 10
   buffRange: 1
   description: 
   sourceCharacter: {fileID: 0}
-  attackMultiplier: 1.5
-  originalAttack: 100
+  attackMultiplier: 100
+  originalAttack: 10

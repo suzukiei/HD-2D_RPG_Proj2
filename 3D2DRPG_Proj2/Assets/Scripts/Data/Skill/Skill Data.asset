@@ -18,16 +18,15 @@ MonoBehaviour:
   soundEffect: {fileID: 0}
   vfxPrefab: {fileID: 0}
   animationName: 
-  power: 4
+  effectType: 0
+  power: 2
   mpCost: 5
-  spCost: 0
   cooldown: 0
   hitCount: 1
   criticalRate: 0.1
   accuracy: 1
-  damageType: 0
-  elementType: 0
-  targetType: 0
+  targetScope: 0
+  statusEffect: 0
   canCombo: 0
   comboNextSkill: {fileID: 0}
   timingWindowStart: 0.3
@@ -36,6 +35,6 @@ MonoBehaviour:
   maxcombo: 3
   missCancel: 1
   statusChance: 0
-  buffType: 0
+  buffEffect: {fileID: 0}
   buffValue: 0
   buffDuration: 0

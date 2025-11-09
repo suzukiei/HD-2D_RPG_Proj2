@@ -27,6 +27,7 @@ public class TurnUI : MonoBehaviour
     private GameObject turnUIPrefab;
     [SerializeField, Header("ターンUI配置場所")]
     private Transform turnUIParent;
+    [SerializeField, Header("ターン番号表示テキスト")]
     private List<GameObject> activeTurnUIs = new List<GameObject>();
     // 追加: ターン番号表示用テキスト
     public void UpdateTurnUI(List<GameObject> sortedTurnList, int turnNumber)
@@ -45,9 +46,11 @@ public class TurnUI : MonoBehaviour
         // 新しいUI要素を生成
         for (int i = 0; i < sortedTurnList.Count; i++)
         {
+            if(sortedTurnList[i]== null)
+                continue;
             GameObject turnUI = Instantiate(turnUIPrefab, turnUIParent);
             // ターンUIの位置を調整（例: 横並び）
-            turnUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(i * 250, 0); // 100はアイコン間の距離
+            turnUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(i * 150, 0); // 100はアイコン間の距離
             // キャラクターの情報を取得してUIに反映
             Character character = sortedTurnList[i].GetComponent<Character>();
             if (character != null)
@@ -73,15 +76,16 @@ public class TurnUI : MonoBehaviour
     {
         // ターンUIを更新する処理をここに追加
         //UIの先頭を削除し、次のキャラクターを追加
-        activeTurnUIs.RemoveAt(0);
+        
 
         var removeobj = activeTurnUIs[0];
         //オブジェクトを削除
         Destroy(removeobj);
+        activeTurnUIs.RemoveAt(0);
         //今あるオブジェクトを左にずらす
         for (int i = 0; i < activeTurnUIs.Count; i++)
         {
-            activeTurnUIs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(i * 250, 0);
+            activeTurnUIs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(i * 150, 0);
         }
     }
 }

@@ -302,7 +302,14 @@ public class PlayerManager : MonoBehaviour
     {
         if (enemy == null || skill == null) return; // nullチェック追加
 
-        var hp = enemy.hp - skill.power;
+        //ダメージ乱数
+        float random = UnityEngine.Random.Range(10, 20);
+        random = random / 10;
+        Debug.Log("乱数:" + random);
+        //基礎ダメージ計算
+        var damage = selectedCharacter.atk* random;
+        //防御力計算
+        var hp = enemy.hp -(damage *skill.power- enemy.def);
         enemy.hp = (int)math.floor(hp);
         if (enemy.hp <= 0)
         {

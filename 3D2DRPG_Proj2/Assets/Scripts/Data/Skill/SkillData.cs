@@ -47,10 +47,14 @@ public class SkillData : ScriptableObject
     public bool missCancel = true;
 
     [Header("状態異常・効果")]
+    [Header("")]
     //public StatusEffect inflictStatus;
     public float statusChance = 0f;
+    [Header("バフの管理スクリプト")]
     public BuffBase buffEffect;
+    [Header("バフ値")]
     public float buffValue = 0f;
+    [Header("バフの継続時間")]
     public int buffDuration = 0;
 }
 

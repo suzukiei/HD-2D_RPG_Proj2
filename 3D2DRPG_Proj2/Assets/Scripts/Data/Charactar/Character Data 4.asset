@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Character Data 4
   m_EditorClassIdentifier: 
   charactername: Enemy
+  characterIcon: {fileID: 0}
   enemyCheckFlag: 1
   hp: 100
   mp: 100
-  atk: 100
-  def: 100
+  atk: 10
+  def: 5
   spd: 130
   maxHp: 1000
   maxMp: 10
