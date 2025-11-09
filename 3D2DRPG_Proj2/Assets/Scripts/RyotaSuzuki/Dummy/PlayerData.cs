@@ -45,7 +45,27 @@ public class PlayerData
     {
         return nextLevelEXP > 0 ? (float)currentEXP / nextLevelEXP : 0f;
     }
-
+    /// <summary>
+    /// コンストラクタ
+    /// </summary>
+    public PlayerData() { }
+    /// <summary>
+    /// 追加コンストラクタ（CharacterDataからの変換用）
+    /// </summary>
+    public PlayerData (Character characterData)
+    {
+        playerName = characterData.charactername;
+        level = characterData.level;
+        currentHP = characterData.hp;
+        maxHP = characterData.maxHp;
+        currentMP = characterData.mp;
+        maxMP = characterData.maxMp;
+        attack = characterData.atk;
+        defense = characterData.def;
+        speed = characterData.spd;
+        currentEXP = characterData.exp;
+        nextLevelEXP = characterData.level * 100; // 仮の計算式
+    }
     /// <summary>
     /// ダミーデータを生成
     /// </summary>
@@ -101,4 +121,4 @@ public class PlayerData
         
         return data;
     }
-} 
+}

@@ -117,7 +117,7 @@ public class SkillSelectionUITest : MonoBehaviour
         {
             SkillData selectedSkill = testSkills[skillIndex];
             Debug.Log($"選択された技: {selectedSkill.name} (MP: {selectedSkill.mpCost}, 威力: {selectedSkill.power})");
-            Debug.Log($"対象: {selectedSkill.targetType}");
+            //Debug.Log($"対象: {selectedSkill.targetType}");
         }
         else
         {
@@ -149,7 +149,7 @@ public class SkillSelectionUITest : MonoBehaviour
             skill.name = data.name;
             skill.mpCost = data.mpCost;
             skill.power = data.power;
-            skill.targetType = data.targetType;
+            //skill.targetType = data.targetType;
             testSkills.Add(skill);
         }
         
@@ -168,7 +168,7 @@ public class SkillSelectionUITest : MonoBehaviour
         for (int i = 0; i < testSkills.Count; i++)
         {
             var skill = testSkills[i];
-            Debug.Log($"{i}: {skill.name} (MP:{skill.mpCost}, 威力:{skill.power}, 対象:{skill.targetType})");
+            //Debug.Log($"{i}: {skill.name} (MP:{skill.mpCost}, 威力:{skill.power}, 対象:{skill.targetType})");
         }
     }
     
