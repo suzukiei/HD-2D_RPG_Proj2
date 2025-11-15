@@ -206,7 +206,7 @@ public class ConversationUI : MonoBehaviour
     Sprite LoadCharacterSprite(string characterName)
     {
         // Resources/Image/Sanmenzu/{キャラ名}_0 を読み込む
-        string spritePath = $"Image/Sanmenzu/{characterName}";
+        string spritePath = $"Image/Sanmenzu/{characterName}立ち絵";
         
         // スライスされたスプライトを読み込む
         Sprite[] sprites = Resources.LoadAll<Sprite>(spritePath);
@@ -216,12 +216,12 @@ public class ConversationUI : MonoBehaviour
             // {キャラ名}_0 のスプライトを探す
             foreach (Sprite sprite in sprites)
             {
-                if (sprite.name == $"{characterName}_0")
+                if (sprite.name == $"{characterName}立ち絵_0")
                 {
                     Debug.Log($"キャラ画像読み込み成功: {sprite.name}");
                     return sprite;
                 }
-            }
+            }   
             
             // _0が見つからなければ最初のスプライトを返す
             Debug.Log($"キャラ画像読み込み（最初のスプライト）: {sprites[0].name}");
