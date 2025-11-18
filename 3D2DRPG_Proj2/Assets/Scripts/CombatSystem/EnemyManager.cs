@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
     private List<CharacterData> enemyData;
-    [SerializeField, Header("攻撃方法をランダムにする")]
+    [SerializeField, Header("敵の攻撃ランダムフラグ")]
     private bool AttackRandamFlag;
     [SerializeField]
     private TurnManager turnManager;
     [SerializeField]
     private List<Vector3> vector3s;
+    [SerializeField, Header("前に出る距離")]
+    private float forwardDistance = 2f;
+    [SerializeField, Header("前に出る時間")]
+    private float forwardDuration = 0.5f;
+    [SerializeField, Header("考える時間")]
+    private float thinkingTime = 1.5f;
+    [SerializeField, Header("戻る時間")]
+    private float returnDuration = 0.5f;
     private List<GameObject> enemygameObjects = new List<GameObject>();
 
     public List<GameObject> GetEnemyData() { return enemygameObjects; }
@@ -34,8 +43,8 @@ public class EnemyManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Enemy の行動処理（シンプルAI: スキルをランダム選択してプレイヤーを攻撃）
-    /// TurnManager から行動するエネミーの Character を受け取る
+    /// Enemy の行動処理（優先度AI: スキルがあれば使用、なければプレイヤーを攻撃）
+    /// TurnManager から呼び出される。プレイヤーの Character を攻撃する
     /// </summary>
     public void Test(Character actingEnemy)
     {
@@ -46,7 +55,26 @@ public class EnemyManager : MonoBehaviour
             return;
         }
 
-        // プレイヤー候補を取得
+        // エネミーのターン処理を開始（コルーチンで実行）
+        StartCoroutine(EnemyTurnSequence(actingEnemy));
+    }
+
+    /// <summary>
+    /// エネミーのターンシーケンス（前に出る→考える→攻撃→戻る）
+    /// </summary>
+    private IEnumerator EnemyTurnSequence(Character actingEnemy)
+    {
+        if (actingEnemy == null || actingEnemy.gameObject == null)
+        {
+            turnManager.FlagChange();
+            yield break;
+        }
+
+        // 初期位置を保存
+        Vector3 originalPosition = actingEnemy.transform.position;
+        Vector3 forwardPosition = originalPosition + Vector3.forward * forwardDistance;
+
+        // プレイヤー候補の取得
         List<Character> playerCandidates = new List<Character>();
         foreach (var playerObj in turnManager.players)
         {
@@ -57,12 +85,12 @@ public class EnemyManager : MonoBehaviour
 
         if (playerCandidates.Count == 0)
         {
-            // 攻撃対象がいない -> ターン終了
+            // プレイヤーがいない -> ターン終了
             turnManager.FlagChange();
-            return;
+            yield break;
         }
 
-        // スキル選択（ランダムで非nullなスキルを選ぶ）
+        // スキル選択（使用可能なスキルがあれば選択、なければnullでスキルなし）
         SkillData chosenSkill = null;
         if (actingEnemy.skills != null && actingEnemy.skills.Length > 0)
         {
@@ -77,7 +105,7 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
-        // ターゲット選択（現状: HP最小のプレイヤーを狙う。ランダムにしたい場合は Random.Range を使う）
+        // ターゲット選択（優先: HPが低いプレイヤーを優先。ランダムフラグがtrueなら Random.Range を使用）
         Character target = null;
         int minHp = int.MaxValue;
         if (!AttackRandamFlag)
@@ -95,21 +123,34 @@ public class EnemyManager : MonoBehaviour
     
         if (target == null)
         {
-            // 保険でランダム
+            // ランダムに選択
             target = playerCandidates[UnityEngine.Random.Range(0, playerCandidates.Count)];
         }
 
-        // 攻撃実行
+        // 1. 前に出るアニメーション
+        Tween forwardTween = actingEnemy.transform.DOMove(forwardPosition, forwardDuration)
+            .SetEase(Ease.OutQuad);
+        yield return forwardTween.WaitForCompletion();
+
+        // 2. 考える時間を待つ
+        yield return new WaitForSeconds(thinkingTime);
+
+        // 3. 攻撃処理を実行
         ApplyAttack(target, chosenSkill, actingEnemy);
 
-        // 行動終了フラグ処理
+        // 4. 元の位置に戻るアニメーション
+        Tween returnTween = actingEnemy.transform.DOMove(originalPosition, returnDuration)
+            .SetEase(Ease.InQuad);
+        yield return returnTween.WaitForCompletion();
+
+        // 5. ステータスフラグを終了に
         actingEnemy.StatusFlag = StatusFlag.End;
-        // ターンを TurnManager に返す
+        // 6. ターンを TurnManager に通知
         turnManager.FlagChange();
     }
 
     /// <summary>
-    /// 攻撃処理（ダメージ計算・死亡判定）
+    /// 攻撃処理（ダメージ計算と死亡判定）
     /// </summary>
     private void ApplyAttack(Character target, SkillData skill, Character attacker)
     {
@@ -122,7 +163,7 @@ public class EnemyManager : MonoBehaviour
         }
         else
         {
-            // スキルが無ければ基本攻撃力を使用（CharacterData の atk を参照する等、必要なら調整）
+            // スキルがない場合は通常攻撃を使用（CharacterData の atk を参照するが、必要に応じて）
             power = attacker != null ? attacker.atk : 1;
         }
 
@@ -130,9 +171,16 @@ public class EnemyManager : MonoBehaviour
        target.hp=(int)math.floor(targethp);
         Debug.Log($"{attacker.name} が {target.name} に {power} ダメージ。残りHP: {target.hp}");
 
+        // ダメージエフェクトを表示（攻撃を受けたターゲットの位置の前に表示）
+        // 注: 敵がプレイヤーを攻撃する場合、プレイヤーの位置にエフェクトが表示されます
+        if (DamageEffectUI.Instance != null && target.CharacterObj != null)
+        {
+            DamageEffectUI.Instance.ShowDamageEffectOnEnemy(target.CharacterObj, power);
+        }
+
         if (target.hp <= 0)
         {
-            // エネミー死亡時の処理（未実装）
+            // プレイヤーが死亡した（HPを0に）
             target.hp = 0;
             // リストから削除
             if (turnManager.players.Contains(target.gameObject))
@@ -143,7 +191,7 @@ public class EnemyManager : MonoBehaviour
             {
                 turnManager.turnList.Remove(target.gameObject);
             }
-            // GameObject を破壊
+            // GameObject を削除
             if (target.CharacterObj != null)
             {
                 Destroy(target.CharacterObj);
