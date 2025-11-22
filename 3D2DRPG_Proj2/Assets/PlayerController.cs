@@ -19,10 +19,13 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
         
         // Rigidbodyの設定
         if (rb != null)
@@ -36,23 +39,34 @@ public class PlayerController : MonoBehaviour
     {
         // 移動方向を計算
         Vector3 moveDirection = Vector3.zero;
+        bool isMoving = false;
 
         if (Input.GetKey(KeyCode.D))
         {
             moveDirection.z -= 1;
+            animator.SetInteger("direction", 3);
+            isMoving = true;
         }
         if (Input.GetKey(KeyCode.A))
         {
             moveDirection.z = 1;
+            animator.SetInteger("direction", 2);
+            isMoving = true;
         }
         if (Input.GetKey(KeyCode.W))
         {
             moveDirection.x += 1;
+            animator.SetInteger("direction", 0);
+            isMoving = true;
         }
         if (Input.GetKey(KeyCode.S))
         {
             moveDirection.x -= 1;
+            animator.SetInteger("direction", 1);
+            isMoving = true;
         }
+
+        animator.SetBool("isMoving", isMoving);
 
         // ダッシュ判定
         float currentSpeed = Speed;
