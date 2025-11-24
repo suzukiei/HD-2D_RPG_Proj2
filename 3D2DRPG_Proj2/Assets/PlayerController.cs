@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
         // 移動方向を計算
         Vector3 moveDirection = Vector3.zero;
         bool isMoving = false;
+        bool isDash = false;
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -73,7 +74,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             currentSpeed *= DashSpeed;
+            isDash = true;
+           
         }
+
+        animator.SetBool("isDash", isDash);
 
         // Rigidbodyで移動
         if (rb != null && moveDirection != Vector3.zero)
