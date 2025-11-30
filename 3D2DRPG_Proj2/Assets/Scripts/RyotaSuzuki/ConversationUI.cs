@@ -289,6 +289,16 @@ public class ConversationUI : MonoBehaviour
         ShowDialogue(currentDialogueIndex);
     }
 
+    /// <summary>
+    /// CSVファイルを指定して会話を開始（Timeline用）
+    /// </summary>
+    public void StartDialogueWithCSV(string csvFile)
+    {
+        csvFileName = csvFile;
+        ReloadCSV();
+        StartDialogue();
+    }
+
     void ShowDialogue(int index)
     {
         if (index >= dialogues.Count) return;
