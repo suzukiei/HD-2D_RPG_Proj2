@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
 using System.IO;
@@ -54,6 +55,10 @@ public class ConversationUI : MonoBehaviour
     [Header("CSVの格納されているフォルダ名")] public string csvFolderName = "ScenarioCSV";
     [Header("CSVのファイル名")] public string csvFileName = "scenario01.csv";
     [Header("CSVファイルを使用する？")] public bool useCSVFile = true;
+
+    [Header("会話終了後の動作")]
+    [SerializeField, Header("会話終了後にシーン遷移するか")] private bool loadSceneOnEnd = false;
+    [SerializeField, Header("遷移先のシーン名")] private string nextSceneName = "Map";
 
     [Header("ログUI設定")]
     [SerializeField, Header("ログビューアパネル")] public GameObject logPanel;
@@ -382,6 +387,7 @@ public class ConversationUI : MonoBehaviour
             canvasGroup.DOFade(0, fadeInDuration)
                 .OnComplete(() => {
                     dialoguePanel.SetActive(false);
+                    OnDialogueComplete();
                 });
 
             characterImage.enabled = false;
@@ -390,6 +396,20 @@ public class ConversationUI : MonoBehaviour
         {
             dialoguePanel.SetActive(false);
             characterImage.enabled = false;
+            OnDialogueComplete();
+        }
+    }
+
+    /// <summary>
+    /// 会話完了時の処理
+    /// </summary>
+    void OnDialogueComplete()
+    {
+        // シーン遷移
+        if (loadSceneOnEnd && !string.IsNullOrEmpty(nextSceneName))
+        {
+            Debug.Log($"会話終了。シーン遷移: {nextSceneName}");
+            SceneManager.LoadScene(nextSceneName);
         }
     }
 
