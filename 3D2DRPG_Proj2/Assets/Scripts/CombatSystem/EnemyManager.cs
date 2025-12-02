@@ -27,6 +27,11 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> GetEnemyData() { return enemygameObjects; }
     private void Awake()
     {
+        if (GameManager.Instance != null && GameManager.Instance.EnemyData.Count!=0)
+        {
+            enemyData.Clear();
+            enemyData.AddRange(GameManager.Instance.EnemyData);
+        }
         for (int i = 0; i < enemyData.Count; i++)
         {
             enemyData[i].CharacterTransfrom = vector3s[i];
@@ -120,7 +125,7 @@ public class EnemyManager : MonoBehaviour
                 }
             }
         }
-    
+
         if (target == null)
         {
             // ランダムに選択
@@ -167,8 +172,8 @@ public class EnemyManager : MonoBehaviour
             power = attacker != null ? attacker.atk : 1;
         }
 
-        var targethp =target.hp - power;
-       target.hp=(int)math.floor(targethp);
+        var targethp = target.hp - power;
+        target.hp = (int)math.floor(targethp);
         Debug.Log($"{attacker.name} が {target.name} に {power} ダメージ。残りHP: {target.hp}");
 
         // ダメージエフェクトを表示（攻撃を受けたターゲットの位置の前に表示）

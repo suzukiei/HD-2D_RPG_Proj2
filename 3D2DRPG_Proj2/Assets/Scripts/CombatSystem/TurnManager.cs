@@ -5,27 +5,27 @@ using System.Linq;
 
 public class TurnManager : MonoBehaviour
 {
-    [SerializeField, Header("ƒvƒŒƒCƒ„[ƒ}ƒl[ƒWƒƒ[")]
+    [SerializeField, Header("ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[")]
     private PlayerManager playerManager;
-    [SerializeField, Header("ƒGƒlƒ~[ƒ}ƒl[ƒWƒƒ[")]
+    [SerializeField, Header("ï¿½Gï¿½lï¿½~ï¿½[ï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[")]
     private EnemyManager enemyManager;
-    [SerializeField, Header("ƒvƒŒƒCƒ„[‚Ìƒf[ƒ^")]
+    [SerializeField, Header("ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìƒfï¿½[ï¿½^")]
     public List<GameObject> players;
-    [SerializeField, Header("ƒGƒlƒ~[‚Ìƒf[ƒ^")]
+    [SerializeField, Header("ï¿½Gï¿½lï¿½~ï¿½[ï¿½Ìƒfï¿½[ï¿½^")]
     public List<GameObject> enemys;
-    [SerializeField, Header("ƒ^[ƒ“‡ƒŠƒXƒg")]
-    public List<GameObject> turnList = new List<GameObject>();// ƒvƒŒƒCƒ„[‚ÆƒGƒlƒ~[‚ğ‚Ü‚Æ‚ß‚½ƒŠƒXƒg
+    [SerializeField, Header("ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½g")]
+    public List<GameObject> turnList = new List<GameObject>();// ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÆƒGï¿½lï¿½~ï¿½[ï¿½ï¿½ï¿½Ü‚Æ‚ß‚ï¿½ï¿½ï¿½ï¿½Xï¿½g
     [SerializeField]
-    private List<GameObject> sortedTurnList = new List<GameObject>();// SPD‡‚Éƒ\[ƒg‚³‚ê‚½ƒŠƒXƒg
+    private List<GameObject> sortedTurnList = new List<GameObject>();// SPDï¿½ï¿½ï¿½Éƒ\ï¿½[ï¿½gï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Xï¿½g
     [SerializeField]
-    private List<GameObject> nextTurnList = new List<GameObject>();// Ÿ‚Ìƒ^[ƒ“—pƒŠƒXƒg
-    //Œ»İ‚Ìƒ^[ƒ“ƒIƒuƒWƒFƒNƒg
+    private List<GameObject> nextTurnList = new List<GameObject>();// ï¿½ï¿½ï¿½Ìƒ^ï¿½[ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½Xï¿½g
+    //ï¿½ï¿½ï¿½İ‚Ìƒ^ï¿½[ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
     public GameObject currentTurnObject;
-    private bool turnChangeFlag = false; // ƒ^[ƒ“‡•ÏXƒtƒ‰ƒO
-    private int turnNumber = 0; // Œ»İ‚Ìƒ^[ƒ“”
-    private bool turnFlag; // ƒ^[ƒ“ˆ—’†‚©‚Ç‚¤‚©‚Ìƒtƒ‰ƒO
+    private bool turnChangeFlag = false; // ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ÏXï¿½tï¿½ï¿½ï¿½O
+    private int turnNumber = 0; // ï¿½ï¿½ï¿½İ‚Ìƒ^ï¿½[ï¿½ï¿½ï¿½ï¿½
+    private bool turnFlag; // ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½Ìƒtï¿½ï¿½ï¿½O
 
-    //ƒVƒŠƒAƒ‰ƒCƒYƒtƒB[ƒ‹ƒh
+    //ï¿½Vï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Cï¿½Yï¿½tï¿½Bï¿½[ï¿½ï¿½ï¿½h
     private static TurnManager instance;
     public static TurnManager Instance
     {
@@ -45,7 +45,7 @@ public class TurnManager : MonoBehaviour
     }
     private void Awake()
     {
-        // ƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“‚ÌÀ‘•
+        // ï¿½Vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½gï¿½ï¿½ï¿½pï¿½^ï¿½[ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
         if (instance == null)
         {
             instance = this;
@@ -59,66 +59,66 @@ public class TurnManager : MonoBehaviour
     private void Start()
     {
 
-        // •Ï”‚Ì‰Šú‰»
+        // ï¿½Ïï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
         turnFlag = true;
         turnNumber = 0;
         turnChangeFlag = false;
-        // ‰Šú‰»
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Initialization();
     }
-    // ‰Šú‰»ˆ—
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void Initialization()
     {
-        // ƒvƒŒƒCƒ„[‚ğæ“¾
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½æ“¾
         players = playerManager.GetPlayerCharacters();
-        // ƒGƒlƒ~[‚ğæ“¾
+        // ï¿½Gï¿½lï¿½~ï¿½[ï¿½ï¿½ï¿½æ“¾
         enemys = enemyManager.GetEnemyData();
 
-        // ƒvƒŒƒCƒ„[‚ÆƒGƒlƒ~[‚ğ‚Ü‚Æ‚ß‚ÄSPD‡‚É•À‚Ñ‘Ö‚¦‚é
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÆƒGï¿½lï¿½~ï¿½[ï¿½ï¿½ï¿½Ü‚Æ‚ß‚ï¿½SPDï¿½ï¿½ï¿½É•ï¿½ï¿½Ñ‘Ö‚ï¿½ï¿½ï¿½
         turnList.Clear();
         turnList.AddRange(players);
         turnList.AddRange(enemys);
-        // SPD‡‚Éƒ\[ƒg
-        turnList.Sort((a, b) => b.GetComponent<Character>().spd.CompareTo(a.GetComponent<Character>().spd)); // SPD~‡‚Åƒ\[ƒg
+        // SPDï¿½ï¿½ï¿½Éƒ\ï¿½[ï¿½g
+        turnList.Sort((a, b) => b.GetComponent<Character>().spd.CompareTo(a.GetComponent<Character>().spd)); // SPDï¿½~ï¿½ï¿½ï¿½Åƒ\ï¿½[ï¿½g
         nextTurnList = new List<GameObject>(turnList);
         sortedTurnList = new List<GameObject>(turnList);
-        // Spd ‚ª‚‚¢‡i~‡j
+        // Spd ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½~ï¿½ï¿½ï¿½j
         //List<GameObject> sorted = turnList.OrderByDescending(c => c.GetComponent<Character>().Spd).ToList();
-        // UI‚Éw¦
-        // UI‚ÉŒ»İ‚Ìƒ^[ƒ“‡Ÿ‚Ì‡”Ô‚ğ“`‚¦‚é
+        // UIï¿½Éwï¿½ï¿½
+        // UIï¿½ÉŒï¿½ï¿½İ‚Ìƒ^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Ô‚ï¿½`ï¿½ï¿½ï¿½ï¿½
         UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
-        // ‡”Ô‚Ìƒf[ƒ^‚ğUI‚É“n‚·
-        // ƒ^[ƒ“ˆ—ƒXƒ^[ƒg
+        // ï¿½ï¿½ï¿½Ô‚Ìƒfï¿½[ï¿½^ï¿½ï¿½UIï¿½É“nï¿½ï¿½
+        // ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½^ï¿½[ï¿½g
         StartCoroutine(TurnController());
     }
 
-    // ƒ^[ƒ“ŠÇ—
-    // ‚±‚Ìˆ—Update‚Å‚à‚¢‚¢‚©‚à....
+    // ï¿½^ï¿½[ï¿½ï¿½ï¿½Ç—ï¿½
+    // ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½Updateï¿½Å‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½....
     private IEnumerator TurnController()
     {
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
-            // Ÿ‚Ìˆ—‚ğ‘Ò‚Â
+            // ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½Ò‚ï¿½
             if (turnFlag)
             {
-                //ƒ^[ƒ“ˆ—
+                //ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (players.Count == 0 || enemys.Count == 0)
                 {
                     EndTurnManager();
                     yield break;
                     //break;
                 }
-                Debug.Log("ƒ^[ƒ“ˆ—’†:" + turnNumber);
-                // ƒtƒ‰ƒO‚ğÜ‚é
+                Debug.Log("ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½:" + turnNumber);
+                // ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½Ü‚ï¿½
                 turnFlag = false;
-                // TurnƒŠƒXƒg‚ğæ“¾
+                // Turnï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½æ“¾
                 var nextCharacterStatus = sortedTurnList[turnNumber];
                 currentTurnObject = nextCharacterStatus;
-                // Character‚ÌƒXƒe[ƒ^ƒX‚ğ•ÏX
+                // Characterï¿½ÌƒXï¿½eï¿½[ï¿½^ï¿½Xï¿½ï¿½ÏX
                 if (nextCharacterStatus == null)
                 {
-                    Debug.Log("ƒ^[ƒ“‘ÎÛ‚ª‘¶İ‚µ‚Ü‚¹‚ñ");
+                    Debug.Log("ï¿½^ï¿½[ï¿½ï¿½ï¿½ÎÛ‚ï¿½ï¿½ï¿½ï¿½İ‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
                     turnFlag = true;
                     turnNumber = (turnNumber + 1) % sortedTurnList.Count;
                     continue;
@@ -126,20 +126,20 @@ public class TurnManager : MonoBehaviour
                 // True:Enemy False:Player
                 if (nextCharacterStatus.GetComponent<Character>().enemyCheckFlag)
                 {
-                    // Enemyˆ—
+                    // Enemyï¿½ï¿½ï¿½ï¿½
                     enemyManager.Test(nextCharacterStatus.GetComponent<Character>());
                     Debug.Log("StartEnemy");
                 }
                 else
                 {
-                    // Playerˆ—
+                    // Playerï¿½ï¿½ï¿½ï¿½
                     nextCharacterStatus.GetComponent<Character>().StatusFlag = StatusFlag.Move;
                     playerManager.StartPlayerAction(nextCharacterStatus.GetComponent<Character>());
                     Debug.Log("StartPlayer");
                 }
-                //¡‚Ìƒ^[ƒ“‚ÌƒŠƒXƒg‚©‚çíœ
+                //ï¿½ï¿½ï¿½Ìƒ^ï¿½[ï¿½ï¿½ï¿½Ìƒï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½íœ
                 sortedTurnList[turnNumber] = null;
-                // ƒ^[ƒ“ƒ`ƒFƒ“ƒW
+                // ï¿½^ï¿½[ï¿½ï¿½ï¿½`ï¿½Fï¿½ï¿½ï¿½W
                 turnNumber++;
                 if (turnNumber >= sortedTurnList.Count)
                 {
@@ -147,7 +147,7 @@ public class TurnManager : MonoBehaviour
                     if (turnChangeFlag)
                     {
                         turnChangeFlag = false;
-                        // ƒ^[ƒ“ƒŠƒXƒg‚ğŸ‚Ìƒ^[ƒ“—pƒŠƒXƒg‚ÅXV
+                        // ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Ìƒ^ï¿½[ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½Xï¿½gï¿½ÅXï¿½V
                         sortedTurnList.Clear();
                         sortedTurnList.AddRange(nextTurnList);
                         nextTurnList.Clear();
@@ -157,7 +157,7 @@ public class TurnManager : MonoBehaviour
                     {
                         turnChangeFlag = false;
                         sortedTurnList.Clear();
-                        // ƒvƒŒƒCƒ„[‚ÆƒGƒlƒ~[‚ğ‚Ü‚Æ‚ß‚ÄSPD‡‚É•À‚Ñ‘Ö‚¦‚é
+                        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÆƒGï¿½lï¿½~ï¿½[ï¿½ï¿½ï¿½Ü‚Æ‚ß‚ï¿½SPDï¿½ï¿½ï¿½É•ï¿½ï¿½Ñ‘Ö‚ï¿½ï¿½ï¿½
                         sortedTurnList.AddRange(turnList);
                     }
                     UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
@@ -171,7 +171,7 @@ public class TurnManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("ƒ^[ƒ“‘Ò‚¿");
+                Debug.Log("ï¿½^ï¿½[ï¿½ï¿½ï¿½Ò‚ï¿½");
             }
 
           
@@ -179,67 +179,79 @@ public class TurnManager : MonoBehaviour
     }
     
 
-    //ƒ^[ƒ“ƒŠƒXƒg‚Ì‡”Ô‚ğ•ÏX
+    //ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½Ìï¿½ï¿½Ô‚ï¿½ÏX
     public void TurnChange(Character character, int chageNum)
     {
-        //ƒ^[ƒ“ƒŠƒXƒg•ÏXƒtƒ‰ƒO‚ğ—§‚Ä‚é
+        //ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ÏXï¿½tï¿½ï¿½ï¿½Oï¿½ğ—§‚Ä‚ï¿½
         turnChangeFlag = true;
         if(character==null)
-            Debug.Log("ƒ^[ƒ“ƒŠƒXƒg•ÏX:‘ÎÛƒLƒƒƒ‰ƒNƒ^[‚ª‘¶İ‚µ‚Ü‚¹‚ñ");
+            Debug.Log("ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ÏX:ï¿½ÎÛƒLï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½İ‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
         var changeobj = character.CharacterObj;
       
-            Debug.Log("ƒ^[ƒ“ƒŠƒXƒg•ÏX:" + changeobj.name + "‚ğ" + chageNum + "”Ô–Ú‚ÉˆÚ“®");
+            Debug.Log("ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ÏX:" + changeobj.name + "ï¿½ï¿½" + chageNum + "ï¿½Ô–Ú‚ÉˆÚ“ï¿½");
         var objectToMove = nextTurnList.FirstOrDefault(obj => obj == changeobj);
         if (objectToMove != null)
         {
             nextTurnList.Remove(objectToMove);
-            //w’è‚³‚ê‚½ˆÊ’u‚É‘}“ü
+            //ï¿½wï¿½è‚³ï¿½ê‚½ï¿½Ê’uï¿½É‘}ï¿½ï¿½
             nextTurnList.Insert(chageNum, objectToMove);
         }
     }
-    //ƒ^[ƒ“ƒŠƒXƒg‚©‚çƒLƒƒƒ‰ƒNƒ^[‚ğíœ
+    //ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½^ï¿½[ï¿½ï¿½ï¿½íœ
     public void RemoveCharacterFromTurnList(Character character)
     {
         var removeobj = character.CharacterObj;
-        //ƒ^[ƒ“ƒŠƒXƒg‚©‚çíœ
+        //ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½ï¿½íœ
         if (sortedTurnList.Contains(removeobj))
             sortedTurnList.Remove(removeobj);
         else if (nextTurnList.Contains(removeobj))
             nextTurnList.Remove(removeobj);
     }
 
-    //ƒ^[ƒ“ˆ—ÄŠJƒtƒ‰ƒO
+    //ï¿½^ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄŠJï¿½tï¿½ï¿½ï¿½O
     public void FlagChange()
     {
 
         turnFlag = true;
     }
 
-    //Ÿ—˜A”s–k‚ÉŒÄ‚Ño‚·
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½sï¿½kï¿½ï¿½ï¿½ÉŒÄ‚Ñoï¿½ï¿½
     public void EndTurnManager()
     {
-        //”s–k”»’è
+        //ï¿½sï¿½kï¿½ï¿½ï¿½ï¿½
         if (players.Count == 0)
             DefeatProcess();
-        //”s–k”»’è
+        //ï¿½sï¿½kï¿½ï¿½ï¿½ï¿½
         if (enemys.Count == 0)
             VictoryProcess();
 
-        //ƒRƒ‹[ƒ`ƒ“’â~
+        //ï¿½Rï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½ï¿½ï¿½~
         StopAllCoroutines();
     }
 
-    //”s–kˆ—
+    //ï¿½sï¿½kï¿½ï¿½ï¿½ï¿½
     private void DefeatProcess()
     {
-        Debug.Log("”s–kˆ—");
+        Debug.Log("ï¿½sï¿½kï¿½ï¿½ï¿½ï¿½");
         GameManager.Instance.EndBattle();
     }
 
-    //Ÿ—˜ˆ—
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private void VictoryProcess()
     {
-        Debug.Log("Ÿ—˜ˆ—");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+        // å€’ã—ãŸæ•µã‚’è¨˜éŒ²
+        if (GameManager.Instance != null && GameManager.Instance.EnemyData != null)
+        {
+            foreach (var enemyData in GameManager.Instance.EnemyData)
+            {
+                if (enemyData != null)
+                {
+                    GameManager.Instance.RecordEnemyDefeat(enemyData);
+                }
+            }
+        }
+        
         GameManager.Instance.EndBattle();
     }
     //End of TurnManager

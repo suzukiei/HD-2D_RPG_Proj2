@@ -37,7 +37,7 @@ public class Character: MonoBehaviour
         CharacterTransfrom= characterData.CharacterTransfrom;
         StatusFlag= characterData.StatusFlag;
     }
-    // ƒ_ƒ[ƒWŒvZ
+    // ãƒ€ãƒ¡ãƒ¼ã‚¸è¨ˆç®—
     public int Attack(Character enemy,SkillData skillData)
     {
         int damage = Mathf.Max(0, (int)skillData.power - enemy.def);
@@ -45,13 +45,13 @@ public class Character: MonoBehaviour
         return damage;
     }
 
-    // ƒ_ƒ[ƒW‚ğó‚¯‚é
+    // ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹
     public void TakeDamage(int damage)
     {
         hp = Mathf.Max(0, hp - damage);
     }
 
-    // HP/MP‰ñ•œ
+    // HP/MPå›å¾©
     public void Heal(int amount)
     {
         hp = Mathf.Min(maxHp, hp + amount);
@@ -61,7 +61,7 @@ public class Character: MonoBehaviour
         mp = Mathf.Min(maxMp, mp + amount);
     }
 
-    // ƒŒƒxƒ‹ƒAƒbƒv
+    // çµŒé¨“å€¤ã‚¢ãƒƒãƒ—
     public void GainExp(int amount)
     {
         exp += amount;
@@ -72,7 +72,7 @@ public class Character: MonoBehaviour
     }
     private int ExpToLevelUp()
     {
-        return level * 100; // —á: ƒŒƒxƒ‹‚²‚Æ‚É100‚¸‚Â•K—v
+        return level * 100; // ä¾‹: ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—ã™ã‚‹ã®ã«100å¿…è¦
     }
     private void LevelUp()
     {

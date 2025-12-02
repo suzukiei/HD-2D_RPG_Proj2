@@ -54,6 +54,11 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        if (GameManager.Instance != null && GameManager.Instance.PlayerData.Count!=0)
+        {
+            playerCharacters.Clear();
+            playerCharacters.AddRange(GameManager.Instance.PlayerData);
+        }
         isActionPending = false;
         for (int i = 0; i < playerCharacters.Count; i++)
         {
@@ -307,18 +312,18 @@ public class PlayerManager : MonoBehaviour
         random = random / 10;
         Debug.Log("����:" + random);
         //��b�_���[�W�v�Z
-        var damage = selectedCharacter.atk* random;
+        var damage = selectedCharacter.atk * random;
         //�h��͌v�Z
         var finalDamage = damage * skill.power - enemy.def;
         var hp = enemy.hp - finalDamage;
         enemy.hp = (int)math.floor(hp);
-        
+
         // ダメージエフェクトを表示（敵の位置の前に表示）
         if (DamageEffectUI.Instance != null && enemy.CharacterObj != null)
         {
             DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, finalDamage);
         }
-        
+
         if (enemy.hp <= 0)
         {
             // �G�l�~�[���S���̏����i�������j
@@ -389,7 +394,7 @@ public class PlayerManager : MonoBehaviour
         }
         //�ʏ�X�L���̏���
         var character = characters[index];
-        BuffInstance buff = new BuffInstance (selectedSkill.buffEffect);
+        BuffInstance buff = new BuffInstance(selectedSkill.buffEffect);
         buff.remainingTurns = selectedSkill.buffDuration;
         buffApply(buff, character);
         selectedCharacter.mp -= selectedSkill.mpCost;
@@ -447,7 +452,7 @@ public class PlayerManager : MonoBehaviour
     //�o�t���ʂ̓K�p
     private void buffApply(BuffInstance buff, Character target)
     {
-        switch(buff.buffRange)
+        switch (buff.buffRange)
         {
             case BuffRange.Self:
                 target = selectedCharacter;
@@ -462,7 +467,7 @@ public class PlayerManager : MonoBehaviour
                 break;
             case BuffRange.AllAllies:
                 var players = getPlayer();
-                foreach(var player in players)
+                foreach (var player in players)
                 {
                     buff.Apply(player);
                     activeBuffs.Add(buff);
