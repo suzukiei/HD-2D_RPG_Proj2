@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 using DG.Tweening;
 using System.IO;
@@ -54,6 +55,10 @@ public class ConversationUI : MonoBehaviour
     [Header("CSVの格納されているフォルダ名")] public string csvFolderName = "ScenarioCSV";
     [Header("CSVのファイル名")] public string csvFileName = "scenario01.csv";
     [Header("CSVファイルを使用する？")] public bool useCSVFile = true;
+
+    [Header("会話終了後の動作")]
+    [SerializeField, Header("会話終了後にシーン遷移するか")] private bool loadSceneOnEnd = false;
+    [SerializeField, Header("遷移先のシーン名")] private string nextSceneName = "Map";
 
     [Header("ログUI設定")]
     [SerializeField, Header("ログビューアパネル")] public GameObject logPanel;
@@ -206,7 +211,7 @@ public class ConversationUI : MonoBehaviour
     Sprite LoadCharacterSprite(string characterName)
     {
         // Resources/Image/Sanmenzu/{キャラ名}_0 を読み込む
-        string spritePath = $"Image/Sanmenzu/{characterName}";
+        string spritePath = $"Image/Sanmenzu/{characterName}立ち絵";
         
         // スライスされたスプライトを読み込む
         Sprite[] sprites = Resources.LoadAll<Sprite>(spritePath);
@@ -216,12 +221,12 @@ public class ConversationUI : MonoBehaviour
             // {キャラ名}_0 のスプライトを探す
             foreach (Sprite sprite in sprites)
             {
-                if (sprite.name == $"{characterName}_0")
+                if (sprite.name == $"{characterName}立ち絵_0")
                 {
                     Debug.Log($"キャラ画像読み込み成功: {sprite.name}");
                     return sprite;
                 }
-            }
+            }   
             
             // _0が見つからなければ最初のスプライトを返す
             Debug.Log($"キャラ画像読み込み（最初のスプライト）: {sprites[0].name}");
@@ -287,6 +292,16 @@ public class ConversationUI : MonoBehaviour
         }
 
         ShowDialogue(currentDialogueIndex);
+    }
+
+    /// <summary>
+    /// CSVファイルを指定して会話を開始（Timeline用）
+    /// </summary>
+    public void StartDialogueWithCSV(string csvFile)
+    {
+        csvFileName = csvFile;
+        ReloadCSV();
+        StartDialogue();
     }
 
     void ShowDialogue(int index)
@@ -372,6 +387,7 @@ public class ConversationUI : MonoBehaviour
             canvasGroup.DOFade(0, fadeInDuration)
                 .OnComplete(() => {
                     dialoguePanel.SetActive(false);
+                    OnDialogueComplete();
                 });
 
             characterImage.enabled = false;
@@ -380,6 +396,20 @@ public class ConversationUI : MonoBehaviour
         {
             dialoguePanel.SetActive(false);
             characterImage.enabled = false;
+            OnDialogueComplete();
+        }
+    }
+
+    /// <summary>
+    /// 会話完了時の処理
+    /// </summary>
+    void OnDialogueComplete()
+    {
+        // シーン遷移
+        if (loadSceneOnEnd && !string.IsNullOrEmpty(nextSceneName))
+        {
+            Debug.Log($"会話終了。シーン遷移: {nextSceneName}");
+            SceneManager.LoadScene(nextSceneName);
         }
     }
 
