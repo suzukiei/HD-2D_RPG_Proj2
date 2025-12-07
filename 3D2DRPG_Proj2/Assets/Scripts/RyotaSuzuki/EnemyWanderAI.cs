@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// NavMeshを使って徘徊し、プレイヤーを発見したら追跡する敵のAI
@@ -33,7 +34,11 @@ public class EnemyWanderAI : MonoBehaviour
     [SerializeField] private bool showWanderRange = true;      // 徘徊範囲表示
     [SerializeField] private bool showDetectionRange = true;   // 検知範囲表示
     [SerializeField] private Color debugColor = Color.red;     // デバッグ色
-    
+
+    [Header("エネミー情報")]
+    [SerializeField] private List<CharacterData> enemyData;    // エネミーデータリスト
+
+
     private NavMeshAgent navMeshAgent;
     private Vector3 initialPosition;
     private float timer;
@@ -108,7 +113,17 @@ public class EnemyWanderAI : MonoBehaviour
             }
         }
     }
-    
+
+
+    /// <summary>
+    /// エネミーデータを設定を取得
+    /// </summary>
+    public List<CharacterData> GetEnemyData()
+    {
+        return enemyData;
+    }
+
+
     /// <summary>
     /// ランダムな目標地点を設定
     /// </summary>

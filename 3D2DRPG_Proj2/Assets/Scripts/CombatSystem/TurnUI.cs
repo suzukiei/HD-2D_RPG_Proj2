@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-//UI—v‘f‚ÌQÆ
+//UIè¦ç´ ã®å‚ç…§
 public class ViewHolder
 {
     public ViewHolder(Character character)
@@ -23,66 +23,66 @@ public class TurnUI : MonoBehaviour
 {
     private List<ViewHolder> viewHolders;
 
-    [SerializeField, Header("ƒ^[ƒ“UIƒvƒŒƒnƒu")]
+    [SerializeField, Header("ã‚¿ãƒ¼ãƒ³UIãƒ—ãƒ¬ãƒãƒ–")]
     private GameObject turnUIPrefab;
-    [SerializeField, Header("ƒ^[ƒ“UI”z’uêŠ")]
+    [SerializeField, Header("ã‚¿ãƒ¼ãƒ³UIé…ç½®å ´æ‰€")]
     private Transform turnUIParent;
-    [SerializeField, Header("ƒ^[ƒ“”Ô†•\¦ƒeƒLƒXƒg")]
+    [SerializeField, Header("ã‚¿ãƒ¼ãƒ³é †ç•ªè¡¨ç¤ºãƒªã‚¹ãƒˆ")]
     private List<GameObject> activeTurnUIs = new List<GameObject>();
-    // ’Ç‰Á: ƒ^[ƒ“”Ô†•\¦—pƒeƒLƒXƒg
+    // è¿½åŠ : ã‚¿ãƒ¼ãƒ³é †ç•ªè¡¨ç¤ºç”¨ãƒªã‚¹ãƒˆ
     public void UpdateTurnUI(List<GameObject> sortedTurnList, int turnNumber)
     {
         if (turnUIParent == null || turnUIPrefab == null)
         {
-            Debug.LogWarning("TurnUIParent‚Ü‚½‚ÍTurnUIPrefab‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            Debug.LogWarning("TurnUIParentã¾ãŸã¯TurnUIPrefabãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“");
             return;
         }
-        // Šù‘¶‚ÌUI—v‘f‚ğƒNƒŠƒA
+        // æ—¢å­˜ã®UIè¦ç´ ã‚’å‰Šé™¤
         foreach (var ui in activeTurnUIs)
         {
             Destroy(ui);
         }
         activeTurnUIs.Clear();
-        // V‚µ‚¢UI—v‘f‚ğ¶¬
+        // æ–°ã—ã„UIè¦ç´ ã‚’ä½œæˆ
         for (int i = 0; i < sortedTurnList.Count; i++)
         {
             if(sortedTurnList[i]== null)
                 continue;
             GameObject turnUI = Instantiate(turnUIPrefab, turnUIParent);
-            // ƒ^[ƒ“UI‚ÌˆÊ’u‚ğ’²®i—á: ‰¡•À‚Ñj
-            turnUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(i * 150, 0); // 100‚ÍƒAƒCƒRƒ“ŠÔ‚Ì‹——£
-            // ƒLƒƒƒ‰ƒNƒ^[‚Ìî•ñ‚ğæ“¾‚µ‚ÄUI‚É”½‰f
+            // ã‚¿ãƒ¼ãƒ³UIã®ä½ç½®ã‚’è¨­å®šï¼ˆæ¨ªä¸¦ã³ï¼‰
+            turnUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(i * 150, 0); // 150ã¯ã‚¢ã‚¤ã‚³ãƒ³ã®é–“éš”
+            // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®æƒ…å ±ã‚’å–å¾—ã—ã¦UIã«åæ˜ 
             Character character = sortedTurnList[i].GetComponent<Character>();
             if (character != null)
             {
-                // ƒAƒCƒRƒ“‚Ìİ’è
+                // ã‚¢ã‚¤ã‚³ãƒ³ã®è¨­å®š
                 Image iconImage = turnUI.transform.Find("CharacterIcon").GetComponent<Image>();
                 iconImage.sprite = character.characterIcon;
-                // –¼‘O‚Ìİ’è
+                // åå‰ã®è¨­å®š
                 TextMeshProUGUI nameText = turnUI.transform.Find("CharacterName").GetComponent<TextMeshProUGUI>();
                 nameText.text = character.charactername;
             }
             activeTurnUIs.Add(turnUI);
         }
-        // ƒ^[ƒ“”Ô†‚Ì•\¦XV
+        // ã‚¿ãƒ¼ãƒ³ç•ªå·ã®è¡¨ç¤ºæ›´æ–°
         //TextMeshProUGUI turnNumberText = turnUIParent.parent.Find("TurnNumberText").GetComponent<TextMeshProUGUI>();
         //if (turnNumberText != null)
         //{
         //     turnNumberText.text = "Turn: " + turnNumber.ToString();
         //}
     }
-    //ƒ^[ƒ“‚ği‚ß‚é
+    //ã‚¿ãƒ¼ãƒ³ã‚’é€²ã‚ã‚‹
     public void AdvanceTurn()
     {
-        // ƒ^[ƒ“UI‚ğXV‚·‚éˆ—‚ğ‚±‚±‚É’Ç‰Á
-        //UI‚Ìæ“ª‚ğíœ‚µAŸ‚ÌƒLƒƒƒ‰ƒNƒ^[‚ğ’Ç‰Á
+        // ã‚¿ãƒ¼ãƒ³UIã‚’æ›´æ–°ã™ã‚‹å‡¦ç†ã‚’ã“ã“ã«è¿½åŠ 
+        //UIã®å…ˆé ­ã‚’å‰Šé™¤ã—ã¦ã€æ¬¡ã®ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚’è¿½åŠ 
         
 
         var removeobj = activeTurnUIs[0];
-        //ƒIƒuƒWƒFƒNƒg‚ğíœ
+        //ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤
         Destroy(removeobj);
         activeTurnUIs.RemoveAt(0);
-        //¡‚ ‚éƒIƒuƒWƒFƒNƒg‚ğ¶‚É‚¸‚ç‚·
+        //æ®‹ã‚Šã®ã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å·¦ã«è©°ã‚ã‚‹
         for (int i = 0; i < activeTurnUIs.Count; i++)
         {
             activeTurnUIs[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(i * 150, 0);

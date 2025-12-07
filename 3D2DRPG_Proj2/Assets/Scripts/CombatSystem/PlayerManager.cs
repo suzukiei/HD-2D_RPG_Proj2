@@ -6,65 +6,70 @@ using Unity.VisualScripting;
 using Unity.Mathematics;
 
 /// <summary>
-/// ƒvƒŒƒCƒ„[‚Ìí“¬s“®‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+/// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æˆ¦é—˜è¡Œå‹•ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField, Header("UIƒeƒXƒg—p")]
+    [SerializeField, Header("UIãƒ†ã‚¹ãƒˆç”¨")]
     private UITest uiTest;
     [SerializeField, Header("ComboUI")]
     private ComboAttack comboUI;
-    [SerializeField, Header("‘I‘ğ—pUI")]
+    [SerializeField, Header("é¸æŠç”¨UI")]
     private SkillSelectionUI skillSelectionUI;
-    [SerializeField, Header("ƒ^[ƒ“ŠÇ—")]
+    [SerializeField, Header("ã‚¿ãƒ¼ãƒ³ç®¡ç†")]
     private TurnManager turnManager;
-    [SerializeField, Header("ƒvƒŒƒCƒ„[ƒLƒƒƒ‰ƒNƒ^[ˆê——")]
+    [SerializeField, Header("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãƒªã‚¹ãƒˆ")]
     private List<CharacterData> playerCharacters;
-    [SerializeField, Header("ƒLƒƒƒ‰ƒNƒ^[‰Šú”z’uÀ•W")]
+    [SerializeField, Header("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®ç”Ÿæˆé…ç½®åº§æ¨™")]
     private List<Vector3> spawnPositions;
-    [SerializeField, Header("ƒvƒŒƒCƒ„[ƒXƒe[ƒ^ƒX")]
+    [SerializeField, Header("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ‘ãƒãƒ«")]
     private List<PlayerStatusPanel> playerStatusPanel;
 
-    [SerializeField, Header("ƒLƒƒƒ‰ƒNƒ^[í“¬ŠJnˆÊ’u")]
+    [SerializeField, Header("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼æˆ¦é—˜é–‹å§‹ä½ç½®")]
     private Vector3 ActionPosition;
-    [SerializeField, Header("ƒLƒƒƒ‰ƒNƒ^[‰ŠúˆÊ’u")]
+    [SerializeField, Header("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼é–‹å§‹ä½ç½®")]
     private Vector3 StartPosition;
-    // ƒLƒƒƒ‰ƒNƒ^[‚ÌGameObjectŠi”[—p
+    // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®GameObjectä¿å­˜ç”¨
     private List<GameObject> characterObjects = new List<GameObject>();
 
-    // Œ»İ‘I‘ğ’†‚ÌƒLƒƒƒ‰ƒNƒ^[
+    // ç¾åœ¨é¸æŠä¸­ã®ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼
     private Character selectedCharacter;
-    // Œ»İ‘I‘ğ’†‚ÌƒXƒLƒ‹
+    // ç¾åœ¨é¸æŠä¸­ã®ã‚¹ã‚­ãƒ«
     private SkillData selectedSkill;
-    // s“®‘Ò‚¿ƒtƒ‰ƒO
+    // è¡Œå‹•å¾…æ©Ÿã®ãƒ•ãƒ©ã‚°
     private bool isActionPending = false;
-    //‘I‘ğ‚µ‚Ä‚¢‚éƒGƒlƒ~[
+    //é¸æŠã—ã¦ã„ã‚‹æ•µ
     private Character selectedEnemy;
 
-    //ƒoƒt‚ÌŒø‰Ê‚ğŠÇ—‚·‚é•Ï”
+    //ãƒãƒ•ã®åŠ¹æœã‚’ç®¡ç†ã™ã‚‹å¤‰æ•°
     private List<BuffInstance> activeBuffs = new List<BuffInstance>();
 
     /// <summary>
-    /// ƒLƒƒƒ‰ƒNƒ^[ƒf[ƒ^æ“¾—p
+    /// ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨
     /// </summary>
     public List<GameObject> GetPlayerCharacters() => characterObjects;
 
     /// <summary>
-    /// ‰Šú‰»ˆ—iƒLƒƒƒ‰ƒNƒ^[‚Ì”z’uj
+    /// åˆæœŸåŒ–å‡¦ç†ï¼ˆã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®é…ç½®ï¼‰
     /// </summary>
     private void Awake()
     {
+        if (GameManager.Instance != null && GameManager.Instance.PlayerData.Count!=0)
+        {
+            playerCharacters.Clear();
+            playerCharacters.AddRange(GameManager.Instance.PlayerData);
+        }
         isActionPending = false;
         for (int i = 0; i < playerCharacters.Count; i++)
         {
-            // ƒLƒƒƒ‰ƒNƒ^[‚ÌÀ•Wî•ñ‚ğƒZƒbƒg
+            // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
             playerCharacters[i].CharacterTransfrom = spawnPositions[i];
-            // ƒLƒƒƒ‰ƒNƒ^[‚ÌGameObject‚ğ¶¬
+            // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®GameObjectã‚’ä½œæˆ
             var obj = Instantiate(playerCharacters[i].CharacterObj, spawnPositions[i], Quaternion.identity);
             obj.AddComponent<Character>().init(playerCharacters[i]);
             obj.transform.parent = transform;
             characterObjects.Add(obj);
-            // ƒ^[ƒ“ŠÇ—‚ÉƒLƒƒƒ‰ƒNƒ^[‚ğ“o˜^
+            // ã‚¿ãƒ¼ãƒ³ç®¡ç†ã«ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚’ç™»éŒ²
             playerStatusPanel[i].gameObject.SetActive(true);
             PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
             playerStatusPanel[i].UpdatePlayerStatus(playerData);
@@ -72,21 +77,21 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// –ˆƒtƒŒ[ƒ€‚Ìó‘ÔŠÇ—Es“®ˆ—
+    /// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒã‚·ãƒ³ã®çŠ¶æ…‹ç®¡ç†ãƒ»è¡Œå‹•å‡¦ç†
     /// </summary>
     private void Update()
     {
-        // UI‚ÌƒvƒŒƒCƒ„[ƒXƒe[ƒ^ƒXXV
+        // UIã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ‘ãƒãƒ«æ›´æ–°
         PlayerUIUpdate();
         if (!isActionPending) return;
 
-        // ƒLƒƒƒ‰ƒNƒ^[‚Ìó‘Ô‚É‰‚¶‚Äˆ—‚ğ•ªŠò
+        // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®çŠ¶æ…‹ã«å¿œã˜ã¦å‡¦ç†ã‚’åˆ†å²
         switch (selectedCharacter.StatusFlag)
         {
             case StatusFlag.Move:
-                //‰ŠúˆÊ’u‚ğ•Û‘¶
+                //é–‹å§‹ä½ç½®ã‚’ä¿å­˜
                 StartPosition = selectedCharacter.CharacterObj.transform.position;
-                // ƒLƒƒƒ‰ƒNƒ^[‚ğs“®ˆÊ’u‚ÉˆÚ“®
+                // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚’è¡Œå‹•ä½ç½®ã«ç§»å‹•
                 selectedCharacter.CharacterObj.transform.DOMove(ActionPosition, 1f).OnComplete(() =>
                 {
                     selectedCharacter.StatusFlag = StatusFlag.Select;
@@ -95,18 +100,18 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case StatusFlag.Select:
-                // ƒXƒLƒ‹‘I‘ğƒtƒF[ƒY
+                // ã‚¹ã‚­ãƒ«é¸æŠãƒ‘ãƒãƒ«
                 List<SkillData> skills = new List<SkillData>();
                 skills.AddRange(selectedCharacter.skills);
-                // UnityEvent‚ğì¬‚µ‚ÄƒR[ƒ‹ƒoƒbƒN‚ğİ’è
+                // UnityEventã‚’ä½œæˆã—ã¦ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’è¨­å®š
                 UnityEvent<int> callback = new UnityEvent<int>();
                 callback.AddListener(OnSkillSelected);
-                // ‹Z‘I‘ğUI‚ğ•\¦
+                // ã‚¹ã‚­ãƒ«é¸æŠUIã‚’è¡¨ç¤º
                 skillSelectionUI.ShowSkillSelection(skills, callback);
                 break;
 
             case StatusFlag.Attack:
-                // UŒ‚‘ÎÛ‘I‘ğƒtƒF[ƒY
+                // æ”»æ’ƒå¯¾è±¡é¸æŠãƒ‘ãƒãƒ«
                 List<Character> enemies = getEnemy();
                 var attackEvent = new UnityEvent<int>();
                 attackEvent.AddListener((index) => OnAttackSelected(enemies, index));
@@ -114,14 +119,14 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case StatusFlag.Heal:
-                // Heel‘ÎÛƒtƒ@ƒCƒY‘ÎÛ‘I‘ğƒtƒF[ƒY
+                // Healå¯¾è±¡é¸æŠãƒ‘ãƒãƒ«å¯¾è±¡é¸æŠãƒ‘ãƒãƒ«
                 List<Character> characters = getPlayer();
                 var healEvent = new UnityEvent<int>();
                 healEvent.AddListener((index) => OnHealSelected(characters, index));
                 uiTest.Inputs(healEvent, characters.Count - 1, characters);
                 break;
             case StatusFlag.Buff:
-                // Heel‘ÎÛƒtƒ@ƒCƒY‘ÎÛ‘I‘ğƒtƒF[ƒY
+                // Healå¯¾è±¡é¸æŠãƒ‘ãƒãƒ«å¯¾è±¡é¸æŠãƒ‘ãƒãƒ«
                 switch (selectedSkill.buffEffect.buffRange)
                 {
                     case BuffRange.Self:
@@ -147,23 +152,23 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case StatusFlag.End:
-                //ƒoƒtŒø‰Ê‚ÌŠÇ—
+                //ãƒãƒ•åŠ¹æœã®ç®¡ç†
                 buffTurnManage();
-                // ƒLƒƒƒ‰ƒNƒ^[‚ğ‰ŠúˆÊ’u‚É–ß‚·
+                // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã‚’é–‹å§‹ä½ç½®ã«æˆ»ã‚‹
                 selectedCharacter.CharacterObj.transform.DOMove(StartPosition, 1f).OnComplete(() =>
                 {
                     selectedCharacter.StatusFlag = StatusFlag.None;
-                    // ƒ^[ƒ“I—¹ˆ—
+                    // ã‚¿ãƒ¼ãƒ³å‡¦ç†ã‚’çµ‚äº†
                     turnManager.FlagChange();
                 }); ;
                 break;
         }
 
-        // s“®Š®—¹Œãƒtƒ‰ƒO‚ğ‰º‚°‚é
+        // è¡Œå‹•å‡¦ç†ã®ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
         isActionPending = false;
     }
     /// <summary>
-    /// UI‚ÌƒvƒŒƒCƒ„[ƒXƒe[ƒ^ƒXXV
+    /// UIã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ‘ãƒãƒ«æ›´æ–°
     /// </summary>
     public void PlayerUIUpdate()
     {
@@ -176,7 +181,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒvƒŒƒCƒ„[‚Ìs“®ŠJniŠO•”‚©‚çŒÄ‚Ño‚µj
+    /// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¡Œå‹•é–‹å§‹ï¼ˆå¤–éƒ¨ã‹ã‚‰å‘¼ã³å‡ºã•ã‚Œã‚‹ï¼‰
     /// </summary>
     public void StartPlayerAction(Character character)
     {
@@ -187,7 +192,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒXƒLƒ‹‘I‘ğ‚ÌƒR[ƒ‹ƒoƒbƒN
+    /// ã‚¹ã‚­ãƒ«é¸æŠæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
     /// </summary>
     private void OnSkillSelected(int index)
     {
@@ -198,7 +203,7 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
-        if (selectedCharacter.skills[index] == null)// nullƒ`ƒFƒbƒN’Ç‰Á
+        if (selectedCharacter.skills[index] == null)// nullãƒã‚§ãƒƒã‚¯è¿½åŠ 
         {
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
@@ -230,7 +235,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// UŒ‚‘ÎÛ‘I‘ğ‚ÌƒR[ƒ‹ƒoƒbƒN
+    /// æ”»æ’ƒå¯¾è±¡é¸æŠæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
     /// </summary>
     private void OnAttackSelected(List<Character> enemies, int index)
     {
@@ -247,7 +252,7 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
-        // ‘S‘ÌUŒ‚ƒXƒLƒ‹‚Ìê‡A‚·‚×‚Ä‚Ì“G‚ÉUŒ‚‚ğ“K—p
+        // å…¨ã®æ”»æ’ƒã‚¹ã‚­ãƒ«ã®å ´åˆã€ã™ã¹ã¦ã®æ•µã«æ”»æ’ƒã‚’é©ç”¨
         if (selectedSkill.targetScope == TargetScope.All)
         {
             if (selectedCharacter.mp < selectedSkill.mpCost)
@@ -268,7 +273,7 @@ public class PlayerManager : MonoBehaviour
         if (selectedSkill.canCombo)
         {
             selectedCharacter.mp -= selectedSkill.mpCost;
-            //ƒRƒ“ƒ{ƒXƒLƒ‹‚Ìˆ—i–¢À‘•j
+            //ã‚³ãƒ³ãƒœã‚¹ã‚­ãƒ«ã®å‡¦ç†ï¼ˆæˆåŠŸæ™‚ï¼‰
             var attackEvent = new UnityEvent<int>();
             attackEvent.AddListener((index) => OnComboApplyAttack());
             var attackEnd = new UnityEvent<int>();
@@ -278,7 +283,7 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            //’ÊíƒXƒLƒ‹‚Ìˆ—  
+            //é€šå¸¸ã‚¹ã‚­ãƒ«ã®å‡¦ç†  
             var enemy = enemies[index];
             ApplyAttack(enemy, selectedSkill);
             selectedCharacter.mp -= selectedSkill.mpCost;
@@ -296,29 +301,37 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// UŒ‚ˆ—iƒ_ƒ[ƒWŒvZE€–S”»’èj
+    /// æ”»æ’ƒå‡¦ç†ï¼ˆãƒ€ãƒ¡ãƒ¼ã‚¸è¨ˆç®—ãƒ»æ’ƒç ´å‡¦ç†ï¼‰
     /// </summary>
     private void ApplyAttack(Character enemy, SkillData skill)
     {
-        if (enemy == null || skill == null) return; // nullƒ`ƒFƒbƒN’Ç‰Á
+        if (enemy == null || skill == null) return; // nullãƒã‚§ãƒƒã‚¯è¿½åŠ 
 
-        //ƒ_ƒ[ƒW—”
+        //ãƒ€ãƒ¡ãƒ¼ã‚¸ä¹±æ•°
         float random = UnityEngine.Random.Range(10, 20);
         random = random / 10;
-        Debug.Log("—”:" + random);
-        //Šî‘bƒ_ƒ[ƒWŒvZ
-        var damage = selectedCharacter.atk* random;
-        //–hŒä—ÍŒvZ
-        var hp = enemy.hp -(damage *skill.power- enemy.def);
+        Debug.Log("ä¹±æ•°:" + random);
+        //åŸºæœ¬ãƒ€ãƒ¡ãƒ¼ã‚¸è¨ˆç®—
+        var damage = selectedCharacter.atk * random;
+        //æœ€çµ‚è¨ˆç®—
+        var finalDamage = damage * skill.power - enemy.def;
+        var hp = enemy.hp - finalDamage;
         enemy.hp = (int)math.floor(hp);
+
+        // ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’è¡¨ç¤ºï¼ˆæ•µã®ä½ç½®ã®å‰ã«è¡¨ç¤ºï¼‰
+        if (DamageEffectUI.Instance != null && enemy.CharacterObj != null)
+        {
+            DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, finalDamage);
+        }
+
         if (enemy.hp <= 0)
         {
-            // ƒGƒlƒ~[€–S‚Ìˆ—i–¢À‘•j
-            //ƒGƒlƒ~[‚Ì‘Ì—Í‚ğ0‚É‚·‚é
+            // ã‚¨ãƒãƒŸãƒ¼ãŒæ’ƒç ´ã•ã‚ŒãŸå‡¦ç†ï¼ˆæˆåŠŸæ™‚ï¼‰
+            //ã‚¨ãƒãƒŸãƒ¼ã®ä½“åŠ›ã‚’0ã«ã™ã‚‹
             enemy.hp = 0;
             turnManager.enemys.Remove(enemy.gameObject);
             turnManager.turnList.Remove(enemy.gameObject);
-            //ƒGƒlƒ~[‚ÌGameObject‚ğ”j‰ó‚·‚é
+            //ã‚¨ãƒãƒŸãƒ¼ã®GameObjectã‚’å‰Šé™¤
             Destroy(enemy.CharacterObj);
 
         }
@@ -330,7 +343,7 @@ public class PlayerManager : MonoBehaviour
         isActionPending = true;
     }
     /// <summary>
-    /// UŒ‚‘ÎÛ‘I‘ğ‚ÌƒR[ƒ‹ƒoƒbƒN
+    /// æ”»æ’ƒå¯¾è±¡é¸æŠæ™‚ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
     /// </summary>
     private void OnHealSelected(List<Character> characters, int index)
     {
@@ -348,7 +361,7 @@ public class PlayerManager : MonoBehaviour
         }
         if (selectedSkill.targetScope == TargetScope.All)
         {
-            //‘S‘Ì‰ñ•œƒXƒLƒ‹‚Ìˆ—
+            //å…¨ã®å›å¾©ã‚¹ã‚­ãƒ«ã®å‡¦ç†
             foreach (var getCharacter in characters)
             {
                 ApplyHeal(getCharacter, selectedSkill);
@@ -358,7 +371,7 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
-        //’ÊíƒXƒLƒ‹‚Ìˆ—  
+        //é€šå¸¸ã‚¹ã‚­ãƒ«ã®å‡¦ç†  
         var character = characters[index];
         ApplyHeal(character, selectedSkill);
         selectedCharacter.mp -= selectedSkill.mpCost;
@@ -379,9 +392,9 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
-        //’ÊíƒXƒLƒ‹‚Ìˆ—
+        //é€šå¸¸ã‚¹ã‚­ãƒ«ã®å‡¦ç†
         var character = characters[index];
-        BuffInstance buff = new BuffInstance (selectedSkill.buffEffect);
+        BuffInstance buff = new BuffInstance(selectedSkill.buffEffect);
         buff.remainingTurns = selectedSkill.buffDuration;
         buffApply(buff, character);
         selectedCharacter.mp -= selectedSkill.mpCost;
@@ -389,11 +402,11 @@ public class PlayerManager : MonoBehaviour
         isActionPending = true;
     }
     /// <summary>
-    /// ‰ñ•œˆ—
+    /// å›å¾©å‡¦ç†
     /// </summary>
     private void ApplyHeal(Character character, SkillData skill)
     {
-        if (character == null || skill == null) return; // nullƒ`ƒFƒbƒN’Ç‰Á
+        if (character == null || skill == null) return; // nullãƒã‚§ãƒƒã‚¯è¿½åŠ 
         var hp = character.hp + skill.power;
         character.hp = (int)math.floor(hp);
         if (character.hp > character.maxHp)
@@ -402,11 +415,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// UŒ‚‘ÎÛ‘I‘ğƒtƒF[ƒY‚Ì“GƒLƒƒƒ‰ƒNƒ^[æ“¾
+    /// æ”»æ’ƒå¯¾è±¡é¸æŠãƒ‘ãƒãƒ«ã®æ•µã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼å–å¾—
     /// </summary>
     private List<Character> getEnemy()
     {
-        // UŒ‚‘ÎÛ‘I‘ğƒtƒF[ƒY
+        // æ”»æ’ƒå¯¾è±¡é¸æŠãƒ‘ãƒãƒ«
         List<Character> enemies = new List<Character>();
         foreach (var enemyObj in turnManager.enemys)
         {
@@ -419,11 +432,11 @@ public class PlayerManager : MonoBehaviour
         return enemies;
     }
     /// <summary>
-    /// UŒ‚‘ÎÛ‘I‘ğƒtƒF[ƒY‚Ì–¡•ûƒLƒƒƒ‰ƒNƒ^[æ“¾
+    /// æ”»æ’ƒå¯¾è±¡é¸æŠãƒ‘ãƒãƒ«ã®å‘³æ–¹ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼å–å¾—
     /// </summary>
     private List<Character> getPlayer()
     {
-        // UŒ‚‘ÎÛ‘I‘ğƒtƒF[ƒY
+        // æ”»æ’ƒå¯¾è±¡é¸æŠãƒ‘ãƒãƒ«
         List<Character> players = new List<Character>();
         foreach (var playerObj in turnManager.players)
         {
@@ -436,10 +449,10 @@ public class PlayerManager : MonoBehaviour
         return players;
     }
 
-    //ƒoƒtŒø‰Ê‚Ì“K—p
+    //ãƒãƒ•åŠ¹æœã®é©ç”¨
     private void buffApply(BuffInstance buff, Character target)
     {
-        switch(buff.buffRange)
+        switch (buff.buffRange)
         {
             case BuffRange.Self:
                 target = selectedCharacter;
@@ -448,13 +461,13 @@ public class PlayerManager : MonoBehaviour
                 break;
             case BuffRange.Ally:
             case BuffRange.Enemy:
-                //’P‘Ì‘I‘ğˆ—(¡‚Ì‚Æ‚±‚ë‚Ítarget‚Å‘Î‰)
+                //å˜ä¸€ã®é¸æŠå¯¾è±¡(ã“ã®å ´åˆã¯targetã«å¯¾å¿œ)
                 buff.Apply(target);
                 activeBuffs.Add(buff);
                 break;
             case BuffRange.AllAllies:
                 var players = getPlayer();
-                foreach(var player in players)
+                foreach (var player in players)
                 {
                     buff.Apply(player);
                     activeBuffs.Add(buff);
@@ -471,26 +484,26 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
-    //ƒoƒtŒø‰Ê‚Ì‰ğœ
+    //ãƒãƒ•åŠ¹æœã®è§£é™¤
     private void buffRemove(BuffInstance buff)
     {
         buff.Remove();
         activeBuffs.Remove(buff);
     }
-    //ƒoƒt‚ÌŒø‰Êƒ^[ƒ“ŠÇ—
+    //ãƒãƒ•ã®åŠ¹æœã‚¿ãƒ¼ãƒ³ç®¡ç†
     private void buffTurnManage()
     {
-        //ƒoƒtŒø‰Êƒ^[ƒ“‚È‚Ì‚©‚ğ”»’è
+        //ãƒãƒ•åŠ¹æœã‚¿ãƒ¼ãƒ³ãŒã‚ã‚‹ã‹ã©ã†ã‹ã‚’åˆ¤å®š
         for (int activeBuffCount = activeBuffs.Count - 1; activeBuffCount >= 0; activeBuffCount--)
         {
             BuffInstance buff = activeBuffs[activeBuffCount];
             buff.TickTurn();
             if (buff.IsExpired())
             {
-                //ƒoƒtŒø‰ÊI—¹
+                //ãƒãƒ•åŠ¹æœçµ‚äº†
                 buffRemove(buff);
             }
         }
-        //ƒoƒtŒø‰Êƒ^[ƒ“I—¹
+        //ãƒãƒ•åŠ¹æœã‚¿ãƒ¼ãƒ³å‡¦ç†çµ‚äº†
     }
 }

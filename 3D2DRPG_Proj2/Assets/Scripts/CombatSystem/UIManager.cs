@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField, Header("ƒ^[ƒ“‡”ÔUI")]
+    [SerializeField, Header("ã‚¿ãƒ¼ãƒ³é †UI")]
     private TurnUI turnUI;
-    //ƒVƒŠƒAƒ‰ƒCƒYƒtƒB[ƒ‹ƒh
+    //ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³
     private static UIManager instance;
     public static UIManager Instance
     {
@@ -26,23 +26,23 @@ public class UIManager : MonoBehaviour
     }
     private void Awake()
     {
-        // ƒVƒ“ƒOƒ‹ƒgƒ“ƒpƒ^[ƒ“‚ÌŽÀ‘•
+        // ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®å®Ÿè£…
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
-    // ƒ^[ƒ“UI‚ÌXV
+    // ã‚¿ãƒ¼ãƒ³é †UIã®æ›´æ–°
     public void UpdateTurnUI(List<GameObject> sortedTurnList, int turnNumber)
     {
         turnUI.UpdateTurnUI(sortedTurnList, turnNumber);
     }
-    //ƒ^[ƒ“‚ði‚ß‚é
+    //ã‚¿ãƒ¼ãƒ³ã‚’é€²ã‚ã‚‹
     public void NextTurn()
     {
         turnUI.AdvanceTurn();
