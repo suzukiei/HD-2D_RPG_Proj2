@@ -6,19 +6,19 @@ public class TimingUI : MonoBehaviour
     [SerializeField] private Slider timingBar;
     [SerializeField] private float speed = 2.0f;
     [SerializeField] private KeyCode attackKey = KeyCode.Space;
-    [SerializeField] private float timingtime; // ·•ª
-    [SerializeField] private float timingWindowEnd = 0.6f;   // ƒ^ƒCƒ~ƒ“ƒOó•tI—¹
+    [SerializeField] private float timingtime; // ã‚¿ã‚¤ãƒŸãƒ³ã‚°æ™‚é–“
+    [SerializeField] private float timingWindowEnd = 0.6f;   // ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦çµ‚äº†
     private float value = 0f;
     public bool isActive = false;
 
     public void Show(float _timingtime, float _timingWindowEnd)
     {
-        // ƒ^ƒCƒ~ƒ“ƒO·•ª‚ÆƒGƒ“ƒhƒ^ƒCƒ€‚ğİ’è
+        // ã‚¿ã‚¤ãƒŸãƒ³ã‚°æ™‚é–“ã¨ã‚¹ãƒ”ãƒ¼ãƒ‰ã‚’è¨­å®š
         //timingtime = _timingtime;
-        timingtime = 1f / timingWindowEnd*_timingtime; // ³‹K‰»
+        timingtime = 1f / timingWindowEnd*_timingtime; // æ­£è¦åŒ–
         timingWindowEnd = _timingWindowEnd;
         Debug.Log("TimingUI Show called with timingtime: " + timingtime + ", timingWindowEnd: " + timingWindowEnd);
-        //ƒGƒ“ƒhƒ^ƒCƒ€‚ğg—p‚µ‚ÄSlider‚ÌƒXƒr[ƒh‚ğİ’è
+        //ã‚¹ãƒ”ãƒ¼ãƒ‰ãƒãƒ¼ã‚’ä½¿ç”¨ã™ã‚‹Sliderã®ã‚¹ãƒ”ãƒ¼ãƒ‰ã‚’è¨­å®š
         speed = 1f / timingWindowEnd;
         timingBar.gameObject.SetActive(true);
         value = 0f;
@@ -35,28 +35,28 @@ public class TimingUI : MonoBehaviour
     {
         if (!isActive) return false;
 
-        // ƒo[‚ğ“®‚©‚·
+        // ãƒãƒ¼ã‚’å‹•ã‹ã™
         value += Time.deltaTime * speed;
         timingBar.value = Mathf.PingPong(value, 1f);
 
-        // ˆê’è”ÍˆÍ‚Å‰Ÿ‚¹‚½‚ç¬Œ÷i—áF’†‰› }0.1j
+        // å…¥åŠ›ç¯„å›²ã§ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰åˆ¤å®šï¼ˆæˆåŠŸç¯„å›² Â±0.1ï¼‰
         if (Input.GetKeyDown(attackKey))
         {
             Debug.Log("Timing Key Pressed at: " + timingBar.value);
             float diff = Mathf.Abs(timingBar.value);
             if (diff > Mathf.Abs (timingtime-1f))
             {
-                isActive = true;// ¬Œ÷
+                isActive = true;// æˆåŠŸ
                 Debug.Log("Timing Success with diff: " + diff);
             }
             else
             {
-                // ƒ^ƒCƒ~ƒ“ƒOó•tI—¹
-                isActive = false;// ¸”s
+                // ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¤–
+                isActive = false;// å¤±æ•—
                 Debug.Log("Timing Failed with diff: " + diff);
             }
-            return true;// ‰Ÿ‚³‚ê‚½
+            return true;// æŠ¼ã•ã‚ŒãŸ
         }
-        return false;// ‰Ÿ‚³‚ê‚Ä‚È‚¢
+        return false;// æŠ¼ã•ã‚Œã¦ã„ãªã„
     }
 }

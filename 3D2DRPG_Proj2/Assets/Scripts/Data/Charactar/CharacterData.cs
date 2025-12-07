@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// ステータスフラグ
+/// </summary>
 public enum StatusFlag
 {
     None = 0,
@@ -14,6 +17,9 @@ public enum StatusFlag
     End
 }
 
+/// <summary>
+/// キャラクターデータ
+/// </summary>
 [CreateAssetMenu(menuName = "CharacterData")]
 public class CharacterData : ScriptableObject
 {
@@ -29,4 +35,3 @@ public class CharacterData : ScriptableObject
     public StatusFlag StatusFlag;
    
 }
-

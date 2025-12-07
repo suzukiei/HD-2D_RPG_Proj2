@@ -44,6 +44,11 @@ public class GameManager : MonoBehaviour
     [SerializeField, Header("戦闘履歴管理")]
     private SerializableStringHashSet defeatedEnemyIds = new SerializableStringHashSet();
 
+    [NonSerialized]
+    public bool BattleWin = false; // 既存の変数を保持
+    [NonSerialized]
+    public Vector3 PlayerBackPosition; // 既存の変数を保持
+
     // プロパティ
     public static GameManager Instance
     {
@@ -224,6 +229,7 @@ public class GameManager : MonoBehaviour
         // バトル終了イベントを発火
         OnBattleEnd?.Invoke();
 
+        BattleWin = true;
         // フィールドに戻る
         StartCoroutine(TransitionToGameField());
     }
@@ -241,6 +247,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(battleTransitionDelay);
         }
 
+        PlayerBackPosition = lastFieldPosition;
         // シーン遷移
         SceneManager.LoadScene(battleSceneName);
 

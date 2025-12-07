@@ -6,51 +6,51 @@ using Unity.VisualScripting;
 using Unity.Mathematics;
 
 /// <summary>
-/// �v���C���[�̐퓬�s�����Ǘ�����N���X
+/// プレイヤーの戦闘行動を管理するクラス
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField, Header("UI�e�X�g�p")]
+    [SerializeField, Header("UIテスト用")]
     private UITest uiTest;
     [SerializeField, Header("ComboUI")]
     private ComboAttack comboUI;
-    [SerializeField, Header("�I��pUI")]
+    [SerializeField, Header("選択用UI")]
     private SkillSelectionUI skillSelectionUI;
-    [SerializeField, Header("�^�[���Ǘ�")]
+    [SerializeField, Header("ターン管理")]
     private TurnManager turnManager;
-    [SerializeField, Header("�v���C���[�L�����N�^�[�ꗗ")]
+    [SerializeField, Header("プレイヤーキャラクターリスト")]
     private List<CharacterData> playerCharacters;
-    [SerializeField, Header("�L�����N�^�[�����z�u���W")]
+    [SerializeField, Header("キャラクターの生成配置座標")]
     private List<Vector3> spawnPositions;
-    [SerializeField, Header("�v���C���[�X�e�[�^�X")]
+    [SerializeField, Header("プレイヤーステータスパネル")]
     private List<PlayerStatusPanel> playerStatusPanel;
 
-    [SerializeField, Header("�L�����N�^�[�퓬�J�n�ʒu")]
+    [SerializeField, Header("キャラクター戦闘開始位置")]
     private Vector3 ActionPosition;
-    [SerializeField, Header("�L�����N�^�[�����ʒu")]
+    [SerializeField, Header("キャラクター開始位置")]
     private Vector3 StartPosition;
-    // �L�����N�^�[��GameObject�i�[�p
+    // キャラクターのGameObject保存用
     private List<GameObject> characterObjects = new List<GameObject>();
 
-    // ���ݑI�𒆂̃L�����N�^�[
+    // 現在選択中のキャラクター
     private Character selectedCharacter;
-    // ���ݑI�𒆂̃X�L��
+    // 現在選択中のスキル
     private SkillData selectedSkill;
-    // �s���҂��t���O
+    // 行動待機のフラグ
     private bool isActionPending = false;
-    //�I�����Ă���G�l�~�[
+    //選択している敵
     private Character selectedEnemy;
 
-    //�o�t�̌��ʂ��Ǘ�����ϐ�
+    //バフの効果を管理する変数
     private List<BuffInstance> activeBuffs = new List<BuffInstance>();
 
     /// <summary>
-    /// �L�����N�^�[�f�[�^�擾�p
+    /// キャラクターデータ取得用
     /// </summary>
     public List<GameObject> GetPlayerCharacters() => characterObjects;
 
     /// <summary>
-    /// �����������i�L�����N�^�[�̔z�u�j
+    /// 初期化処理（キャラクターの配置）
     /// </summary>
     private void Awake()
     {
@@ -62,14 +62,14 @@ public class PlayerManager : MonoBehaviour
         isActionPending = false;
         for (int i = 0; i < playerCharacters.Count; i++)
         {
-            // �L�����N�^�[�̍��W�����Z�b�g
+            // キャラクターの座標をセット
             playerCharacters[i].CharacterTransfrom = spawnPositions[i];
-            // �L�����N�^�[��GameObject�𐶐�
+            // キャラクターのGameObjectを作成
             var obj = Instantiate(playerCharacters[i].CharacterObj, spawnPositions[i], Quaternion.identity);
             obj.AddComponent<Character>().init(playerCharacters[i]);
             obj.transform.parent = transform;
             characterObjects.Add(obj);
-            // �^�[���Ǘ��ɃL�����N�^�[��o�^
+            // ターン管理にキャラクターを登録
             playerStatusPanel[i].gameObject.SetActive(true);
             PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
             playerStatusPanel[i].UpdatePlayerStatus(playerData);
@@ -77,21 +77,21 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ���t���[���̏�ԊǗ��E�s������
+    /// ステータスマシンの状態管理・行動処理
     /// </summary>
     private void Update()
     {
-        // UI�̃v���C���[�X�e�[�^�X�X�V
+        // UIのプレイヤーステータスパネル更新
         PlayerUIUpdate();
         if (!isActionPending) return;
 
-        // �L�����N�^�[�̏�Ԃɉ����ď����𕪊�
+        // キャラクターの状態に応じて処理を分岐
         switch (selectedCharacter.StatusFlag)
         {
             case StatusFlag.Move:
-                //�����ʒu��ۑ�
+                //開始位置を保存
                 StartPosition = selectedCharacter.CharacterObj.transform.position;
-                // �L�����N�^�[���s���ʒu�Ɉړ�
+                // キャラクターを行動位置に移動
                 selectedCharacter.CharacterObj.transform.DOMove(ActionPosition, 1f).OnComplete(() =>
                 {
                     selectedCharacter.StatusFlag = StatusFlag.Select;
@@ -100,18 +100,18 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case StatusFlag.Select:
-                // �X�L���I���t�F�[�Y
+                // スキル選択パネル
                 List<SkillData> skills = new List<SkillData>();
                 skills.AddRange(selectedCharacter.skills);
-                // UnityEvent���쐬���ăR�[���o�b�N��ݒ�
+                // UnityEventを作成してコールバックを設定
                 UnityEvent<int> callback = new UnityEvent<int>();
                 callback.AddListener(OnSkillSelected);
-                // �Z�I��UI��\��
+                // スキル選択UIを表示
                 skillSelectionUI.ShowSkillSelection(skills, callback);
                 break;
 
             case StatusFlag.Attack:
-                // �U���ΏۑI���t�F�[�Y
+                // 攻撃対象選択パネル
                 List<Character> enemies = getEnemy();
                 var attackEvent = new UnityEvent<int>();
                 attackEvent.AddListener((index) => OnAttackSelected(enemies, index));
@@ -119,14 +119,14 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case StatusFlag.Heal:
-                // Heel�Ώۃt�@�C�Y�ΏۑI���t�F�[�Y
+                // Heal対象選択パネル対象選択パネル
                 List<Character> characters = getPlayer();
                 var healEvent = new UnityEvent<int>();
                 healEvent.AddListener((index) => OnHealSelected(characters, index));
                 uiTest.Inputs(healEvent, characters.Count - 1, characters);
                 break;
             case StatusFlag.Buff:
-                // Heel�Ώۃt�@�C�Y�ΏۑI���t�F�[�Y
+                // Heal対象選択パネル対象選択パネル
                 switch (selectedSkill.buffEffect.buffRange)
                 {
                     case BuffRange.Self:
@@ -152,23 +152,23 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case StatusFlag.End:
-                //�o�t���ʂ̊Ǘ�
+                //バフ効果の管理
                 buffTurnManage();
-                // �L�����N�^�[�������ʒu�ɖ߂�
+                // キャラクターを開始位置に戻る
                 selectedCharacter.CharacterObj.transform.DOMove(StartPosition, 1f).OnComplete(() =>
                 {
                     selectedCharacter.StatusFlag = StatusFlag.None;
-                    // �^�[���I������
+                    // ターン処理を終了
                     turnManager.FlagChange();
                 }); ;
                 break;
         }
 
-        // �s��������t���O��������
+        // 行動処理のフラグをリセット
         isActionPending = false;
     }
     /// <summary>
-    /// UI�̃v���C���[�X�e�[�^�X�X�V
+    /// UIのプレイヤーステータスパネル更新
     /// </summary>
     public void PlayerUIUpdate()
     {
@@ -181,7 +181,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// �v���C���[�̍s���J�n�i�O������Ăяo���j
+    /// プレイヤーの行動開始（外部から呼び出される）
     /// </summary>
     public void StartPlayerAction(Character character)
     {
@@ -192,7 +192,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// �X�L���I�����̃R�[���o�b�N
+    /// スキル選択時のコールバック
     /// </summary>
     private void OnSkillSelected(int index)
     {
@@ -203,7 +203,7 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
-        if (selectedCharacter.skills[index] == null)// null�`�F�b�N�ǉ�
+        if (selectedCharacter.skills[index] == null)// nullチェック追加
         {
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
@@ -235,7 +235,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// �U���ΏۑI�����̃R�[���o�b�N
+    /// 攻撃対象選択時のコールバック
     /// </summary>
     private void OnAttackSelected(List<Character> enemies, int index)
     {
@@ -252,7 +252,7 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
-        // �S�̍U���X�L���̏ꍇ�A���ׂĂ̓G�ɍU����K�p
+        // 全の攻撃スキルの場合、すべての敵に攻撃を適用
         if (selectedSkill.targetScope == TargetScope.All)
         {
             if (selectedCharacter.mp < selectedSkill.mpCost)
@@ -273,7 +273,7 @@ public class PlayerManager : MonoBehaviour
         if (selectedSkill.canCombo)
         {
             selectedCharacter.mp -= selectedSkill.mpCost;
-            //�R���{�X�L���̏����i�������j
+            //コンボスキルの処理（成功時）
             var attackEvent = new UnityEvent<int>();
             attackEvent.AddListener((index) => OnComboApplyAttack());
             var attackEnd = new UnityEvent<int>();
@@ -283,7 +283,7 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            //�ʏ�X�L���̏���  
+            //通常スキルの処理  
             var enemy = enemies[index];
             ApplyAttack(enemy, selectedSkill);
             selectedCharacter.mp -= selectedSkill.mpCost;
@@ -301,19 +301,19 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// �U�������i�_���[�W�v�Z�E���S����j
+    /// 攻撃処理（ダメージ計算・撃破処理）
     /// </summary>
     private void ApplyAttack(Character enemy, SkillData skill)
     {
-        if (enemy == null || skill == null) return; // null�`�F�b�N�ǉ�
+        if (enemy == null || skill == null) return; // nullチェック追加
 
-        //�_���[�W����
+        //ダメージ乱数
         float random = UnityEngine.Random.Range(10, 20);
         random = random / 10;
-        Debug.Log("����:" + random);
-        //��b�_���[�W�v�Z
+        Debug.Log("乱数:" + random);
+        //基本ダメージ計算
         var damage = selectedCharacter.atk * random;
-        //�h��͌v�Z
+        //最終計算
         var finalDamage = damage * skill.power - enemy.def;
         var hp = enemy.hp - finalDamage;
         enemy.hp = (int)math.floor(hp);
@@ -326,12 +326,12 @@ public class PlayerManager : MonoBehaviour
 
         if (enemy.hp <= 0)
         {
-            // �G�l�~�[���S���̏����i�������j
-            //�G�l�~�[�̗̑͂�0�ɂ���
+            // エネミーが撃破された処理（成功時）
+            //エネミーの体力を0にする
             enemy.hp = 0;
             turnManager.enemys.Remove(enemy.gameObject);
             turnManager.turnList.Remove(enemy.gameObject);
-            //�G�l�~�[��GameObject��j�󂷂�
+            //エネミーのGameObjectを削除
             Destroy(enemy.CharacterObj);
 
         }
@@ -343,7 +343,7 @@ public class PlayerManager : MonoBehaviour
         isActionPending = true;
     }
     /// <summary>
-    /// �U���ΏۑI�����̃R�[���o�b�N
+    /// 攻撃対象選択時のコールバック
     /// </summary>
     private void OnHealSelected(List<Character> characters, int index)
     {
@@ -361,7 +361,7 @@ public class PlayerManager : MonoBehaviour
         }
         if (selectedSkill.targetScope == TargetScope.All)
         {
-            //�S�̉񕜃X�L���̏���
+            //全の回復スキルの処理
             foreach (var getCharacter in characters)
             {
                 ApplyHeal(getCharacter, selectedSkill);
@@ -371,7 +371,7 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
-        //�ʏ�X�L���̏���  
+        //通常スキルの処理  
         var character = characters[index];
         ApplyHeal(character, selectedSkill);
         selectedCharacter.mp -= selectedSkill.mpCost;
@@ -392,7 +392,7 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
-        //�ʏ�X�L���̏���
+        //通常スキルの処理
         var character = characters[index];
         BuffInstance buff = new BuffInstance(selectedSkill.buffEffect);
         buff.remainingTurns = selectedSkill.buffDuration;
@@ -402,11 +402,11 @@ public class PlayerManager : MonoBehaviour
         isActionPending = true;
     }
     /// <summary>
-    /// �񕜏���
+    /// 回復処理
     /// </summary>
     private void ApplyHeal(Character character, SkillData skill)
     {
-        if (character == null || skill == null) return; // null�`�F�b�N�ǉ�
+        if (character == null || skill == null) return; // nullチェック追加
         var hp = character.hp + skill.power;
         character.hp = (int)math.floor(hp);
         if (character.hp > character.maxHp)
@@ -415,11 +415,11 @@ public class PlayerManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// �U���ΏۑI���t�F�[�Y�̓G�L�����N�^�[�擾
+    /// 攻撃対象選択パネルの敵キャラクター取得
     /// </summary>
     private List<Character> getEnemy()
     {
-        // �U���ΏۑI���t�F�[�Y
+        // 攻撃対象選択パネル
         List<Character> enemies = new List<Character>();
         foreach (var enemyObj in turnManager.enemys)
         {
@@ -432,11 +432,11 @@ public class PlayerManager : MonoBehaviour
         return enemies;
     }
     /// <summary>
-    /// �U���ΏۑI���t�F�[�Y�̖����L�����N�^�[�擾
+    /// 攻撃対象選択パネルの味方キャラクター取得
     /// </summary>
     private List<Character> getPlayer()
     {
-        // �U���ΏۑI���t�F�[�Y
+        // 攻撃対象選択パネル
         List<Character> players = new List<Character>();
         foreach (var playerObj in turnManager.players)
         {
@@ -449,7 +449,7 @@ public class PlayerManager : MonoBehaviour
         return players;
     }
 
-    //�o�t���ʂ̓K�p
+    //バフ効果の適用
     private void buffApply(BuffInstance buff, Character target)
     {
         switch (buff.buffRange)
@@ -461,7 +461,7 @@ public class PlayerManager : MonoBehaviour
                 break;
             case BuffRange.Ally:
             case BuffRange.Enemy:
-                //�P�̑I������(���̂Ƃ����target�őΉ�)
+                //単一の選択対象(この場合はtargetに対応)
                 buff.Apply(target);
                 activeBuffs.Add(buff);
                 break;
@@ -484,26 +484,26 @@ public class PlayerManager : MonoBehaviour
         }
 
     }
-    //�o�t���ʂ̉���
+    //バフ効果の解除
     private void buffRemove(BuffInstance buff)
     {
         buff.Remove();
         activeBuffs.Remove(buff);
     }
-    //�o�t�̌��ʃ^�[���Ǘ�
+    //バフの効果ターン管理
     private void buffTurnManage()
     {
-        //�o�t���ʃ^�[���Ȃ̂��𔻒�
+        //バフ効果ターンがあるかどうかを判定
         for (int activeBuffCount = activeBuffs.Count - 1; activeBuffCount >= 0; activeBuffCount--)
         {
             BuffInstance buff = activeBuffs[activeBuffCount];
             buff.TickTurn();
             if (buff.IsExpired())
             {
-                //�o�t���ʏI��
+                //バフ効果終了
                 buffRemove(buff);
             }
         }
-        //�o�t���ʃ^�[���I��
+        //バフ効果ターン処理終了
     }
 }

@@ -5,27 +5,27 @@ using System.Linq;
 
 public class TurnManager : MonoBehaviour
 {
-    [SerializeField, Header("�v���C���[�}�l�[�W���[")]
+    [SerializeField, Header("プレイヤーマネージャー")]
     private PlayerManager playerManager;
-    [SerializeField, Header("�G�l�~�[�}�l�[�W���[")]
+    [SerializeField, Header("エネミーマネージャー")]
     private EnemyManager enemyManager;
-    [SerializeField, Header("�v���C���[�̃f�[�^")]
+    [SerializeField, Header("プレイヤーのデータ")]
     public List<GameObject> players;
-    [SerializeField, Header("�G�l�~�[�̃f�[�^")]
+    [SerializeField, Header("エネミーのデータ")]
     public List<GameObject> enemys;
-    [SerializeField, Header("�^�[�������X�g")]
-    public List<GameObject> turnList = new List<GameObject>();// �v���C���[�ƃG�l�~�[���܂Ƃ߂����X�g
+    [SerializeField, Header("ターン順リスト")]
+    public List<GameObject> turnList = new List<GameObject>();// プレイヤーとエネミーをまとめたリスト
     [SerializeField]
-    private List<GameObject> sortedTurnList = new List<GameObject>();// SPD���Ƀ\�[�g���ꂽ���X�g
+    private List<GameObject> sortedTurnList = new List<GameObject>();// SPD順にソートされたリスト
     [SerializeField]
-    private List<GameObject> nextTurnList = new List<GameObject>();// ���̃^�[���p���X�g
-    //���݂̃^�[���I�u�W�F�N�g
+    private List<GameObject> nextTurnList = new List<GameObject>();// 次のターン用リスト
+    //現在のターンオブジェクト
     public GameObject currentTurnObject;
-    private bool turnChangeFlag = false; // �^�[�����ύX�t���O
-    private int turnNumber = 0; // ���݂̃^�[����
-    private bool turnFlag; // �^�[�����������ǂ����̃t���O
+    private bool turnChangeFlag = false; // ターン順変更フラグ
+    private int turnNumber = 0; // 現在のターン数
+    private bool turnFlag; // ターン開始していいかどうかのフラグ
 
-    //�V���A���C�Y�t�B�[���h
+    //シングルトンパターン
     private static TurnManager instance;
     public static TurnManager Instance
     {
@@ -45,7 +45,7 @@ public class TurnManager : MonoBehaviour
     }
     private void Awake()
     {
-        // �V���O���g���p�^�[���̎���
+        // シングルトンパターンの実装
         if (instance == null)
         {
             instance = this;
@@ -59,87 +59,87 @@ public class TurnManager : MonoBehaviour
     private void Start()
     {
 
-        // �ϐ��̏�����
+        // 変数の初期化
         turnFlag = true;
         turnNumber = 0;
         turnChangeFlag = false;
-        // ������
+        // 初期化
         Initialization();
     }
-    // ����������
+    // 初期化処理
     private void Initialization()
     {
-        // �v���C���[���擾
+        // プレイヤーを取得
         players = playerManager.GetPlayerCharacters();
-        // �G�l�~�[���擾
+        // エネミーを取得
         enemys = enemyManager.GetEnemyData();
 
-        // �v���C���[�ƃG�l�~�[���܂Ƃ߂�SPD���ɕ��ёւ���
+        // プレイヤーとエネミーをまとめてSPD順に並び替える
         turnList.Clear();
         turnList.AddRange(players);
         turnList.AddRange(enemys);
-        // SPD���Ƀ\�[�g
-        turnList.Sort((a, b) => b.GetComponent<Character>().spd.CompareTo(a.GetComponent<Character>().spd)); // SPD�~���Ń\�[�g
+        // SPD順にソート
+        turnList.Sort((a, b) => b.GetComponent<Character>().spd.CompareTo(a.GetComponent<Character>().spd)); // SPD降順でソート
         nextTurnList = new List<GameObject>(turnList);
         sortedTurnList = new List<GameObject>(turnList);
-        // Spd ���������i�~���j
+        // Spd 降順でソート（降順）
         //List<GameObject> sorted = turnList.OrderByDescending(c => c.GetComponent<Character>().Spd).ToList();
-        // UI�Ɏw��
-        // UI�Ɍ��݂̃^�[�������̏��Ԃ�`����
+        // UIに設定
+        // UIに現在のターン順の状態を表示する
         UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
-        // ���Ԃ̃f�[�^��UI�ɓn��
-        // �^�[�������X�^�[�g
+        // 状態のデータをUIに渡す
+        // ターン処理をスタート
         StartCoroutine(TurnController());
     }
 
-    // �^�[���Ǘ�
-    // ���̏���Update�ł���������....
+    // ターン管理
+    // この処理はUpdateで実行する必要がある....
     private IEnumerator TurnController()
     {
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
-            // ���̏�����҂�
+            // 次の処理を待つ
             if (turnFlag)
             {
-                //�^�[������
+                //ターン開始
                 if (players.Count == 0 || enemys.Count == 0)
                 {
                     EndTurnManager();
                     yield break;
                     //break;
                 }
-                Debug.Log("�^�[��������:" + turnNumber);
-                // �t���O��܂�
+                Debug.Log("ターン開始:" + turnNumber);
+                // フラグを立てる
                 turnFlag = false;
-                // Turn���X�g���擾
+                // Turnリストを取得
                 var nextCharacterStatus = sortedTurnList[turnNumber];
                 currentTurnObject = nextCharacterStatus;
-                // Character�̃X�e�[�^�X��ύX
+                // Characterのステータスを変更
                 if (nextCharacterStatus == null)
                 {
-                    Debug.Log("�^�[���Ώۂ����݂��܂���");
+                    Debug.Log("ターン対象が存在しません");
                     turnFlag = true;
                     turnNumber = (turnNumber + 1) % sortedTurnList.Count;
                     continue;
                 }
-                // True:Enemy False:Player
+                // True:Enemy False:Player                
                 if (nextCharacterStatus.GetComponent<Character>().enemyCheckFlag)
                 {
-                    // Enemy����
+                    // Enemy処理
                     enemyManager.Test(nextCharacterStatus.GetComponent<Character>());
                     Debug.Log("StartEnemy");
                 }
                 else
                 {
-                    // Player����
+                    // Player処理
                     nextCharacterStatus.GetComponent<Character>().StatusFlag = StatusFlag.Move;
                     playerManager.StartPlayerAction(nextCharacterStatus.GetComponent<Character>());
                     Debug.Log("StartPlayer");
                 }
-                //���̃^�[���̃��X�g����폜
+                //現在のターンのリストから削除
                 sortedTurnList[turnNumber] = null;
-                // �^�[���`�F���W
+                // ターンカウンター
                 turnNumber++;
                 if (turnNumber >= sortedTurnList.Count)
                 {
@@ -147,7 +147,7 @@ public class TurnManager : MonoBehaviour
                     if (turnChangeFlag)
                     {
                         turnChangeFlag = false;
-                        // �^�[�����X�g�����̃^�[���p���X�g�ōX�V
+                        // ターンリストを次のターン用リストで更新
                         sortedTurnList.Clear();
                         sortedTurnList.AddRange(nextTurnList);
                         nextTurnList.Clear();
@@ -157,7 +157,7 @@ public class TurnManager : MonoBehaviour
                     {
                         turnChangeFlag = false;
                         sortedTurnList.Clear();
-                        // �v���C���[�ƃG�l�~�[���܂Ƃ߂�SPD���ɕ��ёւ���
+                        // プレイヤーとエネミーをまとめてSPD順に並び替える
                         sortedTurnList.AddRange(turnList);
                     }
                     UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
@@ -171,7 +171,7 @@ public class TurnManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("�^�[���҂�");
+                Debug.Log("ターン待機");
             }
 
           
@@ -179,67 +179,67 @@ public class TurnManager : MonoBehaviour
     }
     
 
-    //�^�[�����X�g�̏��Ԃ�ύX
+    //ターン順リストの順序を変更
     public void TurnChange(Character character, int chageNum)
     {
-        //�^�[�����X�g�ύX�t���O�𗧂Ă�
+        //ターン順リスト変更フラグを立てる
         turnChangeFlag = true;
         if(character==null)
-            Debug.Log("�^�[�����X�g�ύX:�ΏۃL�����N�^�[�����݂��܂���");
+            Debug.Log("ターン順リスト変更:対象キャラクターが存在しません");
         var changeobj = character.CharacterObj;
       
-            Debug.Log("�^�[�����X�g�ύX:" + changeobj.name + "��" + chageNum + "�ԖڂɈړ�");
+            Debug.Log("ターン順リスト変更:" + changeobj.name + "を" + chageNum + "番目に移動");
         var objectToMove = nextTurnList.FirstOrDefault(obj => obj == changeobj);
         if (objectToMove != null)
         {
             nextTurnList.Remove(objectToMove);
-            //�w�肳�ꂽ�ʒu�ɑ}��
+            //指定された位置に挿入
             nextTurnList.Insert(chageNum, objectToMove);
         }
     }
-    //�^�[�����X�g����L�����N�^�[���폜
+    //ターン順リストからキャラクターを削除
     public void RemoveCharacterFromTurnList(Character character)
     {
         var removeobj = character.CharacterObj;
-        //�^�[�����X�g����폜
+        //ターン順リストから削除
         if (sortedTurnList.Contains(removeobj))
             sortedTurnList.Remove(removeobj);
         else if (nextTurnList.Contains(removeobj))
             nextTurnList.Remove(removeobj);
     }
 
-    //�^�[�������ĊJ�t���O
+    //ターン開始してフラグ
     public void FlagChange()
     {
 
         turnFlag = true;
     }
 
-    //�����A�s�k���ɌĂяo��
+    //勝利、敗北時に呼び出し
     public void EndTurnManager()
     {
-        //�s�k����
+        //敗北処理
         if (players.Count == 0)
             DefeatProcess();
-        //�s�k����
+        //勝利処理
         if (enemys.Count == 0)
             VictoryProcess();
 
-        //�R���[�`����~
+        //コルーチンを停止
         StopAllCoroutines();
     }
 
-    //�s�k����
+    //敗北処理
     private void DefeatProcess()
     {
-        Debug.Log("�s�k����");
+        Debug.Log("敗北処理");
         GameManager.Instance.EndBattle();
     }
 
-    //��������
+    //勝利処理
     private void VictoryProcess()
     {
-        Debug.Log("��������");
+        Debug.Log("勝利処理");
         // 倒した敵を記録
         if (GameManager.Instance != null && GameManager.Instance.EnemyData != null)
         {

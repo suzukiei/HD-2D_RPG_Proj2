@@ -8,19 +8,19 @@ public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
     private List<CharacterData> enemyData;
-    [SerializeField, Header("“G‚ÌUŒ‚ƒ‰ƒ“ƒ_ƒ€ƒtƒ‰ƒO")]
+    [SerializeField, Header("æ•µã®æ”»æ’ƒãƒ©ãƒ³ãƒ€ãƒ ãƒ•ãƒ©ã‚°")]
     private bool AttackRandamFlag;
     [SerializeField]
     private TurnManager turnManager;
     [SerializeField]
     private List<Vector3> vector3s;
-    [SerializeField, Header("‘O‚Éo‚é‹——£")]
+    [SerializeField, Header("å‰ã«å‡ºã‚‹è·é›¢")]
     private float forwardDistance = 2f;
-    [SerializeField, Header("‘O‚Éo‚éŠÔ")]
+    [SerializeField, Header("å‰ã«å‡ºã‚‹æ™‚é–“")]
     private float forwardDuration = 0.5f;
-    [SerializeField, Header("l‚¦‚éŠÔ")]
+    [SerializeField, Header("è€ƒãˆã‚‹æ™‚é–“")]
     private float thinkingTime = 1.5f;
-    [SerializeField, Header("–ß‚éŠÔ")]
+    [SerializeField, Header("æˆ»ã‚‹æ™‚é–“")]
     private float returnDuration = 0.5f;
     private List<GameObject> enemygameObjects = new List<GameObject>();
 
@@ -48,24 +48,24 @@ public class EnemyManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Enemy ‚Ìs“®ˆ—i—Dæ“xAI: ƒXƒLƒ‹‚ª‚ ‚ê‚Îg—pA‚È‚¯‚ê‚ÎƒvƒŒƒCƒ„[‚ğUŒ‚j
-    /// TurnManager ‚©‚çŒÄ‚Ño‚³‚ê‚éBƒvƒŒƒCƒ„[‚Ì Character ‚ğUŒ‚‚·‚é
+    /// Enemy ã®è¡Œå‹•å‡¦ç†ï¼ˆç°¡å˜AI: ã‚¹ã‚­ãƒ«ãŒã‚ã‚Œã°ä½¿ç”¨ã€ãªã‘ã‚Œã°ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æ”»æ’ƒï¼‰
+    /// TurnManager ã‹ã‚‰å‘¼ã³å‡ºã•ã‚Œã‚‹ã€‚ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã® Character ã‚’æ”»æ’ƒã™ã‚‹
     /// </summary>
     public void Test(Character actingEnemy)
     {
-        // Nullƒ`ƒFƒbƒN
+        // Nullãƒã‚§ãƒƒã‚¯
         if (actingEnemy == null)
         {
             turnManager.FlagChange();
             return;
         }
 
-        // ƒGƒlƒ~[‚Ìƒ^[ƒ“ˆ—‚ğŠJniƒRƒ‹[ƒ`ƒ“‚ÅÀsj
+        // ã‚¨ãƒãƒŸãƒ¼ã®ã‚¿ãƒ¼ãƒ³å‡¦ç†ã‚’é–‹å§‹ï¼ˆã‚³ãƒ«ãƒ¼ãƒãƒ³ã§å®Ÿè¡Œï¼‰
         StartCoroutine(EnemyTurnSequence(actingEnemy));
     }
 
     /// <summary>
-    /// ƒGƒlƒ~[‚Ìƒ^[ƒ“ƒV[ƒPƒ“ƒXi‘O‚Éo‚é¨l‚¦‚é¨UŒ‚¨–ß‚éj
+    /// ã‚¨ãƒãƒŸãƒ¼ã®ã‚¿ãƒ¼ãƒ³ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ï¼ˆå‰ã«å‡ºã‚‹â†’è€ƒãˆã‚‹â†’æ”»æ’ƒâ†’æˆ»ã‚‹ï¼‰
     /// </summary>
     private IEnumerator EnemyTurnSequence(Character actingEnemy)
     {
@@ -75,11 +75,11 @@ public class EnemyManager : MonoBehaviour
             yield break;
         }
 
-        // ‰ŠúˆÊ’u‚ğ•Û‘¶
+        // å…ƒã®ä½ç½®ã‚’ä¿å­˜
         Vector3 originalPosition = actingEnemy.transform.position;
         Vector3 forwardPosition = originalPosition + Vector3.forward * forwardDistance;
 
-        // ƒvƒŒƒCƒ„[Œó•â‚Ìæ“¾
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å–å¾—
         List<Character> playerCandidates = new List<Character>();
         foreach (var playerObj in turnManager.players)
         {
@@ -90,12 +90,12 @@ public class EnemyManager : MonoBehaviour
 
         if (playerCandidates.Count == 0)
         {
-            // ƒvƒŒƒCƒ„[‚ª‚¢‚È‚¢ -> ƒ^[ƒ“I—¹
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã„ãªã„ -> ã‚¿ãƒ¼ãƒ³çµ‚äº†
             turnManager.FlagChange();
             yield break;
         }
 
-        // ƒXƒLƒ‹‘I‘ğig—p‰Â”\‚ÈƒXƒLƒ‹‚ª‚ ‚ê‚Î‘I‘ğA‚È‚¯‚ê‚Înull‚ÅƒXƒLƒ‹‚È‚µj
+        // ã‚¹ã‚­ãƒ«é¸æŠï¼ˆä½¿ç”¨å¯èƒ½ãªã‚¹ã‚­ãƒ«ãŒã‚ã‚Œã°é¸æŠã€ãªã‘ã‚Œã°nullã§ã‚¹ã‚­ãƒ«ãªã—ï¼‰
         SkillData chosenSkill = null;
         if (actingEnemy.skills != null && actingEnemy.skills.Length > 0)
         {
@@ -110,7 +110,7 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
-        // ƒ^[ƒQƒbƒg‘I‘ği—Dæ: HP‚ª’á‚¢ƒvƒŒƒCƒ„[‚ğ—DæBƒ‰ƒ“ƒ_ƒ€ƒtƒ‰ƒO‚ªtrue‚È‚ç Random.Range ‚ğg—pj
+        // ã‚¿ãƒ¼ã‚²ãƒƒãƒˆé¸æŠï¼ˆå„ªå…ˆ: HPãŒä½ã„ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å„ªå…ˆã€‚ãƒ©ãƒ³ãƒ€ãƒ ãƒ•ãƒ©ã‚°ãŒtrueãªã‚‰ Random.Range ã‚’ä½¿ç”¨ï¼‰
         Character target = null;
         int minHp = int.MaxValue;
         if (!AttackRandamFlag)
@@ -128,34 +128,34 @@ public class EnemyManager : MonoBehaviour
 
         if (target == null)
         {
-            // ƒ‰ƒ“ƒ_ƒ€‚É‘I‘ğ
+            // ãƒ©ãƒ³ãƒ€ãƒ ã«é¸æŠ
             target = playerCandidates[UnityEngine.Random.Range(0, playerCandidates.Count)];
         }
 
-        // 1. ‘O‚Éo‚éƒAƒjƒ[ƒVƒ‡ƒ“
+        // 1. å‰ã«å‡ºã‚‹ã€ãƒˆã‚¥ã‚¤ãƒ¼ãƒ³ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
         Tween forwardTween = actingEnemy.transform.DOMove(forwardPosition, forwardDuration)
             .SetEase(Ease.OutQuad);
         yield return forwardTween.WaitForCompletion();
 
-        // 2. l‚¦‚éŠÔ‚ğ‘Ò‚Â
+        // 2. è€ƒãˆã‚‹æ™‚é–“ã‚’å¾…ã¤
         yield return new WaitForSeconds(thinkingTime);
 
-        // 3. UŒ‚ˆ—‚ğÀs
+        // 3. æ”»æ’ƒå‡¦ç†ã‚’å®Ÿè¡Œ
         ApplyAttack(target, chosenSkill, actingEnemy);
 
-        // 4. Œ³‚ÌˆÊ’u‚É–ß‚éƒAƒjƒ[ƒVƒ‡ƒ“
+        // 4. å…ƒã®ä½ç½®ã«æˆ»ã‚‹ã€ãƒˆã‚¥ã‚¤ãƒ¼ãƒ³ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
         Tween returnTween = actingEnemy.transform.DOMove(originalPosition, returnDuration)
             .SetEase(Ease.InQuad);
         yield return returnTween.WaitForCompletion();
 
-        // 5. ƒXƒe[ƒ^ƒXƒtƒ‰ƒO‚ğI—¹‚É
+        // 5. ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ•ãƒ©ã‚°ã‚’çµ‚äº†ã«
         actingEnemy.StatusFlag = StatusFlag.End;
-        // 6. ƒ^[ƒ“‚ğ TurnManager ‚É’Ê’m
+        // 6. ã‚¿ãƒ¼ãƒ³ã‚’ TurnManager ã«é€šçŸ¥
         turnManager.FlagChange();
     }
 
     /// <summary>
-    /// UŒ‚ˆ—iƒ_ƒ[ƒWŒvZ‚Æ€–S”»’èj
+    /// æ”»æ’ƒå‡¦ç†ï¼ˆãƒ€ãƒ¡ãƒ¼ã‚¸è¨ˆç®—ã¨æ’ƒç ´å‡¦ç†ï¼‰
     /// </summary>
     private void ApplyAttack(Character target, SkillData skill, Character attacker)
     {
@@ -168,16 +168,16 @@ public class EnemyManager : MonoBehaviour
         }
         else
         {
-            // ƒXƒLƒ‹‚ª‚È‚¢ê‡‚Í’ÊíUŒ‚‚ğg—piCharacterData ‚Ì atk ‚ğQÆ‚·‚é‚ªA•K—v‚É‰‚¶‚Äj
+            // ã‚¹ã‚­ãƒ«ãŒãªã„å ´åˆã¯é€šå¸¸æ”»æ’ƒã‚’ä½¿ç”¨ï¼ˆCharacterData ã® atk ã‚’å‚ç…§ã™ã‚‹ãŒã€å¿…è¦ã«å¿œã˜ã¦ï¼‰
             power = attacker != null ? attacker.atk : 1;
         }
 
         var targethp = target.hp - power;
         target.hp = (int)math.floor(targethp);
-        Debug.Log($"{attacker.name} ‚ª {target.name} ‚É {power} ƒ_ƒ[ƒWBc‚èHP: {target.hp}");
+        Debug.Log($"{attacker.name} ãŒ {target.name} ã« {power} ãƒ€ãƒ¡ãƒ¼ã‚¸ã€‚æ®‹ã‚ŠHP: {target.hp}");
 
-        // ƒ_ƒ[ƒWƒGƒtƒFƒNƒg‚ğ•\¦iUŒ‚‚ğó‚¯‚½ƒ^[ƒQƒbƒg‚ÌˆÊ’u‚Ì‘O‚É•\¦j
-        // ’: “G‚ªƒvƒŒƒCƒ„[‚ğUŒ‚‚·‚éê‡AƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ÉƒGƒtƒFƒNƒg‚ª•\¦‚³‚ê‚Ü‚·
+        // ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’è¡¨ç¤ºï¼ˆæ”»æ’ƒã‚’å—ã‘ãŸã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ä½ç½®ã®å‰ã«è¡¨ç¤ºï¼‰
+        // æ³¨: æ•µãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æ”»æ’ƒã™ã‚‹å ´åˆã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã«ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’è¡¨ç¤ºã—ã¾ã™
         if (DamageEffectUI.Instance != null && target.CharacterObj != null)
         {
             DamageEffectUI.Instance.ShowDamageEffectOnEnemy(target.CharacterObj, power);
@@ -185,9 +185,9 @@ public class EnemyManager : MonoBehaviour
 
         if (target.hp <= 0)
         {
-            // ƒvƒŒƒCƒ„[‚ª€–S‚µ‚½iHP‚ğ0‚Éj
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ’ƒç ´ã•ã‚ŒãŸï¼ˆHPãŒ0ã«ï¼‰
             target.hp = 0;
-            // ƒŠƒXƒg‚©‚çíœ
+            // ãƒªã‚¹ãƒˆã‹ã‚‰å‰Šé™¤
             if (turnManager.players.Contains(target.gameObject))
             {
                 turnManager.players.Remove(target.gameObject);
@@ -196,7 +196,7 @@ public class EnemyManager : MonoBehaviour
             {
                 turnManager.turnList.Remove(target.gameObject);
             }
-            // GameObject ‚ğíœ
+            // GameObject ã‚’å‰Šé™¤
             if (target.CharacterObj != null)
             {
                 Destroy(target.CharacterObj);

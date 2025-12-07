@@ -26,7 +26,17 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        if(GameManager.Instance != null)
+        {
+            if(GameManager.Instance.BattleWin)
+            {
+                
+                GameManager.Instance.BattleWin = false;
+                this.gameObject.transform.position=GameManager.Instance.PlayerBackPosition;
+                Debug.Log("PlayerControllerがGameManagerを取得しました。");
+            }
+            Debug.LogWarning("GameManagerが見つかりません。");
+        }
         // Rigidbodyの設定
         if (rb != null)
         {

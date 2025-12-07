@@ -29,8 +29,8 @@ MonoBehaviour:
   statusEffect: 0
   canCombo: 1
   comboNextSkill: {fileID: 11400000}
-  timingWindowStart: 3
-  timingWindowEnd: 10
+  timingWindowStart: 2
+  timingWindowEnd: 3
   comboDamageMultiplier: 1
   maxcombo: 3
   missCancel: 1
