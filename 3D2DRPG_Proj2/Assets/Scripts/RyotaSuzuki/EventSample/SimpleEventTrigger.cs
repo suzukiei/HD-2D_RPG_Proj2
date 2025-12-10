@@ -10,6 +10,7 @@ public class SimpleEventTrigger : MonoBehaviour
     [Header("イベント設定")]
     [SerializeField,Header("任意のイベントID")] private string eventId = "";
     [SerializeField,Header("任意のイベント名")] private string eventName = "";
+    [SerializeField,Header("イベントタイプ")] private EventType eventType = EventType.Conversation;
     
     [Header("発動条件")]
     [SerializeField, Header("発動条件にタグを使用する")] private bool requirePlayerTag = true;
@@ -20,6 +21,9 @@ public class SimpleEventTrigger : MonoBehaviour
     [Header("会話設定")]
     [SerializeField] private ConversationUI conversationUI;
     [SerializeField,Header("発動するイベントcsv")] private string csvFileName = "scenario01.csv";
+    
+    [Header("ムービー設定")]
+    [SerializeField] private CineController cineController;
     
     [Header("発動後の処理")]
     [SerializeField, Header("発動後、以下の処理を行うか")] private bool setFlagAfterEvent = true;
@@ -44,6 +48,12 @@ public class SimpleEventTrigger : MonoBehaviour
         ButtonPress     // 範囲内でボタン押したら発動
     }
     
+    public enum EventType
+    {
+        Conversation,   // 会話のみ
+        Movie           // ムービーのみ
+    }
+    
     void Start()
     {
         // Colliderの設定確認
@@ -54,12 +64,22 @@ public class SimpleEventTrigger : MonoBehaviour
         }
         
         // ConversationUIを自動検索
-        if (conversationUI == null)
+        if (conversationUI == null && eventType == EventType.Conversation)
         {
             conversationUI = FindObjectOfType<ConversationUI>();
             if (conversationUI == null && showDebugLog)
             {
                 Debug.LogWarning($"[{eventName}] ConversationUIが見つかりません！");
+            }
+        }
+        
+        // CineControllerを自動検索
+        if (cineController == null && eventType == EventType.Movie)
+        {
+            cineController = FindObjectOfType<CineController>();
+            if (cineController == null && showDebugLog)
+            {
+                Debug.LogWarning($"[{eventName}] CineControllerが見つかりません！");
             }
         }
     }
@@ -156,22 +176,16 @@ public class SimpleEventTrigger : MonoBehaviour
             }
         }
         
-        // イベント実行
-        if (conversationUI != null)
+        // イベントタイプに応じて実行
+        switch (eventType)
         {
-            // CSVファイル名を設定
-            conversationUI.csvFileName = csvFileName;
-            conversationUI.ReloadCSV();
-            conversationUI.StartDialogue();
-            
-            if (showDebugLog)
-            {
-                Debug.Log($"[{eventName}] イベント発動！CSV: {csvFileName}");
-            }
-        }
-        else
-        {
-            Debug.LogError($"[{eventName}] ConversationUIがnullです！");
+            case EventType.Conversation:
+                ExecuteConversation();
+                break;
+                
+            case EventType.Movie:
+                ExecuteMovie();
+                break;
         }
         
         // フラグを設定
@@ -186,6 +200,48 @@ public class SimpleEventTrigger : MonoBehaviour
         if (destroyAfterTrigger)
         {
             Destroy(gameObject, 0.5f);
+        }
+    }
+    
+    /// <summary>
+    /// 会話イベントを実行
+    /// </summary>
+    private void ExecuteConversation()
+    {
+        if (conversationUI != null)
+        {
+            conversationUI.csvFileName = csvFileName;
+            conversationUI.ReloadCSV();
+            conversationUI.StartDialogue();
+            
+            if (showDebugLog)
+            {
+                Debug.Log($"[{eventName}] 会話イベント発動！CSV: {csvFileName}");
+            }
+        }
+        else
+        {
+            Debug.LogError($"[{eventName}] ConversationUIがnullです！");
+        }
+    }
+    
+    /// <summary>
+    /// ムービーイベントを実行
+    /// </summary>
+    private void ExecuteMovie()
+    {
+        if (cineController != null)
+        {
+            cineController.PlayMovie();
+            
+            if (showDebugLog)
+            {
+                Debug.Log($"[{eventName}] ムービーイベント発動！");
+            }
+        }
+        else
+        {
+            Debug.LogError($"[{eventName}] CineControllerがnullです！");
         }
     }
     

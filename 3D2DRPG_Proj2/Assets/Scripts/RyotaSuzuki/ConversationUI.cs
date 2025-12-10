@@ -299,6 +299,7 @@ public class ConversationUI : MonoBehaviour
     /// </summary>
     public void StartDialogueWithCSV(string csvFile)
     {
+        Debug.Log($"========== StartDialogueWithCSV が呼ばれました！CSV: {csvFile} ==========");
         csvFileName = csvFile;
         ReloadCSV();
         StartDialogue();
