@@ -17,6 +17,7 @@ public class Character: MonoBehaviour
     public SkillData[] skills;
     public Vector3 CharacterTransfrom;
     public StatusFlag StatusFlag;
+    private GameObject characterDataObj;
     public void init(CharacterData _characterData)
     {
         characterData = _characterData;
@@ -33,6 +34,7 @@ public class Character: MonoBehaviour
         exp = characterData.exp;
         level = characterData.level;
         CharacterObj = this.gameObject;
+        characterDataObj= characterData.CharacterObj;
         skills = characterData.skills;
         CharacterTransfrom= characterData.CharacterTransfrom;
         StatusFlag= characterData.StatusFlag;
@@ -61,29 +63,122 @@ public class Character: MonoBehaviour
         mp = Mathf.Min(maxMp, mp + amount);
     }
 
+    [Header("レベルアップ設定")]
+    public int maxLevel = 99; // 最大レベル
+    
+    // レベルアップイベント（旧レベルを引数として渡す）
+    public System.Action<int> OnLevelUp;
+    
     // 経験値アップ
     public void GainExp(int amount)
     {
-        exp += amount;
-        if (exp >= ExpToLevelUp())
+        if (level >= maxLevel)
         {
+            exp = 0; // 最大レベルに達している場合は経験値を0に
+            return;
+        }
+        
+        exp += amount;
+        
+        // 連続レベルアップに対応
+        while (exp >= ExpToLevelUp() && level < maxLevel)
+        {
+            int expNeeded = ExpToLevelUp();
+            exp -= expNeeded;
             LevelUp();
         }
+        
+        // 最大レベルに達した場合
+        if (level >= maxLevel)
+        {
+            exp = 0;
+        }
     }
+    
+    /// <summary>
+    /// 次のレベルアップに必要な経験値を計算
+    /// 二次関数的な成長曲線を使用（よりバランスが良い）
+    /// </summary>
     private int ExpToLevelUp()
     {
-        return level * 100; // 例: レベルアップするのに100必要
+        // オプション1: 二次関数的な成長（推奨）
+        return 100 + (level - 1) * (level - 1) * 50;
+        
+        // オプション2: 指数関数的な成長（コメントアウト）
+        // return (int)(100 * Mathf.Pow(1.5f, level - 1));
+        
+        // オプション3: 線形成長（コメントアウト）
+        // return level * 100;
     }
+    
+    /// <summary>
+    /// レベルアップ処理
+    /// </summary>
     private void LevelUp()
     {
+        int oldLevel = level;
         level++;
-        exp = 0;
+        
+        // ステータス上昇
         maxHp += 10;
         maxMp += 5;
         atk += 2;
         def += 2;
         spd += 1;
+        
+        // HP/MP全回復
         hp = maxHp;
         mp = maxMp;
+        
+        // レベルアップイベント発火
+        OnLevelUp?.Invoke(oldLevel);
+        
+        Debug.Log($"{charactername} がレベル {oldLevel} から {level} にレベルアップしました！");
+    }
+    
+    /// <summary>
+    /// 次のレベルアップに必要な経験値を取得（外部から参照可能）
+    /// </summary>
+    public int GetExpToNextLevel()
+    {
+        if (level >= maxLevel) return 0;
+        return ExpToLevelUp();
+    }
+    
+    /// <summary>
+    /// 現在の経験値の割合を取得（0.0～1.0）
+    /// </summary>
+    public float GetExpRatio()
+    {
+        int expNeeded = GetExpToNextLevel();
+        if (expNeeded <= 0) return 1f;
+        return (float)exp / expNeeded;
+    }
+
+    ///<summary>
+    ///
+    /// CharacterDataを取得
+    ///
+    ///</summary>
+    public CharacterData GetCharacterData()
+    {
+        CharacterData newCharacterData =new CharacterData();   
+        newCharacterData.charactername = charactername;
+        newCharacterData.characterIcon = characterIcon;
+        newCharacterData.enemyCheckFlag = enemyCheckFlag;
+        newCharacterData.hp = hp;
+        newCharacterData.mp = mp;
+        newCharacterData.atk = atk;
+        newCharacterData.def = def;
+        newCharacterData.spd = spd;
+        newCharacterData.maxHp = maxHp;
+        newCharacterData.maxMp = maxMp;
+        newCharacterData.exp = exp;
+        newCharacterData.level = level;
+        newCharacterData.CharacterObj = characterDataObj;
+        newCharacterData.skills = skills;
+        newCharacterData.CharacterTransfrom = CharacterTransfrom;
+        newCharacterData.StatusFlag = StatusFlag;
+        return newCharacterData;
     }
 }

@@ -618,6 +618,13 @@ MonoBehaviour:
       m_Calls: []
   showDebugLog: 1
   isi: 0
+  PlayerData: []
+  EnemyData:
+  - {fileID: 11400000, guid: 8cdef13f5176d85439f5bd8b535dd680, type: 2}
+  - {fileID: 11400000, guid: c3e43bb82dd8f8d43b767c6dc1456d09, type: 2}
+  - {fileID: 11400000, guid: 3d8a2bcb8627c6c4f833b751a495801a, type: 2}
+  defeatedEnemyIds:
+    items: []
 --- !u!4 &106495799
 Transform:
   m_ObjectHideFlags: 0
@@ -627,11 +634,11 @@ Transform:
   m_GameObject: {fileID: 106495797}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.553999, y: -2.6639562, z: -15.070351}
+  m_LocalPosition: {x: -2.2416315, y: -2.5488262, z: -5.451541}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1918423552}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &114979743
 GameObject:
@@ -6858,7 +6865,6 @@ Transform:
   m_Children:
   - {fileID: 745215965}
   - {fileID: 1864808122}
-  - {fileID: 106495799}
   - {fileID: 333137749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7652,6 +7658,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 218251942}
+  - {fileID: 106495799}
   - {fileID: 50853071}
   - {fileID: 778180833}
   - {fileID: 893692958}

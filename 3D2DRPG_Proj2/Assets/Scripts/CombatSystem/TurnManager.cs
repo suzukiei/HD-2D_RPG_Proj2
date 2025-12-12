@@ -109,7 +109,7 @@ public class TurnManager : MonoBehaviour
                     yield break;
                     //break;
                 }
-                Debug.Log("ターン開始:" + turnNumber);
+                //Debug.Log("ターン開始:" + turnNumber);
                 // フラグを立てる
                 turnFlag = false;
                 // Turnリストを取得
@@ -118,7 +118,7 @@ public class TurnManager : MonoBehaviour
                 // Characterのステータスを変更
                 if (nextCharacterStatus == null)
                 {
-                    Debug.Log("ターン対象が存在しません");
+                    //Debug.Log("ターン対象が存在しません");
                     turnFlag = true;
                     turnNumber = (turnNumber + 1) % sortedTurnList.Count;
                     continue;
@@ -128,14 +128,14 @@ public class TurnManager : MonoBehaviour
                 {
                     // Enemy処理
                     enemyManager.Test(nextCharacterStatus.GetComponent<Character>());
-                    Debug.Log("StartEnemy");
+                    //Debug.Log("StartEnemy");
                 }
                 else
                 {
                     // Player処理
                     nextCharacterStatus.GetComponent<Character>().StatusFlag = StatusFlag.Move;
                     playerManager.StartPlayerAction(nextCharacterStatus.GetComponent<Character>());
-                    Debug.Log("StartPlayer");
+                    //Debug.Log("StartPlayer");
                 }
                 //現在のターンのリストから削除
                 sortedTurnList[turnNumber] = null;
@@ -171,24 +171,24 @@ public class TurnManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("ターン待機");
+                //Debug.Log("ターン待機");
             }
 
-          
+
         }
     }
-    
+
 
     //ターン順リストの順序を変更
     public void TurnChange(Character character, int chageNum)
     {
         //ターン順リスト変更フラグを立てる
         turnChangeFlag = true;
-        if(character==null)
+        if (character == null)
             Debug.Log("ターン順リスト変更:対象キャラクターが存在しません");
         var changeobj = character.CharacterObj;
-      
-            Debug.Log("ターン順リスト変更:" + changeobj.name + "を" + chageNum + "番目に移動");
+
+        Debug.Log("ターン順リスト変更:" + changeobj.name + "を" + chageNum + "番目に移動");
         var objectToMove = nextTurnList.FirstOrDefault(obj => obj == changeobj);
         if (objectToMove != null)
         {
@@ -240,19 +240,123 @@ public class TurnManager : MonoBehaviour
     private void VictoryProcess()
     {
         Debug.Log("勝利処理");
-        // 倒した敵を記録
-        if (GameManager.Instance != null && GameManager.Instance.EnemyData != null)
+
+        GameManager.Instance.EnemyData.AddRange(enemyManager.enemyData);
+
+        // 倒した敵を記録し、経験値を計算
+        int totalExp = 0;
+        //if (GameManager.Instance != null && GameManager.Instance.EnemyData != null)
+        //{
+        foreach (var enemyData in GameManager.Instance.EnemyData)
         {
-            foreach (var enemyData in GameManager.Instance.EnemyData)
+            Debug.Log($"倒した敵の確認: {enemyData.charactername}");
+            if (enemyData != null)
             {
-                if (enemyData != null)
+                GameManager.Instance.RecordEnemyDefeat(enemyData);
+                //Debug.Log($"敵を倒した記録: {enemyData.charactername}");
+                // 敵の経験値を合計
+                totalExp += CalculateEnemyExp(enemyData);
+            }
+        }
+        //}
+        Debug.Log($"総獲得経験値: {totalExp}");
+        // プレイヤーに経験値を配布
+        if (totalExp > 0)
+        {
+            DistributeExperienceToPlayers(totalExp);
+        }
+       
+        GameManager.Instance.EndBattle();
+        //GameManager.Instance.EnemyDataClear();  
+    }
+
+    /// <summary>
+    /// 敵から獲得できる経験値を計算
+    /// </summary>
+    /// <param name="enemyData">敵のデータ</param>
+    /// <returns>獲得経験値</returns>
+    private int CalculateEnemyExp(CharacterData enemyData)
+    {
+        if (enemyData == null) return 0;
+
+        // 敵のレベルに基づいて経験値を計算
+        // 基本経験値 = 敵レベル × 50
+        int baseExp = enemyData.level * 50;
+
+        // 敵の種類や強さに応じて調整可能
+        // 例: ボス敵の場合は倍率を上げるなど
+
+        return baseExp;
+    }
+
+    /// <summary>
+    /// プレイヤーキャラクターに経験値を配布
+    /// </summary>
+    /// <param name="totalExp">配布する総経験値</param>
+    private void DistributeExperienceToPlayers(int totalExp)
+    {
+        if (players == null || players.Count == 0)
+        {
+            Debug.LogWarning("プレイヤーキャラクターが見つかりません");
+            return;
+        }
+
+        // 生存しているプレイヤーキャラクターに経験値を配布
+        int alivePlayerCount = 0;
+        foreach (var playerObj in players)
+        {
+            if (playerObj != null)
+            {
+                var character = playerObj.GetComponent<Character>();
+                if (character != null && !character.enemyCheckFlag && character.hp > 0)
                 {
-                    GameManager.Instance.RecordEnemyDefeat(enemyData);
+                    alivePlayerCount++;
                 }
             }
         }
-        
-        GameManager.Instance.EndBattle();
+
+        if (alivePlayerCount == 0)
+        {
+            Debug.LogWarning("生存しているプレイヤーキャラクターがいません");
+            return;
+        }
+
+        // 各プレイヤーに均等に経験値を配布
+        int expPerPlayer = totalExp / alivePlayerCount;
+
+        Debug.Log($"経験値配布: 総経験値 {totalExp}, 生存プレイヤー数 {alivePlayerCount}, 1人あたり {expPerPlayer}");
+
+        foreach (var playerObj in players)
+        {
+            if (playerObj != null)
+            {
+                var character = playerObj.GetComponent<Character>();
+                if (character != null && !character.enemyCheckFlag && character.hp > 0)
+                {
+                    int oldLevel = character.level;
+                    character.GainExp(expPerPlayer);
+
+                    if (character.level > oldLevel)
+                    {
+                        Debug.Log($"{character.charactername} がレベル {oldLevel} から {character.level} にレベルアップしました！");
+                    }
+                }
+            }
+        }
+        //プレイヤーデータをGameManagerに保存
+        List<CharacterData> playerDataList = new List<CharacterData>();
+        foreach (var playerObj in players)
+        {
+            if (playerObj != null)
+            {
+                var character = playerObj.GetComponent<Character>();
+                if (character != null && !character.enemyCheckFlag)
+                {
+                    playerDataList.Add(character.GetCharacterData());
+                }
+            }
+        }
+        GameManager.Instance.PlayerDataSetStatus(playerDataList);
     }
     //End of TurnManager
 }

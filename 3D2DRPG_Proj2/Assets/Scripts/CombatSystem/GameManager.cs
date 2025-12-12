@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 
             if (showDebugLog)
             {
-                Debug.Log("GameManager: シングルトンインスタンスを作成しました");
+                //Debug.Log("GameManager: シングルトンインスタンスを作成しました");
             }
         }
         else
@@ -92,8 +92,17 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //プレイヤー
-        PlayerData.Clear();
+        //PlayerData.Clear();
         //エネミー
+        //EnemyData.Clear();
+    }
+    public void PlayerDataSetStatus(List<CharacterData> characterData)
+    {
+        PlayerData.Clear();
+        PlayerData.AddRange(characterData);
+    }
+    public void EnemyDataClear()
+    {
         EnemyData.Clear();
     }
     private void OnDestroy()
@@ -379,7 +388,7 @@ public class GameManager : MonoBehaviour
         if (isTransitioning || !enableBattleTransition) return;
 
         lastFieldPosition = playerPosition;
-        
+
         // EnemyDataをクリアして新しい敵データを設定
         EnemyData.Clear();
         if (enemyCharacterDataList != null)

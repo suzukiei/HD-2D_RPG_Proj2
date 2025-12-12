@@ -7,7 +7,7 @@ using DG.Tweening;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
-    private List<CharacterData> enemyData;
+    public List<CharacterData> enemyData;
     [SerializeField, Header("敵の攻撃ランダムフラグ")]
     private bool AttackRandamFlag;
     [SerializeField]
