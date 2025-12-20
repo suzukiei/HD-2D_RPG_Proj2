@@ -73,6 +73,7 @@ public class PlayerManager : MonoBehaviour
             playerStatusPanel[i].gameObject.SetActive(true);
             PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
             playerStatusPanel[i].UpdatePlayerStatus(playerData);
+            
         }
     }
 

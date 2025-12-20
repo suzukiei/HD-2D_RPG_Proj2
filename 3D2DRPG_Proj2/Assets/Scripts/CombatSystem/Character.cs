@@ -18,6 +18,8 @@ public class Character: MonoBehaviour
     public Vector3 CharacterTransfrom;
     public StatusFlag StatusFlag;
     private GameObject characterDataObj;
+    [SerializeField]
+    private Animator enemyAnimator;
     public void init(CharacterData _characterData)
     {
         characterData = _characterData;
@@ -38,6 +40,8 @@ public class Character: MonoBehaviour
         skills = characterData.skills;
         CharacterTransfrom= characterData.CharacterTransfrom;
         StatusFlag= characterData.StatusFlag;
+        if (this.transform.Find("BlockWolfAnimation"))
+        enemyAnimator = this.transform.Find("BlockWolfAnimation").GetComponent<Animator>();
     }
     // ダメージ計算
     public int Attack(Character enemy,SkillData skillData)
@@ -69,6 +73,10 @@ public class Character: MonoBehaviour
     // レベルアップイベント（旧レベルを引数として渡す）
     public System.Action<int> OnLevelUp;
     
+    public Animator EnemyAnimator
+    {
+        get { return enemyAnimator; }
+    }
     // 経験値アップ
     public void GainExp(int amount)
     {
