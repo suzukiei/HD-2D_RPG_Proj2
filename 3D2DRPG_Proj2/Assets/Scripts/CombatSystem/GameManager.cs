@@ -49,6 +49,11 @@ public class GameManager : MonoBehaviour
     [NonSerialized]
     public Vector3 PlayerBackPosition; // 既存の変数を保持
 
+    [SerializeField]
+    private string EventIDName;
+    [SerializeField]
+    private bool EventFlag;
+
     // プロパティ
     public static GameManager Instance
     {
@@ -95,6 +100,7 @@ public class GameManager : MonoBehaviour
         //PlayerData.Clear();
         //エネミー
         //EnemyData.Clear();
+        EventFlag=false;
     }
     public void PlayerDataSetStatus(List<CharacterData> characterData)
     {
@@ -123,6 +129,36 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObj);
         }
     }
+
+    ///// <summary>
+    /// 
+    /// イベントフラグを取得
+    /// 
+    ///// </summary>
+    public void GetEventID(string eventID)
+    {
+        EventIDName = eventID;
+        EventFlag = true;
+    }
+
+    ///// <summary>
+    ///
+    /// イベントがTrueの時にイベントIDを返す
+    /// 
+    ///// </summary>
+    public String SetEventIDFlag()
+    {
+        if (EventFlag)
+        {
+            EventFlag = false;
+            return EventIDName;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
 
     /// <summary>
     /// シーンロード時の処理
