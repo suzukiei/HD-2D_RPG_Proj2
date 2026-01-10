@@ -15,7 +15,7 @@ MonoBehaviour:
   charactername: Enemy
   characterIcon: {fileID: 0}
   enemyCheckFlag: 1
-  hp: 10
+  hp: 100
   mp: 100
   atk: 10
   def: 5
@@ -23,10 +23,10 @@ MonoBehaviour:
   maxHp: 1000
   maxMp: 10
   exp: 10
-  level: 10
-  CharacterObj: {fileID: 7333836060625140281, guid: 499efc22926276d48a3d2f55c743509d,
+  level: 100
+  CharacterObj: {fileID: 478247392656403969, guid: 032b251d9419d7b4283ce492c1c5483d,
     type: 3}
   skills:
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
-  CharacterTransfrom: {x: 3, y: 0, z: 5}
+  CharacterTransfrom: {x: 3, y: 0, z: 4.5}
   StatusFlag: 0

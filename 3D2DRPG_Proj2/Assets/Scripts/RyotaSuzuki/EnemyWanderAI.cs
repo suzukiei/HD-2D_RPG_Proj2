@@ -38,6 +38,9 @@ public class EnemyWanderAI : MonoBehaviour
     [Header("エネミー情報")]
     [SerializeField] private List<CharacterData> enemyData;    // エネミーデータリスト
 
+    [Header("イベントフラグ")]
+    [SerializeField]private string detectionFlagName = "EnemyDetectedPlayer"; // プレイヤー検知フラグ名
+    [SerializeField]private bool setFlagOnDetection = true; // 検知時にフラグを設定するか
 
     private NavMeshAgent navMeshAgent;
     private Vector3 initialPosition;

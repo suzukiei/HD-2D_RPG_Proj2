@@ -49,6 +49,11 @@ public class GameManager : MonoBehaviour
     [NonSerialized]
     public Vector3 PlayerBackPosition; // 既存の変数を保持
 
+    [SerializeField]
+    private string EventIDName;
+    [SerializeField]
+    private bool EventFlag;
+
     // プロパティ
     public static GameManager Instance
     {
@@ -81,7 +86,7 @@ public class GameManager : MonoBehaviour
 
             if (showDebugLog)
             {
-                Debug.Log("GameManager: シングルトンインスタンスを作成しました");
+                //Debug.Log("GameManager: シングルトンインスタンスを作成しました");
             }
         }
         else
@@ -92,8 +97,18 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //プレイヤー
-        PlayerData.Clear();
+        //PlayerData.Clear();
         //エネミー
+        //EnemyData.Clear();
+        EventFlag=false;
+    }
+    public void PlayerDataSetStatus(List<CharacterData> characterData)
+    {
+        PlayerData.Clear();
+        PlayerData.AddRange(characterData);
+    }
+    public void EnemyDataClear()
+    {
         EnemyData.Clear();
     }
     private void OnDestroy()
@@ -114,6 +129,36 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObj);
         }
     }
+
+    ///// <summary>
+    /// 
+    /// イベントフラグを取得
+    /// 
+    ///// </summary>
+    public void GetEventID(string eventID)
+    {
+        EventIDName = eventID;
+        EventFlag = true;
+    }
+
+    ///// <summary>
+    ///
+    /// イベントがTrueの時にイベントIDを返す
+    /// 
+    ///// </summary>
+    public String SetEventIDFlag()
+    {
+        if (EventFlag)
+        {
+            EventFlag = false;
+            return EventIDName;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
 
     /// <summary>
     /// シーンロード時の処理
@@ -379,7 +424,7 @@ public class GameManager : MonoBehaviour
         if (isTransitioning || !enableBattleTransition) return;
 
         lastFieldPosition = playerPosition;
-        
+
         // EnemyDataをクリアして新しい敵データを設定
         EnemyData.Clear();
         if (enemyCharacterDataList != null)

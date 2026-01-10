@@ -22,8 +22,8 @@ MonoBehaviour:
   spd: 100
   maxHp: 100
   maxMp: 100
-  exp: 10
-  level: 10
+  exp: 1
+  level: 1
   CharacterObj: {fileID: 7333836060625140281, guid: 13802adbece5a754f9a5c305138d6630,
     type: 3}
   skills:
@@ -31,5 +31,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
   - {fileID: 11400000, guid: 3add518a66829b945b071a686ccded4b, type: 2}
   - {fileID: 11400000, guid: d3af36cc263dc974795e1215d63c6aa2, type: 2}
-  CharacterTransfrom: {x: 2, y: 0, z: 0}
+  CharacterTransfrom: {x: 2, y: 0, z: -1.5}
   StatusFlag: 0

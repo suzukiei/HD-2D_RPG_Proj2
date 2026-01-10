@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using DG.Tweening;
 using Unity.VisualScripting;
 using Unity.Mathematics;
+using System;
 
 /// <summary>
 /// プレイヤーの戦闘行動を管理するクラス
@@ -73,6 +74,7 @@ public class PlayerManager : MonoBehaviour
             playerStatusPanel[i].gameObject.SetActive(true);
             PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
             playerStatusPanel[i].UpdatePlayerStatus(playerData);
+            
         }
     }
 
@@ -274,11 +276,13 @@ public class PlayerManager : MonoBehaviour
         {
             selectedCharacter.mp -= selectedSkill.mpCost;
             //コンボスキルの処理（成功時）
-            var attackEvent = new UnityEvent<int>();
-            attackEvent.AddListener((index) => OnComboApplyAttack());
+            Func<int, bool> attackEvent;
+            // 修正: OnComboApplyAttackメソッドをラムダ式でラップし、Func<int, bool>型にする
+            attackEvent = (comboStep) => OnComboApplyAttack();
             var attackEnd = new UnityEvent<int>();
             attackEnd.AddListener((index) => OnComboEnd());
             selectedEnemy = enemies[index];
+            comboUI.AttackTiming(selectedSkill.timingWindowStart, selectedSkill.timingWindowEnd);
             comboUI.Inputs(attackEvent, attackEnd, selectedSkill.maxcombo, selectedEnemy);
         }
         else
@@ -293,19 +297,21 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    public void OnComboApplyAttack()
+    public bool OnComboApplyAttack()
     {
         var enemy = selectedEnemy;
-        ApplyAttack(enemy, selectedSkill);
+        var enemysurvival =ApplyAttack(enemy, selectedSkill);
+        return enemysurvival;
         //selectedCharacter.mp -= selectedSkill.mpCost;
     }
 
     /// <summary>
     /// 攻撃処理（ダメージ計算・撃破処理）
+    /// true;敵が残っている、false:敵が撃破された
     /// </summary>
-    private void ApplyAttack(Character enemy, SkillData skill)
+    private bool ApplyAttack(Character enemy, SkillData skill)
     {
-        if (enemy == null || skill == null) return; // nullチェック追加
+        if (enemy == null || skill == null) return true; // nullチェック追加
 
         //ダメージ乱数
         float random = UnityEngine.Random.Range(10, 20);
@@ -333,7 +339,11 @@ public class PlayerManager : MonoBehaviour
             turnManager.turnList.Remove(enemy.gameObject);
             //エネミーのGameObjectを削除
             Destroy(enemy.CharacterObj);
-
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 

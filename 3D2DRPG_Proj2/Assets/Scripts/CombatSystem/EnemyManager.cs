@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Animations;
 
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField]
-    private List<CharacterData> enemyData;
+    public List<CharacterData> enemyData;
     [SerializeField, Header("敵の攻撃ランダムフラグ")]
     private bool AttackRandamFlag;
     [SerializeField]
@@ -23,6 +24,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField, Header("戻る時間")]
     private float returnDuration = 0.5f;
     private List<GameObject> enemygameObjects = new List<GameObject>();
+    [SerializeField]
+    public Animator enemyAnimator;
 
     public List<GameObject> GetEnemyData() { return enemygameObjects; }
     private void Awake()
@@ -35,8 +38,9 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < enemyData.Count; i++)
         {
             enemyData[i].CharacterTransfrom = vector3s[i];
-            var obj = Instantiate(enemyData[i].CharacterObj, vector3s[i] * 2, Quaternion.identity);
+            var obj = Instantiate(enemyData[i].CharacterObj, vector3s[i] * 2,Quaternion.identity);
             obj.AddComponent<Character>().init(enemyData[i]);
+            obj.transform.localRotation = Quaternion.Euler(0, -90, 0);
             obj.transform.parent = this.gameObject.transform;
             enemygameObjects.Add(obj);
         }
@@ -136,13 +140,17 @@ public class EnemyManager : MonoBehaviour
         Tween forwardTween = actingEnemy.transform.DOMove(forwardPosition, forwardDuration)
             .SetEase(Ease.OutQuad);
         yield return forwardTween.WaitForCompletion();
-
+        // 攻撃アニメーション再生
+        enemyAnimator = actingEnemy.EnemyAnimator;
+        
         // 2. 考える時間を待つ
         yield return new WaitForSeconds(thinkingTime);
-
+        if (enemyAnimator != null)
+            enemyAnimator.SetTrigger("Attack");
+        yield return new WaitForSeconds(0.5f);
         // 3. 攻撃処理を実行
         ApplyAttack(target, chosenSkill, actingEnemy);
-
+       
         // 4. 元の位置に戻る、トゥイーンアニメーション
         Tween returnTween = actingEnemy.transform.DOMove(originalPosition, returnDuration)
             .SetEase(Ease.InQuad);
