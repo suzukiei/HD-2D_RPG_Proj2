@@ -25,6 +25,13 @@ public class SimpleEventTrigger : MonoBehaviour
     [Header("ムービー設定")]
     [SerializeField] private CineController cineController;
     
+    [Header("プレイヤー制御")]
+    [SerializeField, Tooltip("イベント中プレイヤー操作を無効化するか")]
+    private bool disablePlayerControl = true;
+    
+    [SerializeField, Tooltip("プレイヤーオブジェクト（nullなら自動検索）")]
+    private GameObject playerObject;
+    
     [Header("発動後の処理")]
     [SerializeField, Header("発動後、以下の処理を行うか")] private bool setFlagAfterEvent = true;
     [SerializeField, Header("処理を行うイベントID")] private string flagToSet = "";
@@ -80,6 +87,16 @@ public class SimpleEventTrigger : MonoBehaviour
             if (cineController == null && showDebugLog)
             {
                 Debug.LogWarning($"[{eventName}] CineControllerが見つかりません！");
+            }
+        }
+        
+        // プレイヤーを自動検索
+        if (playerObject == null && disablePlayerControl)
+        {
+            playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject == null && showDebugLog)
+            {
+                Debug.LogWarning($"[{eventName}] Playerタグのオブジェクトが見つかりません！");
             }
         }
     }
@@ -210,6 +227,12 @@ public class SimpleEventTrigger : MonoBehaviour
     {
         if (conversationUI != null)
         {
+            // プレイヤー操作を無効化
+            if (disablePlayerControl)
+            {
+                DisablePlayerControl();
+            }
+            
             conversationUI.csvFileName = csvFileName;
             conversationUI.ReloadCSV();
             conversationUI.StartDialogue();
@@ -242,6 +265,78 @@ public class SimpleEventTrigger : MonoBehaviour
         else
         {
             Debug.LogError($"[{eventName}] CineControllerがnullです！");
+        }
+    }
+    
+    /// <summary>
+    /// プレイヤー操作を無効化
+    /// </summary>
+    private void DisablePlayerControl()
+    {
+        if (playerObject == null) return;
+        
+        // MonoBehaviourコンポーネントを無効化
+        var scripts = playerObject.GetComponents<MonoBehaviour>();
+        foreach (var script in scripts)
+        {
+            if (script != null && script.enabled && script.GetType().Name.Contains("Player"))
+            {
+                script.enabled = false;
+                if (showDebugLog)
+                {
+                    Debug.Log($"[{eventName}] {script.GetType().Name} を無効化しました");
+                }
+            }
+        }
+        
+        // CharacterController
+        var characterController = playerObject.GetComponent<CharacterController>();
+        if (characterController != null)
+        {
+            characterController.enabled = false;
+        }
+        
+        // Rigidbody
+        var rb = playerObject.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+    }
+    
+    /// <summary>
+    /// プレイヤー操作を有効化（会話終了時に呼ぶ）
+    /// </summary>
+    public void EnablePlayerControl()
+    {
+        if (playerObject == null || !disablePlayerControl) return;
+        
+        // MonoBehaviourコンポーネントを有効化
+        var scripts = playerObject.GetComponents<MonoBehaviour>();
+        foreach (var script in scripts)
+        {
+            if (script != null && !script.enabled && script.GetType().Name.Contains("Player"))
+            {
+                script.enabled = true;
+                if (showDebugLog)
+                {
+                    Debug.Log($"[{eventName}] {script.GetType().Name} を有効化しました");
+                }
+            }
+        }
+        
+        // CharacterController
+        var characterController = playerObject.GetComponent<CharacterController>();
+        if (characterController != null)
+        {
+            characterController.enabled = true;
+        }
+        
+        // Rigidbody
+        var rb = playerObject.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
         }
     }
     

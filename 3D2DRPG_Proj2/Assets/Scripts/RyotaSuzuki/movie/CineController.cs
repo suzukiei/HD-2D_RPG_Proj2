@@ -6,6 +6,16 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 /// <summary>
+/// アニメーション制御方法
+/// </summary>
+public enum AnimationControlType
+{
+    None,           // アニメーション制御しない
+    DirectState,    // 状態名を直接指定（animator.Play）
+    Parameters      // パラメータで制御（IsMoving, direction など）
+}
+
+/// <summary>
 /// 複数キャラクターの位置を管理するムービーコントローラー
 /// </summary>
 [System.Serializable]
@@ -19,6 +29,28 @@ public class CharacterMovieData
     
     [Tooltip("元の位置に戻すか")]
     public bool returnToOriginal = true;
+    
+    [Tooltip("回転も元に戻すか（falseなら位置だけ）")]
+    public bool returnRotation = false;
+    
+    [Header("アニメーション設定")]
+    [Tooltip("アニメーション制御方法")]
+    public AnimationControlType animationControlType = AnimationControlType.DirectState;
+    
+    [Tooltip("直接指定する状態名（DirectState使用時）")]
+    public string movieAnimationState = "Idle";
+    
+    [Tooltip("IsMovingパラメータの値（Parameters使用時）")]
+    public bool setIsMoving = false;
+    
+    [Tooltip("directionパラメータの値（Parameters使用時、0-4）")]
+    public int setDirection = 0;
+    
+    [Tooltip("IsDashパラメータの値（Parameters使用時）")]
+    public bool setIsDash = false;
+    
+    [Tooltip("最初にパラメータをリセットするか")]
+    public bool resetAnimatorParameters = true;
     
     // 保存用
     [HideInInspector] public Vector3 savedPosition;
@@ -135,6 +167,9 @@ public class CineController : MonoBehaviour
                 Debug.Log($"{charData.character.name} をムービー位置に移動しました");
             }
             
+            // アニメーション制御
+            SetMovieAnimation(charData);
+            
             // プレイヤー操作を無効化
             if (disablePlayerControl)
             {
@@ -191,8 +226,17 @@ public class CineController : MonoBehaviour
             if (charData.returnToOriginal)
             {
                 charData.character.transform.position = charData.savedPosition;
-                charData.character.transform.rotation = charData.savedRotation;
-                Debug.Log($"{charData.character.name} を元の位置に戻しました");
+                
+                // 回転も戻す設定の場合のみ
+                if (charData.returnRotation)
+                {
+                    charData.character.transform.rotation = charData.savedRotation;
+                    Debug.Log($"{charData.character.name} を元の位置・回転に戻しました");
+                }
+                else
+                {
+                    Debug.Log($"{charData.character.name} を元の位置に戻しました（回転は維持）");
+                }
             }
             
             // プレイヤー操作を有効化
@@ -370,6 +414,124 @@ public class CineController : MonoBehaviour
         {
             playableDirector.time = playableDirector.duration;
             playableDirector.Stop();
+        }
+    }
+    
+    /// <summary>
+    /// ムービー用アニメーションを設定
+    /// </summary>
+    private void SetMovieAnimation(CharacterMovieData data)
+    {
+        Animator animator = data.character.GetComponent<Animator>();
+        if (animator == null) return;
+        
+        // Animatorパラメータをリセット
+        if (data.resetAnimatorParameters)
+        {
+            // プロジェクトで使用しているパラメータをリセット（小文字のi）
+            ResetAnimatorParameter(animator, "direction");
+            ResetAnimatorParameter(animator, "isMoving");
+            ResetAnimatorParameter(animator, "isDash");
+            
+            // 汎用的なパラメータもリセット（存在すれば）
+            ResetAnimatorParameter(animator, "Speed");
+            ResetAnimatorParameter(animator, "MoveSpeed");
+            ResetAnimatorParameter(animator, "Velocity");
+            
+            Debug.Log($"[CineController] {data.character.name} のAnimatorパラメータをリセットしました");
+        }
+        
+        // アニメーション制御タイプに応じて処理
+        switch (data.animationControlType)
+        {
+            case AnimationControlType.None:
+                // 何もしない
+                break;
+                
+            case AnimationControlType.DirectState:
+                // 状態名を直接指定
+                if (!string.IsNullOrEmpty(data.movieAnimationState))
+                {
+                    animator.Play(data.movieAnimationState);
+                    Debug.Log($"[CineController] {data.character.name} のアニメーションを {data.movieAnimationState} に設定しました");
+                }
+                break;
+                
+            case AnimationControlType.Parameters:
+                // パラメータで制御（順序重要：isMovingを最後に設定）
+                SetAnimatorParameter(animator, "direction", data.setDirection);
+                SetAnimatorParameter(animator, "isDash", data.setIsDash);
+                SetAnimatorParameter(animator, "isMoving", data.setIsMoving);
+                
+                Debug.Log($"[CineController] {data.character.name} のパラメータを設定: isMoving={data.setIsMoving}, direction={data.setDirection}, isDash={data.setIsDash}");
+                
+                // 念のため、設定後の実際の値も確認
+                bool hasIsMoving = false;
+                foreach (var param in animator.parameters)
+                {
+                    if (param.name == "isMoving") { hasIsMoving = true; break; }
+                }
+                
+                if (hasIsMoving)
+                {
+                    Debug.Log($"[CineController] 実際の値: isMoving={animator.GetBool("isMoving")}, direction={animator.GetInteger("direction")}, isDash={animator.GetBool("isDash")}");
+                }
+                break;
+        }
+    }
+    
+    /// <summary>
+    /// Animatorパラメータを設定（存在する場合のみ）
+    /// </summary>
+    private void SetAnimatorParameter(Animator animator, string parameterName, object value)
+    {
+        foreach (var param in animator.parameters)
+        {
+            if (param.name == parameterName)
+            {
+                switch (param.type)
+                {
+                    case AnimatorControllerParameterType.Float:
+                        animator.SetFloat(parameterName, System.Convert.ToSingle(value));
+                        break;
+                    case AnimatorControllerParameterType.Int:
+                        animator.SetInteger(parameterName, System.Convert.ToInt32(value));
+                        break;
+                    case AnimatorControllerParameterType.Bool:
+                        animator.SetBool(parameterName, System.Convert.ToBoolean(value));
+                        break;
+                }
+                return;
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Animatorパラメータをリセット（存在する場合のみ）
+    /// </summary>
+    private void ResetAnimatorParameter(Animator animator, string parameterName)
+    {
+        foreach (var param in animator.parameters)
+        {
+            if (param.name == parameterName)
+            {
+                switch (param.type)
+                {
+                    case AnimatorControllerParameterType.Float:
+                        animator.SetFloat(parameterName, 0f);
+                        break;
+                    case AnimatorControllerParameterType.Int:
+                        animator.SetInteger(parameterName, 0);
+                        break;
+                    case AnimatorControllerParameterType.Bool:
+                        animator.SetBool(parameterName, false);
+                        break;
+                    case AnimatorControllerParameterType.Trigger:
+                        animator.ResetTrigger(parameterName);
+                        break;
+                }
+                return;
+            }
         }
     }
     

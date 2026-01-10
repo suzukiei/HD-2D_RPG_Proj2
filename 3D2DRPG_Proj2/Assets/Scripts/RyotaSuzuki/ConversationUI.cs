@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 using TMPro;
 using DG.Tweening;
 using System.IO;
@@ -59,6 +60,23 @@ public class ConversationUI : MonoBehaviour
     [Header("会話終了後の動作")]
     [SerializeField, Header("会話終了後にシーン遷移するか")] private bool loadSceneOnEnd = false;
     [SerializeField, Header("遷移先のシーン名")] private string nextSceneName = "Map";
+    
+    [Header("会話終了イベント")]
+    [SerializeField, Header("会話終了時に実行するイベント")] private UnityEvent onDialogueEnd;
+    
+    [Header("プレイヤー制御")]
+    [SerializeField, Tooltip("会話終了時にプレイヤー操作を再開するか")]
+    private bool enablePlayerControlOnEnd = true;
+    
+    [SerializeField, Tooltip("プレイヤーオブジェクト（nullなら自動検索）")]
+    private GameObject playerObject;
+    
+    [Header("Timeline連携")]
+    [SerializeField, Tooltip("会話終了時にTimelineも停止するか")]
+    private bool stopTimelineOnEnd = false;
+    
+    // 現在再生中のPlayableDirector（動的に設定）
+    private UnityEngine.Playables.PlayableDirector currentPlayableDirector;
 
     [Header("ログUI設定")]
     [SerializeField, Header("ログビューアパネル")] public GameObject logPanel;
@@ -95,6 +113,12 @@ public class ConversationUI : MonoBehaviour
         else
         {
             LoadTestDialogues();
+        }
+        
+        // プレイヤーを自動検索
+        if (playerObject == null && enablePlayerControlOnEnd)
+        {
+            playerObject = GameObject.FindGameObjectWithTag("Player");
         }
     }
 
@@ -301,6 +325,19 @@ public class ConversationUI : MonoBehaviour
     {
         Debug.Log($"========== StartDialogueWithCSV が呼ばれました！CSV: {csvFile} ==========");
         csvFileName = csvFile;
+        currentPlayableDirector = null; // リセット
+        ReloadCSV();
+        StartDialogue();
+    }
+    
+    /// <summary>
+    /// CSVファイルとPlayableDirectorを指定して会話を開始（Timeline用・拡張版）
+    /// </summary>
+    public void StartDialogueWithCSVAndTimeline(string csvFile, UnityEngine.Playables.PlayableDirector director)
+    {
+        Debug.Log($"========== StartDialogueWithCSVAndTimeline が呼ばれました！CSV: {csvFile} ==========");
+        csvFileName = csvFile;
+        currentPlayableDirector = director;
         ReloadCSV();
         StartDialogue();
     }
@@ -406,11 +443,61 @@ public class ConversationUI : MonoBehaviour
     /// </summary>
     void OnDialogueComplete()
     {
+        Debug.Log("[ConversationUI] 会話が終了しました");
+        
+        // Timeline停止（設定されている場合）
+        if (stopTimelineOnEnd && currentPlayableDirector != null)
+        {
+            Debug.Log($"[ConversationUI] Timelineを停止します: {currentPlayableDirector.name}");
+            currentPlayableDirector.Stop();
+            currentPlayableDirector = null;
+        }
+        
+        // プレイヤー操作を再開
+        if (enablePlayerControlOnEnd && playerObject != null)
+        {
+            EnablePlayerControl();
+        }
+        
+        // 会話終了イベントを発火
+        onDialogueEnd?.Invoke();
+        
         // シーン遷移
         if (loadSceneOnEnd && !string.IsNullOrEmpty(nextSceneName))
         {
             Debug.Log($"会話終了。シーン遷移: {nextSceneName}");
             SceneManager.LoadScene(nextSceneName);
+        }
+    }
+    
+    /// <summary>
+    /// プレイヤー操作を有効化
+    /// </summary>
+    private void EnablePlayerControl()
+    {
+        // MonoBehaviourコンポーネントを有効化
+        var scripts = playerObject.GetComponents<MonoBehaviour>();
+        foreach (var script in scripts)
+        {
+            if (script != null && !script.enabled && script.GetType().Name.Contains("Player"))
+            {
+                script.enabled = true;
+                Debug.Log($"[ConversationUI] {script.GetType().Name} を有効化しました");
+            }
+        }
+        
+        // CharacterController
+        var characterController = playerObject.GetComponent<CharacterController>();
+        if (characterController != null && !characterController.enabled)
+        {
+            characterController.enabled = true;
+        }
+        
+        // Rigidbody
+        var rb = playerObject.GetComponent<Rigidbody>();
+        if (rb != null && rb.isKinematic)
+        {
+            rb.isKinematic = false;
         }
     }
 

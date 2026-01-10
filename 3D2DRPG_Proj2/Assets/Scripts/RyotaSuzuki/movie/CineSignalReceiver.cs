@@ -14,6 +14,15 @@ public class CineSignalReceiver : MonoBehaviour
     {
         public GameObject character;
         public Transform targetPosition;
+        
+        [Header("アニメーション設定")]
+        [Tooltip("ムービー中のアニメーション状態名（空なら制御しない）")]
+        public string movieAnimationState = "Idle";
+        
+        [Tooltip("Animatorパラメータをリセットするか")]
+        public bool resetAnimatorParameters = true;
+        
+        // 保存用
         [HideInInspector] public Vector3 savedPosition;
         [HideInInspector] public Quaternion savedRotation;
     }
@@ -45,6 +54,9 @@ public class CineSignalReceiver : MonoBehaviour
                 data.character.transform.position = data.targetPosition.position;
                 data.character.transform.rotation = data.targetPosition.rotation;
             }
+            
+            // アニメーション制御
+            SetMovieAnimation(data);
             
             // 操作を無効化
             if (disableControl)
@@ -174,6 +186,67 @@ public class CineSignalReceiver : MonoBehaviour
             if (data.character != null)
             {
                 SetControlEnabled(data.character, true);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// ムービー用アニメーションを設定
+    /// </summary>
+    private void SetMovieAnimation(CharacterTransformData data)
+    {
+        Animator animator = data.character.GetComponent<Animator>();
+        if (animator == null) return;
+        
+        // Animatorパラメータをリセット
+        if (data.resetAnimatorParameters)
+        {
+            // プロジェクトで使用しているパラメータをリセット（小文字のi）
+            ResetAnimatorParameter(animator, "direction");
+            ResetAnimatorParameter(animator, "isMoving");
+            ResetAnimatorParameter(animator, "isDash");
+            
+            // 汎用的なパラメータもリセット（存在すれば）
+            ResetAnimatorParameter(animator, "Speed");
+            ResetAnimatorParameter(animator, "MoveSpeed");
+            ResetAnimatorParameter(animator, "Velocity");
+            
+            Debug.Log($"[CineSignalReceiver] {data.character.name} のAnimatorパラメータをリセットしました");
+        }
+        
+        // 指定されたアニメーション状態に遷移
+        if (!string.IsNullOrEmpty(data.movieAnimationState))
+        {
+            animator.Play(data.movieAnimationState);
+            Debug.Log($"[CineSignalReceiver] {data.character.name} のアニメーションを {data.movieAnimationState} に設定しました");
+        }
+    }
+    
+    /// <summary>
+    /// Animatorパラメータをリセット（存在する場合のみ）
+    /// </summary>
+    private void ResetAnimatorParameter(Animator animator, string parameterName)
+    {
+        foreach (var param in animator.parameters)
+        {
+            if (param.name == parameterName)
+            {
+                switch (param.type)
+                {
+                    case AnimatorControllerParameterType.Float:
+                        animator.SetFloat(parameterName, 0f);
+                        break;
+                    case AnimatorControllerParameterType.Int:
+                        animator.SetInteger(parameterName, 0);
+                        break;
+                    case AnimatorControllerParameterType.Bool:
+                        animator.SetBool(parameterName, false);
+                        break;
+                    case AnimatorControllerParameterType.Trigger:
+                        animator.ResetTrigger(parameterName);
+                        break;
+                }
+                return;
             }
         }
     }
