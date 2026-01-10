@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 public class ComboAttack : MonoBehaviour
 {
     //public Animator animator;
@@ -9,7 +10,7 @@ public class ComboAttack : MonoBehaviour
     [SerializeField] private float timingWindowEnd = 0.6f;   // 攻撃中のタイミング受付終了
 
     private UnityEvent<int> onComboEnd;
-    private UnityEvent<int> onComboAttack;
+    private Func<int, bool> onComboAttack;
     private Character enemy;
     private int comboStep = 0;
     private int maxComboStep = 3; // 最大コンボ数
@@ -81,7 +82,12 @@ public class ComboAttack : MonoBehaviour
             return;
         }
         timingUI.Show(timingTime, timingWindowEnd);
-        onComboAttack.Invoke(0);
+        bool EnemySurvival = onComboAttack.Invoke(0);
+        if (!EnemySurvival)
+        {
+            EndCombo();
+            return;
+        }
         //animator.SetTrigger($"Attack{comboStep}");
         timer = 0f;
         canInput = true;
@@ -95,7 +101,15 @@ public class ComboAttack : MonoBehaviour
         canInput = false;
         timer = 0f;
     }
-    public void Inputs(UnityEvent<int> _attackEvent, UnityEvent<int> _attackEnd, int _maxcombo, Character enemies)
+
+    // コンボ攻撃の入力設定
+    public void AttackTiming(float _timing , float _AttackEnd)
+    {
+          timingTime = _timing;
+       timingWindowEnd = _AttackEnd;
+
+    }
+    public void Inputs(Func<int,bool> _attackEvent, UnityEvent<int> _attackEnd, int _maxcombo, Character enemies)
     {
         onComboEnd = _attackEnd;
         onComboAttack = _attackEvent;
