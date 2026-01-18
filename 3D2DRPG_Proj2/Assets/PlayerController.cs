@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = Vector3.zero;
         bool isMoving = false;
         bool isDash = false;
-        PadTest(inputVector);
+        //PadTest(inputVector);
 
         if (Input.GetKey(KeyCode.D) || inputVector.x > 0.5f)
         {

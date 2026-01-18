@@ -75,6 +75,9 @@ public class ConversationUI : MonoBehaviour
     [SerializeField, Tooltip("会話終了時にTimelineも停止するか")]
     private bool stopTimelineOnEnd = false;
     
+    [SerializeField, Tooltip("停止するPlayableDirector（Inspectorで設定可能）")]
+    private UnityEngine.Playables.PlayableDirector defaultPlayableDirector;
+    
     // 現在再生中のPlayableDirector（動的に設定）
     private UnityEngine.Playables.PlayableDirector currentPlayableDirector;
 
@@ -446,17 +449,20 @@ public class ConversationUI : MonoBehaviour
         Debug.Log("[ConversationUI] 会話が終了しました");
         
         // Timeline停止（設定されている場合）
-        if (stopTimelineOnEnd && currentPlayableDirector != null)
+        if (stopTimelineOnEnd)
         {
-            Debug.Log($"[ConversationUI] Timelineを停止します: {currentPlayableDirector.name}");
-            currentPlayableDirector.Stop();
-            currentPlayableDirector = null;
+            StopActiveTimeline();
         }
         
         // プレイヤー操作を再開
+        Debug.Log($"[ConversationUI] enablePlayerControlOnEnd={enablePlayerControlOnEnd}, playerObject={playerObject}");
         if (enablePlayerControlOnEnd && playerObject != null)
         {
             EnablePlayerControl();
+        }
+        else if (enablePlayerControlOnEnd && playerObject == null)
+        {
+            Debug.LogWarning("[ConversationUI] playerObjectがnullのためプレイヤー操作を再開できません");
         }
         
         // 会話終了イベントを発火
@@ -467,6 +473,49 @@ public class ConversationUI : MonoBehaviour
         {
             Debug.Log($"会話終了。シーン遷移: {nextSceneName}");
             SceneManager.LoadScene(nextSceneName);
+        }
+    }
+    
+    /// <summary>
+    /// 現在再生中のTimelineを停止
+    /// </summary>
+    private void StopActiveTimeline()
+    {
+        // 優先順位: currentPlayableDirector > defaultPlayableDirector > 自動検索
+        UnityEngine.Playables.PlayableDirector directorToStop = null;
+        
+        if (currentPlayableDirector != null)
+        {
+            directorToStop = currentPlayableDirector;
+        }
+        else if (defaultPlayableDirector != null)
+        {
+            directorToStop = defaultPlayableDirector;
+        }
+        else
+        {
+            // 再生中のPlayableDirectorを自動検索
+            var allDirectors = FindObjectsOfType<UnityEngine.Playables.PlayableDirector>();
+            foreach (var director in allDirectors)
+            {
+                if (director.state == UnityEngine.Playables.PlayState.Playing)
+                {
+                    directorToStop = director;
+                    Debug.Log($"[ConversationUI] 再生中のTimelineを自動検出: {director.name}");
+                    break;
+                }
+            }
+        }
+        
+        if (directorToStop != null)
+        {
+            Debug.Log($"[ConversationUI] Timelineを停止します: {directorToStop.name}");
+            directorToStop.Stop();
+            currentPlayableDirector = null;
+        }
+        else
+        {
+            Debug.LogWarning("[ConversationUI] 停止するTimelineが見つかりませんでした");
         }
     }
     

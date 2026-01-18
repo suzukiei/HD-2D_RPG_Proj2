@@ -302,6 +302,45 @@ public class SimpleEventTrigger : MonoBehaviour
         {
             rb.isKinematic = true;
         }
+        
+        // AnimatorをIdleにする
+        SetPlayerAnimatorIdle();
+    }
+    
+    /// <summary>
+    /// プレイヤーのAnimatorをIdle状態にする
+    /// </summary>
+    private void SetPlayerAnimatorIdle()
+    {
+        if (playerObject == null) return;
+        
+        var animator = playerObject.GetComponent<Animator>();
+        if (animator == null) return;
+        
+        // isMovingパラメータをfalseにする（存在する場合）
+        foreach (var param in animator.parameters)
+        {
+            if (param.name == "isMoving" && param.type == AnimatorControllerParameterType.Bool)
+            {
+                animator.SetBool("isMoving", false);
+                if (showDebugLog)
+                {
+                    Debug.Log($"[{eventName}] Animator: isMoving を false に設定しました");
+                }
+            }
+            else if (param.name == "isDash" && param.type == AnimatorControllerParameterType.Bool)
+            {
+                animator.SetBool("isDash", false);
+            }
+            else if (param.name == "Speed" && param.type == AnimatorControllerParameterType.Float)
+            {
+                animator.SetFloat("Speed", 0f);
+            }
+            else if (param.name == "MoveSpeed" && param.type == AnimatorControllerParameterType.Float)
+            {
+                animator.SetFloat("MoveSpeed", 0f);
+            }
+        }
     }
     
     /// <summary>
