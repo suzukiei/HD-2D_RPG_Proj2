@@ -504,7 +504,7 @@ MonoBehaviour:
   autoStartOnSceneLoad: 1
   autoHideOnComplete: 0
   autoLoadNextScene: 1
-  nextSceneName: GameField
+  nextSceneName: EV002AnimationScene
   onPrologueComplete:
     m_PersistentCalls:
       m_Calls: []

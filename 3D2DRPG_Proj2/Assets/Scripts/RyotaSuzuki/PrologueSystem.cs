@@ -299,9 +299,14 @@ public class PrologueSystem : MonoBehaviour
         // 完了イベントを呼び出し
         onPrologueComplete?.Invoke();
 
-        // 次のシーンへ遷移
-        if (autoLoadNextScene && !string.IsNullOrEmpty(nextSceneName))
+        // SceneTransitionManagerがあれば使用（画面全体のフェード）
+        if (SceneTransitionManager.Instance != null)
         {
+            SceneTransitionManager.Instance.LoadSceneWithFade(nextSceneName);
+        }
+        else
+        {
+            // なければ直接遷移
             SceneManager.LoadScene(nextSceneName);
         }
     }
