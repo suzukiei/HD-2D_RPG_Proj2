@@ -472,7 +472,16 @@ public class ConversationUI : MonoBehaviour
         if (loadSceneOnEnd && !string.IsNullOrEmpty(nextSceneName))
         {
             Debug.Log($"会話終了。シーン遷移: {nextSceneName}");
-            SceneManager.LoadScene(nextSceneName);
+            
+            // SceneTransitionManagerがあれば使用、なければ通常遷移
+            if (SceneTransitionManager.Instance != null)
+            {
+                SceneTransitionManager.Instance.LoadSceneWithAutoTransition(nextSceneName);
+            }
+            else
+            {
+                SceneManager.LoadScene(nextSceneName);
+            }
         }
     }
     

@@ -112,7 +112,7 @@ public class CineController : MonoBehaviour
     }
     
     void OnDisable()
-    {
+        {
         Debug.Log($"[CineController] OnDisable - {gameObject.name}が非アクティブになりました");
     }
     
@@ -230,7 +230,7 @@ public class CineController : MonoBehaviour
                 // 回転も戻す設定の場合のみ
                 if (charData.returnRotation)
                 {
-                    charData.character.transform.rotation = charData.savedRotation;
+                charData.character.transform.rotation = charData.savedRotation;
                     Debug.Log($"{charData.character.name} を元の位置・回転に戻しました");
                 }
                 else
