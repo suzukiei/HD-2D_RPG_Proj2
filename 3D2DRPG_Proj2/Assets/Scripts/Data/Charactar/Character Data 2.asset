@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
   m_Name: Character Data 2
   m_EditorClassIdentifier: 
-  charactername: Player3
+  charactername: "\u6708"
   characterIcon: {fileID: 0}
   enemyCheckFlag: 0
   hp: 100
