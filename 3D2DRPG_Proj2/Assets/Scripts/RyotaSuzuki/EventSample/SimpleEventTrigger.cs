@@ -8,7 +8,7 @@ using UnityEngine;
 public class SimpleEventTrigger : MonoBehaviour
 {
     [Header("イベント設定")]
-    [SerializeField,Header("任意のイベントID")] private string eventId = "";
+    [SerializeField,Header("任意のイベントID")] public string eventId = "";
     [SerializeField,Header("任意のイベント名")] private string eventName = "";
     [SerializeField,Header("イベントタイプ")] private EventType eventType = EventType.Conversation;
     
@@ -145,7 +145,17 @@ public class SimpleEventTrigger : MonoBehaviour
             Debug.Log($"[{eventName}] プレイヤーが範囲外に出ました");
         }
     }
-    
+
+    /// <summary>
+    /// 他スクリプトから直接イベントを発火させる場合
+    /// </summary>
+    public void StartEvent(string EventID)
+    {
+        this.eventId = EventID;
+
+        TriggerEvent();
+    }
+
     /// <summary>
     /// イベントを発動
     /// </summary>
