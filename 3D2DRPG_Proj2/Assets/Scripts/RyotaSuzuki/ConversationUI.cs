@@ -1,12 +1,13 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine.Events;
-using TMPro;
-using DG.Tweening;
 using System.IO;
+using TMPro;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class DialogueData
