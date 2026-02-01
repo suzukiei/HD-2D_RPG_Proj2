@@ -22,7 +22,7 @@ public class BlinkingText : MonoBehaviour
     
     [Tooltip("開始時に自動的に点滅を開始")]
     [SerializeField] private bool autoStart = true;
-    
+
     [Header("フェード設定")]
     [Tooltip("開始時にフェードインするか")]
     [SerializeField] private bool fadeInOnStart = false;
