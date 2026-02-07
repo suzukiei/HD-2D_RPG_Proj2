@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92d8b73040e5b143bbd8be31623266c, type: 3}
   m_Name: Combo
   m_EditorClassIdentifier: 
-  skillName: combo
+  skillName: "\u30B3\u30F3\u30DC"
   description: 
   icon: {fileID: 0}
   soundEffect: {fileID: 0}
@@ -35,6 +35,6 @@ MonoBehaviour:
   maxcombo: 3
   missCancel: 1
   statusChance: 0
-  buffEffect: {fileID: 0}
+  buffEffect: []
   buffValue: 0
   buffDuration: 0

@@ -42,9 +42,6 @@ public class PlayerManager : MonoBehaviour
     //選択している敵
     private Character selectedEnemy;
 
-    //バフの効果を管理する変数
-    private List<BuffInstance> activeBuffs = new List<BuffInstance>();
-
     /// <summary>
     /// キャラクターデータ取得用
     /// </summary>
@@ -107,6 +104,7 @@ public class PlayerManager : MonoBehaviour
                 skills.AddRange(selectedCharacter.skills);
                 // UnityEventを作成してコールバックを設定
                 UnityEvent<int> callback = new UnityEvent<int>();
+                //カリバフ効果適用
                 callback.AddListener(OnSkillSelected);
                 // スキル選択UIを表示
                 skillSelectionUI.ShowSkillSelection(skills, callback);
@@ -128,29 +126,42 @@ public class PlayerManager : MonoBehaviour
                 uiTest.Inputs(healEvent, characters.Count - 1, characters);
                 break;
             case StatusFlag.Buff:
-                // Heal対象選択パネル対象選択パネル
-                switch (selectedSkill.buffEffect.buffRange)
+            if(selectedSkill.buffEffect.Count > 0)
+            {
+                List<BuffBase> buffBase = selectedSkill.buffEffect;
+                foreach (var buff in buffBase)
                 {
-                    case BuffRange.Self:
-                        OnBuffSelected(null, 0);
-                        break;
-                    case BuffRange.AllAllies:
-                    case BuffRange.AllEnemies:
-                        OnBuffSelected(null, 0);
-                        break;
-                    case BuffRange.Ally:
-                        List<Character> buffcharacters = getPlayer();
-                        var buffEvent = new UnityEvent<int>();
-                        buffEvent.AddListener((index) => OnBuffSelected(buffcharacters, index));
-                        uiTest.Inputs(buffEvent, buffcharacters.Count - 1, buffcharacters);
-                        break;
-                    case BuffRange.Enemy:
-                        List<Character> buffenemies = getEnemy();
-                        var buffEvents = new UnityEvent<int>();
-                        buffEvents.AddListener((index) => OnBuffSelected(buffenemies, index));
-                        uiTest.Inputs(buffEvents, buffenemies.Count - 1, buffenemies);
-                        break;
+                    // Heal対象選択パネル対象選択パネル
+                    switch (buff.buffRange)
+                    {
+                        case BuffRange.Self:
+                            OnBuffSelected(null, 0,buff);
+                            break;
+                        case BuffRange.AllAllies:
+                        case BuffRange.AllEnemies:
+                            OnBuffSelected(null, 0, buff);
+                            break;
+                        case BuffRange.Ally:
+                            List<Character> buffcharacters = getPlayer();
+                            var buffEvent = new UnityEvent<int>();
+                            buffEvent.AddListener((index) => OnBuffSelected(buffcharacters, index, buff));
+                            uiTest.Inputs(buffEvent, buffcharacters.Count - 1, buffcharacters);
+                            break;
+                        case BuffRange.Enemy:
+                            List<Character> buffenemies = getEnemy();
+                            var buffEvents = new UnityEvent<int>();
+                            buffEvents.AddListener((index) => OnBuffSelected(buffenemies, index, buff));
+                            uiTest.Inputs(buffEvents, buffenemies.Count - 1, buffenemies);
+                            break;
+                    }
                 }
+            }else
+            {
+                Debug.Log("バフ効果がありません");
+                selectedCharacter.StatusFlag = StatusFlag.End;
+                isActionPending = true;
+                    return;
+            }
                 break;
 
             case StatusFlag.End:
@@ -230,7 +241,8 @@ public class PlayerManager : MonoBehaviour
             case SkillEffectType.Buff:
                 selectedCharacter.StatusFlag = StatusFlag.Buff;
                 if (selectedSkill.targetScope == TargetScope.All)
-                    OnBuffSelected(null, 0);
+                    //仮バフ効果適用
+                    OnBuffSelected(null, 0, selectedSkill.buffEffect[0]);
                 break;
         }
         isActionPending = true;
@@ -295,6 +307,15 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
         }
 
+        //攻撃後バフの設定
+        if (selectedCharacter.skills.Length > 0)
+        {
+            SetBuff();
+        }
+
+
+
+
     }
 
     public bool OnComboApplyAttack()
@@ -317,10 +338,15 @@ public class PlayerManager : MonoBehaviour
         float random = UnityEngine.Random.Range(10, 20);
         random = random / 10;
         Debug.Log("乱数:" + random);
-        //基本ダメージ計算
-        var damage = selectedCharacter.atk * random;
-        //最終計算
-        var finalDamage = damage * skill.power - enemy.def;
+        
+        // バフ適用後の攻撃力と防御力を取得
+        int effectiveAtk = selectedCharacter.GetEffectiveAttack();
+        int effectiveDef = enemy.GetEffectiveDefense();
+        
+        //基本ダメージ計算（バフ適用後の攻撃力を使用）
+        var damage = effectiveAtk * random;
+        //最終計算（バフ適用後の防御力を使用）
+        var finalDamage = damage * skill.power - effectiveDef;
         var hp = enemy.hp - finalDamage;
         enemy.hp = (int)math.floor(hp);
 
@@ -388,7 +414,7 @@ public class PlayerManager : MonoBehaviour
         selectedCharacter.StatusFlag = StatusFlag.End;
         isActionPending = true;
     }
-    public void OnBuffSelected(List<Character> characters, int index)
+    public void OnBuffSelected(List<Character> characters, int index,BuffBase buffBase)
     {
         if (index < 0 || index >= characters.Count)
         {
@@ -404,7 +430,7 @@ public class PlayerManager : MonoBehaviour
         }
         //通常スキルの処理
         var character = characters[index];
-        BuffInstance buff = new BuffInstance(selectedSkill.buffEffect);
+        BuffInstance buff = new BuffInstance(buffBase);
         buff.remainingTurns = selectedSkill.buffDuration;
         buffApply(buff, character);
         selectedCharacter.mp -= selectedSkill.mpCost;
@@ -459,61 +485,142 @@ public class PlayerManager : MonoBehaviour
         return players;
     }
 
-    //バフ効果の適用
-    private void buffApply(BuffInstance buff, Character target)
+    /// <summary>
+    /// バフ効果の適用
+    /// 各キャラクターのCharacterBuffManagerに委譲
+    /// </summary>
+    private void  buffApply(BuffInstance buff, Character target)
     {
+        if (buff == null)
+        {
+            Debug.LogWarning("バフ適用失敗: バフインスタンスがnullです");
+            return;
+        }
+        
         switch (buff.buffRange)
         {
             case BuffRange.Self:
                 target = selectedCharacter;
-                buff.Apply(target);
-                activeBuffs.Add(buff);
+                if (target != null)
+                {
+                    target.ApplyBuff(buff, selectedCharacter);
+                }
                 break;
             case BuffRange.Ally:
             case BuffRange.Enemy:
                 //単一の選択対象(この場合はtargetに対応)
-                buff.Apply(target);
-                activeBuffs.Add(buff);
+                if (target != null)
+                {
+                    target.ApplyBuff(buff, selectedCharacter);
+                }
                 break;
             case BuffRange.AllAllies:
                 var players = getPlayer();
                 foreach (var player in players)
                 {
-                    buff.Apply(player);
-                    activeBuffs.Add(buff);
+                    if (player != null)
+                    {
+                        // 各プレイヤー用に新しいバフインスタンスを作成
+                        BuffInstance playerBuff = new BuffInstance(buff.baseData);
+                        playerBuff.remainingTurns = buff.remainingTurns;
+                        player.ApplyBuff(playerBuff, selectedCharacter);
+                    }
                 }
                 break;
             case BuffRange.AllEnemies:
                 var enemies = getEnemy();
                 foreach (var enemy in enemies)
                 {
-                    buff.Apply(enemy);
-                    activeBuffs.Add(buff);
+                    if (enemy != null)
+                    {
+                        // 各敵用に新しいバフインスタンスを作成
+                        BuffInstance enemyBuff = new BuffInstance(buff.baseData);
+                        enemyBuff.remainingTurns = buff.remainingTurns;
+                        enemy.ApplyBuff(enemyBuff, selectedCharacter);
+                    }
                 }
                 break;
         }
-
     }
-    //バフ効果の解除
-    private void buffRemove(BuffInstance buff)
-    {
-        buff.Remove();
-        activeBuffs.Remove(buff);
-    }
-    //バフの効果ターン管理
+    
+    /// <summary>
+    /// バフの効果ターン管理
+    /// 全てのキャラクターのバフを更新
+    /// </summary>
     private void buffTurnManage()
     {
-        //バフ効果ターンがあるかどうかを判定
-        for (int activeBuffCount = activeBuffs.Count - 1; activeBuffCount >= 0; activeBuffCount--)
+        // プレイヤーキャラクターのバフを更新
+        var players = getPlayer();
+        foreach (var player in players)
         {
-            BuffInstance buff = activeBuffs[activeBuffCount];
-            buff.TickTurn();
-            if (buff.IsExpired())
+            if (player != null)
             {
-                //バフ効果終了
-                buffRemove(buff);
+                player.TickBuffTurn();
             }
         }
-        //バフ効果ターン処理終了
+        
+        // 敵キャラクターのバフを更新
+        var enemies = getEnemy();
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                enemy.TickBuffTurn();
+            }
+        }
     }
+    /// <summary>
+    /// バフをセットする
+    /// </summary>
+    private void SetBuff()
+    {
+        if (selectedSkill.buffEffect.Count > 0)
+        {
+            List<BuffBase> buffBase = selectedSkill.buffEffect;
+            foreach (var buff in buffBase)
+            {
+                if(buff.isSelfTarget)
+                {
+                    OnBuffSelected(new List<Character>() { selectedCharacter }, 0, buff);
+                    continue;
+                }
+                // Heal対象選択パネル対象選択パネル
+                switch (buff.buffRange)
+                {
+                    case BuffRange.Self:
+                        OnBuffSelected(null, 0, buff);
+                        break;
+                    case BuffRange.AllAllies:
+                    case BuffRange.AllEnemies:
+                        OnBuffSelected(null, 0, buff);
+                        break;
+                    case BuffRange.Ally:
+                        List<Character> buffcharacters = getPlayer();
+                        var buffEvent = new UnityEvent<int>();
+                        buffEvent.AddListener((index) => OnBuffSelected(buffcharacters, index, buff));
+                        uiTest.Inputs(buffEvent, buffcharacters.Count - 1, buffcharacters);
+                        break;
+                    case BuffRange.Enemy:
+                        if (buff.isSelfTarget)
+                        {
+                            OnBuffSelected(null, 0, buff);
+                            break;
+                        }
+                        List<Character> buffenemies = getEnemy();
+                        var buffEvents = new UnityEvent<int>();
+                        buffEvents.AddListener((index) => OnBuffSelected(buffenemies, index, buff));
+                        uiTest.Inputs(buffEvents, buffenemies.Count - 1, buffenemies);
+                        break;
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("バフ効果がありません");
+            selectedCharacter.StatusFlag = StatusFlag.End;
+            isActionPending = true;
+            return;
+        }
+    }
+
 }

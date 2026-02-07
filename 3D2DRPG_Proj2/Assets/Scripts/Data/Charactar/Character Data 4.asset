@@ -15,12 +15,12 @@ MonoBehaviour:
   charactername: Enemy
   characterIcon: {fileID: 0}
   enemyCheckFlag: 1
-  hp: 100
+  hp: 10
   mp: 100
   atk: 10
   def: 5
   spd: 130
-  maxHp: 1000
+  maxHp: 100
   maxMp: 10
   exp: 10
   level: 100
