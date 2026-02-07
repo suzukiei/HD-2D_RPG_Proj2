@@ -1,36 +1,56 @@
 using UnityEngine;
-using static Unity.VisualScripting.Member;
 
 [System.Serializable]
 public class BuffInstance
 {
-    public BuffBase baseData;          // Œ³‚Ìƒf[ƒ^iScriptableObjectj
-    [Header("‹¤’Êî•ñ")]
+    public BuffBase baseData;          // ãƒ™ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ï¼ˆScriptableObjectï¼‰
+    [Header("ãƒãƒ•ID")]
+    public string buffId;
+    [Header("ãƒãƒ•å")]
     public string buffName;
-    [Header("c‚èƒ^[ƒ“”i“Æ—§ŠÇ—j")]
+    [Header("æ®‹ã‚Šã‚¿ãƒ¼ãƒ³æ•°ï¼ˆã‚¿ãƒ¼ãƒ³ç®¡ç†ï¼‰")]
     public int remainingTurns;
-    [Header("ƒoƒt”ÍˆÍ")]
+    [Header("ãƒãƒ•ç¯„å›²")]
     public BuffRange buffRange;
-    [Header("ƒoƒtà–¾")]
+    [Header("ãƒãƒ•èª¬æ˜")]
     public string description;
-    [Header("ƒoƒt‚ğ—^‚¦‚Ä‚¢‚éƒLƒƒƒ‰ƒNƒ^[Ši”[")]
+    [Header("ãƒãƒ•ã‚’ä»˜ä¸ã—ãŸã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼")]
     public Character sourceCharacter;
+    [Header("ãƒãƒ•ãŒé©ç”¨ã•ã‚Œã¦ã„ã‚‹ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼")]
+    public Character targetCharacter;
 
     public BuffInstance(BuffBase baseBuff)
     {
-        baseData =baseBuff;
-        buffName = baseData.buffName;
-        remainingTurns = baseData.duration;
-        buffRange = baseData.buffRange;
-        sourceCharacter = baseData.sourceCharacter;
+        baseData = baseBuff;
+        if (baseData != null)
+        {
+            buffId = baseData.buffId;
+            buffName = baseData.buffName;
+            remainingTurns = baseData.duration;
+            buffRange = baseData.buffRange;
+            description = baseData.description;
+        }
     }
-    public void Apply(Character _sourceCharacter)
+    
+    /// <summary>
+    /// ãƒãƒ•ã‚’é©ç”¨
+    /// </summary>
+    public void Apply(Character target)
     {
-        Debug.Log("BuffInstance Apply called for buff: " + _sourceCharacter);
-        sourceCharacter = _sourceCharacter;
-        // ScriptableObject‚ÌApply‚ğŒÄ‚Ôi“à•”‚Åtarget‚ÉŒø‰Ê‚ğ—^‚¦‚éj
-        baseData.sourceCharacter = _sourceCharacter;
-        baseData.Apply(_sourceCharacter);
+        if (target == null || baseData == null)
+        {
+            Debug.LogWarning("ãƒãƒ•é©ç”¨å¤±æ•—: ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¾ãŸã¯ãƒ™ãƒ¼ã‚¹ãƒ‡ãƒ¼ã‚¿ãŒnullã§ã™");
+            return;
+        }
+        
+        targetCharacter = target;
+        sourceCharacter = baseData.sourceCharacter;
+        
+        // ScriptableObjectã®Applyã‚’å‘¼ã³å‡ºã™ï¼ˆå„ãƒãƒ•ã‚¯ãƒ©ã‚¹ã§å®Ÿè£…ï¼‰
+        baseData.sourceCharacter = sourceCharacter;
+        baseData.Apply(target);
+        
+        Debug.Log($"ãƒãƒ• '{buffName}' ã‚’ {target.charactername} ã«é©ç”¨ã—ã¾ã—ãŸ");
     }
 
     public void TickTurn()
@@ -45,6 +65,9 @@ public class BuffInstance
 
     public void Remove()
     {
-        baseData.Remove();
+        if (baseData != null)
+        {
+            baseData.Remove();
+        }
     }
 }

@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a92d8b73040e5b143bbd8be31623266c, type: 3}
+  m_Name: Aflashoflight
+  m_EditorClassIdentifier: 
+  skillName: "\u4E00\u9583"
+  description: "\u30FB\u76F8\u624B1\u4F53\u653B\u6483 \n\u30FB\u6B21\u306E\u30BF\u30FC\u30F3\u306B\u5148\u624B\u3067\u52D5\u304F\n\u30FB\u57FA\u790E\u5024+DB\n\u30FBMP
+    10\u6D88\u8CBB"
+  icon: {fileID: 0}
+  soundEffect: {fileID: 0}
+  vfxPrefab: {fileID: 0}
+  animationName: 
+  effectType: 0
+  power: 10
+  mpCost: 10
+  cooldown: 0
+  hitCount: 1
+  criticalRate: 0.1
+  accuracy: 1
+  targetScope: 0
+  statusEffect: 0
+  canCombo: 0
+  comboNextSkill: {fileID: 0}
+  timingWindowStart: 0.3
+  timingWindowEnd: 0.6
+  comboDamageMultiplier: 1.2
+  maxcombo: 3
+  missCancel: 1
+  statusChance: 0
+  buffEffect:
+  - {fileID: 11400000, guid: 06a275324b906504a8cd999ad1e2ceff, type: 2}
+  buffValue: 0
+  buffDuration: 0

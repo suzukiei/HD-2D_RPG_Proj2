@@ -30,6 +30,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
   - {fileID: 11400000, guid: 1381c0e3658634d43a988d49085f68e8, type: 2}
   - {fileID: 11400000, guid: d286022fd6472e240b7489ed5fa9e994, type: 2}
-  - {fileID: 11400000, guid: 7e30a3b62b67e5f42a177cdbd1bb2538, type: 2}
+  - {fileID: 11400000, guid: 6ca2043cbb898984298e0529d1e29d11, type: 2}
   CharacterTransfrom: {x: 4, y: 0, z: 0}
   StatusFlag: 2

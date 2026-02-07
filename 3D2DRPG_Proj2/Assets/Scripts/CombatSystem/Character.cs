@@ -20,6 +20,16 @@ public class Character: MonoBehaviour
     private GameObject characterDataObj;
     [SerializeField]
     private Animator enemyAnimator;
+    
+    // バフ管理
+    private CharacterBuffManager buffManager;
+    
+    // ベースステータス（バフ適用前の元の値）
+    private int baseAtk;
+    private int baseDef;
+    private int baseSpd;
+    private int baseMaxHp;
+    private int baseMaxMp;
     public void init(CharacterData _characterData)
     {
         characterData = _characterData;
@@ -42,11 +52,36 @@ public class Character: MonoBehaviour
         StatusFlag= characterData.StatusFlag;
         if (this.transform.Find("BlockWolfAnimation"))
         enemyAnimator = this.transform.Find("BlockWolfAnimation").GetComponent<Animator>();
+        
+        // ベースステータスを保存
+        baseAtk = atk;
+        baseDef = def;
+        baseSpd = spd;
+        baseMaxHp = maxHp;
+        baseMaxMp = maxMp;
+        
+        // バフマネージャーの初期化
+        InitializeBuffManager();
+    }
+    
+    /// <summary>
+    /// バフマネージャーの初期化
+    /// </summary>
+    private void InitializeBuffManager()
+    {
+        buffManager = GetComponent<CharacterBuffManager>();
+        if (buffManager == null)
+        {
+            buffManager = gameObject.AddComponent<CharacterBuffManager>();
+        }
+        buffManager.Initialize(this);
     }
     // ダメージ計算
     public int Attack(Character enemy,SkillData skillData)
     {
-        int damage = Mathf.Max(0, (int)skillData.power - enemy.def);
+        // バフ適用後の防御力を使用
+        int effectiveDef = enemy.GetEffectiveDefense();
+        int damage = Mathf.Max(0, (int)skillData.power - effectiveDef);
         enemy.TakeDamage(damage);
         return damage;
     }
@@ -134,6 +169,19 @@ public class Character: MonoBehaviour
         def += 2;
         spd += 1;
         
+        // ベースステータスを更新
+        baseAtk = atk;
+        baseDef = def;
+        baseSpd = spd;
+        baseMaxHp = maxHp;
+        baseMaxMp = maxMp;
+        
+        // バフマネージャーにベースステータスの更新を通知
+        if (buffManager != null)
+        {
+            buffManager.UpdateBaseStats(baseAtk, baseDef, baseSpd, baseMaxHp, baseMaxMp);
+        }
+        
         // HP/MP全回復
         hp = maxHp;
         mp = maxMp;
@@ -188,5 +236,84 @@ public class Character: MonoBehaviour
         newCharacterData.CharacterTransfrom = CharacterTransfrom;
         newCharacterData.StatusFlag = StatusFlag;
         return newCharacterData;
+    }
+    
+    /// <summary>
+    /// バフ適用後の攻撃力を取得
+    /// </summary>
+    public int GetEffectiveAttack()
+    {
+        if (buffManager != null)
+        {
+            return buffManager.GetEffectiveAttack();
+        }
+        return atk;
+    }
+    
+    /// <summary>
+    /// バフ適用後の防御力を取得
+    /// </summary>
+    public int GetEffectiveDefense()
+    {
+        if (buffManager != null)
+        {
+            return buffManager.GetEffectiveDefense();
+        }
+        return def;
+    }
+    
+    /// <summary>
+    /// バフ適用後の速度を取得
+    /// </summary>
+    public int GetEffectiveSpeed()
+    {
+        if (buffManager != null)
+        {
+            return buffManager.GetEffectiveSpeed();
+        }
+        return spd;
+    }
+    
+    /// <summary>
+    /// バフ適用後の魔法攻撃力を取得
+    /// </summary>
+    public int GetEffectiveMagicAttack()
+    {
+        if (buffManager != null)
+        {
+            return buffManager.GetEffectiveMagicAttack();
+        }
+        return atk; // 将来的にINTフィールドが追加されたら変更
+    }
+    
+    /// <summary>
+    /// バフマネージャーを取得
+    /// </summary>
+    public CharacterBuffManager GetBuffManager()
+    {
+        return buffManager;
+    }
+    
+    /// <summary>
+    /// バフを適用
+    /// </summary>
+    public bool ApplyBuff(BuffInstance buffInstance, Character appliedBy)
+    {
+        if (buffManager != null)
+        {
+            return buffManager.ApplyBuff(buffInstance, appliedBy);
+        }
+        return false;
+    }
+    
+    /// <summary>
+    /// バフのターン経過処理
+    /// </summary>
+    public void TickBuffTurn()
+    {
+        if (buffManager != null)
+        {
+            buffManager.TickTurn();
+        }
     }
 }

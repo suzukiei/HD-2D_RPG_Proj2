@@ -35,6 +35,7 @@ MonoBehaviour:
   maxcombo: 3
   missCancel: 1
   statusChance: 0
-  buffEffect: {fileID: 11400000, guid: c574ed739704f3d4488076ad8e90e61a, type: 2}
+  buffEffect:
+  - {fileID: 11400000, guid: c574ed739704f3d4488076ad8e90e61a, type: 2}
   buffValue: 10
   buffDuration: 2

@@ -148,7 +148,7 @@ public class SkillSelectionUI : MonoBehaviour
 
                 // カーソルと技名を表示
                 string cursorDisplay = (i == currentSelection) ? cursorSymbol : "　"; // 全角スペース
-                string skillName = currentSkills[i].name;
+                string skillName = currentSkills[i].skillName;
                 string mpCost = $"(MP: {currentSkills[i].mpCost})";
 
                 skillTexts[i].text = $"{cursorDisplay} {skillName} {mpCost}";
