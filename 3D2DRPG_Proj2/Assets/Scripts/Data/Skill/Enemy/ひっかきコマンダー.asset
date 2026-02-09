@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a92d8b73040e5b143bbd8be31623266c, type: 3}
+  m_Name: "\u3072\u3063\u304B\u304D\u30B3\u30DE\u30F3\u30C0\u30FC"
+  m_EditorClassIdentifier: 
+  skillName: "\u3072\u3063\u304B\u304D"
+  description: + DB
+  icon: {fileID: 0}
+  soundEffect: {fileID: 0}
+  vfxPrefab: {fileID: 0}
+  animationName: 
+  effectType: 0
+  power: 15
+  mpCost: 0
+  cooldown: 0
+  hitCount: 1
+  criticalRate: 0.1
+  accuracy: 1
+  targetScope: 0
+  statusEffect: 0
+  canCombo: 0
+  comboNextSkill: {fileID: 0}
+  timingWindowStart: 0.3
+  timingWindowEnd: 0.6
+  comboDamageMultiplier: 1.2
+  maxcombo: 3
+  missCancel: 1
+  statusChance: 0
+  buffEffect: []
+  buffValue: 0
+  buffDuration: 0
