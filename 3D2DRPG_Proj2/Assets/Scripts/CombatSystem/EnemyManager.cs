@@ -132,8 +132,12 @@ public class EnemyManager : MonoBehaviour
 
         if (target == null)
         {
-            // ランダムに選択
-            target = playerCandidates[UnityEngine.Random.Range(0, playerCandidates.Count)];
+            if(chosenSkill.targetScope == TargetScope.Single)
+            {
+                // ランダムに選択
+                target = playerCandidates[UnityEngine.Random.Range(0, playerCandidates.Count)];
+            }
+            
         }
 
         // 1. 前に出る、トゥイーンアニメーション
@@ -149,8 +153,14 @@ public class EnemyManager : MonoBehaviour
             enemyAnimator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.5f);
         // 3. 攻撃処理を実行
-        ApplyAttack(target, chosenSkill, actingEnemy);
-       
+        if(chosenSkill.targetScope == TargetScope.Single)
+        { 
+            ApplyAttack(target, chosenSkill, actingEnemy);
+        }
+        else
+        {
+            ApplyAttack(playerCandidates, chosenSkill, actingEnemy);
+        }
         // 4. 元の位置に戻る、トゥイーンアニメーション
         Tween returnTween = actingEnemy.transform.DOMove(originalPosition, returnDuration)
             .SetEase(Ease.InQuad);
@@ -163,7 +173,7 @@ public class EnemyManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 攻撃処理（ダメージ計算と撃破処理）
+    /// 個別攻撃処理（ダメージ計算と撃破処理）
     /// </summary>
     private void ApplyAttack(Character target, SkillData skill, Character attacker)
     {
@@ -215,5 +225,60 @@ public class EnemyManager : MonoBehaviour
                 Destroy(target.gameObject);
             }
         }
+    }
+
+    /// <summary>
+    /// 全体攻撃処理（ダメージ計算と撃破処理）
+    /// </summary>
+    private void ApplyAttack(List<Character> target, SkillData skill, Character attacker)
+    {
+        if (target == null) return;
+
+        float power = 0;
+        if (skill != null)
+        {
+            power = skill.power;
+        }
+
+        //各キャラに全体攻撃、耐性を含んだ計算は未実装。
+        foreach (Character chara in target)
+        {
+            var targethp = chara.hp - power;
+            chara.hp = (int)math.floor(targethp);
+            Debug.Log($"{attacker.name} が {chara.name} に {power} ダメージ。残りHP: {chara.hp}");
+            
+            // ダメージエフェクトを表示（攻撃を受けたターゲットの位置の前に表示）
+            // 注: 敵がプレイヤーを攻撃する場合、プレイヤーの位置にエフェクトを表示します
+            if (DamageEffectUI.Instance != null && chara.CharacterObj != null)
+            {
+                DamageEffectUI.Instance.ShowDamageEffectOnEnemy(chara.CharacterObj, power);
+            }
+
+            if (chara.hp <= 0)
+            {
+                // プレイヤーが撃破された（HPが0に）
+                chara.hp = 0;
+                // リストから削除
+                if (turnManager.players.Contains(chara.gameObject))
+                {
+                    turnManager.players.Remove(chara.gameObject);
+                }
+                if (turnManager.turnList.Contains(chara.gameObject))
+                {
+                    turnManager.turnList.Remove(chara.gameObject);
+                }
+                // GameObject を削除
+                if (chara.CharacterObj != null)
+                {
+                    Destroy(chara.CharacterObj);
+                }
+                else
+                {
+                    // fallback: Destroy target.gameObject
+                    Destroy(chara.gameObject);
+                }
+            }
+        }
+        
     }
 }
