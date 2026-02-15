@@ -25,7 +25,7 @@ MonoBehaviour:
   hitCount: 1
   criticalRate: 0.1
   accuracy: 1
-  targetScope: 0
+  targetScope: 1
   statusEffect: 0
   canCombo: 0
   comboNextSkill: {fileID: 0}

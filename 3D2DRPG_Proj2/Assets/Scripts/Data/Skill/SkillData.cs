@@ -56,5 +56,8 @@ public class SkillData : ScriptableObject
     public float buffValue = 0f;
     [Header("バフの継続時間")]
     public int buffDuration = 0;
+
+    [Header("ダメージボーナスがある？")]
+    public bool DamageBonusFlg = false;
 }
 

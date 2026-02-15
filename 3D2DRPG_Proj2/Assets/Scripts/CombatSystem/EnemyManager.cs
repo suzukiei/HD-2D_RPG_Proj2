@@ -180,9 +180,22 @@ public class EnemyManager : MonoBehaviour
         if (target == null) return;
 
         float power = 0;
+        float AddDamageBonusPower = 0f;
         if (skill != null)
         {
-            power = skill.power;
+            if (skill.DamageBonusFlg == true)
+            {
+                //ダメージボーナスの処理
+                float rndDB = UnityEngine.Random.Range(1f, attacker.atk);
+                AddDamageBonusPower = skill.power + rndDB;
+
+                power = AddDamageBonusPower;
+            }
+            else
+            {
+                power = skill.power;
+            }
+            
         }
         else
         {
@@ -235,9 +248,22 @@ public class EnemyManager : MonoBehaviour
         if (target == null) return;
 
         float power = 0;
+        float AddDamageBonusPower = 0f;
         if (skill != null)
-        {
-            power = skill.power;
+        {   
+            if(skill.DamageBonusFlg == true)
+            {
+                //ダメージボーナスの処理
+                float rndDB = UnityEngine.Random.Range(1f, attacker.atk);
+                AddDamageBonusPower = skill.power + rndDB;
+
+                power = AddDamageBonusPower;
+            }
+            else
+            {
+                power = skill.power;
+            }
+            
         }
 
         //各キャラに全体攻撃、耐性を含んだ計算は未実装。
