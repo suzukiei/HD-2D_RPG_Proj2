@@ -5,6 +5,7 @@ using System.Linq;
 
 public class TurnManager : MonoBehaviour
 {
+    #region 変数宣言
     [SerializeField, Header("プレイヤーマネージャー")]
     private PlayerManager playerManager;
     [SerializeField, Header("エネミーマネージャー")]
@@ -56,6 +57,9 @@ public class TurnManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    #endregion
+    
+    #region 初期化
     private void Start()
     {
 
@@ -66,6 +70,7 @@ public class TurnManager : MonoBehaviour
         // 初期化
         Initialization();
     }
+
     // 初期化処理
     private void Initialization()
     {
@@ -177,8 +182,9 @@ public class TurnManager : MonoBehaviour
 
         }
     }
+    #endregion
 
-
+    #region ターン順リスト操作(ターン処理）
     //ターン順リストの順序を変更
     public void TurnChange(Character character, int chageNum)
     {
@@ -211,10 +217,11 @@ public class TurnManager : MonoBehaviour
     //ターン開始してフラグ
     public void FlagChange()
     {
-
         turnFlag = true;
     }
+    #endregion
 
+    #region 勝利・敗北処理
     //勝利、敗北時に呼び出し
     public void EndTurnManager()
     {
@@ -359,4 +366,5 @@ public class TurnManager : MonoBehaviour
         GameManager.Instance.PlayerDataSetStatus(playerDataList);
     }
     //End of TurnManager
+    #endregion
 }

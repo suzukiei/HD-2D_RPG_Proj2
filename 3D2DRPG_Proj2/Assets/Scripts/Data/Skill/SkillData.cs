@@ -39,6 +39,8 @@ public class SkillData : ScriptableObject
 
     [Header("ƒRƒ“ƒ{İ’è")]
     public bool canCombo = false;
+    public bool DamageUp = false;
+    public int ComboDamage = 0;
     public SkillData comboNextSkill;
     public float timingWindowStart = 0.3f;
     public float timingWindowEnd = 0.6f;

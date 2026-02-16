@@ -2789,6 +2789,7 @@ MonoBehaviour:
   - {fileID: 1455347933}
   ActionPosition: {x: 4, y: 0, z: 3}
   StartPosition: {x: 0, y: 0, z: 0}
+  characterBuffs: []
 --- !u!4 &745215965
 Transform:
   m_ObjectHideFlags: 0
@@ -2816,7 +2817,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba420c819fa3c4d4fadabef6047458c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeBuffs: []
+  activeBuffs:
+  - baseData: {fileID: 0}
+    buffId: 
+    buffName: 
+    remainingTurns: 0
+    buffRange: 0
+    description: 
+    sourceCharacter: {fileID: 0}
+    targetCharacter: {fileID: 0}
 --- !u!1 &755962757
 GameObject:
   m_ObjectHideFlags: 0
