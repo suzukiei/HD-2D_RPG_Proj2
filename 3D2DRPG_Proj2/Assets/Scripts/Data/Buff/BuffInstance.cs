@@ -18,6 +18,25 @@ public class BuffInstance
     public Character sourceCharacter;
     [Header("バフが適用されているキャラクター")]
     public Character targetCharacter;
+    public enum StatusEffect
+    {
+        Poison,
+        Stun,
+        Burn,
+        Freeze,
+        Sleep,
+        Silent,
+        DamageUp,
+        TurnChange,
+        DefenceUp,
+        SpdDown,
+        SpdUp,
+        MagicDamageDown,
+        MagicCounter,
+        Makituki,
+        Zouen,
+    } //毒、スタン、やけど、凍結、眠り、魔封,ダメ増,ターンチェンジ,防御UP,スピードUP,スピードDN,マジックダメDN,反射,巻きつき,増援
+
 
     public BuffInstance(BuffBase baseBuff)
     {

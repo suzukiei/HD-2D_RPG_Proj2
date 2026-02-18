@@ -28,9 +28,29 @@ public class EnemyManager : MonoBehaviour
     public Animator enemyAnimator;
 
     public List<GameObject> GetEnemyData() { return enemygameObjects; }
+
+    //public enum StatusEffect
+    //{
+    //    Poison,
+    //    Stun,
+    //    Burn,
+    //    Freeze,
+    //    Sleep,
+    //    Silent,
+    //    DamageUp,
+    //    TurnChange,
+    //    DefenceUp,
+    //    SpdDown,
+    //    SpdUp,
+    //    MagicDamageDown,
+    //    MagicCounter,
+    //    Makituki,
+    //    Zouen,
+    //} //毒、スタン、やけど、凍結、眠り、魔封,ダメ増,ターンチェンジ,防御UP,スピードUP,スピードDN,マジックダメDN,反射,巻きつき,増援
+
     private void Awake()
     {
-        if (GameManager.Instance != null && GameManager.Instance.EnemyData.Count!=0)
+        if (GameManager.Instance != null && GameManager.Instance.EnemyData.Count != 0)
         {
             enemyData.Clear();
             enemyData.AddRange(GameManager.Instance.EnemyData);
@@ -38,7 +58,7 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < enemyData.Count; i++)
         {
             enemyData[i].CharacterTransfrom = vector3s[i];
-            var obj = Instantiate(enemyData[i].CharacterObj, vector3s[i] * 2,Quaternion.identity);
+            var obj = Instantiate(enemyData[i].CharacterObj, vector3s[i] * 2, Quaternion.identity);
             obj.AddComponent<Character>().init(enemyData[i]);
             obj.transform.localRotation = Quaternion.Euler(0, -90, 0);
             obj.transform.parent = this.gameObject.transform;
@@ -132,12 +152,12 @@ public class EnemyManager : MonoBehaviour
 
         if (target == null)
         {
-            if(chosenSkill.targetScope == TargetScope.Single)
+            if (chosenSkill.targetScope == TargetScope.Single)
             {
                 // ランダムに選択
                 target = playerCandidates[UnityEngine.Random.Range(0, playerCandidates.Count)];
             }
-            
+
         }
 
         // 1. 前に出る、トゥイーンアニメーション
@@ -146,15 +166,15 @@ public class EnemyManager : MonoBehaviour
         yield return forwardTween.WaitForCompletion();
         // 攻撃アニメーション再生
         enemyAnimator = actingEnemy.EnemyAnimator;
-        
+
         // 2. 考える時間を待つ
         yield return new WaitForSeconds(thinkingTime);
         if (enemyAnimator != null)
             enemyAnimator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.5f);
         // 3. 攻撃処理を実行
-        if(chosenSkill.targetScope == TargetScope.Single)
-        { 
+        if (chosenSkill.targetScope == TargetScope.Single)
+        {
             ApplyAttack(target, chosenSkill, actingEnemy);
         }
         else
@@ -186,7 +206,7 @@ public class EnemyManager : MonoBehaviour
             if (skill.DamageBonusFlg == true)
             {
                 //ダメージボーナスの処理
-                float rndDB = UnityEngine.Random.Range(1f, attacker.atk);
+                float rndDB = UnityEngine.Random.Range(1f, attacker.atk + 1);
                 AddDamageBonusPower = skill.power + rndDB;
 
                 power = AddDamageBonusPower;
@@ -195,7 +215,7 @@ public class EnemyManager : MonoBehaviour
             {
                 power = skill.power;
             }
-            
+
         }
         else
         {
@@ -205,6 +225,47 @@ public class EnemyManager : MonoBehaviour
 
         var targethp = target.hp - power;
         target.hp = (int)math.floor(targethp);
+        if (skill.buffEffect.Count != 0)
+        {
+            foreach (var buffEffect in skill.buffEffect)
+            {
+                switch (buffEffect.statusEffect)
+                {
+                    case StatusEffect.Poison:
+                        break;
+                    case StatusEffect.Stun:
+                        break;
+                    case StatusEffect.Burn: 
+                        break;
+                    case StatusEffect.Freeze:
+                        break;
+                    case StatusEffect.Sleep: 
+                        break;
+                    case StatusEffect.Silent:
+                        break;
+                    case StatusEffect.DamageUp: 
+                        break;
+                    case StatusEffect.TurnChange:
+                        break;
+                    case StatusEffect.DefenceUp:
+                        break;
+                    case StatusEffect.SpdDown:
+                        break;
+                    case StatusEffect.SpdUp:
+                        break;
+                    case StatusEffect.MagicDamageDown:
+                        break;
+                    case StatusEffect.MagicCounter: 
+                        break;
+                    case StatusEffect.Makituki:
+                        break;
+                    case StatusEffect.Zouen:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
         Debug.Log($"{attacker.name} が {target.name} に {power} ダメージ。残りHP: {target.hp}");
 
         // ダメージエフェクトを表示（攻撃を受けたターゲットの位置の前に表示）
@@ -250,11 +311,11 @@ public class EnemyManager : MonoBehaviour
         float power = 0;
         float AddDamageBonusPower = 0f;
         if (skill != null)
-        {   
-            if(skill.DamageBonusFlg == true)
+        {
+            if (skill.DamageBonusFlg == true)
             {
                 //ダメージボーナスの処理
-                float rndDB = UnityEngine.Random.Range(1f, attacker.atk);
+                float rndDB = UnityEngine.Random.Range(1f, attacker.atk + 1);
                 AddDamageBonusPower = skill.power + rndDB;
 
                 power = AddDamageBonusPower;
@@ -263,7 +324,7 @@ public class EnemyManager : MonoBehaviour
             {
                 power = skill.power;
             }
-            
+
         }
 
         //各キャラに全体攻撃、耐性を含んだ計算は未実装。
@@ -272,7 +333,7 @@ public class EnemyManager : MonoBehaviour
             var targethp = chara.hp - power;
             chara.hp = (int)math.floor(targethp);
             Debug.Log($"{attacker.name} が {chara.name} に {power} ダメージ。残りHP: {chara.hp}");
-            
+
             // ダメージエフェクトを表示（攻撃を受けたターゲットの位置の前に表示）
             // 注: 敵がプレイヤーを攻撃する場合、プレイヤーの位置にエフェクトを表示します
             if (DamageEffectUI.Instance != null && chara.CharacterObj != null)
@@ -305,6 +366,6 @@ public class EnemyManager : MonoBehaviour
                 }
             }
         }
-        
+
     }
 }

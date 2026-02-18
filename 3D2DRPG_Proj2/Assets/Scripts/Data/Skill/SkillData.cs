@@ -8,7 +8,12 @@ using UnityEngine;
 //public enum TargetType { SingleEnemy, AllEnemies, Self, Ally, AllAllies }
 //public enum BuffType { None, AttackUp, DefenseUp, SpeedUp, AttackDown, DefenseDown }
 public enum TargetScope { Single, All }
-public enum StatusEffect { Poison, Stun, Burn, Freeze, Sleep }
+
+public enum ZokuseiType
+{
+    Buturi,
+    Mahou
+}
 public enum SkillEffectType { Attack, Heal, Buff }
 [CreateAssetMenu(menuName = "SkillData")]
 public class SkillData : ScriptableObject

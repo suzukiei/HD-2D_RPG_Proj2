@@ -13,6 +13,25 @@ public enum BuffRange
     AllEnemies  // 全敵
 }
 
+public enum StatusEffect
+{
+    Poison,
+    Stun,
+    Burn,
+    Freeze,
+    Sleep,
+    Silent,
+    DamageUp,
+    TurnChange,
+    DefenceUp,
+    SpdDown,
+    SpdUp,
+    MagicDamageDown,
+    MagicCounter,
+    Makituki,
+    Zouen,
+} //毒、スタン、やけど、凍結、眠り、魔封,ダメ増,ターンチェンジ,防御UP,スピードUP,スピードDN,マジックダメDN,反射,巻きつき,増援
+
 /// <summary>
 /// バフの基底クラス
 /// </summary>
@@ -57,6 +76,11 @@ public abstract class BuffBase : ScriptableObject
     /// </summary>
     /// <param name="target">適用対象のキャラクター</param>
     public abstract void Apply(Character target);
+
+    /// <summary>
+    /// 状態異常
+    /// </summary>
+    public StatusEffect statusEffect; 
 
     /// <summary>
     /// バフを解除する
