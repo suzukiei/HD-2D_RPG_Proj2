@@ -225,10 +225,17 @@ public class EnemyManager : MonoBehaviour
 
         var targethp = target.hp - power;
         target.hp = (int)math.floor(targethp);
-        if (skill.buffEffect.Count != 0)
+        
+        //スキルにバフがあるなら適用させる。
+        if (skill != null && skill.buffEffect != null && skill.buffEffect.Count > 0)
         {
             foreach (var buffEffect in skill.buffEffect)
             {
+                if (buffEffect == null) continue;
+
+                BuffInstance buff = new BuffInstance(buffEffect);
+                buff.remainingTurns = skill.buffDuration;
+
                 switch (buffEffect.statusEffect)
                 {
                     case StatusEffect.Poison:
@@ -242,6 +249,21 @@ public class EnemyManager : MonoBehaviour
                     case StatusEffect.Sleep: 
                         break;
                     case StatusEffect.Silent:
+                        // ランダムに1つスキルを選んで封じる
+                        if (target.skills != null && target.skills.Length > 0)
+                        {
+                            List<int> availableSkills = new List<int>();
+                            for (int i = 0; i < target.skills.Length; i++)
+                            {
+                                if (target.skills[i] != null) availableSkills.Add(i);
+                            }
+
+                            if (availableSkills.Count > 0)
+                            {
+                                buff.LockSkillIndex = availableSkills[UnityEngine.Random.Range(0, availableSkills.Count)];
+                                Debug.Log($"{target.charactername}のスキル{buff.LockSkillIndex}番が封じられた");
+                            }
+                        }
                         break;
                     case StatusEffect.DamageUp: 
                         break;
@@ -264,6 +286,7 @@ public class EnemyManager : MonoBehaviour
                     default:
                         break;
                 }
+                target.ApplyBuff(buff, attacker);
             }
         }
         Debug.Log($"{attacker.name} が {target.name} に {power} ダメージ。残りHP: {target.hp}");

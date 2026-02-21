@@ -38,3 +38,4 @@ MonoBehaviour:
   buffEffect: []
   buffValue: 0
   buffDuration: 0
+  DamageBonusFlg: 0

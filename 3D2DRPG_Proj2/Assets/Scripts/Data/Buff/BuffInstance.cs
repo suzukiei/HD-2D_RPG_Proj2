@@ -18,6 +18,8 @@ public class BuffInstance
     public Character sourceCharacter;
     [Header("バフが適用されているキャラクター")]
     public Character targetCharacter;
+    [Header("スキルが封じられているか？")]
+    public int LockSkillIndex = -2; // -2=封じなし, -1=全スキル, 0移行は=プレイヤーの特定スキル(CharacterDataのスキルリスト順)
     public enum StatusEffect
     {
         Poison,
