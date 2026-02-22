@@ -340,11 +340,15 @@ public class EnemyManager : MonoBehaviour
         float AddDamageBonusPower = 0f;
         if (skill != null)
         {
+            //バフがかかった状態のatkを参照しなければならない。
+            float attackerAtk = attacker != null ? attacker.GetEffectiveAttack() : 1;
+
             if (skill.DamageBonusFlg == true)
             {
+
                 //ダメージボーナスの処理
-                float rndDB = UnityEngine.Random.Range(1f, attacker.atk + 1);
-                AddDamageBonusPower = skill.power + rndDB;
+                float rndDB = UnityEngine.Random.Range(1f, attackerAtk + 1);
+                power = skill.power + rndDB;
 
                 power = AddDamageBonusPower;
             }
@@ -467,6 +471,36 @@ public class EnemyManager : MonoBehaviour
 
                         enemy.ApplyBuff(buff, target);
                     }
+                    break;
+
+                case StatusEffect.MagicCounter:
+                    // 魔法反射バフ（自分自身）
+                    switch (buffBase.buffRange)
+                    {
+                        case BuffRange.Self:
+                            target.ApplyBuff(buff, target);
+                            Debug.Log($"{target.charactername}にマジックカウンター付与");
+                            break;
+                    }
+                    break;
+
+                case StatusEffect.DamageUp:
+                    //攻撃力を上げる。(物理魔法兼用)
+                    switch (buffBase.buffRange)
+                    {
+                        case BuffRange.Self:
+                            target.ApplyBuff(buff, target);
+                            break;
+                        case BuffRange.AllEnemies:
+
+                            var list = GetAllies(); // 敵の味方取得
+                            foreach (var enemy in list)
+                            {
+                                enemy.ApplyBuff(buff, target);
+                            }
+                            break;
+                    }
+                    
                     break;
             }
         }

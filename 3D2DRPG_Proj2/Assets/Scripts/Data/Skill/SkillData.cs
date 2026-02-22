@@ -64,5 +64,8 @@ public class SkillData : ScriptableObject
 
     [Header("ダメージボーナスがある？")]
     public bool DamageBonusFlg = false;
+
+    [Header("属性タイプ")]
+    public ZokuseiType ZokuseiType = ZokuseiType.Buturi; // デフォルトは物理
 }
 
