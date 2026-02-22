@@ -173,7 +173,12 @@ public class EnemyManager : MonoBehaviour
             enemyAnimator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.5f);
         // 3. 攻撃処理を実行
-        if (chosenSkill.targetScope == TargetScope.Single)
+        if (chosenSkill != null && chosenSkill.effectType == SkillEffectType.Buff)
+        {
+            // バフスキルの処理
+            ApplyBuff(chosenSkill, actingEnemy);
+        }
+        else if (chosenSkill.targetScope == TargetScope.Single)
         {
             ApplyAttack(target, chosenSkill, actingEnemy);
         }
@@ -225,7 +230,7 @@ public class EnemyManager : MonoBehaviour
 
         var targethp = target.hp - power;
         target.hp = (int)math.floor(targethp);
-        
+
         //スキルにバフがあるなら適用させる。
         if (skill != null && skill.buffEffect != null && skill.buffEffect.Count > 0)
         {
@@ -242,30 +247,30 @@ public class EnemyManager : MonoBehaviour
                         break;
                     case StatusEffect.Stun:
                         break;
-                    case StatusEffect.Burn: 
+                    case StatusEffect.Burn:
                         break;
                     case StatusEffect.Freeze:
                         break;
-                    case StatusEffect.Sleep: 
+                    case StatusEffect.Sleep:
                         break;
-                    case StatusEffect.Silent:
-                        // ランダムに1つスキルを選んで封じる
-                        if (target.skills != null && target.skills.Length > 0)
-                        {
-                            List<int> availableSkills = new List<int>();
-                            for (int i = 0; i < target.skills.Length; i++)
-                            {
-                                if (target.skills[i] != null) availableSkills.Add(i);
-                            }
+                    //case StatusEffect.Silent:
+                    //    // ランダムに1つスキルを選んで封じる
+                    //    if (target.skills != null && target.skills.Length > 0)
+                    //    {
+                    //        List<int> availableSkills = new List<int>();
+                    //        for (int i = 0; i < target.skills.Length; i++)
+                    //        {
+                    //            if (target.skills[i] != null) availableSkills.Add(i);
+                    //        }
 
-                            if (availableSkills.Count > 0)
-                            {
-                                buff.LockSkillIndex = availableSkills[UnityEngine.Random.Range(0, availableSkills.Count)];
-                                Debug.Log($"{target.charactername}のスキル{buff.LockSkillIndex}番が封じられた");
-                            }
-                        }
-                        break;
-                    case StatusEffect.DamageUp: 
+                    //        if (availableSkills.Count > 0)
+                    //        {
+                    //            buff.LockSkillIndex = availableSkills[UnityEngine.Random.Range(0, availableSkills.Count)];
+                    //            Debug.Log($"{target.charactername}のスキル{buff.LockSkillIndex}番が封じられた");
+                    //        }
+                    //    }
+                    //    break;
+                    case StatusEffect.DamageUp:
                         break;
                     case StatusEffect.TurnChange:
                         break;
@@ -277,7 +282,7 @@ public class EnemyManager : MonoBehaviour
                         break;
                     case StatusEffect.MagicDamageDown:
                         break;
-                    case StatusEffect.MagicCounter: 
+                    case StatusEffect.MagicCounter:
                         break;
                     case StatusEffect.Makituki:
                         break;
@@ -390,5 +395,106 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
+    }
+
+    private void ApplyBuff(SkillData skill, Character target)
+    {
+        if (skill == null || skill.buffEffect == null || skill.buffEffect.Count == 0)
+            return;
+
+        foreach (var buffBase in skill.buffEffect)
+        {
+            BuffInstance buff = new BuffInstance(buffBase);
+            buff.remainingTurns = skill.buffDuration;
+            buff.buffValue = skill.buffValue;
+
+            // statusEffectで大きく分岐（状態異常の種類ごと）
+            switch (buffBase.statusEffect)
+            {   //魔法ダメ半減
+                case StatusEffect.MagicDamageDown:
+
+                    switch (buffBase.buffRange)
+                    {
+                        case BuffRange.Self:
+                            // 自分自身にバフ
+                            target.ApplyBuff(buff, target);
+                            break;
+
+                        case BuffRange.Ally:
+                            // 味方1人にバフ（ランダムまたは条件選択）
+                            var allies = GetAllies(); // 味方リスト取得
+                            if (allies.Count > 0)
+                            {
+                                var ally = allies[UnityEngine.Random.Range(0, allies.Count)];
+                                ally.ApplyBuff(buff, target);
+                            }
+                            break;
+
+                        case BuffRange.AllAllies:
+                            // 全味方にバフ
+                            var allAllies = GetAllies();
+                            foreach (var ally in allAllies)
+                            {
+                                BuffInstance allyBuff = new BuffInstance(buffBase);
+                                allyBuff.remainingTurns = skill.buffDuration;
+                                allyBuff.buffValue = skill.buffValue;
+                                ally.ApplyBuff(allyBuff, target);
+                            }
+                            break;                     
+                    }
+                  break;
+
+                case StatusEffect.Silent:
+                    // 敵1人にデバフ
+                    var enemies = GetPlayers(); // プレイヤーリスト取得
+                    if (enemies.Count > 0)
+                    {
+                        var enemy = enemies[UnityEngine.Random.Range(0, enemies.Count)];
+
+                        // スキル封じ処理
+                        if (enemy.skills != null && enemy.skills.Length > 0)
+                        {
+                            var availableSkills = new List<int>();
+                            for (int i = 0; i < enemy.skills.Length; i++)
+                            {
+                                if (enemy.skills[i] != null) availableSkills.Add(i);
+                            }
+                            if (availableSkills.Count > 0)
+                            {
+                                buff.LockSkillIndex = availableSkills[UnityEngine.Random.Range(0, availableSkills.Count)];
+                            }
+                        }
+
+                        enemy.ApplyBuff(buff, target);
+                    }
+                    break;
+            }
+        }
+    }
+
+    //敵の味方リストを取得する。
+    private List<Character> GetAllies()
+    {
+        List<Character> allies = new List<Character>();
+        foreach (var enemyObj in turnManager.enemys)
+        {
+            if (enemyObj == null) continue;
+            var ch = enemyObj.GetComponent<Character>();
+            if (ch != null) allies.Add(ch);
+        }
+        return allies;
+    }
+
+    //味方サイドの味方リストを取得する。
+    private List<Character> GetPlayers()
+    {
+        List<Character> players = new List<Character>();
+        foreach (var playerObj in turnManager.players)
+        {
+            if (playerObj == null) continue;
+            var ch = playerObj.GetComponent<Character>();
+            if (ch != null) players.Add(ch);
+        }
+        return players;
     }
 }

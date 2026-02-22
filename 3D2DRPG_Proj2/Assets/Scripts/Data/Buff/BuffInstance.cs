@@ -20,6 +20,8 @@ public class BuffInstance
     public Character targetCharacter;
     [Header("スキルが封じられているか？")]
     public int LockSkillIndex = -2; // -2=封じなし, -1=全スキル, 0移行は=プレイヤーの特定スキル(CharacterDataのスキルリスト順)
+    [Header("バフの増減値")]
+    public float buffValue = 0f; //バフの値、増減率など入れる
     public enum StatusEffect
     {
         Poison,
