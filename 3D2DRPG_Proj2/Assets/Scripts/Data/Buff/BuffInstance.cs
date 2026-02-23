@@ -22,6 +22,8 @@ public class BuffInstance
     public int LockSkillIndex = -2; // -2=封じなし, -1=全スキル, 0移行は=プレイヤーの特定スキル(CharacterDataのスキルリスト順)
     [Header("バフの増減値")]
     public float buffValue = 0f; //バフの値、増減率など入れる
+    [Header("ロックオン対象")]
+    public Character lockedTarget = null; // LockIn用：攻撃対象を限定
     public enum StatusEffect
     {
         Poison,
@@ -39,7 +41,9 @@ public class BuffInstance
         MagicCounter,
         Makituki,
         Zouen,
-    } //毒、スタン、やけど、凍結、眠り、魔封,ダメ増,ターンチェンジ,防御UP,スピードUP,スピードDN,マジックダメDN,反射,巻きつき,増援
+        MPRecovery,
+        LockIn
+    } //毒、スタン、やけど、凍結、眠り、魔封,ダメ増,ターンチェンジ,防御UP,スピードUP,スピードDN,マジックダメDN,反射,巻きつき,増援,MP回復,対象を絞る
 
 
     public BuffInstance(BuffBase baseBuff)

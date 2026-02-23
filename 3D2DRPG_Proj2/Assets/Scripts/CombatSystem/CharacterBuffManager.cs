@@ -134,11 +134,30 @@ public class CharacterBuffManager : MonoBehaviour
         for (int i = activeBuffs.Count - 1; i >= 0; i--)
         {
             var buff = activeBuffs[i];
+
+            // ターン終了時ダメージ処理
+            if (buff.baseData is Poison poisonBuff)
+            {
+                ownerCharacter.hp -= poisonBuff.damagePerTurn;
+                Debug.Log($"{ownerCharacter.charactername}は毒で{poisonBuff.damagePerTurn}ダメージを受けた");
+            }
+            else if (buff.baseData is Burn burnBuff)
+            {
+                ownerCharacter.hp -= burnBuff.damagePerTurn;
+                Debug.Log($"{ownerCharacter.charactername}はやけどで{burnBuff.damagePerTurn}ダメージを受けた");
+            }
+            else if (buff.baseData is Makituki makitukiBuff)
+            {
+                ownerCharacter.hp -= makitukiBuff.damagePerTurn;
+                Debug.Log($"{ownerCharacter.charactername}は巻きつきで{makitukiBuff.damagePerTurn}ダメージを受けた");
+            }
+
+            //ターンを減らす
             buff.TickTurn();
             
             if (buff.IsExpired())
             {
-                RemoveBuff(buff);
+                RemoveBuff(buff); //バフを削除する
             }
         }
     }
