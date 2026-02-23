@@ -150,6 +150,9 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
+        //ターゲットをロックインしているかチェック、ロックインしてなければnullを返す。
+        target = CheckLockIn(actingEnemy);
+
         if (target == null)
         {
             if (chosenSkill.targetScope == TargetScope.Single)
@@ -159,6 +162,7 @@ public class EnemyManager : MonoBehaviour
             }
 
         }
+
 
         // 1. 前に出る、トゥイーンアニメーション
         Tween forwardTween = actingEnemy.transform.DOMove(forwardPosition, forwardDuration)
@@ -206,6 +210,37 @@ public class EnemyManager : MonoBehaviour
 
         float power = 0;
         float AddDamageBonusPower = 0f;
+
+        // クリティカル判定（ロックオン時は+30%）
+        float critRate = skill != null ? skill.criticalRate : 0.1f;
+
+        // ロックオンバフがあり、対象が一致すればクリティカル率上昇 仕様上は基礎値にクリティカルを乗算してからDBを加算
+        var buffManager = attacker.GetBuffManager();
+        if (buffManager != null)
+        {
+            var buffs = buffManager.GetActiveBuffs();
+            foreach (var buff in buffs)
+            {
+                if (buff.baseData is LockIn lockInBuff)
+                {
+                    if (buff.lockedTarget == target)
+                    {
+                        critRate += lockInBuff.criticalRateBonus; // バフから値を取得
+                        Debug.Log($"ロックオン効果：クリティカル率+{lockInBuff.criticalRateBonus * 100}%");
+                    }
+                }
+            }
+        }
+
+        // クリティカル判定
+        bool isCritical = UnityEngine.Random.value < critRate;
+        if (isCritical)
+        {
+            power *= UnityEngine.Random.Range(1.5f,3.0f); // クリティカルヒット 範囲は1.5から3.0の間らしい。よくわからん
+            Debug.Log("クリティカルヒット！");
+        }
+
+
         if (skill != null)
         {
             if (skill.DamageBonusFlg == true)
@@ -288,6 +323,9 @@ public class EnemyManager : MonoBehaviour
                         break;
                     case StatusEffect.Zouen:
                         break;
+                    case StatusEffect.MPRecovery: //天使でしか使わないバフ
+                        attacker.mp += attacker.maxMp / 5;
+                        break;
                     default:
                         break;
                 }
@@ -338,6 +376,8 @@ public class EnemyManager : MonoBehaviour
 
         float power = 0;
         float AddDamageBonusPower = 0f;
+
+
         if (skill != null)
         {
             //バフがかかった状態のatkを参照しなければならない。
@@ -502,6 +542,27 @@ public class EnemyManager : MonoBehaviour
                     }
                     
                     break;
+
+                case StatusEffect.LockIn:
+                    // ロックオン：敵1体を対象として選択
+                    switch (buffBase.buffRange)
+                    {
+                        case BuffRange.Self:
+                            var enemy = GetPlayers();
+                            if (enemy.Count > 0)
+                            {
+                                // ランダムに敵1体を選択してロックオン
+                                var lockedEnemy = enemy[UnityEngine.Random.Range(0, enemy.Count)];
+                                buff.lockedTarget = lockedEnemy;
+
+                                // 自分自身にバフを適用
+                                target.ApplyBuff(buff, target);
+
+                                Debug.Log($"{target.charactername}が{lockedEnemy.charactername}をロックオン");
+                            }
+                            break;
+                    }
+                    break;
             }
         }
     }
@@ -530,5 +591,32 @@ public class EnemyManager : MonoBehaviour
             if (ch != null) players.Add(ch);
         }
         return players;
+    }
+
+    //ロックインチェック
+    private Character CheckLockIn(Character actingEnemy)
+    {
+        // ロックオンバフがあれば、そのターゲットに上書き
+        var buffManager = actingEnemy.GetBuffManager();
+        Character Ltarget = null;
+        if (buffManager != null)
+        {
+            var buffs = buffManager.GetActiveBuffs();
+            foreach (var buff in buffs)
+            {
+                if (buff.baseData.statusEffect == StatusEffect.LockIn)
+                {
+                    if (buff.lockedTarget != null)
+                    {
+                        Ltarget = buff.lockedTarget;
+                        
+                        Debug.Log($"{actingEnemy.charactername}はロックオン対象{Ltarget.charactername}を攻撃");
+                        break;
+                    }
+                }
+            }
+
+        }
+        return Ltarget;
     }
 }

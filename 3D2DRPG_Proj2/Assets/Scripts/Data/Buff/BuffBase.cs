@@ -30,6 +30,8 @@ public enum StatusEffect
     MagicCounter,
     Makituki,
     Zouen,
+    MPRecovery,
+    LockIn
 } //毒、スタン、やけど、凍結、眠り、魔封,ダメ増,ターンチェンジ,防御UP,スピードUP,スピードDN,マジックダメDN,反射,巻きつき,増援
 
 /// <summary>
