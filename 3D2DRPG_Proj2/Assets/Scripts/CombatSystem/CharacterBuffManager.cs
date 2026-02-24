@@ -57,6 +57,7 @@ public class CharacterBuffManager : MonoBehaviour
     /// </summary>
     public bool ApplyBuff(BuffInstance buffInstance, Character appliedBy)
     {
+        //
         if (buffInstance == null || ownerCharacter == null)
         {
             Debug.LogWarning("バフ適用失敗: バフインスタンスまたはキャラクターがnullです");

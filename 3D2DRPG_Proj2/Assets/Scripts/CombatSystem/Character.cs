@@ -30,6 +30,11 @@ public class Character: MonoBehaviour
     private int baseSpd;
     private int baseMaxHp;
     private int baseMaxMp;
+
+    //バフ関連
+    //すべての攻撃を全体攻撃にするフラグ
+    public bool AllAttack;
+    
     public void init(CharacterData _characterData)
     {
         characterData = _characterData;

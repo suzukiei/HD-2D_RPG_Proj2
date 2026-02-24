@@ -6,25 +6,41 @@ using Unity.VisualScripting;
 using Unity.Mathematics;
 using System;
 
+//バフ効果
+public enum buffEffect
+{
+    damegeDown,
+    SkillnotUse,
+}
+//バフの効果を管理するクラス
+[Serializable]
+public class CharacterBuff
+{
+    public buffEffect effect;  // バフの効果の種類
+    public BuffBase buffBase;  // バフの基本データ(使うか不明）
+    public List<Character> target;　// バフの対象キャラクター
+    public int remainingTurns;  // バフの残りターン数
+}
+
 /// <summary>
 /// プレイヤーの戦闘行動を管理するクラス
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
     [SerializeField, Header("UIテスト用")]
-    private UITest uiTest;
+    private UITest uiTest;  // UIテスト用の参照
     [SerializeField, Header("ComboUI")]
-    private ComboAttack comboUI;
+    private ComboAttack comboUI;   // コンボ攻撃UIの参照
     [SerializeField, Header("選択用UI")]
-    private SkillSelectionUI skillSelectionUI;
+    private SkillSelectionUI skillSelectionUI; // スキル選択UIの参照
     [SerializeField, Header("ターン管理")]
-    private TurnManager turnManager;
+    private TurnManager turnManager; // ターン管理の参照
     [SerializeField, Header("プレイヤーキャラクターリスト")]
-    private List<CharacterData> playerCharacters;
+    private List<CharacterData> playerCharacters; // プレイヤーキャラクターデータのリスト
     [SerializeField, Header("キャラクターの生成配置座標")]
-    private List<Vector3> spawnPositions;
+    private List<Vector3> spawnPositions; // キャラクターの生成配置座標のリスト
     [SerializeField, Header("プレイヤーステータスパネル")]
-    private List<PlayerStatusPanel> playerStatusPanel;
+    private List<PlayerStatusPanel> playerStatusPanel; // プレイヤーステータスパネルのリスト
 
     [SerializeField, Header("キャラクター戦闘開始位置")]
     private Vector3 ActionPosition;
@@ -32,7 +48,6 @@ public class PlayerManager : MonoBehaviour
     private Vector3 StartPosition;
     // キャラクターのGameObject保存用
     private List<GameObject> characterObjects = new List<GameObject>();
-
     // 現在選択中のキャラクター
     private Character selectedCharacter;
     // 現在選択中のスキル
@@ -41,6 +56,11 @@ public class PlayerManager : MonoBehaviour
     private bool isActionPending = false;
     //選択している敵
     private Character selectedEnemy;
+    //コンボ数のcount
+    private int comboCount = 0;
+
+    //Buffの管理用リスト
+    public List<CharacterBuff>　characterBuffs = new List<CharacterBuff>();
 
     /// <summary>
     /// キャラクターデータ取得用
@@ -76,124 +96,6 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ステータスマシンの状態管理・行動処理
-    /// </summary>
-    private void Update()
-    {
-        // UIのプレイヤーステータスパネル更新
-        PlayerUIUpdate();
-        if (!isActionPending) return;
-
-        // キャラクターの状態に応じて処理を分岐
-        switch (selectedCharacter.StatusFlag)
-        {
-            case StatusFlag.Move:
-                //開始位置を保存
-                StartPosition = selectedCharacter.CharacterObj.transform.position;
-                // キャラクターを行動位置に移動
-                selectedCharacter.CharacterObj.transform.DOMove(ActionPosition, 1f).OnComplete(() =>
-                {
-                    selectedCharacter.StatusFlag = StatusFlag.Select;
-                    isActionPending = true;
-                }); ;
-                break;
-
-            case StatusFlag.Select:
-                // スキル選択パネル
-                List<SkillData> skills = new List<SkillData>();
-                skills.AddRange(selectedCharacter.skills);
-                // UnityEventを作成してコールバックを設定
-                UnityEvent<int> callback = new UnityEvent<int>();
-                //カリバフ効果適用
-                callback.AddListener(OnSkillSelected);
-                // スキル選択UIを表示
-                skillSelectionUI.ShowSkillSelection(skills, callback);
-                break;
-
-            case StatusFlag.Attack:
-                // 攻撃対象選択パネル
-                List<Character> enemies = getEnemy();
-                var attackEvent = new UnityEvent<int>();
-                attackEvent.AddListener((index) => OnAttackSelected(enemies, index));
-                uiTest.Inputs(attackEvent, enemies.Count - 1, enemies);
-                break;
-
-            case StatusFlag.Heal:
-                // Heal対象選択パネル対象選択パネル
-                List<Character> characters = getPlayer();
-                var healEvent = new UnityEvent<int>();
-                healEvent.AddListener((index) => OnHealSelected(characters, index));
-                uiTest.Inputs(healEvent, characters.Count - 1, characters);
-                break;
-            case StatusFlag.Buff:
-            if(selectedSkill.buffEffect.Count > 0)
-            {
-                List<BuffBase> buffBase = selectedSkill.buffEffect;
-                foreach (var buff in buffBase)
-                {
-                    // Heal対象選択パネル対象選択パネル
-                    switch (buff.buffRange)
-                    {
-                        case BuffRange.Self:
-                            OnBuffSelected(null, 0,buff);
-                            break;
-                        case BuffRange.AllAllies:
-                        case BuffRange.AllEnemies:
-                            OnBuffSelected(null, 0, buff);
-                            break;
-                        case BuffRange.Ally:
-                            List<Character> buffcharacters = getPlayer();
-                            var buffEvent = new UnityEvent<int>();
-                            buffEvent.AddListener((index) => OnBuffSelected(buffcharacters, index, buff));
-                            uiTest.Inputs(buffEvent, buffcharacters.Count - 1, buffcharacters);
-                            break;
-                        case BuffRange.Enemy:
-                            List<Character> buffenemies = getEnemy();
-                            var buffEvents = new UnityEvent<int>();
-                            buffEvents.AddListener((index) => OnBuffSelected(buffenemies, index, buff));
-                            uiTest.Inputs(buffEvents, buffenemies.Count - 1, buffenemies);
-                            break;
-                    }
-                }
-            }else
-            {
-                Debug.Log("バフ効果がありません");
-                selectedCharacter.StatusFlag = StatusFlag.End;
-                isActionPending = true;
-                    return;
-            }
-                break;
-
-            case StatusFlag.End:
-                //バフ効果の管理
-                buffTurnManage();
-                // キャラクターを開始位置に戻る
-                selectedCharacter.CharacterObj.transform.DOMove(StartPosition, 1f).OnComplete(() =>
-                {
-                    selectedCharacter.StatusFlag = StatusFlag.None;
-                    // ターン処理を終了
-                    turnManager.FlagChange();
-                }); ;
-                break;
-        }
-
-        // 行動処理のフラグをリセット
-        isActionPending = false;
-    }
-    /// <summary>
-    /// UIのプレイヤーステータスパネル更新
-    /// </summary>
-    public void PlayerUIUpdate()
-    {
-
-        for (int i = 0; i < characterObjects.Count; i++)
-        {
-            PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
-            playerStatusPanel[i].UpdatePlayerStatus(playerData);
-        }
-    }
-
-    /// <summary>
     /// プレイヤーの行動開始（外部から呼び出される）
     /// </summary>
     public void StartPlayerAction(Character character)
@@ -203,19 +105,158 @@ public class PlayerManager : MonoBehaviour
         selectedCharacter.StatusFlag = StatusFlag.Move;
         isActionPending = true;
     }
+    /// <summary>
+    /// ステータスマシンの状態管理・行動処理
+    /// </summary>
+    private void Update()
+    {
+        // UIのプレイヤーステータスパネル更新
+        PlayerUIUpdate();
+        if (!isActionPending) return;
+        // キャラクターの状態に応じて処理を分岐
+        PlayerUpdate();
+        // 行動処理のフラグをリセット
+        isActionPending = false;
+    }
+
+    /// <summary>
+    /// UIのプレイヤーステータスパネル更新
+    /// </summary>
+    private void PlayerUIUpdate()
+    {
+        for (int i = 0; i < characterObjects.Count; i++)
+        {
+            PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
+            playerStatusPanel[i].UpdatePlayerStatus(playerData);
+        }
+    }
+
+    /// <summary>
+    /// キャラクターの状態に応じて処理を分岐
+    /// </summary>
+    private void PlayerUpdate()
+    {
+        switch (selectedCharacter.StatusFlag)
+        {
+            case StatusFlag.Move:
+                PlayerMove();
+                break;
+            case StatusFlag.Select:
+                PlayerSelect();
+                break;
+            case StatusFlag.Attack:
+                PlayerAttackSelect();
+                break;
+            case StatusFlag.Heal:
+                PlayerHealSelect();
+                break;
+            case StatusFlag.Buff:
+                PlayerBuff();
+                break;
+            case StatusFlag.End:
+                PlayerEnd();
+                break;
+        }
+    }
+    
+    /// <summary>
+    /// 移動処理
+    /// </summary>
+    private void PlayerMove()
+    {
+        //開始位置を保存
+        StartPosition = selectedCharacter.CharacterObj.transform.position;
+        // キャラクターを行動位置に移動
+        selectedCharacter.CharacterObj.transform.DOMove(ActionPosition, 1f).OnComplete(() =>
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Select;
+            isActionPending = true;
+        }); ;
+    }
+    /// <summary>
+    /// スキル選択処理
+    /// </summary>
+    private void PlayerSelect()
+    {
+        // スキル選択パネル
+        List<SkillData> skills = new List<SkillData>();
+        skills.AddRange(selectedCharacter.skills);
+        // UnityEventを作成してコールバックを設定
+        UnityEvent<int> callback = new UnityEvent<int>();
+        //カリバフ効果適用
+        callback.AddListener(OnSkillSelected);
+        // スキル選択UIを表示
+        skillSelectionUI.ShowSkillSelection(skills, callback);
+    }
+    /// <summary>
+    /// 攻撃相手選択フェイズ
+    /// </summary>
+    private void PlayerAttackSelect()
+    {
+        // 攻撃対象選択パネル
+        List<Character> enemies = getEnemy();
+        var attackEvent = new UnityEvent<int>();
+        attackEvent.AddListener((index) => OnAttackSelected(enemies, index));
+        uiTest.Inputs(attackEvent, enemies.Count - 1, enemies);
+    }
+    /// <summary>
+    /// 回復味方を選択するファイズ
+    /// </summary>
+    private void PlayerHealSelect()
+    {
+        // Heal対象選択パネル対象選択パネル
+        List<Character> characters = getPlayer();
+        var healEvent = new UnityEvent<int>();
+        healEvent.AddListener((index) => OnHealSelected(characters, index));
+        uiTest.Inputs(healEvent, characters.Count - 1, characters);
+    }
+    /// <summary>
+    /// バフの処理
+    /// </summary>
+    private void PlayerBuff()
+    {
+        if (selectedSkill.buffEffect.Count > 0)
+        {
+            if (selectedCharacter.mp < selectedSkill.mpCost)
+            {
+                selectedCharacter.StatusFlag = StatusFlag.Select;
+                isActionPending = true;
+                return;
+            }
+            selectedCharacter.mp -= selectedSkill.mpCost;
+            SetBuff();
+        }
+    }
+    /// <summary>
+    /// 最終処理
+    /// </summary>
+    private void PlayerEnd()
+    {
+        //バフ効果の管理
+        buffTurnManage();
+        // キャラクターを開始位置に戻る
+        selectedCharacter.CharacterObj.transform.DOMove(StartPosition, 1f).OnComplete(() =>
+        {
+            selectedCharacter.StatusFlag = StatusFlag.None;
+            // ターン処理を終了
+            turnManager.FlagChange();
+        });
+
+    }
 
     /// <summary>
     /// スキル選択時のコールバック
     /// </summary>
     private void OnSkillSelected(int index)
     {
+        //callBackでかえってきた変数がスキルのリスト内の物選択しているか
         if (index < 0 || index >= selectedCharacter.skills.Length)
         {
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
             return;
         }
-
+        //スキルリストにセットされている確認
         if (selectedCharacter.skills[index] == null)// nullチェック追加
         {
             selectedCharacter.StatusFlag = StatusFlag.Select;
@@ -223,20 +264,22 @@ public class PlayerManager : MonoBehaviour
             return;
         }
         selectedSkill = selectedCharacter.skills[index];
+
+        //選択したスキル名を表示させたい
+        //
+        //スキル呼び出し
+        
         switch (selectedSkill.effectType)
         {
             case SkillEffectType.Attack:
                 selectedCharacter.StatusFlag = StatusFlag.Attack;
-                if (selectedSkill.targetScope == TargetScope.All)
-                {
+                if (selectedSkill.targetScope == TargetScope.All||selectedCharacter.AllAttack)
                     OnAttackSelected(getEnemy(), 0);
-                }
                 break;
-
             case SkillEffectType.Heal:
                 selectedCharacter.StatusFlag = StatusFlag.Heal;
                 if (selectedSkill.targetScope == TargetScope.All)
-                    OnHealSelected(null, 0);
+                    OnHealSelected(null, 0); 
                 break;
             case SkillEffectType.Buff:
                 selectedCharacter.StatusFlag = StatusFlag.Buff;
@@ -245,7 +288,8 @@ public class PlayerManager : MonoBehaviour
                     OnBuffSelected(null, 0, selectedSkill.buffEffect[0]);
                 break;
         }
-        isActionPending = true;
+        if(selectedSkill.targetScope != TargetScope.All)
+            isActionPending = true;
     }
 
     /// <summary>
@@ -253,13 +297,14 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void OnAttackSelected(List<Character> enemies, int index)
     {
-
+        // 攻撃の範囲内かを確認
         if (index < 0 || index >= enemies.Count)
         {
             selectedCharacter.StatusFlag = StatusFlag.Attack;
             isActionPending = true;
             return;
         }
+        //MPが足りるかを確認
         if (selectedCharacter.mp < selectedSkill.mpCost)
         {
             selectedCharacter.StatusFlag = StatusFlag.Select;
@@ -267,70 +312,159 @@ public class PlayerManager : MonoBehaviour
             return;
         }
         // 全の攻撃スキルの場合、すべての敵に攻撃を適用
-        if (selectedSkill.targetScope == TargetScope.All)
+        if (selectedSkill.targetScope == TargetScope.All||selectedCharacter.AllAttack)
         {
-            if (selectedCharacter.mp < selectedSkill.mpCost)
-            {
-                selectedCharacter.StatusFlag = StatusFlag.Select;
-                isActionPending = true;
-                return;
-            }
+            selectedCharacter.mp -= selectedSkill.mpCost;
             foreach (var enemy in enemies)
             {
-                ApplyAttack(enemy, selectedSkill);
+                bool EnemyDefeat = ApplyAttack(enemy, selectedSkill);
+                if (!EnemyDefeat)
+                {
+                    Debug.Log($"{enemy}撃破！");
+                }
+            }
+        } else
+        {
+            if (selectedSkill.canCombo)
+            {
+                selectedCharacter.mp -= selectedSkill.mpCost;
+                comboCount = 0;
+                //コンボスキルの処理（成功時）
+                Func<int, bool> attackEvent;
+                // 修正: OnComboApplyAttackメソッドをラムダ式でラップし、Func<int, bool>型にする
+                attackEvent = (comboStep) => OnComboApplyAttack();
+                var attackEnd = new UnityEvent<int>();
+                attackEnd.AddListener((index) => OnComboEnd());
+                selectedEnemy = enemies[index];
+                comboUI.AttackTiming(selectedSkill.timingWindowStart, selectedSkill.timingWindowEnd);
+                comboUI.Inputs(attackEvent, attackEnd, selectedSkill.maxcombo, selectedEnemy);
+            }
+            else
+            {
+                //通常スキルの処理  
+                var enemy = enemies[index];
+                selectedCharacter.mp -= selectedSkill.mpCost;
+                bool EnemyDefeat = ApplyAttack(enemy, selectedSkill);
+                if (!EnemyDefeat)
+                {
+                    Debug.Log($"{enemy}撃破！");
+                }
+            }
+        }
+
+        //コンボ以外
+        if(!selectedSkill.canCombo)
+        {
+            //攻撃後バフの設定
+            if (selectedCharacter.skills.Length > 0)
+            {
+                SetBuff();
+            }
+            selectedCharacter.StatusFlag = StatusFlag.End;
+            isActionPending = true;
+        }
+    }
+
+    /// <summary>
+    /// コンボ時の攻撃処理
+    /// </summary>
+    public bool OnComboApplyAttack()
+    {
+        comboCount++;
+        int attackdamege = 0;
+        if (comboCount != 0)
+            attackdamege =+ comboCount*selectedSkill.ComboDamage;
+        var enemy = selectedEnemy;
+        var enemysurvival =ApplyAttack(enemy, selectedSkill, attackdamege);
+        return enemysurvival;
+        //selectedCharacter.mp -= selectedSkill.mpCost;
+    }
+
+    /// <summary>
+    /// コンボ攻撃後の処理
+    /// </summary>
+    private void OnComboEnd()
+    {
+        //攻撃後バフの設定
+        if (selectedCharacter.skills.Length > 0)
+        {
+            SetBuff();
+        }
+        else
+        {
+            selectedCharacter.StatusFlag = StatusFlag.End;
+            isActionPending = true;
+        }
+    }
+
+    /// <summary>
+    /// 攻撃対象選択時のコールバック
+    /// </summary>
+    private void OnHealSelected(List<Character> characters, int index)
+    {
+        // 対象の範囲内かを確認
+        if (index < 0 || index >= characters.Count)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Heal;
+            isActionPending = true;
+            return;
+        }
+        // MPが存在するかを確認
+        if (selectedCharacter.mp < selectedSkill.mpCost)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Select;
+            isActionPending = true;
+            return;
+        }
+        //すべての味方を対象
+        if (selectedSkill.targetScope == TargetScope.All)
+        {
+            //全の回復スキルの処理
+            foreach (var getCharacter in characters)
+            {
+                ApplyHeal(getCharacter, selectedSkill);
             }
             selectedCharacter.mp -= selectedSkill.mpCost;
             selectedCharacter.StatusFlag = StatusFlag.End;
             isActionPending = true;
             return;
         }
-        if (selectedSkill.canCombo)
-        {
-            selectedCharacter.mp -= selectedSkill.mpCost;
-            //コンボスキルの処理（成功時）
-            Func<int, bool> attackEvent;
-            // 修正: OnComboApplyAttackメソッドをラムダ式でラップし、Func<int, bool>型にする
-            attackEvent = (comboStep) => OnComboApplyAttack();
-            var attackEnd = new UnityEvent<int>();
-            attackEnd.AddListener((index) => OnComboEnd());
-            selectedEnemy = enemies[index];
-            comboUI.AttackTiming(selectedSkill.timingWindowStart, selectedSkill.timingWindowEnd);
-            comboUI.Inputs(attackEvent, attackEnd, selectedSkill.maxcombo, selectedEnemy);
-        }
-        else
-        {
-            //通常スキルの処理  
-            var enemy = enemies[index];
-            ApplyAttack(enemy, selectedSkill);
-            selectedCharacter.mp -= selectedSkill.mpCost;
-            selectedCharacter.StatusFlag = StatusFlag.End;
-            isActionPending = true;
-        }
-
-        //攻撃後バフの設定
-        if (selectedCharacter.skills.Length > 0)
-        {
-            SetBuff();
-        }
-
-
-
+        //通常スキルの処理  
+        var character = characters[index];
+        ApplyHeal(character, selectedSkill);
+        selectedCharacter.mp -= selectedSkill.mpCost;
+        selectedCharacter.StatusFlag = StatusFlag.End;
+        isActionPending = true;
+        //ヒール後にバフが必要かを確認
 
     }
 
-    public bool OnComboApplyAttack()
+    /// <summary>
+    /// バフセレクト後の処理
+    /// </summary>
+    public void OnBuffSelected(List<Character> characters, int index,BuffBase buffBase)
     {
-        var enemy = selectedEnemy;
-        var enemysurvival =ApplyAttack(enemy, selectedSkill);
-        return enemysurvival;
-        //selectedCharacter.mp -= selectedSkill.mpCost;
+        if (index < 0 || index >= characters.Count)
+        {
+            selectedCharacter.StatusFlag = StatusFlag.Buff;
+            isActionPending = true;
+            return;
+        }
+        //通常スキルの処理
+        var character = characters[index];
+        BuffInstance buff = new BuffInstance(buffBase);
+        buff.remainingTurns = selectedSkill.buffDuration;
+        buffApply(buff, character);
+
+        selectedCharacter.StatusFlag = StatusFlag.End;
+        isActionPending = true;
     }
 
     /// <summary>
     /// 攻撃処理（ダメージ計算・撃破処理）
     /// true;敵が残っている、false:敵が撃破された
     /// </summary>
-    private bool ApplyAttack(Character enemy, SkillData skill)
+    private bool ApplyAttack(Character enemy, SkillData skill, int Attackbuff = 0)
     {
         if (enemy == null || skill == null) return true; // nullチェック追加
 
@@ -338,15 +472,15 @@ public class PlayerManager : MonoBehaviour
         float random = UnityEngine.Random.Range(10, 20);
         random = random / 10;
         Debug.Log("乱数:" + random);
-        
+
         // バフ適用後の攻撃力と防御力を取得
         int effectiveAtk = selectedCharacter.GetEffectiveAttack();
         int effectiveDef = enemy.GetEffectiveDefense();
-        
+
         //基本ダメージ計算（バフ適用後の攻撃力を使用）
         var damage = effectiveAtk * random;
         //最終計算（バフ適用後の防御力を使用）
-        var finalDamage = damage * skill.power - effectiveDef;
+        var finalDamage = damage * skill.power + Attackbuff - effectiveDef;
         var hp = enemy.hp - finalDamage;
         enemy.hp = (int)math.floor(hp);
 
@@ -373,70 +507,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void OnComboEnd()
-    {
-        selectedCharacter.StatusFlag = StatusFlag.End;
-        isActionPending = true;
-    }
-    /// <summary>
-    /// 攻撃対象選択時のコールバック
-    /// </summary>
-    private void OnHealSelected(List<Character> characters, int index)
-    {
-        if (index < 0 || index >= characters.Count)
-        {
-            selectedCharacter.StatusFlag = StatusFlag.Heal;
-            isActionPending = true;
-            return;
-        }
-        if (selectedCharacter.mp < selectedSkill.mpCost)
-        {
-            selectedCharacter.StatusFlag = StatusFlag.Select;
-            isActionPending = true;
-            return;
-        }
-        if (selectedSkill.targetScope == TargetScope.All)
-        {
-            //全の回復スキルの処理
-            foreach (var getCharacter in characters)
-            {
-                ApplyHeal(getCharacter, selectedSkill);
-            }
-            selectedCharacter.mp -= selectedSkill.mpCost;
-            selectedCharacter.StatusFlag = StatusFlag.End;
-            isActionPending = true;
-            return;
-        }
-        //通常スキルの処理  
-        var character = characters[index];
-        ApplyHeal(character, selectedSkill);
-        selectedCharacter.mp -= selectedSkill.mpCost;
-        selectedCharacter.StatusFlag = StatusFlag.End;
-        isActionPending = true;
-    }
-    public void OnBuffSelected(List<Character> characters, int index,BuffBase buffBase)
-    {
-        if (index < 0 || index >= characters.Count)
-        {
-            selectedCharacter.StatusFlag = StatusFlag.Buff;
-            isActionPending = true;
-            return;
-        }
-        if (selectedCharacter.mp < selectedSkill.mpCost)
-        {
-            selectedCharacter.StatusFlag = StatusFlag.Select;
-            isActionPending = true;
-            return;
-        }
-        //通常スキルの処理
-        var character = characters[index];
-        BuffInstance buff = new BuffInstance(buffBase);
-        buff.remainingTurns = selectedSkill.buffDuration;
-        buffApply(buff, character);
-        selectedCharacter.mp -= selectedSkill.mpCost;
-        selectedCharacter.StatusFlag = StatusFlag.End;
-        isActionPending = true;
-    }
     /// <summary>
     /// 回復処理
     /// </summary>
@@ -450,52 +520,24 @@ public class PlayerManager : MonoBehaviour
             character.hp = character.maxHp;
         }
     }
-    /// <summary>
-    /// 攻撃対象選択パネルの敵キャラクター取得
-    /// </summary>
-    private List<Character> getEnemy()
-    {
-        // 攻撃対象選択パネル
-        List<Character> enemies = new List<Character>();
-        foreach (var enemyObj in turnManager.enemys)
-        {
-            var characterData = enemyObj.GetComponent<Character>();
-            if (characterData != null)
-            {
-                enemies.Add(characterData);
-            }
-        }
-        return enemies;
-    }
-    /// <summary>
-    /// 攻撃対象選択パネルの味方キャラクター取得
-    /// </summary>
-    private List<Character> getPlayer()
-    {
-        // 攻撃対象選択パネル
-        List<Character> players = new List<Character>();
-        foreach (var playerObj in turnManager.players)
-        {
-            var characterData = playerObj.GetComponent<Character>();
-            if (characterData != null)
-            {
-                players.Add(characterData);
-            }
-        }
-        return players;
-    }
+
+
+
+
 
     /// <summary>
     /// バフ効果の適用
     /// 各キャラクターのCharacterBuffManagerに委譲
     /// </summary>
-    private void  buffApply(BuffInstance buff, Character target)
+    private void buffApply(BuffInstance buff, Character target)
     {
+        // || buff.baseData.duration==0
         if (buff == null)
         {
-            Debug.LogWarning("バフ適用失敗: バフインスタンスがnullです");
+            Debug.LogWarning("バフ適用失敗: バフインスタンスがnullですまたは、そのターンのみの処理です。");
             return;
         }
+
         
         switch (buff.buffRange)
         {
@@ -569,6 +611,7 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+
     /// <summary>
     /// バフをセットする
     /// </summary>
@@ -577,9 +620,10 @@ public class PlayerManager : MonoBehaviour
         if (selectedSkill.buffEffect.Count > 0)
         {
             List<BuffBase> buffBase = selectedSkill.buffEffect;
+
             foreach (var buff in buffBase)
             {
-                if(buff.isSelfTarget)
+                if (buff.isSelfTarget)
                 {
                     OnBuffSelected(new List<Character>() { selectedCharacter }, 0, buff);
                     continue;
@@ -588,7 +632,7 @@ public class PlayerManager : MonoBehaviour
                 switch (buff.buffRange)
                 {
                     case BuffRange.Self:
-                        OnBuffSelected(null, 0, buff);
+                        OnBuffSelected(new List<Character>() { selectedCharacter }, 0, buff);
                         break;
                     case BuffRange.AllAllies:
                     case BuffRange.AllEnemies:
@@ -621,6 +665,41 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
+    }
+    /// <summary>
+    /// 攻撃対象選択パネルの敵キャラクター取得
+    /// </summary>
+    private List<Character> getEnemy()
+    {
+        // 攻撃対象選択パネル
+        List<Character> enemies = new List<Character>();
+        foreach (var enemyObj in turnManager.enemys)
+        {
+            var characterData = enemyObj.GetComponent<Character>();
+            if (characterData != null)
+            {
+                enemies.Add(characterData);
+            }
+        }
+        return enemies;
+    }
+
+    /// <summary>
+    /// 攻撃対象選択パネルの味方キャラクター取得
+    /// </summary>
+    private List<Character> getPlayer()
+    {
+        // 攻撃対象選択パネル
+        List<Character> players = new List<Character>();
+        foreach (var playerObj in turnManager.players)
+        {
+            var characterData = playerObj.GetComponent<Character>();
+            if (characterData != null)
+            {
+                players.Add(characterData);
+            }
+        }
+        return players;
     }
 
 }
