@@ -14,7 +14,7 @@ public enum ZokuseiType
     Buturi,
     Mahou
 }
-public enum SkillEffectType { Attack, Heal, Buff }
+public enum SkillEffectType { Attack, Heal, Buff, ExtraAction }
 [CreateAssetMenu(menuName = "SkillData")]
 public class SkillData : ScriptableObject
 {
@@ -57,8 +57,6 @@ public class SkillData : ScriptableObject
     public float statusChance = 0f;
     [Header("バフの管理スクリプト")]
     public List<BuffBase> buffEffect;
-    [Header("バフ値")]
-    public float buffValue = 0f;
     [Header("バフの継続時間")]
     public int buffDuration = 0;
 
@@ -74,6 +72,21 @@ public class SkillData : ScriptableObject
 
     [Header("一回だけの使用制限")]
     public bool isOnlyOnece = false;
+
+    [Header("連続攻撃")]
+    [Tooltip("このスキルで何回攻撃するか（デフォルト1回）")]
+    public int attackCount = 1;
+
+    [Header("以下ボス用で使用するフラグ")]
+    [Header("必殺技か？")]
+    public bool isUltimateSkill = false; // 必殺技フラグ
+
+    [Header("追加行動")]
+    [Tooltip("このスキル使用後、他のスキルで追加行動するか")]
+    public bool hasExtraActions = false;
+
+    [Tooltip("追加行動の回数")]
+    public int extraActionCount = 2;
 
 }
 

@@ -26,7 +26,7 @@ public class CharacterData : ScriptableObject
     public string charactername;
     public Sprite characterIcon;
     public bool enemyCheckFlag;
-    public int hp, mp, atk, def, spd;
+    public int hp, mp, atk,Int, def, spd;
     public int maxHp, maxMp;
     public int exp, level;
     public GameObject CharacterObj;

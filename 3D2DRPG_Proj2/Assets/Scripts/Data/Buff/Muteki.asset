@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b034ba8d830c1ac45b0c63e21fe1d5fc, type: 3}
+  m_Name: Muteki
+  m_EditorClassIdentifier: 
+  buffId: 
+  buffName: 
+  description: 
+  icon: {fileID: 0}
+  buffType: 1
+  duration: 1
+  buffRange: 0
+  sourceCharacter: {fileID: 0}
+  isSelfTarget: 1
+  statusEffect: 8
+  defenseMultiplier: 9
