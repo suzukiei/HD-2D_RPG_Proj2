@@ -1,9 +1,10 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-using DG.Tweening;
 using UnityEngine.Animations;
+using UnityEngine.TextCore.Text;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -186,9 +187,25 @@ public class EnemyManager : MonoBehaviour
         {
             ApplyAttack(target, chosenSkill, actingEnemy);
         }
-        else
+        else if(chosenSkill.targetScope == TargetScope.All)
         {
-            ApplyAttack(playerCandidates, chosenSkill, actingEnemy);
+            if(chosenSkill.effectType == SkillEffectType.Heal)
+            {
+                if(chosenSkill.isOnlyOnece == false) //とりあえず殴っておく。
+                {
+                    ApplyAttack(playerCandidates, chosenSkill, actingEnemy);
+                }
+                else
+                {
+                    List<Character> enemies = GetAllies();
+                    ApplyHeal(enemies, chosenSkill, actingEnemy);
+                }
+                
+            }
+            else
+            { 
+                ApplyAttack(playerCandidates, chosenSkill, actingEnemy);
+            }
         }
         // 4. 元の位置に戻る、トゥイーンアニメーション
         Tween returnTween = actingEnemy.transform.DOMove(originalPosition, returnDuration)
@@ -209,6 +226,7 @@ public class EnemyManager : MonoBehaviour
         if (target == null) return;
 
         float power = 0;
+        bool isHeal = false; // 回復フラグ
         float AddDamageBonusPower = 0f;
 
         // クリティカル判定（ロックオン時は+30%）
@@ -243,17 +261,75 @@ public class EnemyManager : MonoBehaviour
 
         if (skill != null)
         {
-            if (skill.DamageBonusFlg == true)
+            // ランダム効果スキルかチェック
+            if (skill.isRandomEffect)
             {
-                //ダメージボーナスの処理
-                float rndDB = UnityEngine.Random.Range(1f, attacker.atk + 1);
-                AddDamageBonusPower = skill.power + rndDB;
+                // 50%でダメージか回復か決定
+                isHeal = UnityEngine.Random.value < 0.5f;
 
-                power = AddDamageBonusPower;
+                // 最大HPの割合 skill.powerはスキル側に0.2などの割合ダメを設定しておき、MAXHPと計算させる。
+                power = attacker.maxHp * skill.power;
+
+                if (isHeal)
+                {
+                    // 回復処理（使用者自身を回復）
+                    attacker.hp += (int)power;
+                    target.hp += (int)power;
+                    if (attacker.hp > attacker.maxHp) attacker.hp = attacker.maxHp;
+                    Debug.Log($"{attacker.charactername}は{power}回復した！");
+                    return; // ここで処理終了
+                }
+                else
+                {
+                    // ダメージ処理（プレイヤーにダメージ）
+                    //この後のダメージ処理はtargetにダメージを与える処理しかないので、先にPlayerhpを削っておく。
+                    var Playerhp = target.hp - power;
+                    target.hp = (int)math.floor(Playerhp);
+
+                    //もしこの攻撃で死んだら
+                    if (target.hp <= 0)
+                    {
+                        // プレイヤーが撃破された（HPが0に）
+                        target.hp = 0;
+                        // リストから削除
+                        if (turnManager.players.Contains(target.gameObject))
+                        {
+                            turnManager.players.Remove(target.gameObject);
+                        }
+                        if (turnManager.turnList.Contains(target.gameObject))
+                        {
+                            turnManager.turnList.Remove(target.gameObject);
+                        }
+                        // GameObject を削除
+                        if (target.CharacterObj != null)
+                        {
+                            Destroy(target.CharacterObj);
+                        }
+                        else
+                        {
+                            // fallback: Destroy target.gameObject
+                            Destroy(target.gameObject);
+                        }
+                    }
+
+                    //削ったら
+                    target = attacker; // 自分自身をターゲットに
+                }
             }
-            else
-            {
-                power = skill.power;
+            else 
+            { 
+                if (skill.DamageBonusFlg == true)
+                {
+                    //ダメージボーナスの処理
+                    float rndDB = UnityEngine.Random.Range(1f, attacker.atk + 1);
+                    AddDamageBonusPower = skill.power + rndDB;
+
+                    power = AddDamageBonusPower;
+                }
+                else
+                {
+                    power = skill.power;
+                }
             }
 
         }
@@ -565,6 +641,33 @@ public class EnemyManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    /// <summary>
+    /// 回復処理 今は全体回復用
+    /// </summary>
+    private void ApplyHeal (List<Character> targets, SkillData skill, Character actingEnemy)
+    {
+        if(targets == null || skill == null) return;
+
+        foreach (var target in targets)
+        {
+            if (target == null) continue;
+
+            float healAmount = 0;
+            healAmount = target.maxHp * skill.power; //割合で回復
+            target.hp += (int)healAmount;
+            //MaxHPを超えないようにする
+            if (target.hp > target.maxHp)
+            {
+                target.hp = target.maxHp;
+            }
+                     
+        }
+
+        //一回限りならばもう使えないようにする
+        if (skill.isOnlyOnece)
+            skill.isOnlyOnece = false;
     }
 
     //敵の味方リストを取得する。

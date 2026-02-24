@@ -67,5 +67,13 @@ public class SkillData : ScriptableObject
 
     [Header("属性タイプ")]
     public ZokuseiType ZokuseiType = ZokuseiType.Buturi; // デフォルトは物理
+
+    [Header("ギャンブル系スキル")]
+    [Tooltip("trueの場合、50%でダメージか回復かランダムに決まる")]
+    public bool isRandomEffect = false;
+
+    [Header("一回だけの使用制限")]
+    public bool isOnlyOnece = false;
+
 }
 

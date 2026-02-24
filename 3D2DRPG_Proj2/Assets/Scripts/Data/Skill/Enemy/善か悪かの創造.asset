@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a92d8b73040e5b143bbd8be31623266c, type: 3}
+  m_Name: "\u5584\u304B\u60AA\u304B\u306E\u5275\u9020"
+  m_EditorClassIdentifier: 
+  skillName: "\u5584\u304B\u60AA\u304B\u306E\u5275\u9020"
+  description: "Power\u306F\u5272\u5408\u306B\u306A\u308B\u306E\u30670.2(20%)\u306B\u3059\u308B"
+  icon: {fileID: 0}
+  soundEffect: {fileID: 0}
+  vfxPrefab: {fileID: 0}
+  animationName: 
+  effectType: 0
+  power: 0.2
+  mpCost: 0
+  cooldown: 0
+  hitCount: 1
+  criticalRate: 0.1
+  accuracy: 1
+  targetScope: 0
+  statusEffect: 0
+  canCombo: 0
+  comboNextSkill: {fileID: 0}
+  timingWindowStart: 0.3
+  timingWindowEnd: 0.6
+  comboDamageMultiplier: 1.2
+  maxcombo: 3
+  missCancel: 1
+  statusChance: 0
+  buffEffect: []
+  buffValue: 0
+  buffDuration: 0
+  DamageBonusFlg: 0
+  ZokuseiType: 0
+  isRandomEffect: 1
+  isOnlyOnece: 0
