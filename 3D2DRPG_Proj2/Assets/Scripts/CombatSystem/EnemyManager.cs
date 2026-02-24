@@ -152,16 +152,16 @@ public class EnemyManager : MonoBehaviour
         }
 
         //ターゲットをロックインしているかチェック、ロックインしてなければnullを返す。
-        target = CheckLockIn(actingEnemy);
-
-        if (target == null)
+        Character lockedTarget = CheckLockIn(actingEnemy);
+        if (lockedTarget != null)
         {
-            if (chosenSkill.targetScope == TargetScope.Single)
-            {
-                // ランダムに選択
-                target = playerCandidates[UnityEngine.Random.Range(0, playerCandidates.Count)];
-            }
+            target = lockedTarget;
+        }
 
+        // それでもnullならランダム選択
+        if (target == null && chosenSkill != null && chosenSkill.targetScope == TargetScope.Single)
+        {
+            target = playerCandidates[UnityEngine.Random.Range(0, playerCandidates.Count)];
         }
 
 
@@ -169,44 +169,135 @@ public class EnemyManager : MonoBehaviour
         Tween forwardTween = actingEnemy.transform.DOMove(forwardPosition, forwardDuration)
             .SetEase(Ease.OutQuad);
         yield return forwardTween.WaitForCompletion();
-        // 攻撃アニメーション再生
-        enemyAnimator = actingEnemy.EnemyAnimator;
 
-        // 2. 考える時間を待つ
-        yield return new WaitForSeconds(thinkingTime);
-        if (enemyAnimator != null)
-            enemyAnimator.SetTrigger("Attack");
-        yield return new WaitForSeconds(0.5f);
-        // 3. 攻撃処理を実行
-        if (chosenSkill != null && chosenSkill.effectType == SkillEffectType.Buff)
+        // 攻撃回数を取得
+        int attackCount = (chosenSkill != null && chosenSkill.attackCount > 0)
+            ? chosenSkill.attackCount
+            : 1;
+
+        // 攻撃回数分ループ
+        for (int i = 0; i < attackCount; i++)
         {
-            // バフスキルの処理
-            ApplyBuff(chosenSkill, actingEnemy);
-        }
-        else if (chosenSkill.targetScope == TargetScope.Single)
-        {
-            ApplyAttack(target, chosenSkill, actingEnemy);
-        }
-        else if(chosenSkill.targetScope == TargetScope.All)
-        {
-            if(chosenSkill.effectType == SkillEffectType.Heal)
+
+            // 攻撃アニメーション再生
+            enemyAnimator = actingEnemy.EnemyAnimator;
+
+            // 2. 考える時間を待つ
+            yield return new WaitForSeconds(thinkingTime);
+            if (enemyAnimator != null)
+                enemyAnimator.SetTrigger("Attack");
+            yield return new WaitForSeconds(0.5f);
+            // 3. 攻撃処理を実行
+            if(chosenSkill != null && chosenSkill.effectType == SkillEffectType.ExtraAction)
             {
-                if(chosenSkill.isOnlyOnece == false) //とりあえず殴っておく。
+                //なにもしない。下の追加処理で動くので
+            }
+            else if (chosenSkill.effectType == SkillEffectType.Buff)
+            {
+                // バフスキルの処理
+                ApplyBuff(chosenSkill, actingEnemy);
+            }
+            else if (chosenSkill.targetScope == TargetScope.Single)
+            {
+                ApplyAttack(target, chosenSkill, actingEnemy);
+            }
+            else if (chosenSkill.targetScope == TargetScope.All)
+            {
+                if (chosenSkill.effectType == SkillEffectType.Heal)
                 {
-                    ApplyAttack(playerCandidates, chosenSkill, actingEnemy);
+                    if (chosenSkill.isOnlyOnece == false) //とりあえず殴っておく。
+                    {
+                        ApplyAttack(playerCandidates, chosenSkill, actingEnemy);
+                    }
+                    else
+                    {
+                        List<Character> enemies = GetAllies();
+                        ApplyHeal(enemies, chosenSkill, actingEnemy);
+                    }
+
                 }
                 else
                 {
-                    List<Character> enemies = GetAllies();
-                    ApplyHeal(enemies, chosenSkill, actingEnemy);
+                    ApplyAttack(playerCandidates, chosenSkill, actingEnemy);
                 }
-                
             }
-            else
-            { 
-                ApplyAttack(playerCandidates, chosenSkill, actingEnemy);
+
+            // 2回目以降の攻撃がある場合、一旦戻って再度前に出る
+            if (i < attackCount - 1)
+            {
+                // 4a. 元の位置に戻る
+                Tween returnTweenA = actingEnemy.transform.DOMove(originalPosition, returnDuration)
+                    .SetEase(Ease.InQuad);
+                yield return returnTweenA.WaitForCompletion();
+
+                yield return new WaitForSeconds(0.3f); // 少し間を置く
+
+                // 4b. 再度前に出る
+                Tween forwardAgain = actingEnemy.transform.DOMove(forwardPosition, forwardDuration)
+                    .SetEase(Ease.OutQuad);
+                yield return forwardAgain.WaitForCompletion();
             }
         }
+
+        // 追加行動スキルの場合、さらに2回行動
+        if (chosenSkill != null && chosenSkill.hasExtraActions)
+        {
+            // 使用可能なスキルをフィルタリング
+            List<SkillData> availableSkills = new List<SkillData>();
+            foreach (var s in actingEnemy.skills)
+            {
+                if (s == null) continue;
+
+                // 今使ったスキルを除外
+                if (s == chosenSkill) continue;
+
+                // 必殺技を除外
+                if (s.isUltimateSkill) continue;
+
+                availableSkills.Add(s);
+            }
+
+            // 2回ランダムに行動
+            for (int k = 0; k < 2; k++)
+            {
+                if (availableSkills.Count == 0) break;
+
+                // ランダムにスキルを選択
+                SkillData extraSkill = availableSkills[UnityEngine.Random.Range(0, availableSkills.Count)];
+
+                // 戻る → 前に出る
+                Tween returnTweenA = actingEnemy.transform.DOMove(originalPosition, returnDuration)
+                    .SetEase(Ease.InQuad);
+                yield return returnTweenA.WaitForCompletion();
+
+                yield return new WaitForSeconds(0.3f);
+
+                Tween forwardTweenA = actingEnemy.transform.DOMove(forwardPosition, forwardDuration)
+                    .SetEase(Ease.OutQuad);
+                yield return forwardTweenA.WaitForCompletion();
+
+                // 考える時間
+                yield return new WaitForSeconds(thinkingTime);
+
+                if (enemyAnimator != null)
+                    enemyAnimator.SetTrigger("Attack");
+
+                yield return new WaitForSeconds(0.5f);
+
+                // 攻撃実行
+                if (extraSkill.targetScope == TargetScope.Single)
+                {
+                    // 新しいターゲットを選択（または同じターゲット）
+                    var newTarget = playerCandidates[UnityEngine.Random.Range(0, playerCandidates.Count)];
+                    ApplyAttack(newTarget, extraSkill, actingEnemy);
+                }
+                else
+                {
+                    ApplyAttack(playerCandidates, extraSkill, actingEnemy);
+                }
+            }
+        }
+
         // 4. 元の位置に戻る、トゥイーンアニメーション
         Tween returnTween = actingEnemy.transform.DOMove(originalPosition, returnDuration)
             .SetEase(Ease.InQuad);
@@ -316,8 +407,8 @@ public class EnemyManager : MonoBehaviour
                     target = attacker; // 自分自身をターゲットに
                 }
             }
-            else 
-            { 
+            else
+            {
                 if (skill.DamageBonusFlg == true)
                 {
                     //ダメージボーナスの処理
@@ -482,6 +573,42 @@ public class EnemyManager : MonoBehaviour
             chara.hp = (int)math.floor(targethp);
             Debug.Log($"{attacker.name} が {chara.name} に {power} ダメージ。残りHP: {chara.hp}");
 
+            //スキルにバフがあるなら適用させる。
+            if (skill != null && skill.buffEffect != null && skill.buffEffect.Count > 0)
+            {
+                foreach (var buffEffect in skill.buffEffect)
+                {
+                    if (buffEffect == null) continue;
+
+                    BuffInstance buff = new BuffInstance(buffEffect);
+                    buff.remainingTurns = skill.buffDuration;
+
+                    switch (buffEffect.statusEffect)
+                    {
+                        case StatusEffect.Poison:
+                            break;
+                        case StatusEffect.Stun:
+                            break;
+                        case StatusEffect.Burn:
+                            // 状態異常の成功率を計算
+                            float successRate = (attacker.atk - chara.atk + 1) * 5f / 100f;
+
+                            // 成功率を0～1の範囲にクランプ（100%を超えないように）
+                            successRate = Mathf.Clamp01(successRate);
+
+                            // 判定
+                            if (UnityEngine.Random.value < successRate)
+                            {
+                                chara.ApplyBuff(buff, attacker);
+                            }
+   
+                            break;
+
+                    }
+
+                }
+            }
+
             // ダメージエフェクトを表示（攻撃を受けたターゲットの位置の前に表示）
             // 注: 敵がプレイヤーを攻撃する場合、プレイヤーの位置にエフェクトを表示します
             if (DamageEffectUI.Instance != null && chara.CharacterObj != null)
@@ -526,7 +653,6 @@ public class EnemyManager : MonoBehaviour
         {
             BuffInstance buff = new BuffInstance(buffBase);
             buff.remainingTurns = skill.buffDuration;
-            buff.buffValue = skill.buffValue;
 
             // statusEffectで大きく分岐（状態異常の種類ごと）
             switch (buffBase.statusEffect)
@@ -557,12 +683,11 @@ public class EnemyManager : MonoBehaviour
                             {
                                 BuffInstance allyBuff = new BuffInstance(buffBase);
                                 allyBuff.remainingTurns = skill.buffDuration;
-                                allyBuff.buffValue = skill.buffValue;
                                 ally.ApplyBuff(allyBuff, target);
                             }
-                            break;                     
+                            break;
                     }
-                  break;
+                    break;
 
                 case StatusEffect.Silent:
                     // 敵1人にデバフ
@@ -616,7 +741,7 @@ public class EnemyManager : MonoBehaviour
                             }
                             break;
                     }
-                    
+
                     break;
 
                 case StatusEffect.LockIn:
@@ -639,16 +764,28 @@ public class EnemyManager : MonoBehaviour
                             break;
                     }
                     break;
+
+                case StatusEffect.DefenceUp:
+                    switch (buffBase.buffRange)
+                    {
+                        //無の創造用
+                        case BuffRange.Self:
+                            buff.remainingTurns = 1;
+                            // 自分自身にバフを適用
+                            target.ApplyBuff(buff, target);
+                            break;
+
+                    }
+                    break;
             }
         }
     }
-
     /// <summary>
     /// 回復処理 今は全体回復用
     /// </summary>
-    private void ApplyHeal (List<Character> targets, SkillData skill, Character actingEnemy)
+    private void ApplyHeal(List<Character> targets, SkillData skill, Character actingEnemy)
     {
-        if(targets == null || skill == null) return;
+        if (targets == null || skill == null) return;
 
         foreach (var target in targets)
         {
@@ -662,7 +799,7 @@ public class EnemyManager : MonoBehaviour
             {
                 target.hp = target.maxHp;
             }
-                     
+
         }
 
         //一回限りならばもう使えないようにする
@@ -712,7 +849,7 @@ public class EnemyManager : MonoBehaviour
                     if (buff.lockedTarget != null)
                     {
                         Ltarget = buff.lockedTarget;
-                        
+
                         Debug.Log($"{actingEnemy.charactername}はロックオン対象{Ltarget.charactername}を攻撃");
                         break;
                     }
