@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51410d482e76f174996e1fe0bdf26bad, type: 3}
   m_Name: Burn 1
   m_EditorClassIdentifier: 
-  buffId: 
-  buffName: 
+  buffId: 3f218864-df8e-4d5d-875b-a0dea0d41f22
+  buffName: "\u5730\u7344\u306E\u9ED9\u793A\u9332"
   description: 
   icon: {fileID: 0}
-  buffType: 0
+  buffType: 2
   duration: 0
-  buffRange: 0
+  buffRange: 3
   sourceCharacter: {fileID: 0}
   isSelfTarget: 0
-  statusEffect: 0
+  statusEffect: 2
   damagePerTurn: 10

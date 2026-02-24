@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
+  m_Name: "\u732B\u9B54\u8853\u5E2B"
+  m_EditorClassIdentifier: 
+  charactername: "\u732B\u9B54\u8853\u5E2B"
+  characterIcon: {fileID: 0}
+  enemyCheckFlag: 1
+  hp: 110
+  mp: 100
+  atk: 10
+  Int: 20
+  def: 10
+  spd: 25
+  maxHp: 110
+  maxMp: 100
+  exp: 0
+  level: 0
+  CharacterObj: {fileID: 0}
+  skills:
+  - {fileID: 11400000, guid: b98ddca42e7d34d4ebdb3f5d67287b12, type: 2}
+  - {fileID: 11400000, guid: a2987e53adb7dc345b2515bd97cdc10a, type: 2}
+  CharacterTransfrom: {x: 0, y: 0, z: 0}
+  StatusFlag: 0

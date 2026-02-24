@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87af6d748509c714c8bb3aa54d588dc5, type: 3}
   m_Name: "\u6307\u4EE4"
   m_EditorClassIdentifier: 
-  buffId: 
-  buffName: 
+  buffId: a9783a66-b681-4cbc-943c-d76f2ac3fb08
+  buffName: "\u6307\u4EE4"
   description: 
   icon: {fileID: 0}
   buffType: 0
-  duration: 0
-  buffRange: 0
+  duration: 10
+  buffRange: 4
   sourceCharacter: {fileID: 0}
   isSelfTarget: 0
   statusEffect: 0
-  attackMultiplier: 1.5
+  attackMultiplier: 1.3

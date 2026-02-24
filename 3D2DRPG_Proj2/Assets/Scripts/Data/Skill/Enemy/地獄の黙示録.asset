@@ -12,21 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92d8b73040e5b143bbd8be31623266c, type: 3}
   m_Name: "\u5730\u7344\u306E\u9ED9\u793A\u9332"
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: "\u5730\u7344\u306E\u9ED9\u793A\u9332"
   description: 
   icon: {fileID: 0}
   soundEffect: {fileID: 0}
   vfxPrefab: {fileID: 0}
   animationName: 
   effectType: 0
-  power: 10
+  power: 25
   mpCost: 0
   cooldown: 0
   hitCount: 1
   criticalRate: 0.1
   accuracy: 1
-  targetScope: 0
-  statusEffect: 0
+  targetScope: 1
+  statusEffect: 2
   canCombo: 0
   comboNextSkill: {fileID: 0}
   timingWindowStart: 0.3
@@ -35,10 +35,14 @@ MonoBehaviour:
   maxcombo: 3
   missCancel: 1
   statusChance: 0
-  buffEffect: []
+  buffEffect:
+  - {fileID: 11400000, guid: cc7787f206e3dfa41a9b52f9ddcfdc85, type: 2}
   buffDuration: 0
   DamageBonusFlg: 0
-  ZokuseiType: 0
+  ZokuseiType: 1
   isRandomEffect: 0
   isOnlyOnece: 0
   attackCount: 1
+  isUltimateSkill: 0
+  hasExtraActions: 0
+  extraActionCount: 2
