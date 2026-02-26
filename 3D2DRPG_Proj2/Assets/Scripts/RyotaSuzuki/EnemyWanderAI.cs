@@ -115,6 +115,13 @@ public class EnemyWanderAI : MonoBehaviour
                 StartCoroutine(WaitAndSetNewDestination());
             }
         }
+
+
+        // VFXテスト用（開発中のみ）
+        if (Input.GetKeyDown(testVFXKey))
+        {
+            TestExplosionVFX();
+        }
     }
 
 
@@ -475,6 +482,24 @@ public class EnemyWanderAI : MonoBehaviour
                 Gizmos.color = Color.red;
                 Gizmos.DrawLine(transform.position, playerTransform.position);
             }
+        }
+    }
+
+    [Header("VFXテスト")]
+    [SerializeField] private KeyCode testVFXKey = KeyCode.E;  // テスト用キー
+    /// <summary>
+    /// 爆発エフェクトのテスト
+    /// </summary>
+    private void TestExplosionVFX()
+    {
+        if (VFXManager.Instance != null)
+        {
+            VFXManager.Instance.PlayExplosion(gameObject);
+            Debug.Log($"{gameObject.name}で爆発エフェクトをテスト再生");
+        }
+        else
+        {
+            Debug.LogWarning("VFXManagerが見つかりません");
         }
     }
 } 
