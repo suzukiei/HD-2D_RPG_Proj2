@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 758106874644ec5418eb46dd059ba86e
+guid: 19d217801018e104aa9c5de2682299d8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,1198 +97,1135 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WereWolf_Normal_0
+      name: Hound_White_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 642
-        width: 90
+        x: 28
+        y: 480
+        width: 115
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68ff549a6151ef74ca393a10c9b80d40
+      internalID: 176467928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_1
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 481
+        width: 115
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f659138f1a0dc484ead6e2741ec5adfb
+      internalID: 1088544581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_2
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 481
+        width: 115
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9696e2a0f0bba304e95b035a7f2742e7
+      internalID: 210422507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_3
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 492
+        width: 112
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c01b948bf9a072468f30eb89db7f39a
+      internalID: -1250728969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_4
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 486
+        width: 119
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bed39d2aec24f614cab01cda51b646d4
+      internalID: 876904344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_5
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 480
+        width: 95
         height: 91
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 761598d4976917349b44d7580f515cfd
-      internalID: -731083145
+      spriteID: 9d284b3d709b5ac46945f968b6208525
+      internalID: -1315711753
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_1
+      name: Hound_White_6
       rect:
         serializedVersion: 2
-        x: 252
-        y: 642
-        width: 87
-        height: 93
+        x: 900
+        y: 482
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 705fd1fe96a07ff4e8808ee24c214729
-      internalID: 280380272
+      spriteID: 4e97332a01eed5344b526db77cbc057f
+      internalID: 2037495495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_2
+      name: Hound_White_7
       rect:
         serializedVersion: 2
-        x: 449
-        y: 642
-        width: 89
-        height: 94
+        x: 1044
+        y: 482
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf960293b2b3e1541a32debb8ced8a33
-      internalID: -398869463
+      spriteID: 88a3c9e87b690734b89aac0720f85994
+      internalID: -541139462
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_3
+      name: Hound_White_8
       rect:
         serializedVersion: 2
-        x: 637
-        y: 641
-        width: 90
-        height: 102
+        x: 1188
+        y: 482
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52d600bf7fc798547b6e3a4632cb9a26
-      internalID: -1643398218
+      spriteID: a8af3ec948afe0f4284fb2994e5013f4
+      internalID: -1054901448
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_4
+      name: Hound_White_9
       rect:
         serializedVersion: 2
-        x: 799
-        y: 671
-        width: 31
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0c67d0ac8e5b9574fa46c4efa6877289
-      internalID: 1629234833
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_5
-      rect:
-        serializedVersion: 2
-        x: 808
-        y: 641
-        width: 108
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d02b9c6e8a86f4a4db0323b6adfe7351
-      internalID: 1300128042
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_6
-      rect:
-        serializedVersion: 2
-        x: 1026
-        y: 641
-        width: 85
-        height: 88
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 109831e86c3cdaa4ba62eace31430e2f
-      internalID: -1891943289
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_7
-      rect:
-        serializedVersion: 2
-        x: 1229
-        y: 640
-        width: 94
-        height: 92
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce168536d6a22504e998cf1564e4b771
-      internalID: -1486036319
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_8
-      rect:
-        serializedVersion: 2
-        x: 1425
-        y: 640
-        width: 94
-        height: 92
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d09b85a274a6f8f4fb8ebb7f7ea093e2
-      internalID: -698188174
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_9
-      rect:
-        serializedVersion: 2
-        x: 1621
-        y: 640
-        width: 94
-        height: 92
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6026e8f77dbf63041805816c9f1dd7e9
-      internalID: -1213902579
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_10
-      rect:
-        serializedVersion: 2
-        x: 55
-        y: 514
-        width: 90
-        height: 91
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bf6d004a598915c40b1b23f05bb3bfee
-      internalID: -3924641
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_11
-      rect:
-        serializedVersion: 2
-        x: 252
-        y: 514
-        width: 87
-        height: 93
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 177f9365bc0cf9a48b836411a97e6c56
-      internalID: 883734932
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_12
-      rect:
-        serializedVersion: 2
-        x: 449
-        y: 514
-        width: 89
-        height: 94
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 16633e71e33970545a27051d285b20ce
-      internalID: -1155709592
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_13
-      rect:
-        serializedVersion: 2
-        x: 637
-        y: 513
-        width: 90
-        height: 102
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e615b5d269c9a944bbf8d9144c29b630
-      internalID: -472161477
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_14
-      rect:
-        serializedVersion: 2
-        x: 799
-        y: 543
-        width: 31
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af72ef20b30791247a902760707b11c9
-      internalID: 1192188845
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_15
-      rect:
-        serializedVersion: 2
-        x: 808
-        y: 513
-        width: 108
-        height: 104
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 467a8edc64a60c64a94e1845c101693c
-      internalID: -1171430420
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_16
-      rect:
-        serializedVersion: 2
-        x: 1026
-        y: 513
-        width: 85
-        height: 88
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d23c725a2fb8e6749a76a5fd25602bc9
-      internalID: 353291916
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_17
-      rect:
-        serializedVersion: 2
-        x: 1231
-        y: 514
-        width: 90
-        height: 91
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c4242cbc77ddf62459cd0dd0ecde8cd9
-      internalID: -840569156
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_18
-      rect:
-        serializedVersion: 2
-        x: 1428
-        y: 514
-        width: 87
-        height: 93
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7bd30982536631444a4f8a61d5fd6630
-      internalID: 462609927
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_19
-      rect:
-        serializedVersion: 2
-        x: 1625
-        y: 514
-        width: 89
-        height: 94
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a32fb59f6fab47c4fa5f408766efac95
-      internalID: 1249896505
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_20
-      rect:
-        serializedVersion: 2
-        x: 49
+        x: 28
         y: 385
-        width: 90
-        height: 102
+        width: 113
+        height: 81
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef3302ceac464a444a8ad67c2844693f
-      internalID: 1228111674
+      spriteID: 7e883a116a657764d904f158fb077854
+      internalID: -137945045
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_21
+      name: Hound_White_10
       rect:
         serializedVersion: 2
-        x: 245
+        x: 172
+        y: 384
+        width: 114
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adbe26ad90eac3c4ea720b6ceed89ddd
+      internalID: -1464069165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_11
+      rect:
+        serializedVersion: 2
+        x: 316
         y: 385
-        width: 90
-        height: 102
+        width: 99
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f88a0736012cf3c47a3554ca5ba8a69c
-      internalID: 828946149
+      spriteID: 41fc4fb03c5028f47990ca55b48c9861
+      internalID: -24360745
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_22
+      name: Hound_White_12
       rect:
         serializedVersion: 2
-        x: 441
+        x: 461
+        y: 396
+        width: 112
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37996c562531fb443841f11bb4a7ed0c
+      internalID: -1979821295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_13
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 390
+        width: 119
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f33527c783aca9f47b719217b7c56888
+      internalID: 288139427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_14
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 384
+        width: 95
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f95a58baccfee834191bcc633da70660
+      internalID: 1670464521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_15
+      rect:
+        serializedVersion: 2
+        x: 892
         y: 385
-        width: 90
-        height: 102
+        width: 113
+        height: 81
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da7f3b0975803364fa0dfedadd8d959d
-      internalID: 1275708488
+      spriteID: 262cb6cb04cacbc43807a4889e89b725
+      internalID: 568005204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_23
+      name: Hound_White_16
       rect:
         serializedVersion: 2
-        x: 637
+        x: 1036
         y: 385
-        width: 90
-        height: 102
+        width: 114
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18cffc64f3bfd944589d0fbd1c9f4e24
-      internalID: 434492802
+      spriteID: e04bbd65439f3084785cc07f57b694d5
+      internalID: 78144396
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_24
+      name: Hound_White_17
       rect:
         serializedVersion: 2
-        x: 799
-        y: 415
-        width: 31
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 70ed0512c6239c14aa9e342cf8b6e49c
-      internalID: -251262494
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_25
-      rect:
-        serializedVersion: 2
-        x: 808
+        x: 1180
         y: 385
-        width: 108
-        height: 104
+        width: 99
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44900a2b5fcbcda47ac4942f9fc885fd
-      internalID: -634506917
+      spriteID: 83d36df9ff08ac848b556e06e6deedd5
+      internalID: -1397596919
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_26
+      name: Hound_White_18
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 385
-        width: 85
-        height: 88
+        x: 28
+        y: 289
+        width: 113
+        height: 81
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f2d46c0604df44438ed9f425087f793
-      internalID: 1603541251
+      spriteID: 5239449b77347ab4594445a1624f1994
+      internalID: -2012379991
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_27
+      name: Hound_White_19
       rect:
         serializedVersion: 2
-        x: 1231
-        y: 386
-        width: 90
+        x: 172
+        y: 289
+        width: 114
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c36b98b564d5c7f46903392e30739de1
+      internalID: 1401898311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_20
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 289
+        width: 99
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87afc87dadd998f48b1e1855c7605936
+      internalID: 396097926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_21
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 300
+        width: 112
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f38e06d070401c94f94d3aa12ae218dd
+      internalID: 269019997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_22
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 294
+        width: 119
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2930559b89610634cbd9e6a50e42dcb2
+      internalID: -223441762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_23
+      rect:
+        serializedVersion: 2
+        x: 742
+        y: 288
+        width: 95
         height: 91
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17e3df106ce54cb41b3bdf76c8624568
-      internalID: -1731006022
+      spriteID: ab545a495485b59438cfdeb85d3b30e9
+      internalID: 1319974909
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_28
+      name: Hound_White_24
       rect:
         serializedVersion: 2
-        x: 1428
-        y: 386
-        width: 87
-        height: 93
+        x: 892
+        y: 289
+        width: 113
+        height: 81
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebe84caaef70549438667a4568045700
-      internalID: 2015335097
+      spriteID: d7cd9f2b9c8ddd4418d5ecf196977142
+      internalID: -497944332
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_29
+      name: Hound_White_25
       rect:
         serializedVersion: 2
-        x: 1625
-        y: 386
-        width: 89
-        height: 94
+        x: 1036
+        y: 289
+        width: 114
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90b159ed8c5639545a7c7db98428cdbf
-      internalID: 1251599172
+      spriteID: d88bf47d94cea1f47b17cc4695fd13a3
+      internalID: -1460272590
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_30
+      name: Hound_White_26
       rect:
         serializedVersion: 2
-        x: 46
-        y: 258
-        width: 94
-        height: 84
+        x: 1180
+        y: 289
+        width: 99
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 983d74d9e2765d543aec05e927d5d443
-      internalID: 1077863422
+      spriteID: 63df77aa3862a5f4c953164c2c26b738
+      internalID: -291587581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_31
+      name: Hound_White_27
       rect:
         serializedVersion: 2
-        x: 242
-        y: 258
-        width: 94
-        height: 84
+        x: 28
+        y: 193
+        width: 113
+        height: 81
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2af7cac82c8c771489d725356ba4cc71
-      internalID: -399950410
+      spriteID: 602363daf85994b4fb95d256c74486d4
+      internalID: -754953418
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_32
+      name: Hound_White_28
       rect:
         serializedVersion: 2
-        x: 438
-        y: 258
-        width: 94
-        height: 84
+        x: 172
+        y: 193
+        width: 114
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f7dcf0a17d7d364db174b54222dee99
-      internalID: -710704494
+      spriteID: 0b90c0b87de31c34dad6a0abf02317a7
+      internalID: 191437777
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_33
+      name: Hound_White_29
       rect:
         serializedVersion: 2
-        x: 631
-        y: 258
-        width: 89
-        height: 82
+        x: 316
+        y: 193
+        width: 99
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4c03cfafd9888146875e2b8efa5ea7b
-      internalID: 1685349852
+      spriteID: 64aa6daa6d02906429bf72f7421b45d3
+      internalID: 1115126470
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_34
+      name: Hound_White_30
       rect:
         serializedVersion: 2
-        x: 827
-        y: 258
-        width: 89
-        height: 82
+        x: 462
+        y: 193
+        width: 115
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 23782ed04c7ef7a419a4a13f9d8e1c0f
-      internalID: 260502626
+      spriteID: 73bcf913dece01f47a1ed1e78d6c40c3
+      internalID: -1206675091
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_35
+      name: Hound_White_31
       rect:
         serializedVersion: 2
-        x: 1023
-        y: 258
-        width: 89
-        height: 82
+        x: 606
+        y: 193
+        width: 115
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2925a605b1e3e7540a299dffcea8a339
-      internalID: -500455275
+      spriteID: b67b30d53b782014b806fc8f25159dbf
+      internalID: -1158664151
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_36
+      name: Hound_White_32
       rect:
         serializedVersion: 2
-        x: 1231
-        y: 258
-        width: 90
-        height: 91
+        x: 750
+        y: 192
+        width: 115
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9a67c0d7a3b5ce34596a76604d98717a
-      internalID: 7128618
+      spriteID: b20991bb8e50b6c4f82f951f1f58be42
+      internalID: 1696682357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_37
+      name: Hound_White_33
       rect:
         serializedVersion: 2
-        x: 1428
-        y: 258
-        width: 87
-        height: 93
+        x: 892
+        y: 193
+        width: 113
+        height: 81
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce8d9861df42dde4f8dbb5b6e71b7c70
-      internalID: 25881444
+      spriteID: f3cc3bc92a8a4944c9ef09f2ceb02d2f
+      internalID: -1302202463
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_38
+      name: Hound_White_34
       rect:
         serializedVersion: 2
-        x: 1625
-        y: 258
-        width: 89
-        height: 94
+        x: 1036
+        y: 193
+        width: 114
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a32895f89c7c8d4684890009bdace01
-      internalID: -1879017985
+      spriteID: 2bc1c111c87a73c4c85144ab62c7c60c
+      internalID: -2025077380
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_39
+      name: Hound_White_35
       rect:
         serializedVersion: 2
-        x: 53
-        y: 128
-        width: 94
-        height: 91
+        x: 1180
+        y: 193
+        width: 99
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 983f1a50da7380c46b2c85cd6b44c66f
-      internalID: -1716366272
+      spriteID: 3cd61386fff93a0429b3f25a750a9cb1
+      internalID: -1555805835
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_40
+      name: Hound_White_36
       rect:
         serializedVersion: 2
-        x: 249
-        y: 128
-        width: 94
-        height: 91
+        x: 36
+        y: 98
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ff80465eb284ce45be9fd9888d143ac
-      internalID: -1886629993
+      spriteID: b6eb898510027834e89dece5730bb074
+      internalID: -1875418993
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_41
+      name: Hound_White_37
       rect:
         serializedVersion: 2
-        x: 445
-        y: 128
-        width: 94
-        height: 91
+        x: 180
+        y: 98
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29a6fbe003d438f42861bfb17d484627
-      internalID: -73256441
+      spriteID: be4f8b6d4a2cddc4c9e475c49b0c3b3e
+      internalID: -504684018
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_42
+      name: Hound_White_38
       rect:
         serializedVersion: 2
-        x: 637
-        y: 129
-        width: 90
-        height: 102
+        x: 324
+        y: 98
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f4c235d08e2ef54b9f2cbd88adadebb
-      internalID: 964564422
+      spriteID: e51dd968d68e99943be4a3c8090823e5
+      internalID: 1361245820
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_43
+      name: Hound_White_39
       rect:
         serializedVersion: 2
-        x: 833
-        y: 129
-        width: 90
-        height: 102
+        x: 462
+        y: 97
+        width: 106
+        height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5189371bd01bbd14699c65bba9ede190
-      internalID: 178314920
+      spriteID: 2ae034e28cb0e434db44e2d1b6472145
+      internalID: -2101756832
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_44
+      name: Hound_White_40
       rect:
         serializedVersion: 2
-        x: 1029
-        y: 129
-        width: 90
-        height: 102
+        x: 606
+        y: 97
+        width: 106
+        height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b76fe94d7d9228448fcaf5de9db7d06
-      internalID: 233649132
+      spriteID: da37c86ea22157349b5eceec1852ab67
+      internalID: -1417522521
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_45
+      name: Hound_White_41
       rect:
         serializedVersion: 2
-        x: 1231
-        y: 130
-        width: 90
-        height: 91
+        x: 750
+        y: 97
+        width: 106
+        height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55e017f851124b14289f8cb6783c0ce3
-      internalID: 466255737
+      spriteID: ea1a200fb96a09c4194986b7e3cbf725
+      internalID: -33900634
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_46
+      name: Hound_White_42
       rect:
         serializedVersion: 2
-        x: 1428
-        y: 130
-        width: 87
-        height: 93
+        x: 892
+        y: 97
+        width: 113
+        height: 81
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 789fdc88688b250489f51e92fe8f9d99
-      internalID: -879078718
+      spriteID: 6e363e89cbc5cd44686bffb90725d7b2
+      internalID: 704046348
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_47
+      name: Hound_White_43
       rect:
         serializedVersion: 2
-        x: 1625
-        y: 130
-        width: 89
-        height: 94
+        x: 1036
+        y: 97
+        width: 114
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7a594b5c146c094785b13a80707550b
-      internalID: -71774658
+      spriteID: 169862fcfdf921e4bb79b4e34220fac4
+      internalID: 1919899481
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_48
+      name: Hound_White_44
       rect:
         serializedVersion: 2
-        x: 53
-        y: 0
-        width: 94
-        height: 92
+        x: 1180
+        y: 97
+        width: 99
+        height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d47ffcfd4781c28429f62702059f54a2
-      internalID: -61178945
+      spriteID: 47faa2314acd8044a9f6859b56d5cdb2
+      internalID: -145897097
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_49
+      name: Hound_White_45
       rect:
         serializedVersion: 2
-        x: 249
-        y: 0
-        width: 94
-        height: 92
+        x: 36
+        y: 2
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfd67a66d24a90a49893e3224e706cc1
-      internalID: 884089584
+      spriteID: adfde707719d40c4aa333e5efbf3fe3a
+      internalID: -618710448
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_50
+      name: Hound_White_46
       rect:
         serializedVersion: 2
-        x: 445
-        y: 0
-        width: 94
-        height: 92
+        x: 180
+        y: 2
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0e86ea8e801fd54e81c20e7efed5e0f
-      internalID: 590502031
+      spriteID: 0a6d7c30d5692c349bee7ae38fb3463a
+      internalID: 1074334744
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_51
+      name: Hound_White_47
       rect:
         serializedVersion: 2
-        x: 637
+        x: 324
+        y: 2
+        width: 100
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22b2bb720054fde4fb7ff248587ecd6e
+      internalID: -1259666068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hound_White_48
+      rect:
+        serializedVersion: 2
+        x: 462
         y: 1
-        width: 90
-        height: 102
+        width: 106
+        height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 274ed722488d15448a4f849224bdbbd3
-      internalID: 1324366468
+      spriteID: 3fe6cd7a67d8d784e9d920734260733a
+      internalID: -255889869
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_52
+      name: Hound_White_49
       rect:
         serializedVersion: 2
-        x: 833
+        x: 606
         y: 1
-        width: 90
-        height: 102
+        width: 106
+        height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81b106af258c31146b8bb08b641d8177
-      internalID: -234131070
+      spriteID: a7cf75333d727b548bd3bbddf6ce2562
+      internalID: -1584125250
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_53
+      name: Hound_White_50
       rect:
         serializedVersion: 2
-        x: 1029
+        x: 750
         y: 1
-        width: 90
-        height: 102
+        width: 106
+        height: 85
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4af74800ba99fb94d967cdbbe2d0beb9
-      internalID: -812228808
+      spriteID: 7d2b94f3218a64f4d8065aad24ed18e7
+      internalID: -375133622
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_54
+      name: Hound_White_51
       rect:
         serializedVersion: 2
-        x: 1229
-        y: 0
-        width: 94
-        height: 91
+        x: 900
+        y: 2
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99f33c502df95704fa7ff8cdb8428b72
-      internalID: 246024767
+      spriteID: bdc7af58b40c4ed4598d57edb8bf0503
+      internalID: -436560106
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_55
+      name: Hound_White_52
       rect:
         serializedVersion: 2
-        x: 1425
-        y: 0
-        width: 94
-        height: 91
+        x: 1044
+        y: 2
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b484a11da8b4a4418c00929f5dd4b94
-      internalID: -1164677113
+      spriteID: fedef3ecff178d54f8352577794552ee
+      internalID: -563295792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_56
+      name: Hound_White_53
       rect:
         serializedVersion: 2
-        x: 1621
-        y: 0
-        width: 94
-        height: 91
+        x: 1188
+        y: 2
+        width: 100
+        height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e44b9b788a3bcde4299064618915f0f4
-      internalID: 942279388
+      spriteID: a63dd080521d53f438e4b1ee431aa391
+      internalID: -401854324
       vertices: []
       indices: 
       edges: []
@@ -1296,7 +1233,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e03ef48fe3e0154f884ffb21e4a0914
+    spriteID: 05b6611baf3e29d4da497050347d9783
     internalID: 0
     vertices: []
     indices: 
@@ -1304,63 +1241,60 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WereWolf_Normal_0: -731083145
-      WereWolf_Normal_1: 280380272
-      WereWolf_Normal_10: -3924641
-      WereWolf_Normal_11: 883734932
-      WereWolf_Normal_12: -1155709592
-      WereWolf_Normal_13: -472161477
-      WereWolf_Normal_14: 1192188845
-      WereWolf_Normal_15: -1171430420
-      WereWolf_Normal_16: 353291916
-      WereWolf_Normal_17: -840569156
-      WereWolf_Normal_18: 462609927
-      WereWolf_Normal_19: 1249896505
-      WereWolf_Normal_2: -398869463
-      WereWolf_Normal_20: 1228111674
-      WereWolf_Normal_21: 828946149
-      WereWolf_Normal_22: 1275708488
-      WereWolf_Normal_23: 434492802
-      WereWolf_Normal_24: -251262494
-      WereWolf_Normal_25: -634506917
-      WereWolf_Normal_26: 1603541251
-      WereWolf_Normal_27: -1731006022
-      WereWolf_Normal_28: 2015335097
-      WereWolf_Normal_29: 1251599172
-      WereWolf_Normal_3: -1643398218
-      WereWolf_Normal_30: 1077863422
-      WereWolf_Normal_31: -399950410
-      WereWolf_Normal_32: -710704494
-      WereWolf_Normal_33: 1685349852
-      WereWolf_Normal_34: 260502626
-      WereWolf_Normal_35: -500455275
-      WereWolf_Normal_36: 7128618
-      WereWolf_Normal_37: 25881444
-      WereWolf_Normal_38: -1879017985
-      WereWolf_Normal_39: -1716366272
-      WereWolf_Normal_4: 1629234833
-      WereWolf_Normal_40: -1886629993
-      WereWolf_Normal_41: -73256441
-      WereWolf_Normal_42: 964564422
-      WereWolf_Normal_43: 178314920
-      WereWolf_Normal_44: 233649132
-      WereWolf_Normal_45: 466255737
-      WereWolf_Normal_46: -879078718
-      WereWolf_Normal_47: -71774658
-      WereWolf_Normal_48: -61178945
-      WereWolf_Normal_49: 884089584
-      WereWolf_Normal_5: 1300128042
-      WereWolf_Normal_50: 590502031
-      WereWolf_Normal_51: 1324366468
-      WereWolf_Normal_52: -234131070
-      WereWolf_Normal_53: -812228808
-      WereWolf_Normal_54: 246024767
-      WereWolf_Normal_55: -1164677113
-      WereWolf_Normal_56: 942279388
-      WereWolf_Normal_6: -1891943289
-      WereWolf_Normal_7: -1486036319
-      WereWolf_Normal_8: -698188174
-      WereWolf_Normal_9: -1213902579
+      Hound_White_0: 176467928
+      Hound_White_1: 1088544581
+      Hound_White_10: -1464069165
+      Hound_White_11: -24360745
+      Hound_White_12: -1979821295
+      Hound_White_13: 288139427
+      Hound_White_14: 1670464521
+      Hound_White_15: 568005204
+      Hound_White_16: 78144396
+      Hound_White_17: -1397596919
+      Hound_White_18: -2012379991
+      Hound_White_19: 1401898311
+      Hound_White_2: 210422507
+      Hound_White_20: 396097926
+      Hound_White_21: 269019997
+      Hound_White_22: -223441762
+      Hound_White_23: 1319974909
+      Hound_White_24: -497944332
+      Hound_White_25: -1460272590
+      Hound_White_26: -291587581
+      Hound_White_27: -754953418
+      Hound_White_28: 191437777
+      Hound_White_29: 1115126470
+      Hound_White_3: -1250728969
+      Hound_White_30: -1206675091
+      Hound_White_31: -1158664151
+      Hound_White_32: 1696682357
+      Hound_White_33: -1302202463
+      Hound_White_34: -2025077380
+      Hound_White_35: -1555805835
+      Hound_White_36: -1875418993
+      Hound_White_37: -504684018
+      Hound_White_38: 1361245820
+      Hound_White_39: -2101756832
+      Hound_White_4: 876904344
+      Hound_White_40: -1417522521
+      Hound_White_41: -33900634
+      Hound_White_42: 704046348
+      Hound_White_43: 1919899481
+      Hound_White_44: -145897097
+      Hound_White_45: -618710448
+      Hound_White_46: 1074334744
+      Hound_White_47: -1259666068
+      Hound_White_48: -255889869
+      Hound_White_49: -1584125250
+      Hound_White_5: -1315711753
+      Hound_White_50: -375133622
+      Hound_White_51: -436560106
+      Hound_White_52: -563295792
+      Hound_White_53: -401854324
+      Hound_White_6: 2037495495
+      Hound_White_7: -541139462
+      Hound_White_8: -1054901448
+      Hound_White_9: -137945045
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
