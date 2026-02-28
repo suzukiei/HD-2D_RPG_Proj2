@@ -42,7 +42,11 @@ public class BuffInstance
             Debug.LogWarning("バフ適用失敗: ターゲットまたはベースデータがnullです");
             return;
         }
-        
+        //セットの際に継続が0あるかを確認
+        //
+        //
+        //
+
         targetCharacter = target;
         sourceCharacter = baseData.sourceCharacter;
         

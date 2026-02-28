@@ -5,6 +5,7 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using Unity.Mathematics;
 using System;
+using System.Collections;
 
 //バフ効果
 public enum buffEffect
@@ -27,6 +28,7 @@ public class CharacterBuff
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
+    #region 関数宣言
     [SerializeField, Header("UIテスト用")]
     private UITest uiTest;  // UIテスト用の参照
     [SerializeField, Header("ComboUI")]
@@ -67,6 +69,9 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public List<GameObject> GetPlayerCharacters() => characterObjects;
 
+    #endregion
+
+    #region 初期化と更新処理
     /// <summary>
     /// 初期化処理（キャラクターの配置）
     /// </summary>
@@ -95,6 +100,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    
     /// <summary>
     /// プレイヤーの行動開始（外部から呼び出される）
     /// </summary>
@@ -158,7 +164,6 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
-    
     /// <summary>
     /// 移動処理
     /// </summary>
@@ -232,6 +237,12 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void PlayerEnd()
     {
+        StartCoroutine(AttackEndTick());
+    }
+    private IEnumerator AttackEndTick()
+    {
+        yield return new WaitForSeconds(1f); // 攻撃エフェクトの表示時間に合わせて待機
+        //攻撃後バフの設定
         //バフ効果の管理
         buffTurnManage();
         // キャラクターを開始位置に戻る
@@ -241,9 +252,11 @@ public class PlayerManager : MonoBehaviour
             // ターン処理を終了
             turnManager.FlagChange();
         });
-
     }
 
+    #endregion
+
+    #region 行動処理のコールバック
     /// <summary>
     /// スキル選択時のコールバック
     /// </summary>
@@ -284,8 +297,9 @@ public class PlayerManager : MonoBehaviour
             case SkillEffectType.Buff:
                 selectedCharacter.StatusFlag = StatusFlag.Buff;
                 if (selectedSkill.targetScope == TargetScope.All)
-                    //仮バフ効果適用
-                    OnBuffSelected(null, 0, selectedSkill.buffEffect[0]);
+                    isActionPending = true;
+                //    //仮バフ効果適用
+                //    OnBuffSelected(null, 0, selectedSkill.buffEffect[0]);
                 break;
         }
         if(selectedSkill.targetScope != TargetScope.All)
@@ -436,6 +450,15 @@ public class PlayerManager : MonoBehaviour
         selectedCharacter.StatusFlag = StatusFlag.End;
         isActionPending = true;
         //ヒール後にバフが必要かを確認
+        //攻撃後バフの設定
+        //if (selectedCharacter.skills.Length > 0)
+        //{
+        //    SetBuff();
+        //}else
+        //{
+        //    selectedCharacter.StatusFlag = StatusFlag.End;
+        //    isActionPending = true;
+        //}
 
     }
 
@@ -444,22 +467,37 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void OnBuffSelected(List<Character> characters, int index,BuffBase buffBase)
     {
-        if (index < 0 || index >= characters.Count)
+        if (characters == null)
+        {
+            if(buffBase.buffRange != BuffRange.AllAllies && buffBase.buffRange != BuffRange.AllEnemies)
+            {
+                Debug.LogWarning("バフの対象キャラクターが指定されていません。BuffRangeがAllAlliesまたはAllEnemiesの場合、charactersはnullであるべきです。");
+                selectedCharacter.StatusFlag = StatusFlag.End;
+                isActionPending = true;
+                return;
+            }
+        } else if (index < 0 || index >= characters.Count)
         {
             selectedCharacter.StatusFlag = StatusFlag.Buff;
             isActionPending = true;
             return;
         }
         //通常スキルの処理
-        var character = characters[index];
+        var character = new Character();
+        if (characters!=null)
+        { character = characters[index]; }
         BuffInstance buff = new BuffInstance(buffBase);
-        buff.remainingTurns = selectedSkill.buffDuration;
+        buff.baseData.sourceCharacter = selectedCharacter;
+        buff.remainingTurns = buffBase.duration;
         buffApply(buff, character);
 
         selectedCharacter.StatusFlag = StatusFlag.End;
         isActionPending = true;
     }
 
+    #endregion
+
+    #region 行動処理の実装
     /// <summary>
     /// 攻撃処理（ダメージ計算・撃破処理）
     /// true;敵が残っている、false:敵が撃破された
@@ -521,10 +559,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
-
-
-
     /// <summary>
     /// バフ効果の適用
     /// 各キャラクターのCharacterBuffManagerに委譲
@@ -553,7 +587,7 @@ public class PlayerManager : MonoBehaviour
                 //単一の選択対象(この場合はtargetに対応)
                 if (target != null)
                 {
-                    target.ApplyBuff(buff, selectedCharacter);
+                    target.ApplyBuff(buff,target);
                 }
                 break;
             case BuffRange.AllAllies:
@@ -565,7 +599,7 @@ public class PlayerManager : MonoBehaviour
                         // 各プレイヤー用に新しいバフインスタンスを作成
                         BuffInstance playerBuff = new BuffInstance(buff.baseData);
                         playerBuff.remainingTurns = buff.remainingTurns;
-                        player.ApplyBuff(playerBuff, selectedCharacter);
+                        player.ApplyBuff(playerBuff, player);
                     }
                 }
                 break;
@@ -578,7 +612,7 @@ public class PlayerManager : MonoBehaviour
                         // 各敵用に新しいバフインスタンスを作成
                         BuffInstance enemyBuff = new BuffInstance(buff.baseData);
                         enemyBuff.remainingTurns = buff.remainingTurns;
-                        enemy.ApplyBuff(enemyBuff, selectedCharacter);
+                        enemy.ApplyBuff(enemyBuff, enemy);
                     }
                 }
                 break;
@@ -701,5 +735,6 @@ public class PlayerManager : MonoBehaviour
         }
         return players;
     }
+    #endregion
 
 }
