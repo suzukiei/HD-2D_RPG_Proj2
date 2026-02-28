@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 758106874644ec5418eb46dd059ba86e
+guid: 8c7e589f7be97594e95103209fa446aa
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WereWolf_Normal_0
+      name: CatPuppet_Green_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 642
-        width: 90
-        height: 91
+        x: 18
+        y: 325
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 761598d4976917349b44d7580f515cfd
-      internalID: -731083145
+      spriteID: ac3085d5f4f8ca94294cff1de5e32566
+      internalID: -932854111
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_1
+      name: CatPuppet_Green_1
       rect:
         serializedVersion: 2
-        x: 252
-        y: 642
-        width: 87
-        height: 93
+        x: 114
+        y: 326
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 705fd1fe96a07ff4e8808ee24c214729
-      internalID: 280380272
+      spriteID: ae6a85b0dd55ce545b1117f90730be60
+      internalID: -1552225474
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_2
+      name: CatPuppet_Green_2
       rect:
         serializedVersion: 2
-        x: 449
-        y: 642
-        width: 89
-        height: 94
+        x: 210
+        y: 327
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf960293b2b3e1541a32debb8ced8a33
-      internalID: -398869463
+      spriteID: edd00e3a2a41b3e48895f8fec8bafc2e
+      internalID: 756052448
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_3
+      name: CatPuppet_Green_3
       rect:
         serializedVersion: 2
-        x: 637
-        y: 641
-        width: 90
-        height: 102
+        x: 309
+        y: 322
+        width: 45
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52d600bf7fc798547b6e3a4632cb9a26
-      internalID: -1643398218
+      spriteID: 2e64447a48087594097fb97fd7aa74f1
+      internalID: -628905341
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_4
+      name: CatPuppet_Green_4
       rect:
         serializedVersion: 2
-        x: 799
-        y: 671
-        width: 31
-        height: 58
+        x: 404
+        y: 323
+        width: 46
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c67d0ac8e5b9574fa46c4efa6877289
-      internalID: 1629234833
+      spriteID: 7db71fa7e5a7b8a4e9f3fbcb4f3f7e3a
+      internalID: -381107817
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_5
+      name: CatPuppet_Green_5
       rect:
         serializedVersion: 2
-        x: 808
-        y: 641
-        width: 108
-        height: 104
+        x: 500
+        y: 324
+        width: 46
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,20 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d02b9c6e8a86f4a4db0323b6adfe7351
-      internalID: 1300128042
+      spriteID: 271312e83abbfa5478eae55b1cb59a6c
+      internalID: -304591125
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_6
+      name: CatPuppet_Green_6
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 641
-        width: 85
-        height: 88
+        x: 603
+        y: 322
+        width: 38
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -237,20 +237,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 109831e86c3cdaa4ba62eace31430e2f
-      internalID: -1891943289
+      spriteID: a1321dde791baea48a60c39b986ded50
+      internalID: -669537764
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_7
+      name: CatPuppet_Green_7
       rect:
         serializedVersion: 2
-        x: 1229
-        y: 640
-        width: 94
-        height: 92
+        x: 699
+        y: 322
+        width: 38
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,20 +258,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce168536d6a22504e998cf1564e4b771
-      internalID: -1486036319
+      spriteID: c756c2e4bd3aeb64499ee5d8c286fbb8
+      internalID: 205232415
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_8
+      name: CatPuppet_Green_8
       rect:
         serializedVersion: 2
-        x: 1425
-        y: 640
-        width: 94
-        height: 92
+        x: 795
+        y: 322
+        width: 38
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -279,20 +279,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d09b85a274a6f8f4fb8ebb7f7ea093e2
-      internalID: -698188174
+      spriteID: 555e989a01cce3c43bb19c1986c47cba
+      internalID: -333406834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_9
+      name: CatPuppet_Green_9
       rect:
         serializedVersion: 2
-        x: 1621
-        y: 640
-        width: 94
-        height: 92
+        x: 18
+        y: 261
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -300,20 +300,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6026e8f77dbf63041805816c9f1dd7e9
-      internalID: -1213902579
+      spriteID: dee838764ff63564db2d134a4f355510
+      internalID: 1545464800
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_10
+      name: CatPuppet_Green_10
       rect:
         serializedVersion: 2
-        x: 55
-        y: 514
-        width: 90
-        height: 91
+        x: 114
+        y: 262
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -321,20 +321,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf6d004a598915c40b1b23f05bb3bfee
-      internalID: -3924641
+      spriteID: 0eca11141d03a9341a60eafd4f899190
+      internalID: -1521255208
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_11
+      name: CatPuppet_Green_11
       rect:
         serializedVersion: 2
-        x: 252
-        y: 514
-        width: 87
-        height: 93
+        x: 210
+        y: 263
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -342,20 +342,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 177f9365bc0cf9a48b836411a97e6c56
-      internalID: 883734932
+      spriteID: 2d4d6159e17a09f4b93103d6573639aa
+      internalID: 431648070
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_12
+      name: CatPuppet_Green_12
       rect:
         serializedVersion: 2
-        x: 449
-        y: 514
-        width: 89
-        height: 94
+        x: 303
+        y: 262
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -363,20 +363,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16633e71e33970545a27051d285b20ce
-      internalID: -1155709592
+      spriteID: b47cd2fa4d8649444bf82de08240aaff
+      internalID: 493044807
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_13
+      name: CatPuppet_Green_13
       rect:
         serializedVersion: 2
-        x: 637
-        y: 513
-        width: 90
-        height: 102
+        x: 399
+        y: 262
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -384,20 +384,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e615b5d269c9a944bbf8d9144c29b630
-      internalID: -472161477
+      spriteID: 27c44c049cd62854b848adcd36935081
+      internalID: 10390623
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_14
+      name: CatPuppet_Green_14
       rect:
         serializedVersion: 2
-        x: 799
-        y: 543
-        width: 31
-        height: 58
+        x: 495
+        y: 262
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -405,20 +405,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af72ef20b30791247a902760707b11c9
-      internalID: 1192188845
+      spriteID: 0800a1c7eeb674143aed11e9b09bcf7d
+      internalID: -492920262
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_15
+      name: CatPuppet_Green_15
       rect:
         serializedVersion: 2
-        x: 808
-        y: 513
-        width: 108
-        height: 104
+        x: 594
+        y: 261
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -426,20 +426,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 467a8edc64a60c64a94e1845c101693c
-      internalID: -1171430420
+      spriteID: d53d02a3ff8883341b77a3e8721c2b0e
+      internalID: -190663660
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_16
+      name: CatPuppet_Green_16
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 513
-        width: 85
-        height: 88
+        x: 690
+        y: 262
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -447,20 +447,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d23c725a2fb8e6749a76a5fd25602bc9
-      internalID: 353291916
+      spriteID: 847685fcac745954d8dc5009e91cd600
+      internalID: -2013724651
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_17
+      name: CatPuppet_Green_17
       rect:
         serializedVersion: 2
-        x: 1231
-        y: 514
-        width: 90
-        height: 91
+        x: 786
+        y: 263
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -468,20 +468,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4242cbc77ddf62459cd0dd0ecde8cd9
-      internalID: -840569156
+      spriteID: 034ee524b73ac4247a67fbdf24202e1f
+      internalID: -1915227446
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_18
+      name: CatPuppet_Green_18
       rect:
         serializedVersion: 2
-        x: 1428
-        y: 514
-        width: 87
-        height: 93
+        x: 18
+        y: 197
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -489,20 +489,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bd30982536631444a4f8a61d5fd6630
-      internalID: 462609927
+      spriteID: d3d32c6f175e05241925ae2373bbb9a2
+      internalID: -78411214
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_19
+      name: CatPuppet_Green_19
       rect:
         serializedVersion: 2
-        x: 1625
-        y: 514
-        width: 89
-        height: 94
+        x: 114
+        y: 198
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -510,20 +510,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a32fb59f6fab47c4fa5f408766efac95
-      internalID: 1249896505
+      spriteID: 0ffb22293e301374a9bde09fa5da43bc
+      internalID: 1433133331
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_20
+      name: CatPuppet_Green_20
       rect:
         serializedVersion: 2
-        x: 49
-        y: 385
-        width: 90
-        height: 102
+        x: 210
+        y: 199
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -531,20 +531,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef3302ceac464a444a8ad67c2844693f
-      internalID: 1228111674
+      spriteID: a9c7adcad56f3364d874602843fecccf
+      internalID: 1139683778
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_21
+      name: CatPuppet_Green_21
       rect:
         serializedVersion: 2
-        x: 245
-        y: 385
-        width: 90
-        height: 102
+        x: 315
+        y: 194
+        width: 38
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -552,20 +552,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f88a0736012cf3c47a3554ca5ba8a69c
-      internalID: 828946149
+      spriteID: 3143db6045ed3a94c8b7831fb17dc709
+      internalID: 359404500
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_22
+      name: CatPuppet_Green_22
       rect:
         serializedVersion: 2
-        x: 441
-        y: 385
-        width: 90
-        height: 102
+        x: 411
+        y: 194
+        width: 38
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -573,20 +573,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da7f3b0975803364fa0dfedadd8d959d
-      internalID: 1275708488
+      spriteID: cd290faac3fa86e48a5c57ad83216adc
+      internalID: 220631328
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_23
+      name: CatPuppet_Green_23
       rect:
         serializedVersion: 2
-        x: 637
-        y: 385
-        width: 90
-        height: 102
+        x: 507
+        y: 194
+        width: 38
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -594,20 +594,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18cffc64f3bfd944589d0fbd1c9f4e24
-      internalID: 434492802
+      spriteID: c44d2fa4223fd2e46ac351d5e8dfaa54
+      internalID: -1629842482
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_24
+      name: CatPuppet_Green_24
       rect:
         serializedVersion: 2
-        x: 799
-        y: 415
-        width: 31
-        height: 58
+        x: 594
+        y: 197
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -615,20 +615,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70ed0512c6239c14aa9e342cf8b6e49c
-      internalID: -251262494
+      spriteID: e90020710f85d6243a0d593b0d13ff5b
+      internalID: -676117143
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_25
+      name: CatPuppet_Green_25
       rect:
         serializedVersion: 2
-        x: 808
-        y: 385
-        width: 108
-        height: 104
+        x: 690
+        y: 198
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -636,20 +636,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44900a2b5fcbcda47ac4942f9fc885fd
-      internalID: -634506917
+      spriteID: 440ef19cc856ff840a8a3a28c230afff
+      internalID: 1532877300
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_26
+      name: CatPuppet_Green_26
       rect:
         serializedVersion: 2
-        x: 1026
-        y: 385
-        width: 85
-        height: 88
+        x: 786
+        y: 199
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -657,20 +657,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3f2d46c0604df44438ed9f425087f793
-      internalID: 1603541251
+      spriteID: 7aa8e63fe7b428d4ca0bb5043cc57cab
+      internalID: -1869086646
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_27
+      name: CatPuppet_Green_27
       rect:
         serializedVersion: 2
-        x: 1231
-        y: 386
-        width: 90
-        height: 91
+        x: 18
+        y: 133
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -678,20 +678,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 17e3df106ce54cb41b3bdf76c8624568
-      internalID: -1731006022
+      spriteID: 20793da6572ce1b479114b2c0cd48729
+      internalID: -1068977692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_28
+      name: CatPuppet_Green_28
       rect:
         serializedVersion: 2
-        x: 1428
-        y: 386
-        width: 87
-        height: 93
+        x: 114
+        y: 134
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -699,20 +699,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ebe84caaef70549438667a4568045700
-      internalID: 2015335097
+      spriteID: 369e391ded2df2148b5302acc156750b
+      internalID: -370505467
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_29
+      name: CatPuppet_Green_29
       rect:
         serializedVersion: 2
-        x: 1625
-        y: 386
-        width: 89
-        height: 94
+        x: 210
+        y: 135
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -720,335 +720,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90b159ed8c5639545a7c7db98428cdbf
-      internalID: 1251599172
+      spriteID: 754ab08f6271a5449ad391d10053c847
+      internalID: 47019840
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_30
+      name: CatPuppet_Green_30
       rect:
         serializedVersion: 2
-        x: 46
-        y: 258
-        width: 94
-        height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 983d74d9e2765d543aec05e927d5d443
-      internalID: 1077863422
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_31
-      rect:
-        serializedVersion: 2
-        x: 242
-        y: 258
-        width: 94
-        height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2af7cac82c8c771489d725356ba4cc71
-      internalID: -399950410
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_32
-      rect:
-        serializedVersion: 2
-        x: 438
-        y: 258
-        width: 94
-        height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f7dcf0a17d7d364db174b54222dee99
-      internalID: -710704494
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_33
-      rect:
-        serializedVersion: 2
-        x: 631
-        y: 258
-        width: 89
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f4c03cfafd9888146875e2b8efa5ea7b
-      internalID: 1685349852
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_34
-      rect:
-        serializedVersion: 2
-        x: 827
-        y: 258
-        width: 89
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 23782ed04c7ef7a419a4a13f9d8e1c0f
-      internalID: 260502626
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_35
-      rect:
-        serializedVersion: 2
-        x: 1023
-        y: 258
-        width: 89
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2925a605b1e3e7540a299dffcea8a339
-      internalID: -500455275
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_36
-      rect:
-        serializedVersion: 2
-        x: 1231
-        y: 258
-        width: 90
-        height: 91
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a67c0d7a3b5ce34596a76604d98717a
-      internalID: 7128618
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_37
-      rect:
-        serializedVersion: 2
-        x: 1428
-        y: 258
-        width: 87
-        height: 93
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ce8d9861df42dde4f8dbb5b6e71b7c70
-      internalID: 25881444
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_38
-      rect:
-        serializedVersion: 2
-        x: 1625
-        y: 258
-        width: 89
-        height: 94
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a32895f89c7c8d4684890009bdace01
-      internalID: -1879017985
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_39
-      rect:
-        serializedVersion: 2
-        x: 53
-        y: 128
-        width: 94
-        height: 91
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 983f1a50da7380c46b2c85cd6b44c66f
-      internalID: -1716366272
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_40
-      rect:
-        serializedVersion: 2
-        x: 249
-        y: 128
-        width: 94
-        height: 91
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8ff80465eb284ce45be9fd9888d143ac
-      internalID: -1886629993
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_41
-      rect:
-        serializedVersion: 2
-        x: 445
-        y: 128
-        width: 94
-        height: 91
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 29a6fbe003d438f42861bfb17d484627
-      internalID: -73256441
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_42
-      rect:
-        serializedVersion: 2
-        x: 637
-        y: 129
-        width: 90
-        height: 102
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5f4c235d08e2ef54b9f2cbd88adadebb
-      internalID: 964564422
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_43
-      rect:
-        serializedVersion: 2
-        x: 833
-        y: 129
-        width: 90
-        height: 102
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5189371bd01bbd14699c65bba9ede190
-      internalID: 178314920
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_44
-      rect:
-        serializedVersion: 2
-        x: 1029
-        y: 129
-        width: 90
-        height: 102
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7b76fe94d7d9228448fcaf5de9db7d06
-      internalID: 233649132
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WereWolf_Normal_45
-      rect:
-        serializedVersion: 2
-        x: 1231
+        x: 315
         y: 130
-        width: 90
-        height: 91
+        width: 38
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1056,20 +741,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55e017f851124b14289f8cb6783c0ce3
-      internalID: 466255737
+      spriteID: 9242df085789a7c40b4868144a031edc
+      internalID: -2045122508
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_46
+      name: CatPuppet_Green_31
       rect:
         serializedVersion: 2
-        x: 1428
+        x: 411
         y: 130
-        width: 87
-        height: 93
+        width: 38
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1077,20 +762,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 789fdc88688b250489f51e92fe8f9d99
-      internalID: -879078718
+      spriteID: 74ac46aa67617f341a28571bb14d005d
+      internalID: -2072657517
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_47
+      name: CatPuppet_Green_32
       rect:
         serializedVersion: 2
-        x: 1625
+        x: 507
         y: 130
-        width: 89
-        height: 94
+        width: 38
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1098,20 +783,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7a594b5c146c094785b13a80707550b
-      internalID: -71774658
+      spriteID: dbd110c68ea54d04ea8705f617851785
+      internalID: 568893958
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_48
+      name: CatPuppet_Green_33
       rect:
         serializedVersion: 2
-        x: 53
-        y: 0
-        width: 94
-        height: 92
+        x: 594
+        y: 133
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1119,20 +804,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d47ffcfd4781c28429f62702059f54a2
-      internalID: -61178945
+      spriteID: 72d6481a6086afd4ab5390b0e18d21db
+      internalID: -859695975
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_49
+      name: CatPuppet_Green_34
       rect:
         serializedVersion: 2
-        x: 249
-        y: 0
-        width: 94
-        height: 92
+        x: 690
+        y: 134
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1140,20 +825,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfd67a66d24a90a49893e3224e706cc1
-      internalID: 884089584
+      spriteID: fe106889c52e06e4b94247ec44b19ec8
+      internalID: -2119000948
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_50
+      name: CatPuppet_Green_35
       rect:
         serializedVersion: 2
-        x: 445
-        y: 0
-        width: 94
-        height: 92
+        x: 786
+        y: 135
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1161,20 +846,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0e86ea8e801fd54e81c20e7efed5e0f
-      internalID: 590502031
+      spriteID: fabc9051a858d9d4c9ad00f6305f6f24
+      internalID: -1122134858
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_51
+      name: CatPuppet_Green_36
       rect:
         serializedVersion: 2
-        x: 637
-        y: 1
-        width: 90
-        height: 102
+        x: 22
+        y: 69
+        width: 39
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1182,20 +867,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 274ed722488d15448a4f849224bdbbd3
-      internalID: 1324366468
+      spriteID: 146fef5f2953e6046b982d95a0831b01
+      internalID: 129816107
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_52
+      name: CatPuppet_Green_37
       rect:
         serializedVersion: 2
-        x: 833
-        y: 1
-        width: 90
-        height: 102
+        x: 118
+        y: 69
+        width: 39
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1203,20 +888,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 81b106af258c31146b8bb08b641d8177
-      internalID: -234131070
+      spriteID: 4b282caf803f2e142a6563e97dc6f3b8
+      internalID: -1590791727
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_53
+      name: CatPuppet_Green_38
       rect:
         serializedVersion: 2
-        x: 1029
-        y: 1
-        width: 90
-        height: 102
+        x: 214
+        y: 69
+        width: 39
+        height: 50
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1224,20 +909,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4af74800ba99fb94d967cdbbe2d0beb9
-      internalID: -812228808
+      spriteID: 1ab24380d2914d24c863130660438bee
+      internalID: -903039078
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_54
+      name: CatPuppet_Green_39
       rect:
         serializedVersion: 2
-        x: 1229
-        y: 0
-        width: 94
-        height: 91
+        x: 309
+        y: 66
+        width: 45
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1245,20 +930,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99f33c502df95704fa7ff8cdb8428b72
-      internalID: 246024767
+      spriteID: 3612873cf8aff094ba9058268c452625
+      internalID: -348266577
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_55
+      name: CatPuppet_Green_40
       rect:
         serializedVersion: 2
-        x: 1425
-        y: 0
-        width: 94
-        height: 91
+        x: 404
+        y: 67
+        width: 46
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1266,20 +951,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b484a11da8b4a4418c00929f5dd4b94
-      internalID: -1164677113
+      spriteID: 791536ed7a76b0740a1dbbfb8700c841
+      internalID: 1156705268
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WereWolf_Normal_56
+      name: CatPuppet_Green_41
       rect:
         serializedVersion: 2
-        x: 1621
-        y: 0
-        width: 94
-        height: 91
+        x: 500
+        y: 68
+        width: 46
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1287,8 +972,260 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e44b9b788a3bcde4299064618915f0f4
-      internalID: 942279388
+      spriteID: f70af402677b02146a5fed60e6c1e413
+      internalID: -1201993131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_42
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 69
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3c4eefa86c62ed469da1a05838d0a32
+      internalID: 450993869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_43
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 70
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 268f28bd02e89d34392014e6d7b895bf
+      internalID: 1606658672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_44
+      rect:
+        serializedVersion: 2
+        x: 786
+        y: 71
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6fdab1f730adc1469fb852a0b924a3e
+      internalID: -1929073201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_45
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 2
+        width: 38
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2713dffa32cb2ae4381dc5d52c86c3bd
+      internalID: -1627742692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_46
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 2
+        width: 38
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 466c40ad07437a8498cecb5ed97a28a7
+      internalID: -1117049628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_47
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 2
+        width: 38
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f7595c41f5b27143a6d76e5b1682877
+      internalID: 547951336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_48
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 7
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f38410e8221950f429c803dcde372671
+      internalID: 1277234542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_49
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 6
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 277fe2e9947b9fd4a8afeeacaa2c46e2
+      internalID: 163923939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_50
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 6
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6e0539d55d6def4fa4d2a6fc9550d06
+      internalID: -679178971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_51
+      rect:
+        serializedVersion: 2
+        x: 598
+        y: 5
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e462dbacc66b26847990237f5796dd4b
+      internalID: -434987148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_52
+      rect:
+        serializedVersion: 2
+        x: 694
+        y: 5
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9db562a8b8a0a448888e7d99e469e70
+      internalID: -1091563394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CatPuppet_Green_53
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 5
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fb6c65d5eb4c23489d0eb6854e85140
+      internalID: -1791228123
       vertices: []
       indices: 
       edges: []
@@ -1296,7 +1233,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e03ef48fe3e0154f884ffb21e4a0914
+    spriteID: c68d4f7056b1dcb4d94bc40e3a605126
     internalID: 0
     vertices: []
     indices: 
@@ -1304,63 +1241,60 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WereWolf_Normal_0: -731083145
-      WereWolf_Normal_1: 280380272
-      WereWolf_Normal_10: -3924641
-      WereWolf_Normal_11: 883734932
-      WereWolf_Normal_12: -1155709592
-      WereWolf_Normal_13: -472161477
-      WereWolf_Normal_14: 1192188845
-      WereWolf_Normal_15: -1171430420
-      WereWolf_Normal_16: 353291916
-      WereWolf_Normal_17: -840569156
-      WereWolf_Normal_18: 462609927
-      WereWolf_Normal_19: 1249896505
-      WereWolf_Normal_2: -398869463
-      WereWolf_Normal_20: 1228111674
-      WereWolf_Normal_21: 828946149
-      WereWolf_Normal_22: 1275708488
-      WereWolf_Normal_23: 434492802
-      WereWolf_Normal_24: -251262494
-      WereWolf_Normal_25: -634506917
-      WereWolf_Normal_26: 1603541251
-      WereWolf_Normal_27: -1731006022
-      WereWolf_Normal_28: 2015335097
-      WereWolf_Normal_29: 1251599172
-      WereWolf_Normal_3: -1643398218
-      WereWolf_Normal_30: 1077863422
-      WereWolf_Normal_31: -399950410
-      WereWolf_Normal_32: -710704494
-      WereWolf_Normal_33: 1685349852
-      WereWolf_Normal_34: 260502626
-      WereWolf_Normal_35: -500455275
-      WereWolf_Normal_36: 7128618
-      WereWolf_Normal_37: 25881444
-      WereWolf_Normal_38: -1879017985
-      WereWolf_Normal_39: -1716366272
-      WereWolf_Normal_4: 1629234833
-      WereWolf_Normal_40: -1886629993
-      WereWolf_Normal_41: -73256441
-      WereWolf_Normal_42: 964564422
-      WereWolf_Normal_43: 178314920
-      WereWolf_Normal_44: 233649132
-      WereWolf_Normal_45: 466255737
-      WereWolf_Normal_46: -879078718
-      WereWolf_Normal_47: -71774658
-      WereWolf_Normal_48: -61178945
-      WereWolf_Normal_49: 884089584
-      WereWolf_Normal_5: 1300128042
-      WereWolf_Normal_50: 590502031
-      WereWolf_Normal_51: 1324366468
-      WereWolf_Normal_52: -234131070
-      WereWolf_Normal_53: -812228808
-      WereWolf_Normal_54: 246024767
-      WereWolf_Normal_55: -1164677113
-      WereWolf_Normal_56: 942279388
-      WereWolf_Normal_6: -1891943289
-      WereWolf_Normal_7: -1486036319
-      WereWolf_Normal_8: -698188174
-      WereWolf_Normal_9: -1213902579
+      CatPuppet_Green_0: -932854111
+      CatPuppet_Green_1: -1552225474
+      CatPuppet_Green_10: -1521255208
+      CatPuppet_Green_11: 431648070
+      CatPuppet_Green_12: 493044807
+      CatPuppet_Green_13: 10390623
+      CatPuppet_Green_14: -492920262
+      CatPuppet_Green_15: -190663660
+      CatPuppet_Green_16: -2013724651
+      CatPuppet_Green_17: -1915227446
+      CatPuppet_Green_18: -78411214
+      CatPuppet_Green_19: 1433133331
+      CatPuppet_Green_2: 756052448
+      CatPuppet_Green_20: 1139683778
+      CatPuppet_Green_21: 359404500
+      CatPuppet_Green_22: 220631328
+      CatPuppet_Green_23: -1629842482
+      CatPuppet_Green_24: -676117143
+      CatPuppet_Green_25: 1532877300
+      CatPuppet_Green_26: -1869086646
+      CatPuppet_Green_27: -1068977692
+      CatPuppet_Green_28: -370505467
+      CatPuppet_Green_29: 47019840
+      CatPuppet_Green_3: -628905341
+      CatPuppet_Green_30: -2045122508
+      CatPuppet_Green_31: -2072657517
+      CatPuppet_Green_32: 568893958
+      CatPuppet_Green_33: -859695975
+      CatPuppet_Green_34: -2119000948
+      CatPuppet_Green_35: -1122134858
+      CatPuppet_Green_36: 129816107
+      CatPuppet_Green_37: -1590791727
+      CatPuppet_Green_38: -903039078
+      CatPuppet_Green_39: -348266577
+      CatPuppet_Green_4: -381107817
+      CatPuppet_Green_40: 1156705268
+      CatPuppet_Green_41: -1201993131
+      CatPuppet_Green_42: 450993869
+      CatPuppet_Green_43: 1606658672
+      CatPuppet_Green_44: -1929073201
+      CatPuppet_Green_45: -1627742692
+      CatPuppet_Green_46: -1117049628
+      CatPuppet_Green_47: 547951336
+      CatPuppet_Green_48: 1277234542
+      CatPuppet_Green_49: 163923939
+      CatPuppet_Green_5: -304591125
+      CatPuppet_Green_50: -679178971
+      CatPuppet_Green_51: -434987148
+      CatPuppet_Green_52: -1091563394
+      CatPuppet_Green_53: -1791228123
+      CatPuppet_Green_6: -669537764
+      CatPuppet_Green_7: 205232415
+      CatPuppet_Green_8: -333406834
+      CatPuppet_Green_9: 1545464800
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

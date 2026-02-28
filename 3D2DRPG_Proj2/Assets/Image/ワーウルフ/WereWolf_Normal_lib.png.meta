@@ -95,18 +95,1866 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 135
+        height: 1176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1ebbbce4a471464f8fced0f3e817126
+      internalID: -2121422382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_1
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 980
+        width: 95
+        height: 196
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d26d5cd4f4d9df4e8d2db836cb3ec79
+      internalID: -1794021229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_2
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 980
+        width: 92
+        height: 196
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bd662f18b5835c4d969feb0f430b6b5
+      internalID: -1598443754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_3
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 980
+        width: 94
+        height: 196
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15f3925ae45fe74429a6f6f14c909de0
+      internalID: -1141034971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_4
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 980
+        width: 92
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca04559694ebe1d409884b2a5fdbca2a
+      internalID: 1965112472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_5
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 0
+        width: 305
+        height: 1176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 743c5c7cf54c29e459ede86545ca7911
+      internalID: -2077738823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_6
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 978
+        width: 94
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 514d827fa63126249be3434e884c285c
+      internalID: -575250106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_7
+      rect:
+        serializedVersion: 2
+        x: 1205
+        y: 978
+        width: 111
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afa50827f3e000d498e5f3514cb953bf
+      internalID: -2099775644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_8
+      rect:
+        serializedVersion: 2
+        x: 1291
+        y: 978
+        width: 216
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 951164736e120fe40aa0b1332a7a7833
+      internalID: -1495223975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_9
+      rect:
+        serializedVersion: 2
+        x: 1611
+        y: 979
+        width: 90
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 309a9224f5f9b5340af1b5c5169d2a13
+      internalID: 555559609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_10
+      rect:
+        serializedVersion: 2
+        x: 1684
+        y: 0
+        width: 380
+        height: 1176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f92a43b0d294624cbe4ed581eb770b2
+      internalID: 1139910885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_11
+      rect:
+        serializedVersion: 2
+        x: 2011
+        y: 978
+        width: 99
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 431576712fc434543bb21280be83af93
+      internalID: -48624542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_12
+      rect:
+        serializedVersion: 2
+        x: 2206
+        y: 978
+        width: 99
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aed819228c8f4d94492a4db21f8c8cd1
+      internalID: -251474737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_13
+      rect:
+        serializedVersion: 2
+        x: 2403
+        y: 978
+        width: 98
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f40dee69dd516594d87745e7703fdc9f
+      internalID: -837855160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_14
+      rect:
+        serializedVersion: 2
+        x: 2598
+        y: 978
+        width: 100
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b96de089cc4d184ca6d64b3f754ca65
+      internalID: -220824802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_15
+      rect:
+        serializedVersion: 2
+        x: 2636
+        y: 0
+        width: 305
+        height: 1176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 467d347e6f5b99448918f06a7ae09c05
+      internalID: 279399645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_16
+      rect:
+        serializedVersion: 2
+        x: 3722
+        y: 0
+        width: 198
+        height: 1176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 412dec66e3acbc9459abcbf3f687a235
+      internalID: -381916716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_17
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 784
+        width: 95
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dca174d1b053a774aafb12fbbb0ad569
+      internalID: -762919637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_18
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 784
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b88d3ada486b9064d99524893d2d0162
+      internalID: 496981945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_19
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 784
+        width: 94
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8c97bed9f23e244982bf4448db35e72
+      internalID: -1530197168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_20
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 784
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90ccb8ce3c23ed84c9e6b8da6e3c8700
+      internalID: 121922396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_21
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 782
+        width: 94
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44eb77aeae37dab49bbc5616318f1b60
+      internalID: -958016992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_22
+      rect:
+        serializedVersion: 2
+        x: 1205
+        y: 782
+        width: 111
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f1abf1128bb1694b8d2321c4d446acd
+      internalID: -868887533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_23
+      rect:
+        serializedVersion: 2
+        x: 1385
+        y: 782
+        width: 122
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23958a45964d155419572b4a6a66957e
+      internalID: -683056840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_24
+      rect:
+        serializedVersion: 2
+        x: 1611
+        y: 782
+        width: 90
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f21ed601b58fa284ba82d0a04487f1b1
+      internalID: 712619667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_25
+      rect:
+        serializedVersion: 2
+        x: 2013
+        y: 784
+        width: 95
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 977664a69229f8b43956d3c48ac4f284
+      internalID: 481823083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_26
+      rect:
+        serializedVersion: 2
+        x: 2210
+        y: 784
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8af8c6a57083ddd468516aaa510d4da3
+      internalID: 1257028628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_27
+      rect:
+        serializedVersion: 2
+        x: 2407
+        y: 784
+        width: 94
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66b2a84664e834a41ab264ce4545fe0c
+      internalID: -1453726719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_28
+      rect:
+        serializedVersion: 2
+        x: 2602
+        y: 784
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e814febf6b8245f4386ef70a8e51d38f
+      internalID: 1096556623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_29
+      rect:
+        serializedVersion: 2
+        x: 2993
+        y: 784
+        width: 95
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f50b4b22d22d94949ba930f002594301
+      internalID: 420388595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_30
+      rect:
+        serializedVersion: 2
+        x: 3190
+        y: 784
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03df24610f4cc054987580b201111a3f
+      internalID: -1974404379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_31
+      rect:
+        serializedVersion: 2
+        x: 3387
+        y: 784
+        width: 94
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d53f0b8ec30f59e4bad754a010dca2e4
+      internalID: 1215883875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_32
+      rect:
+        serializedVersion: 2
+        x: 3582
+        y: 784
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c84f3ecec2349cb4482b57a3e8d21c46
+      internalID: -797001238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_33
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 587
+        width: 94
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fffb44be3752dc4dafc11043b3b2bd6
+      internalID: -885827584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_34
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 587
+        width: 94
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 850f06db1feed774284bd534e6381e2f
+      internalID: 1321127525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_35
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 587
+        width: 94
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2488faf6c51d974d8a50b533b669695
+      internalID: -770091185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_36
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 587
+        width: 94
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab1c4f4457f44e84c8c2282e9d40afaa
+      internalID: -205501902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_37
+      rect:
+        serializedVersion: 2
+        x: 1205
+        y: 587
+        width: 111
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0db30eb0776a0484d82a1bde8e27532f
+      internalID: -473091114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_38
+      rect:
+        serializedVersion: 2
+        x: 1385
+        y: 587
+        width: 122
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a3666c2c5d72704d966bdc818cd03ca
+      internalID: -1986763487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_39
+      rect:
+        serializedVersion: 2
+        x: 1611
+        y: 587
+        width: 90
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c3cbf0686c34204190542823266c49f
+      internalID: 1525806985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_40
+      rect:
+        serializedVersion: 2
+        x: 2013
+        y: 587
+        width: 95
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70ce4b75145ab1343962a157fad4f1cf
+      internalID: 2117277282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_41
+      rect:
+        serializedVersion: 2
+        x: 2210
+        y: 587
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c48585afbf58cd3479a9f0ca8aebe4bf
+      internalID: -2126033580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_42
+      rect:
+        serializedVersion: 2
+        x: 2407
+        y: 587
+        width: 94
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ad24a5d7caeba4418fa273e5892a339
+      internalID: 990034935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_43
+      rect:
+        serializedVersion: 2
+        x: 2602
+        y: 587
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c41d0ee912afa5740b6ad60739572664
+      internalID: -2068114746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_44
+      rect:
+        serializedVersion: 2
+        x: 2993
+        y: 587
+        width: 95
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54db7c8d4d05fed4091d0d3204042b20
+      internalID: 2080488973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_45
+      rect:
+        serializedVersion: 2
+        x: 3190
+        y: 587
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a5cf68b6c069bb46b3749e6ec1aa563
+      internalID: -1875217999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_46
+      rect:
+        serializedVersion: 2
+        x: 3387
+        y: 587
+        width: 94
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 367bbc4f8b09ef54dba7251ce8c246d8
+      internalID: -246848456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_47
+      rect:
+        serializedVersion: 2
+        x: 3582
+        y: 587
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4c381e63f659214ead90c3ca6520bb0
+      internalID: 628216797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_48
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 392
+        width: 100
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18b4a2d29009c9b40b19ed6924897367
+      internalID: 2142070006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_49
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 392
+        width: 98
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81ab53b474963674684ccbd6ba473c8e
+      internalID: 384843738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_50
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 392
+        width: 100
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cd35377fd5620c4dbcafc06ee6f37a6
+      internalID: 1125474949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_51
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 392
+        width: 99
+        height: 88
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 533626094e654ae41bd54167e72225b5
+      internalID: 837896478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_52
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 390
+        width: 94
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42cfa730e734b2a48a923e53ff5f4f4c
+      internalID: -1299754883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_53
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 391
+        width: 96
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d51c610d653984c469d7ca9766b8dfcc
+      internalID: 1744920791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_54
+      rect:
+        serializedVersion: 2
+        x: 1419
+        y: 390
+        width: 94
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4279d90e7037a8841a8d6f922629b41c
+      internalID: 1573168892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_55
+      rect:
+        serializedVersion: 2
+        x: 1615
+        y: 391
+        width: 95
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f514656956448524d90ed0a205e5011f
+      internalID: -1978233065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_56
+      rect:
+        serializedVersion: 2
+        x: 2013
+        y: 392
+        width: 95
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3bd845dbc1646e48bf3456d85b44318
+      internalID: 1043754420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_57
+      rect:
+        serializedVersion: 2
+        x: 2210
+        y: 392
+        width: 92
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 557c805143814214093ebf5f9202f3fd
+      internalID: -1933894572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_58
+      rect:
+        serializedVersion: 2
+        x: 2407
+        y: 392
+        width: 94
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ad9df2fe3c074145abfd4535fbfc5a4
+      internalID: 1969353335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_59
+      rect:
+        serializedVersion: 2
+        x: 2602
+        y: 392
+        width: 92
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2e9c3b2d2fdf1547afebae4eeada170
+      internalID: 1945879027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_60
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 194
+        width: 99
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fe92f2fd307022439e496426f001096
+      internalID: -2049897227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_61
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 194
+        width: 99
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a50e42052a8732845b436fc431ac87fb
+      internalID: 214722706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_62
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 194
+        width: 98
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9a6567e1c4438c4dac8a21af73fda43
+      internalID: 675298753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_63
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 194
+        width: 100
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 195f31e51d171124db540daaa29abbd6
+      internalID: -615966969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_64
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 194
+        width: 94
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a0c123b2d2029346b211dd4d1c4a0e7
+      internalID: -160265527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_65
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 194
+        width: 96
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45607437b8f0acb439945c2087ae0d0c
+      internalID: 2036724264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_66
+      rect:
+        serializedVersion: 2
+        x: 1419
+        y: 194
+        width: 94
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86017126c5325bb459b108e082017a3d
+      internalID: -685040907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_67
+      rect:
+        serializedVersion: 2
+        x: 1615
+        y: 194
+        width: 95
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 703094f4224acf940b379a64fea5eed9
+      internalID: 838442494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_68
+      rect:
+        serializedVersion: 2
+        x: 2013
+        y: 196
+        width: 95
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5c518634feae37428b9550480b4bd91
+      internalID: -1299716678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_69
+      rect:
+        serializedVersion: 2
+        x: 2210
+        y: 196
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e913f7bf93eed3d4bb254c853e522e7f
+      internalID: 1591851659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_70
+      rect:
+        serializedVersion: 2
+        x: 2407
+        y: 196
+        width: 94
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50f91edff5e7ab545b24c2cfd0c5d6f6
+      internalID: 350730394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_71
+      rect:
+        serializedVersion: 2
+        x: 2602
+        y: 196
+        width: 92
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1652c571fc2b56f4cbb8a561b59642eb
+      internalID: 51524501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_72
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 0
+        width: 99
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e16027266e2a7e64dbf31d8387d5a8a0
+      internalID: -1297683391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_73
+      rect:
+        serializedVersion: 2
+        x: 246
+        y: 0
+        width: 99
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93c653d55afe80545bb7afaad14e2304
+      internalID: 1297549420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_74
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 0
+        width: 98
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33759a566a3229e4f9a1a16fc5c20878
+      internalID: -1504023770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_75
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 0
+        width: 100
+        height: 95
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b7d054b23fa9aa479f53c96efe47ad9
+      internalID: -1529983247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_76
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 0
+        width: 100
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb22a3fdbcfa3ae4e8276624a50eac0f
+      internalID: 1635279172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_77
+      rect:
+        serializedVersion: 2
+        x: 1211
+        y: 0
+        width: 99
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0fb065cfb8c74646a3cd241700cf6a2
+      internalID: 478702437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_78
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 0
+        width: 99
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9cc519c0c1a17245b420f4311e21505
+      internalID: -2079362037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_79
+      rect:
+        serializedVersion: 2
+        x: 1603
+        y: 0
+        width: 100
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f377c5421a39922419c8e1c43ce3b113
+      internalID: -1860082052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_80
+      rect:
+        serializedVersion: 2
+        x: 2011
+        y: 0
+        width: 99
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f3a8d66021905149b409e7dc991dc04
+      internalID: 1200543345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_81
+      rect:
+        serializedVersion: 2
+        x: 2206
+        y: 0
+        width: 99
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0f6ad67daa5f624f9920f9f11f7f2fb
+      internalID: 2096942571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_82
+      rect:
+        serializedVersion: 2
+        x: 2403
+        y: 0
+        width: 98
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 389f1d04d6ce7004ca1af06317183a68
+      internalID: -2040390425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WereWolf_Normal_lib_83
+      rect:
+        serializedVersion: 2
+        x: 2598
+        y: 0
+        width: 100
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b43c614be0b187d44b26f1ffd0ee8c08
+      internalID: 4368296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5fe0f2a129463fa4598c0f7a58eda5c4
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      WereWolf_Normal_lib_0: -2121422382
+      WereWolf_Normal_lib_1: -1794021229
+      WereWolf_Normal_lib_10: 1139910885
+      WereWolf_Normal_lib_11: -48624542
+      WereWolf_Normal_lib_12: -251474737
+      WereWolf_Normal_lib_13: -837855160
+      WereWolf_Normal_lib_14: -220824802
+      WereWolf_Normal_lib_15: 279399645
+      WereWolf_Normal_lib_16: -381916716
+      WereWolf_Normal_lib_17: -762919637
+      WereWolf_Normal_lib_18: 496981945
+      WereWolf_Normal_lib_19: -1530197168
+      WereWolf_Normal_lib_2: -1598443754
+      WereWolf_Normal_lib_20: 121922396
+      WereWolf_Normal_lib_21: -958016992
+      WereWolf_Normal_lib_22: -868887533
+      WereWolf_Normal_lib_23: -683056840
+      WereWolf_Normal_lib_24: 712619667
+      WereWolf_Normal_lib_25: 481823083
+      WereWolf_Normal_lib_26: 1257028628
+      WereWolf_Normal_lib_27: -1453726719
+      WereWolf_Normal_lib_28: 1096556623
+      WereWolf_Normal_lib_29: 420388595
+      WereWolf_Normal_lib_3: -1141034971
+      WereWolf_Normal_lib_30: -1974404379
+      WereWolf_Normal_lib_31: 1215883875
+      WereWolf_Normal_lib_32: -797001238
+      WereWolf_Normal_lib_33: -885827584
+      WereWolf_Normal_lib_34: 1321127525
+      WereWolf_Normal_lib_35: -770091185
+      WereWolf_Normal_lib_36: -205501902
+      WereWolf_Normal_lib_37: -473091114
+      WereWolf_Normal_lib_38: -1986763487
+      WereWolf_Normal_lib_39: 1525806985
+      WereWolf_Normal_lib_4: 1965112472
+      WereWolf_Normal_lib_40: 2117277282
+      WereWolf_Normal_lib_41: -2126033580
+      WereWolf_Normal_lib_42: 990034935
+      WereWolf_Normal_lib_43: -2068114746
+      WereWolf_Normal_lib_44: 2080488973
+      WereWolf_Normal_lib_45: -1875217999
+      WereWolf_Normal_lib_46: -246848456
+      WereWolf_Normal_lib_47: 628216797
+      WereWolf_Normal_lib_48: 2142070006
+      WereWolf_Normal_lib_49: 384843738
+      WereWolf_Normal_lib_5: -2077738823
+      WereWolf_Normal_lib_50: 1125474949
+      WereWolf_Normal_lib_51: 837896478
+      WereWolf_Normal_lib_52: -1299754883
+      WereWolf_Normal_lib_53: 1744920791
+      WereWolf_Normal_lib_54: 1573168892
+      WereWolf_Normal_lib_55: -1978233065
+      WereWolf_Normal_lib_56: 1043754420
+      WereWolf_Normal_lib_57: -1933894572
+      WereWolf_Normal_lib_58: 1969353335
+      WereWolf_Normal_lib_59: 1945879027
+      WereWolf_Normal_lib_6: -575250106
+      WereWolf_Normal_lib_60: -2049897227
+      WereWolf_Normal_lib_61: 214722706
+      WereWolf_Normal_lib_62: 675298753
+      WereWolf_Normal_lib_63: -615966969
+      WereWolf_Normal_lib_64: -160265527
+      WereWolf_Normal_lib_65: 2036724264
+      WereWolf_Normal_lib_66: -685040907
+      WereWolf_Normal_lib_67: 838442494
+      WereWolf_Normal_lib_68: -1299716678
+      WereWolf_Normal_lib_69: 1591851659
+      WereWolf_Normal_lib_7: -2099775644
+      WereWolf_Normal_lib_70: 350730394
+      WereWolf_Normal_lib_71: 51524501
+      WereWolf_Normal_lib_72: -1297683391
+      WereWolf_Normal_lib_73: 1297549420
+      WereWolf_Normal_lib_74: -1504023770
+      WereWolf_Normal_lib_75: -1529983247
+      WereWolf_Normal_lib_76: 1635279172
+      WereWolf_Normal_lib_77: 478702437
+      WereWolf_Normal_lib_78: -2079362037
+      WereWolf_Normal_lib_79: -1860082052
+      WereWolf_Normal_lib_8: -1495223975
+      WereWolf_Normal_lib_80: 1200543345
+      WereWolf_Normal_lib_81: 2096942571
+      WereWolf_Normal_lib_82: -2040390425
+      WereWolf_Normal_lib_83: 4368296
+      WereWolf_Normal_lib_9: 555559609
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
