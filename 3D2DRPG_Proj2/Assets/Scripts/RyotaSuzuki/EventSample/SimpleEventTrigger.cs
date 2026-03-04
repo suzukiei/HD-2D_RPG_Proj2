@@ -40,7 +40,11 @@ public class SimpleEventTrigger : MonoBehaviour
     
     [Header("発動方法")]
     [SerializeField] private TriggerType triggerType = TriggerType.AutoOnEnter;
-    
+
+    [Header("敵制御")]
+    [SerializeField, Tooltip("イベント中に敵を停止&非表示にするか")]
+    private bool disableEnemies = true;
+
     [Header("デバッグ")]
     [SerializeField] private bool showDebugLog = true;
     [SerializeField] private bool showGizmo = true;
@@ -242,7 +246,10 @@ public class SimpleEventTrigger : MonoBehaviour
             {
                 DisablePlayerControl();
             }
-            
+
+            //全敵を停止
+            DisableAllEnemies();
+
             conversationUI.csvFileName = csvFileName;
             conversationUI.ReloadCSV();
             conversationUI.StartDialogue();
@@ -265,6 +272,9 @@ public class SimpleEventTrigger : MonoBehaviour
     {
         if (cineController != null)
         {
+            //全敵を停止
+            DisableAllEnemies();
+
             cineController.PlayMovie();
             
             if (showDebugLog)
@@ -388,7 +398,63 @@ public class SimpleEventTrigger : MonoBehaviour
             rb.isKinematic = false;
         }
     }
-    
+
+    /// <summary>
+    /// フィールド上の全ての敵を停止&非表示
+    /// </summary>
+    private void DisableAllEnemies()
+    {
+        if (!disableEnemies) return;
+
+        // 全てのEnemyWanderAIを検索
+        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>();
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                // 徘徊を停止
+                enemy.StopWandering();
+
+                // オブジェクトを非表示
+                enemy.gameObject.SetActive(false);
+
+                if (showDebugLog)
+                {
+                    Debug.Log($"[{eventName}] {enemy.gameObject.name} を停止&非表示にしました");
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// フィールド上の全ての敵を再開&表示
+    /// </summary>
+    public void EnableAllEnemies()
+    {
+        if (!disableEnemies) return;
+
+        // 非表示の敵を含めて全てを検索（includeInactive: true）
+        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>(true);
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                // オブジェクトを表示
+                enemy.gameObject.SetActive(true);
+
+                // 徘徊を再開
+                enemy.ResumeWandering();
+
+                if (showDebugLog)
+                {
+                    Debug.Log($"[{eventName}] {enemy.gameObject.name} を再開&表示しました");
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// 外部から強制発動
     /// </summary>
