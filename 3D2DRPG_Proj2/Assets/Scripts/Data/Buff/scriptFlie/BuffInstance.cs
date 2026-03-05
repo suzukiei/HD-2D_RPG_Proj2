@@ -49,7 +49,9 @@ public class BuffInstance
 
         targetCharacter = target;
         sourceCharacter = baseData.sourceCharacter;
-        
+
+        // Remove()から正しいインスタンスでRemoveBuffを呼べるよう、現在のBuffInstanceを渡す
+        baseData.currentInstance = this;
         // ScriptableObjectのApplyを呼び出す（各バフクラスで実装）
         baseData.sourceCharacter = sourceCharacter;
         baseData.Apply(target);
@@ -71,7 +73,10 @@ public class BuffInstance
     {
         if (baseData != null)
         {
+            baseData.currentInstance = this;
+            baseData.isBeingRemoved = true;
             baseData.Remove();
+            baseData.isBeingRemoved = false;
         }
     }
 }

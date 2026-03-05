@@ -9,16 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87af6d748509c714c8bb3aa54d588dc5, type: 3}
-  m_Name: Attack Up Buff
+  m_Script: {fileID: 11500000, guid: cd1f7442ad32935499cf08ab85039367, type: 3}
+  m_Name: Mega Heel
   m_EditorClassIdentifier: 
-  buffId: bb046d67-fb00-4047-9486-df0d2b554eba
-  buffName: BUFF1
+  buffId: 
+  buffName: 
   description: 
   icon: {fileID: 0}
   buffType: 0
-  duration: 3
-  buffRange: 0
+  duration: 0
+  buffRange: 3
   sourceCharacter: {fileID: 0}
   isSelfTarget: 1
-  attackMultiplier: 1.5
+  heelMax: 0
+  heelMin: 0
+  spdUp: 0

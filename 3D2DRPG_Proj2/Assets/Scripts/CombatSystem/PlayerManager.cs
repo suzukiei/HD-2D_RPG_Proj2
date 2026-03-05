@@ -596,6 +596,9 @@ public class PlayerManager : MonoBehaviour
                 {
                     if (player != null)
                     {
+                        if (!buff.baseData.isSelfTarget)
+                            if (player == selectedCharacter)
+                                continue;
                         // 各プレイヤー用に新しいバフインスタンスを作成
                         BuffInstance playerBuff = new BuffInstance(buff.baseData);
                         playerBuff.remainingTurns = buff.remainingTurns;

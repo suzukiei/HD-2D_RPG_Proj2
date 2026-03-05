@@ -7,7 +7,7 @@ using UnityEngine;
 //public enum ElementType { None, Fire, Ice, Thunder, Wind, Light, Dark }
 //public enum TargetType { SingleEnemy, AllEnemies, Self, Ally, AllAllies }
 //public enum BuffType { None, AttackUp, DefenseUp, SpeedUp, AttackDown, DefenseDown }
-public enum TargetScope { Single, All }
+public enum TargetScope { Single, All, Other }
 public enum StatusEffect { Poison, Stun, Burn, Freeze, Sleep }
 public enum SkillEffectType { Attack, Heal, Buff }
 [CreateAssetMenu(menuName = "SkillData")]
