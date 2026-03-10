@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87af6d748509c714c8bb3aa54d588dc5, type: 3}
   m_Name: Attack Up Buff
   m_EditorClassIdentifier: 
+  buffId: bb046d67-fb00-4047-9486-df0d2b554eba
   buffName: BUFF1
-  duration: 10
-  buffRange: 1
   description: 
+  icon: {fileID: 0}
+  buffType: 0
+  duration: 3
+  buffRange: 0
   sourceCharacter: {fileID: 0}
-  attackMultiplier: 100
-  originalAttack: 10
+  isSelfTarget: 1
+  attackMultiplier: 1.5

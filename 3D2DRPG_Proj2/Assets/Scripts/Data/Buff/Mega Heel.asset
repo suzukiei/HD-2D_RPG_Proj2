@@ -9,25 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e94eccfc2ee4ca4e8a45ad2662c148d, type: 3}
-  m_Name: New Special Damage Chance
+  m_Script: {fileID: 11500000, guid: cd1f7442ad32935499cf08ab85039367, type: 3}
+  m_Name: Mega Heel
   m_EditorClassIdentifier: 
   buffId: 
   buffName: 
   description: 
   icon: {fileID: 0}
   buffType: 0
-  duration: 1000
-  buffRange: 4
+  duration: 0
+  buffRange: 3
   sourceCharacter: {fileID: 0}
-  isSelfTarget: 0
-  BuffInstance:
-    baseData: {fileID: 0}
-    buffId: 
-    buffName: 
-    remainingTurns: 0
-    buffRange: 0
-    description: 
-    sourceCharacter: {fileID: 0}
-    targetCharacter: {fileID: 0}
-  chance: 50
+  isSelfTarget: 1
+  heelMax: 0
+  heelMin: 0
+  spdUp: 0

@@ -12,15 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92d8b73040e5b143bbd8be31623266c, type: 3}
   m_Name: Combo
   m_EditorClassIdentifier: 
-  skillName: "\u30B3\u30F3\u30DC"
-  description: 
+  skillName: "\u30B0\u30EC\u30CD\u30FC\u30C9\u30AC\u30F3"
+  description: "\u30FB\u76F8\u624B1\u4F53\u306B\u9023\u7D9A\u653B\u6483 \n\u30FB\u30D9\u30B9\u30C8\u30BF\u30A4\u30DF\u30F3\u30B0\u304C\u7D9A\u3051\u3070\u6700\u592720\u56DE\u307E\u3067
+    \u30D9\u30B9\u30C8\u30BF\u30A4\u30DF\u30F3\u30B0\u3059\u308C\u3070\u3059\u308B\u307B\u306910\uFF05\u30C0\u30E1\u30FC\u30B8\u3042\u304C\u308B\n\u30FB\u57FA\u790E\u5024+DB
+    \xD71.0\uFF5E2.0 \n\u30FBMP 30\u6D88\u8CBB"
   icon: {fileID: 0}
   soundEffect: {fileID: 0}
   vfxPrefab: {fileID: 0}
   animationName: 
   effectType: 0
-  power: 4
-  mpCost: 5
+  power: 0.1
+  mpCost: 30
   cooldown: 0
   hitCount: 1
   criticalRate: 0.1
@@ -28,6 +30,8 @@ MonoBehaviour:
   targetScope: 0
   statusEffect: 0
   canCombo: 1
+  DamageUp: 1
+  ComboDamage: 1
   comboNextSkill: {fileID: 11400000}
   timingWindowStart: 2
   timingWindowEnd: 3

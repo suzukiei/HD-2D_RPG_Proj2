@@ -73,6 +73,19 @@ public abstract class BuffBase : ScriptableObject
     [Header("自分自身が対象")]
     [Tooltip("選択フェイズをなくして自分自身のみ対象にする")]
     public bool isSelfTarget = false;
+
+    /// <summary>
+    /// 現在処理中のBuffInstance（Apply/Remove時にBuffInstance側で設定。ScriptableObject共有のためNonSerialized）
+    /// </summary>
+    [System.NonSerialized]
+    public BuffInstance currentInstance;
+
+    /// <summary>
+    /// CharacterBuffManager.RemoveBuff経由でRemove中か（二重RemoveBuff呼び出し防止用）
+    /// </summary>
+    [System.NonSerialized]
+    public bool isBeingRemoved;
+
     /// <summary>
     /// バフを適用する
     /// </summary>

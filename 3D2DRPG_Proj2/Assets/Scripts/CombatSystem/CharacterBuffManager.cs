@@ -82,6 +82,7 @@ public class CharacterBuffManager : MonoBehaviour
         
         // 新しいバフを追加
         buffInstance.Apply(appliedBy);
+        //buffInstance.baseData.
         activeBuffs.Add(buffInstance);
         
         // ステータス修正値を再計算
@@ -155,7 +156,7 @@ public class CharacterBuffManager : MonoBehaviour
 
             //ターンを減らす
             buff.TickTurn();
-            
+            buff.Apply(buff.targetCharacter);
             if (buff.IsExpired())
             {
                 RemoveBuff(buff); //バフを削除する
