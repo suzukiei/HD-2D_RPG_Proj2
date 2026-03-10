@@ -37,9 +37,15 @@ namespace RyotaSuzuki.UI
         [SerializeField] private Button character2Button;
         [SerializeField] private Button character3Button;
         
+        [Header("キャラクター切り替えボタン")]
+        [SerializeField, Tooltip("次のキャラへ切り替えボタン")] private Button upperButton;
+        [SerializeField, Tooltip("前のキャラへ切り替えボタン")] private Button lowerButton;
+        
         [Header("選択中表示")]
-        [SerializeField] private Color selectedColor = new Color(1f, 0.8f, 0.2f, 1f);
-        [SerializeField] private Color normalColor = Color.white;
+        [SerializeField] private Color selectedColor = new Color(1f, 0.65f, 0f, 1f);
+        [SerializeField] private Color normalColor = new Color(0.8f, 0.8f, 0.8f, 1f);
+        [SerializeField, Tooltip("選択中のボタン背景色")] private Color selectedBackgroundColor = new Color(0.3f, 0.3f, 0.3f, 1f);
+        [SerializeField, Tooltip("通常のボタン背景色")] private Color normalBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
         
         [Header("デバッグ")]
         [SerializeField] private bool showDebugLog = true;
@@ -56,6 +62,22 @@ namespace RyotaSuzuki.UI
             if (characterDataList.Count > 0)
             {
                 SelectCharacter(0);
+            }
+        }
+        
+        void Update()
+        {
+            // キーボード操作でキャラクター切り替え（オプション）
+            if (gameObject.activeInHierarchy)
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+                {
+                    SelectPreviousCharacter();
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+                {
+                    SelectNextCharacter();
+                }
             }
         }
         
@@ -106,6 +128,26 @@ namespace RyotaSuzuki.UI
             else
             {
                 Debug.LogWarning("[CharacterStatusDisplay] Character3Buttonが設定されていません");
+            }
+            
+            // UpperButton（次のキャラへ）
+            if (upperButton != null)
+            {
+                upperButton.onClick.RemoveAllListeners();
+                upperButton.onClick.AddListener(() => {
+                    Debug.Log("[CharacterStatusDisplay] UpperButtonがクリックされました");
+                    SelectNextCharacter();
+                });
+            }
+            
+            // LowerButton（前のキャラへ）
+            if (lowerButton != null)
+            {
+                lowerButton.onClick.RemoveAllListeners();
+                lowerButton.onClick.AddListener(() => {
+                    Debug.Log("[CharacterStatusDisplay] LowerButtonがクリックされました");
+                    SelectPreviousCharacter();
+                });
             }
             
             Debug.Log($"[CharacterStatusDisplay] ボタン初期化完了: {characterButtons.Count}個");
@@ -321,25 +363,34 @@ namespace RyotaSuzuki.UI
             {
                 if (characterButtons[i] == null) continue;
                 
-                // ボタンの色を変更
+                // ボタンの背景色を変更（より見やすく）
                 var colors = characterButtons[i].colors;
                 if (i == selectedIndex)
                 {
-                    colors.normalColor = selectedColor;
-                    colors.highlightedColor = selectedColor;
+                    colors.normalColor = selectedBackgroundColor;
+                    colors.highlightedColor = selectedBackgroundColor;
+                    colors.pressedColor = selectedBackgroundColor * 0.8f;
                 }
                 else
                 {
-                    colors.normalColor = normalColor;
-                    colors.highlightedColor = normalColor;
+                    colors.normalColor = normalBackgroundColor;
+                    colors.highlightedColor = normalBackgroundColor * 1.2f;
+                    colors.pressedColor = normalBackgroundColor * 0.8f;
                 }
                 characterButtons[i].colors = colors;
                 
-                // または、子のテキストの色を変更
+                // ボタン上のテキスト色を変更（選択中は明るいオレンジ）
                 var buttonText = characterButtons[i].GetComponentInChildren<TextMeshProUGUI>();
                 if (buttonText != null)
                 {
                     buttonText.color = (i == selectedIndex) ? selectedColor : normalColor;
+                }
+                
+                // ボタン上のImage（背景）を探して色を変更
+                var buttonImage = characterButtons[i].GetComponent<Image>();
+                if (buttonImage != null)
+                {
+                    buttonImage.color = (i == selectedIndex) ? selectedBackgroundColor : normalBackgroundColor;
                 }
             }
         }
@@ -403,6 +454,8 @@ namespace RyotaSuzuki.UI
             if (character1Button != null) character1Button.onClick.RemoveAllListeners();
             if (character2Button != null) character2Button.onClick.RemoveAllListeners();
             if (character3Button != null) character3Button.onClick.RemoveAllListeners();
+            if (upperButton != null) upperButton.onClick.RemoveAllListeners();
+            if (lowerButton != null) lowerButton.onClick.RemoveAllListeners();
         }
     }
 }
