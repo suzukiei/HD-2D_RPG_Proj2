@@ -8,7 +8,7 @@ using UnityEngine;
 //public enum TargetType { SingleEnemy, AllEnemies, Self, Ally, AllAllies }
 //public enum BuffType { None, AttackUp, DefenseUp, SpeedUp, AttackDown, DefenseDown }
 public enum TargetScope { Single, All, Other }
-public enum StatusEffect { Poison, Stun, Burn, Freeze, Sleep }
+//public enum StatusEffect { Poison, Stun, Burn, Freeze, Sleep }
 public enum ZokuseiType
 {
     Buturi,
@@ -63,5 +63,30 @@ public class SkillData : ScriptableObject
     public float buffValue = 0f;
     [Header("バフの継続時間")]
     public int buffDuration = 0;
+
+    [Header("ダメージボーナスを使用する")]
+    public bool DamageBonusFlg = false;
+
+    [Header("属性")]
+    public ZokuseiType ZokuseiType = ZokuseiType.Buturi; 
+
+    [Header("ランダム効果スキル")]
+    [Tooltip("trueの場合は回復かダメージか")]
+    public bool isRandomEffect = false;
+
+    [Header("一度きり？")]
+    public bool isOnlyOnece = false;
+
+    [Header("攻撃回数")]
+    public int attackCount = 1;
+
+    [Header("必殺技か？")]
+    public bool isUltimateSkill = false;
+
+    [Header("特別な行動回数をもつか？")]
+    public bool hasExtraActions = false;
+
+    [Tooltip("特別な行動回数でどれくらい行動するか")]
+    public int extraActionCount = 2;
 }
 
