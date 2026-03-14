@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2082372158735372441}
   - component: {fileID: 5542500787913771377}
   m_Layer: 6
-  m_Name: Suguru
+  m_Name: Suguru 2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
