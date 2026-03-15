@@ -1,7 +1,9 @@
+using DG.Tweening;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections.Generic;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 namespace RyotaSuzuki.UI
 {
@@ -36,7 +38,15 @@ namespace RyotaSuzuki.UI
         [SerializeField] private Button character1Button;
         [SerializeField] private Button character2Button;
         [SerializeField] private Button character3Button;
-        
+
+        [Header("選択枠")]
+        [SerializeField] private GameObject character1Frame;
+        [SerializeField] private GameObject character2Frame;
+        [SerializeField] private GameObject character3Frame;
+
+        //選択フレームの大きさを確保しておくためのDictionary
+        private Dictionary<GameObject, Vector3> originalFrameScales = new Dictionary<GameObject, Vector3>(); 
+
         [Header("キャラクター切り替えボタン")]
         [SerializeField, Tooltip("次のキャラへ切り替えボタン")] private Button upperButton;
         [SerializeField, Tooltip("前のキャラへ切り替えボタン")] private Button lowerButton;
@@ -151,8 +161,50 @@ namespace RyotaSuzuki.UI
             }
             
             Debug.Log($"[CharacterStatusDisplay] ボタン初期化完了: {characterButtons.Count}個");
+
+            // ボタンアイコンの初期化
+            InitButtonIcons(characterDataList);
         }
-        
+
+        /// <summary>
+        /// ボタンのアイコン画像を設定
+        /// </summary>
+        private void InitButtonIcons(List<CharacterData>characterDataList)
+        {
+            List<Button> characterButtonList = new List<Button>() 
+            { character1Button,
+              character2Button,
+              character3Button
+            };
+
+            // フレームの元のスケールを保存
+            List<GameObject> frames = new List<GameObject>()
+            { character1Frame,
+              character2Frame,
+              character3Frame
+            };
+
+
+            for (int i = 0; i < characterDataList.Count; i++)
+            {
+                Image image = characterButtonList[i].GetComponent<Image>();
+
+                if(image != null)
+                {
+                    image.sprite = characterDataList[i].characterIcon;
+                    image.color = Color.white;
+                }
+            }
+
+            foreach (var frame in frames)
+            {
+                if (frame != null)
+                {
+                    originalFrameScales[frame] = frame.transform.localScale;
+                }
+            }
+        }
+
         void OnEnable()
         {
             // メニューが表示されたときに再初期化（必要に応じて）
@@ -296,14 +348,14 @@ namespace RyotaSuzuki.UI
             if (data == null) return null;
             
             // 1. CharacterDataにアイコンが設定されていればそれを使用
-            if (data.characterIcon != null)
-            {
-                if (showDebugLog)
-                {
-                    Debug.Log($"[CharacterStatusDisplay] CharacterData.characterIconを使用: {data.charactername}");
-                }
-                return data.characterIcon;
-            }
+            //if (data.characterIcon != null)
+            //{
+            //    if (showDebugLog)
+            //    {
+            //        Debug.Log($"[CharacterStatusDisplay] CharacterData.characterIconを使用: {data.charactername}");
+            //    }
+            //    return data.characterIcon;
+            //}
             
             // 2. Resourcesから読み込み
             return LoadCharacterSpriteFromResources(data.charactername);
@@ -359,41 +411,72 @@ namespace RyotaSuzuki.UI
         /// </summary>
         private void UpdateButtonSelection(int selectedIndex)
         {
+            List<GameObject> frames = new List<GameObject>()
+            { 
+                character1Frame,
+                character2Frame,
+                character3Frame 
+            };
+
             for (int i = 0; i < characterButtons.Count; i++)
             {
                 if (characterButtons[i] == null) continue;
-                
-                // ボタンの背景色を変更（より見やすく）
-                var colors = characterButtons[i].colors;
-                if (i == selectedIndex)
-                {
-                    colors.normalColor = selectedBackgroundColor;
-                    colors.highlightedColor = selectedBackgroundColor;
-                    colors.pressedColor = selectedBackgroundColor * 0.8f;
-                }
-                else
-                {
-                    colors.normalColor = normalBackgroundColor;
-                    colors.highlightedColor = normalBackgroundColor * 1.2f;
-                    colors.pressedColor = normalBackgroundColor * 0.8f;
-                }
-                characterButtons[i].colors = colors;
-                
+
+                int currentIndex = i;
+                GameObject currentFrame = i < frames.Count ? frames[i] : null;
+
                 // ボタン上のテキスト色を変更（選択中は明るいオレンジ）
                 var buttonText = characterButtons[i].GetComponentInChildren<TextMeshProUGUI>();
                 if (buttonText != null)
                 {
                     buttonText.color = (i == selectedIndex) ? selectedColor : normalColor;
                 }
-                
-                // ボタン上のImage（背景）を探して色を変更
-                var buttonImage = characterButtons[i].GetComponent<Image>();
-                if (buttonImage != null)
+
+                // 選択枠のアニメーション
+                if (currentFrame != null)
                 {
-                    buttonImage.color = (i == selectedIndex) ? selectedBackgroundColor : normalBackgroundColor;
+                    if (i == selectedIndex)
+                    {
+                        Debug.Log($"[UpdateButtonSelection] Frame[{i}]: {currentFrame.name}, SetActive: True");
+
+                        // 選択中
+                        currentFrame.SetActive(true);
+
+                        // 既存のアニメーションを停止
+                        currentFrame.transform.DOKill();
+
+                        // 回転アニメーション（切り替え時）
+                        currentFrame.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                        currentFrame.transform.DORotate(new Vector3(0, 0, 360), 0.5f, RotateMode.FastBeyond360)
+                            .SetEase(Ease.OutCubic)
+                            .SetUpdate(true)
+                            .OnComplete(() => {
+                                Vector3 baseScale = originalFrameScales.ContainsKey(currentFrame)
+                                                    ? originalFrameScales[currentFrame]
+                                                    : Vector3.one;
+
+                                currentFrame.transform.localScale = baseScale;
+                                currentFrame.transform.DOScale(baseScale * 1.15f, 0.8f)
+                                    .SetLoops(-1, LoopType.Yoyo)
+                                    .SetEase(Ease.InOutSine)
+                                    .SetUpdate(true);
+                            });
+                    }
+                    else
+                    {
+                        // 非選択
+                        currentFrame.transform.DOKill(); // アニメーション停止
+                        currentFrame.SetActive(false);
+                        Vector3 baseScale = originalFrameScales.ContainsKey(currentFrame)
+                                            ? originalFrameScales[currentFrame]
+                                            : Vector3.one;
+                        currentFrame.transform.localScale = baseScale;
+                        currentFrame.transform.localRotation = Quaternion.identity; // 回転をリセット
+                    }
                 }
             }
         }
+        
         
         /// <summary>
         /// 次のキャラクターを選択
@@ -456,6 +539,15 @@ namespace RyotaSuzuki.UI
             if (character3Button != null) character3Button.onClick.RemoveAllListeners();
             if (upperButton != null) upperButton.onClick.RemoveAllListeners();
             if (lowerButton != null) lowerButton.onClick.RemoveAllListeners();
+
+            // DOTweenアニメーションを停止
+            foreach (var button in characterButtons)
+            {
+                if (button != null)
+                {
+                    button.transform.DOKill();
+                }
+            }
         }
     }
 }

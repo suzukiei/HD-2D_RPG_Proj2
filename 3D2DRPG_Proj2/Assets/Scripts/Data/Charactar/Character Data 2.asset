@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Character Data 2
   m_EditorClassIdentifier: 
   charactername: "\u6708"
-  characterIcon: {fileID: 0}
+  characterIcon: {fileID: 21300000, guid: 247a696d6a0c355439c9e8d6217b1ceb, type: 3}
   enemyCheckFlag: 0
   hp: 100
   mp: 100
   atk: 10
+  Int: 0
   def: 100
   spd: 150
   maxHp: 100
