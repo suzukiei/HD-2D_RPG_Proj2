@@ -368,10 +368,16 @@ public class ConversationUI : MonoBehaviour
 
         // キャラクター画像設定
         if (characterImage != null && data.characterImage != null)
+        {
+            // アスペクト比調整
+            AspectRatioFitter aspect = characterImage.GetComponent<AspectRatioFitter>();
+            float ratio = (float)data.characterImage.rect.width / data.characterImage.rect.height;
+            aspect.aspectRatio = ratio;
             characterImage.sprite = data.characterImage;
+        }
 
-        // テキストをタイプライター効果で表示
-        if (typingCoroutine != null)
+            // テキストをタイプライター効果で表示
+            if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
         typingCoroutine = StartCoroutine(TypewriterEffect(data.dialogueText));

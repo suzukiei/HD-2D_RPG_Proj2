@@ -329,6 +329,11 @@ namespace RyotaSuzuki.UI
                 Sprite sprite = GetCharacterSprite(data);
                 if (sprite != null)
                 {
+                    // アスペクト比調整
+                    AspectRatioFitter aspect =characterImage.GetComponent<AspectRatioFitter>();
+                    float ratio = (float)sprite.rect.width / sprite.rect.height;
+                    aspect.aspectRatio = ratio;
+
                     characterImage.sprite = sprite;
                     characterImage.enabled = true;
                 }

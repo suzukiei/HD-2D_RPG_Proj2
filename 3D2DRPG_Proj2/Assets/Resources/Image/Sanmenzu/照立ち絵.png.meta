@@ -126,9 +126,9 @@ TextureImporter:
       name: "\u7167\u7ACB\u3061\u7D75_0"
       rect:
         serializedVersion: 2
-        x: 380
+        x: 100
         y: 0
-        width: 1447
+        width: 2000
         height: 2706
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
