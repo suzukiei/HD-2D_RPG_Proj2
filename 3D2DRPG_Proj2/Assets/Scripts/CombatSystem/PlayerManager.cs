@@ -311,6 +311,9 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void OnAttackSelected(List<Character> enemies, int index)
     {
+        // スキルウィンドウ表示
+        skillSelectionUI.ShowSkillWindow();
+
         // 攻撃の範囲内かを確認
         if (index < 0 || index >= enemies.Count)
         {

@@ -16,6 +16,9 @@ public class SkillSelectionUI : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> skillTexts = new List<TextMeshProUGUI>();
     [SerializeField] private TextMeshProUGUI instructionText;
 
+    [SerializeField] private GameObject skillWindowPanel;
+    [SerializeField] private TextMeshProUGUI skillWindowText;
+
     [Header("表示設定")]
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color selectedColor = Color.yellow;
@@ -224,6 +227,24 @@ public class SkillSelectionUI : MonoBehaviour
 
         // UI非表示
         HideSkillSelection();
+     
+        // 選択スキル名設定
+        skillWindowText.text = currentSkills[currentSelection].skillName;
+    }
+
+    public void ShowSkillWindow()
+    {
+        StartCoroutine(SkillWindowCoroutine());
+    }
+    private IEnumerator SkillWindowCoroutine()
+    {
+        skillWindowPanel.SetActive(true);
+
+        yield return new WaitForSeconds(1.0f);
+
+        skillWindowPanel.SetActive(false);
+
+        yield break;
     }
 
     /// <summary>
