@@ -63,11 +63,14 @@ public class ComboAttack : MonoBehaviour
     // コンボ攻撃開始
     private void StartAttack(int step)
     {
-      
+        Debug.Log($"=== StartAttack() 呼ばれました。Step: {step} ===");
+        
         comboStep = step;
         //animator.SetTrigger($"Attack{step}");
         canInput = true;
         timer = 0f;
+        
+        Debug.Log($"timingUI.Show() を呼び出します。timingTime: {timingTime}, timingWindowEnd: {timingWindowEnd}");
         timingUI.Show(timingTime,timingWindowEnd);
     }
     // 次の攻撃へ
@@ -111,10 +114,19 @@ public class ComboAttack : MonoBehaviour
     }
     public void Inputs(Func<int,bool> _attackEvent, UnityEvent<int> _attackEnd, int _maxcombo, Character enemies)
     {
+        Debug.Log($"=== ComboAttack.Inputs() 呼ばれました。MaxCombo: {_maxcombo} ===");
+        
         onComboEnd = _attackEnd;
         onComboAttack = _attackEvent;
         enemy = enemies;
         maxComboStep = _maxcombo;
+        
+        if (timingUI == null)
+        {
+            Debug.LogError("ComboAttack: timingUI が null です！Inspectorで設定してください。");
+            return;
+        }
+        
         StartAttack(0);
     }
 }
