@@ -13,15 +13,30 @@ public class QuickTimeCombatUI : MonoBehaviour
     [SerializeField] private Text instructionText;
     [SerializeField] private KeyCode attackKey = KeyCode.Space;
     
+    [Header("成功ゾーン設定")]
+    [SerializeField] private RectTransform successZone; // SuccessZoneのImage
+    [SerializeField, Range(0f, 1f)] private float successZoneCenter = 0.5f; // 中心位置（0～1）
+    [SerializeField, Range(0f, 0.5f)] private float successZoneHalfWidth = 0.15f; // 半分の幅（timingWindowと同期）
+    
     [Header("タイミング設定")]
-    [SerializeField] private float timingWindow = 0.3f; // 成功判定の範囲（0.0～1.0の間）
     [SerializeField] private float timingSpeed = 2.0f;
     [SerializeField] private float maxTime = 3.0f; // 最大待機時間
     
     private bool isActive = false;
     private float timer = 0f;
-    private float targetValue = 0.5f; // 目標値（中央）
     private System.Action<bool> onCombatResult; // コールバック
+    
+    private void Start()
+    {
+        // 起動時にSuccessZoneの位置を同期
+        UpdateSuccessZonePosition();
+        
+        // QuickTimePanelを最初は非表示にしておく
+        if (quickTimePanel != null)
+        {
+            quickTimePanel.SetActive(false);
+        }
+    }
     
     private void Update()
     {
@@ -71,6 +86,12 @@ public class QuickTimeCombatUI : MonoBehaviour
             instructionText.text = $"{attackKey}キーで攻撃！";
         }
         
+        // SuccessZoneを表示
+        if (successZone != null)
+        {
+            successZone.gameObject.SetActive(true);
+        }
+        
         Debug.Log("クイックタイム戦闘開始");
     }
     
@@ -79,18 +100,20 @@ public class QuickTimeCombatUI : MonoBehaviour
     /// </summary>
     private void CheckTiming(float currentValue)
     {
-        float diff = Mathf.Abs(currentValue - targetValue);
+        // 成功範囲の計算（UIのSuccessZoneと同じ範囲）
+        float minSuccess = successZoneCenter - successZoneHalfWidth;
+        float maxSuccess = successZoneCenter + successZoneHalfWidth;
         
-        if (diff <= timingWindow)
+        if (currentValue >= minSuccess && currentValue <= maxSuccess)
         {
             // 成功
-            Debug.Log($"タイミング成功！差: {diff:F3}");
+            Debug.Log($"タイミング成功！範囲: {minSuccess:F2}～{maxSuccess:F2}, 押した位置: {currentValue:F2}");
             EndCombat(true);
         }
         else
         {
             // 失敗
-            Debug.Log($"タイミング失敗。差: {diff:F3}");
+            Debug.Log($"タイミング失敗。範囲: {minSuccess:F2}～{maxSuccess:F2}, 押した位置: {currentValue:F2}");
             EndCombat(false);
         }
     }
@@ -107,18 +130,16 @@ public class QuickTimeCombatUI : MonoBehaviour
             quickTimePanel.SetActive(false);
         }
         
+        // SuccessZoneを非表示
+        if (successZone != null)
+        {
+            successZone.gameObject.SetActive(false);
+        }
+        
         onCombatResult?.Invoke(success);
         onCombatResult = null;
         
         Debug.Log($"クイックタイム戦闘終了: {(success ? "成功" : "失敗")}");
-    }
-    
-    /// <summary>
-    /// タイミングウィンドウを設定
-    /// </summary>
-    public void SetTimingWindow(float window)
-    {
-        timingWindow = Mathf.Clamp01(window);
     }
     
     /// <summary>
@@ -135,6 +156,51 @@ public class QuickTimeCombatUI : MonoBehaviour
     public void SetMaxTime(float time)
     {
         maxTime = time;
+    }
+    
+    /// <summary>
+    /// 成功ゾーンの範囲を設定
+    /// </summary>
+    public void SetSuccessZone(float center, float halfWidth)
+    {
+        successZoneCenter = Mathf.Clamp01(center);
+        successZoneHalfWidth = Mathf.Clamp(halfWidth, 0f, 0.5f);
+        UpdateSuccessZonePosition();
+    }
+    
+    /// <summary>
+    /// SuccessZoneの位置とサイズをパラメータに基づいて更新
+    /// </summary>
+    private void UpdateSuccessZonePosition()
+    {
+        if (successZone == null || timingBar == null) return;
+        
+        // Sliderの幅を取得
+        RectTransform sliderRect = timingBar.GetComponent<RectTransform>();
+        if (sliderRect == null) return;
+        
+        float sliderWidth = sliderRect.rect.width;
+        
+        // 幅が0の場合はスキップ（まだ初期化されていない）
+        if (sliderWidth <= 0) return;
+
+        // SuccessZoneのサイズを計算
+        float zoneWidth = sliderWidth * (successZoneHalfWidth * 2);
+        successZone.sizeDelta = new Vector2(zoneWidth, successZone.sizeDelta.y);
+
+        // SuccessZoneの位置を計算（中心位置に基づく）
+        float offset = (successZoneCenter - 0.5f) * sliderWidth;
+        successZone.anchoredPosition = new Vector2(offset, successZone.anchoredPosition.y);
+        
+        Debug.Log($"QuickTimeCombat SuccessZone更新: Width={zoneWidth}, Offset={offset}");
+    }
+
+    // Inspectorで値を変更した時に呼ばれる
+    private void OnValidate()
+    {
+        // エディタでの変更時のみ実行
+        if (Application.isPlaying) return;
+        UpdateSuccessZonePosition();
     }
 }
 

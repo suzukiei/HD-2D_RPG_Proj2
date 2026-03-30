@@ -87,6 +87,7 @@ public class CineController : MonoBehaviour
     private bool hasPlayed = false;
     private Canvas fadeCanvas;
     private GameObject fadePanel;
+    private bool disabledEnemy; //SimpleEventTriggerから受け継ぐ
     
     void Start()
     {
@@ -119,7 +120,7 @@ public class CineController : MonoBehaviour
     /// <summary>
     /// ムービーを再生（外部から呼び出し用）
     /// </summary>
-    public void PlayMovie()
+    public void PlayMovie(bool DisabledEnemyFlg)
     {
         if (isPlaying)
         {
@@ -132,6 +133,8 @@ public class CineController : MonoBehaviour
             Debug.LogError("PlayableDirectorが設定されていません");
             return;
         }
+
+        disabledEnemy = DisabledEnemyFlg;
         
         StartCoroutine(PlayMovieCoroutine());
     }
@@ -254,6 +257,7 @@ public class CineController : MonoBehaviour
         
         isPlaying = false;
         Debug.Log("ムービー終了");
+        EnableAllEnemies(); //最終的に敵の動きも有効化する。
     }
     
     /// <summary>
@@ -315,7 +319,31 @@ public class CineController : MonoBehaviour
             rb.isKinematic = false;
         }
     }
-    
+
+    /// <summary>
+    /// フィールド上の全ての敵を再開&表示
+    /// </summary>
+    public void EnableAllEnemies()
+    {
+        if (!disabledEnemy) return;
+
+        // 非表示の敵を含めて全てを検索（includeInactive: true）
+        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>(true);
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                // オブジェクトを表示
+                enemy.gameObject.SetActive(true);
+
+                // 徘徊を再開
+                enemy.ResumeWandering();
+
+            }
+        }
+    }
+
     /// <summary>
     /// フェード用UIをセットアップ
     /// </summary>

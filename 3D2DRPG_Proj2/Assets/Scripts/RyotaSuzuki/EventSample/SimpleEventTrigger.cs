@@ -252,7 +252,7 @@ public class SimpleEventTrigger : MonoBehaviour
 
             conversationUI.csvFileName = csvFileName;
             conversationUI.ReloadCSV();
-            conversationUI.StartDialogue();
+            conversationUI.StartDialogue(disableEnemies);
             
             if (showDebugLog)
             {
@@ -275,7 +275,7 @@ public class SimpleEventTrigger : MonoBehaviour
             //全敵を停止
             DisableAllEnemies();
 
-            cineController.PlayMovie();
+            cineController.PlayMovie(disableEnemies);
             
             if (showDebugLog)
             {
@@ -362,42 +362,6 @@ public class SimpleEventTrigger : MonoBehaviour
             }
         }
     }
-    
-    /// <summary>
-    /// プレイヤー操作を有効化（会話終了時に呼ぶ）
-    /// </summary>
-    public void EnablePlayerControl()
-    {
-        if (playerObject == null || !disablePlayerControl) return;
-        
-        // MonoBehaviourコンポーネントを有効化
-        var scripts = playerObject.GetComponents<MonoBehaviour>();
-        foreach (var script in scripts)
-        {
-            if (script != null && !script.enabled && script.GetType().Name.Contains("Player"))
-            {
-                script.enabled = true;
-                if (showDebugLog)
-                {
-                    Debug.Log($"[{eventName}] {script.GetType().Name} を有効化しました");
-                }
-            }
-        }
-        
-        // CharacterController
-        var characterController = playerObject.GetComponent<CharacterController>();
-        if (characterController != null)
-        {
-            characterController.enabled = true;
-        }
-        
-        // Rigidbody
-        var rb = playerObject.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-        }
-    }
 
     /// <summary>
     /// フィールド上の全ての敵を停止&非表示
@@ -422,34 +386,6 @@ public class SimpleEventTrigger : MonoBehaviour
                 if (showDebugLog)
                 {
                     Debug.Log($"[{eventName}] {enemy.gameObject.name} を停止&非表示にしました");
-                }
-            }
-        }
-    }
-
-    /// <summary>
-    /// フィールド上の全ての敵を再開&表示
-    /// </summary>
-    public void EnableAllEnemies()
-    {
-        if (!disableEnemies) return;
-
-        // 非表示の敵を含めて全てを検索（includeInactive: true）
-        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>(true);
-
-        foreach (var enemy in enemies)
-        {
-            if (enemy != null)
-            {
-                // オブジェクトを表示
-                enemy.gameObject.SetActive(true);
-
-                // 徘徊を再開
-                enemy.ResumeWandering();
-
-                if (showDebugLog)
-                {
-                    Debug.Log($"[{eventName}] {enemy.gameObject.name} を再開&表示しました");
                 }
             }
         }
