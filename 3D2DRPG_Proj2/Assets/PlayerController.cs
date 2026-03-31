@@ -267,12 +267,12 @@ public class PlayerController : MonoBehaviour
             enemyAI.StopWandering();
         }
         
-        // クイックタイム戦闘UIを開始
+        // クイックタイム戦闘UIを開始（敵オブジェクトを渡す）
         quickTimeCombatUI.StartQuickTimeCombat((success) =>
         {
             if (success)
             {
-                // タイミング成功：敵を倒す
+                // タイミング成功：敵を倒す（演出後に呼ばれる）
                 OnQuickTimeCombatSuccess(enemyObject, enemyDataList);
             }
             else
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour
                 // タイミング失敗：通常戦闘に移行
                 StartNormalBattle(enemyObject, enemyDataList);
             }
-        });
+        }, enemyObject);
     }
 
     /// <summary>

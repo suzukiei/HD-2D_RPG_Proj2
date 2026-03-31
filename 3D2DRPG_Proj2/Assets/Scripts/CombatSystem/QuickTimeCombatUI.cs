@@ -13,6 +13,10 @@ public class QuickTimeCombatUI : MonoBehaviour
     [SerializeField] private Text instructionText;
     [SerializeField] private KeyCode attackKey = KeyCode.Space;
     
+    [Header("演出設定")]
+    [SerializeField] private CutIn cutIn; // カットイン演出
+    [SerializeField] private bool useCutIn = true; // カットインを使用するか
+    
     [Header("成功ゾーン設定")]
     [SerializeField] private RectTransform successZone; // SuccessZoneのImage
     [SerializeField, Range(0f, 1f)] private float successZoneCenter = 0.5f; // 中心位置（0～1）
@@ -25,6 +29,7 @@ public class QuickTimeCombatUI : MonoBehaviour
     private bool isActive = false;
     private float timer = 0f;
     private System.Action<bool> onCombatResult; // コールバック
+    private GameObject currentEnemyObject; // 現在の敵オブジェクト（VFX用）
     
     private void Start()
     {
@@ -65,9 +70,10 @@ public class QuickTimeCombatUI : MonoBehaviour
     /// <summary>
     /// クイックタイム戦闘を開始
     /// </summary>
-    public void StartQuickTimeCombat(System.Action<bool> resultCallback)
+    public void StartQuickTimeCombat(System.Action<bool> resultCallback, GameObject enemyObject = null)
     {
         onCombatResult = resultCallback;
+        currentEnemyObject = enemyObject;
         isActive = true;
         timer = 0f;
         
@@ -108,7 +114,8 @@ public class QuickTimeCombatUI : MonoBehaviour
         {
             // 成功
             Debug.Log($"タイミング成功！範囲: {minSuccess:F2}～{maxSuccess:F2}, 押した位置: {currentValue:F2}");
-            EndCombat(true);
+            // 成功時は演出を挟む
+            StartCoroutine(PlaySuccessEffect());
         }
         else
         {
@@ -116,6 +123,50 @@ public class QuickTimeCombatUI : MonoBehaviour
             Debug.Log($"タイミング失敗。範囲: {minSuccess:F2}～{maxSuccess:F2}, 押した位置: {currentValue:F2}");
             EndCombat(false);
         }
+    }
+    
+    /// <summary>
+    /// 成功時の演出を再生
+    /// </summary>
+    private IEnumerator PlaySuccessEffect()
+    {
+        // まずUIを非表示にする
+        isActive = false;
+        if (quickTimePanel != null)
+        {
+            quickTimePanel.SetActive(false);
+        }
+        if (successZone != null)
+        {
+            successZone.gameObject.SetActive(false);
+        }
+        
+        // カットインを再生
+        if (useCutIn && cutIn != null)
+        {
+            Debug.Log("カットイン再生開始");
+            cutIn.SuguruCutIn();
+            
+            // カットインの演出時間を待つ（約2.5秒）
+            yield return new WaitForSeconds(2.5f);
+        }
+        
+        // 爆発VFXを再生
+        if (currentEnemyObject != null && VFXManager.Instance != null)
+        {
+            Debug.Log("爆発VFX再生");
+            VFXManager.Instance.PlayExplosion(currentEnemyObject);
+            
+            // 爆発エフェクトの演出時間を待つ（約0.5秒）
+            yield return new WaitForSeconds(0.5f);
+        }
+        
+        // 結果をコールバックで返す
+        onCombatResult?.Invoke(true);
+        onCombatResult = null;
+        currentEnemyObject = null;
+        
+        Debug.Log("クイックタイム戦闘終了: 成功");
     }
     
     /// <summary>
@@ -138,6 +189,7 @@ public class QuickTimeCombatUI : MonoBehaviour
         
         onCombatResult?.Invoke(success);
         onCombatResult = null;
+        currentEnemyObject = null;
         
         Debug.Log($"クイックタイム戦闘終了: {(success ? "成功" : "失敗")}");
     }
