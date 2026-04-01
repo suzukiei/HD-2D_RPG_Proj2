@@ -165,16 +165,20 @@ public class SimpleEventTrigger : MonoBehaviour
     /// </summary>
     void TriggerEvent()
     {
-        // 一度だけ発動の場合、チェック
-        if (oneTimeOnly && hasTriggered)
+        // EventFlagManagerのフラグで発動済みかチェック
+        if (oneTimeOnly && !string.IsNullOrEmpty(eventId))
         {
-            if (showDebugLog)
+            string triggeredFlagName = $"{eventId}_triggered";
+            if (EventFlagManager.Instance.GetFlag(triggeredFlagName))
             {
-                Debug.Log($"[{eventName}] 既に発動済みです");
+                if (showDebugLog)
+                {
+                    Debug.Log($"[{eventName}] 既に発動済みです");
+                }
+                return;
             }
-            return;
         }
-        
+
         // フラグチェック：必須フラグ
         if (requiredFlags != null && requiredFlags.Length > 0)
         {
@@ -218,8 +222,15 @@ public class SimpleEventTrigger : MonoBehaviour
                 ExecuteMovie();
                 break;
         }
-        
-        // フラグを設定
+
+        // 発動フラグを記録
+        if (oneTimeOnly && !string.IsNullOrEmpty(eventId))
+        {
+            string triggeredFlagName = $"{eventId}_triggered";
+            EventFlagManager.Instance.SetFlag(triggeredFlagName, true);
+        }
+
+        // 別フラグを設定
         if (setFlagAfterEvent && !string.IsNullOrEmpty(flagToSet))
         {
             EventFlagManager.Instance.SetFlag(flagToSet, true);
