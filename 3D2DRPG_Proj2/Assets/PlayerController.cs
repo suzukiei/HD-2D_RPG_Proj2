@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void GetEnemyStetas(GameObject enemy)
     {
-        Debug.Log("敵のステータスを取得");
+        Debug.Log("敵と戦ったことがあるかチェック");
         if (enemy != null)
         {
             EnemyWanderAI enemyAI = enemy.GetComponent<EnemyWanderAI>();
@@ -195,11 +195,13 @@ public class PlayerController : MonoBehaviour
                     
                     if (hasDefeatedAll && quickTimeCombatUI != null)
                     {
+                        Debug.Log("敵と戦ったことがある。");
                         // クイックタイム戦闘を開始
                         StartQuickTimeCombat(enemy, enemyDataList);
                     }
                     else
                     {
+                        Debug.Log("敵と戦ったことがないので通常戦闘シーンへ遷移。");
                         // 通常の戦闘シーンに移動
                         StartNormalBattle(enemy, enemyDataList);
                     }
@@ -209,11 +211,12 @@ public class PlayerController : MonoBehaviour
                     // EnemyDataが設定されていない場合は従来の処理
                     if (GameManager.Instance != null)
                     {
+                        Debug.Log("PlayerController-GetEnemyStetas-EnemyDataが設定されていない");
                         GameManager.Instance.StartBattle(transform.position, enemy);
                     }
                     else
                     {
-                        Debug.LogWarning("GameManagerが見つかりません。直接シーン遷移します。");
+                        Debug.Log("GameManagerが見つかりません。直接シーン遷移します。");
                         SceneManager.LoadScene("turnTestScene");
                     }
                 }
@@ -223,14 +226,19 @@ public class PlayerController : MonoBehaviour
                 // EnemyWanderAIがない場合は従来の処理
                 if (GameManager.Instance != null)
                 {
+                    Debug.Log("PlayerController-GetEnemyStetas-EnemyWanderAIがない");
                     GameManager.Instance.StartBattle(transform.position, enemy);
                 }
                 else
                 {
-                    Debug.LogWarning("GameManagerが見つかりません。直接シーン遷移します。");
+                    Debug.Log("GameManagerが見つかりません。直接シーン遷移します。");
                     SceneManager.LoadScene("turnTestScene");
                 }
             }
+        }
+        else
+        {
+            Debug.Log("PlayerController-GetEnemyStetas-enemyがnull");
         }
     }
 
@@ -259,12 +267,12 @@ public class PlayerController : MonoBehaviour
             enemyAI.StopWandering();
         }
         
-        // クイックタイム戦闘UIを開始
+        // クイックタイム戦闘UIを開始（敵オブジェクトを渡す）
         quickTimeCombatUI.StartQuickTimeCombat((success) =>
         {
             if (success)
             {
-                // タイミング成功：敵を倒す
+                // タイミング成功：敵を倒す（演出後に呼ばれる）
                 OnQuickTimeCombatSuccess(enemyObject, enemyDataList);
             }
             else
@@ -272,7 +280,7 @@ public class PlayerController : MonoBehaviour
                 // タイミング失敗：通常戦闘に移行
                 StartNormalBattle(enemyObject, enemyDataList);
             }
-        });
+        }, enemyObject);
     }
 
     /// <summary>

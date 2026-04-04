@@ -21,7 +21,7 @@ MonoBehaviour:
   vfxPrefab: {fileID: 0}
   animationName: 
   effectType: 0
-  power: 0.1
+  power: 20
   mpCost: 30
   cooldown: 0
   hitCount: 1
@@ -34,11 +34,19 @@ MonoBehaviour:
   ComboDamage: 1
   comboNextSkill: {fileID: 11400000}
   timingWindowStart: 2
-  timingWindowEnd: 3
+  timingWindowEnd: 0.6
   comboDamageMultiplier: 1
-  maxcombo: 3
+  maxcombo: 10
   missCancel: 1
   statusChance: 0
   buffEffect: []
   buffValue: 0
   buffDuration: 0
+  DamageBonusFlg: 0
+  ZokuseiType: 0
+  isRandomEffect: 0
+  isOnlyOnece: 0
+  attackCount: 1
+  isUltimateSkill: 0
+  hasExtraActions: 0
+  extraActionCount: 2

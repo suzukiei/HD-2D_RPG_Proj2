@@ -99,6 +99,8 @@ public class ConversationUI : MonoBehaviour
     private Coroutine typingCoroutine;
     private const int MAX_LOG_ENTRIES = 50;
 
+    private bool disabledEnemy; //SimpleEventTriggerから引数を受けつぐ
+
     void Start()
     {
         // 初期化
@@ -304,6 +306,27 @@ public class ConversationUI : MonoBehaviour
         }
     }
 
+    public void StartDialogue(bool DisabledEnemyFlg)
+    {
+        if (dialogues.Count == 0) return;
+
+        currentDialogueIndex = 0;
+        dialoguePanel.SetActive(true);
+        characterImage.enabled = true;
+        // パネルをフェードイン
+        CanvasGroup canvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = 0;
+            canvasGroup.DOFade(1, fadeInDuration);
+        }
+
+        disabledEnemy = DisabledEnemyFlg;
+
+        ShowDialogue(currentDialogueIndex);
+    }
+
+    //StartDialogueのオーバーロード、ムービを使用するが敵が存在しないフィールドではフラグの受け渡しが不必要なため。
     public void StartDialogue()
     {
         if (dialogues.Count == 0) return;
@@ -325,26 +348,26 @@ public class ConversationUI : MonoBehaviour
     /// <summary>
     /// CSVファイルを指定して会話を開始（Timeline用）
     /// </summary>
-    public void StartDialogueWithCSV(string csvFile)
-    {
-        Debug.Log($"========== StartDialogueWithCSV が呼ばれました！CSV: {csvFile} ==========");
-        csvFileName = csvFile;
-        currentPlayableDirector = null; // リセット
-        ReloadCSV();
-        StartDialogue();
-    }
-    
+    //public void StartDialogueWithCSV(string csvFile)
+    //{
+    //    Debug.Log($"========== StartDialogueWithCSV が呼ばれました！CSV: {csvFile} ==========");
+    //    csvFileName = csvFile;
+    //    currentPlayableDirector = null; // リセット
+    //    ReloadCSV();
+    //    StartDialogue();
+    //}
+
     /// <summary>
     /// CSVファイルとPlayableDirectorを指定して会話を開始（Timeline用・拡張版）
     /// </summary>
-    public void StartDialogueWithCSVAndTimeline(string csvFile, UnityEngine.Playables.PlayableDirector director)
-    {
-        Debug.Log($"========== StartDialogueWithCSVAndTimeline が呼ばれました！CSV: {csvFile} ==========");
-        csvFileName = csvFile;
-        currentPlayableDirector = director;
-        ReloadCSV();
-        StartDialogue();
-    }
+    //public void StartDialogueWithCSVAndTimeline(string csvFile, UnityEngine.Playables.PlayableDirector director)
+    //{
+    //    Debug.Log($"========== StartDialogueWithCSVAndTimeline が呼ばれました！CSV: {csvFile} ==========");
+    //    csvFileName = csvFile;
+    //    currentPlayableDirector = director;
+    //    ReloadCSV();
+    //    StartDialogue();
+    //}
 
     void ShowDialogue(int index)
     {
@@ -461,11 +484,12 @@ public class ConversationUI : MonoBehaviour
             StopActiveTimeline();
         }
         
-        // プレイヤー操作を再開
+        // プレイヤー操作と敵の動きを再開
         Debug.Log($"[ConversationUI] enablePlayerControlOnEnd={enablePlayerControlOnEnd}, playerObject={playerObject}");
         if (enablePlayerControlOnEnd && playerObject != null)
         {
             EnablePlayerControl();
+            EnableAllEnemies();
         }
         else if (enablePlayerControlOnEnd && playerObject == null)
         {
@@ -566,13 +590,32 @@ public class ConversationUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// フィールド上の全ての敵を再開&表示
+    /// </summary>
+    public void EnableAllEnemies()
+    {
+        if (!disabledEnemy) return;
+
+        // 非表示の敵を含めて全てを検索（includeInactive: true）
+        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>(true);
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                // オブジェクトを表示
+                enemy.gameObject.SetActive(true);
+
+                // 徘徊を再開
+                enemy.ResumeWandering();
+
+            }
+        }
+    }
+
     void Update()
     {
-        // テスト用：Tキーで会話開始
-        if (Input.GetKeyDown(KeyCode.T) && !dialoguePanel.activeInHierarchy)
-        {
-            StartDialogue();
-        }
 
         // ログビューアの表示切り替え：Lキー
         if (Input.GetKeyDown(KeyCode.L))

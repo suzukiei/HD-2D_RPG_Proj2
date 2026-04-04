@@ -198,8 +198,12 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void PlayerAttackSelect()
     {
+        Debug.Log($"=== PlayerAttackSelect() 呼ばれました ===");
+        
         // 攻撃対象選択パネル
         List<Character> enemies = getEnemy();
+        Debug.Log($"敵の数: {enemies.Count}");
+        
         var attackEvent = new UnityEvent<int>();
         attackEvent.AddListener((index) => OnAttackSelected(enemies, index));
         uiTest.Inputs(attackEvent, enemies.Count - 1, enemies);
@@ -262,9 +266,12 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void OnSkillSelected(int index)
     {
+        Debug.Log($"=== OnSkillSelected() 呼ばれました。Index: {index} ===");
+        
         //callBackでかえってきた変数がスキルのリスト内の物選択しているか
         if (index < 0 || index >= selectedCharacter.skills.Length)
         {
+            Debug.LogWarning($"無効なスキルインデックス: {index}");
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
             return;
@@ -272,29 +279,37 @@ public class PlayerManager : MonoBehaviour
         //スキルリストにセットされている確認
         if (selectedCharacter.skills[index] == null)// nullチェック追加
         {
+            Debug.LogWarning($"スキル[{index}]が null です");
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
             return;
         }
         selectedSkill = selectedCharacter.skills[index];
+        
+        Debug.Log($"スキル選択: {selectedSkill.skillName}, canCombo: {selectedSkill.canCombo}, effectType: {selectedSkill.effectType}");
 
         //選択したスキル名を表示させたい
         //
         //スキル呼び出し
         
+        Debug.Log($"effectTypeで分岐: {selectedSkill.effectType}");
+        
         switch (selectedSkill.effectType)
         {
             case SkillEffectType.Attack:
+                Debug.Log("StatusFlag.Attackに移行");
                 selectedCharacter.StatusFlag = StatusFlag.Attack;
                 if (selectedSkill.targetScope == TargetScope.All||selectedCharacter.AllAttack)
                     OnAttackSelected(getEnemy(), 0);
                 break;
             case SkillEffectType.Heal:
+                Debug.Log("StatusFlag.Healに移行");
                 selectedCharacter.StatusFlag = StatusFlag.Heal;
                 if (selectedSkill.targetScope == TargetScope.All)
                     OnHealSelected(null, 0); 
                 break;
             case SkillEffectType.Buff:
+                Debug.Log("StatusFlag.Buffに移行");
                 selectedCharacter.StatusFlag = StatusFlag.Buff;
                 if (selectedSkill.targetScope == TargetScope.All)
                     isActionPending = true;
@@ -311,12 +326,15 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void OnAttackSelected(List<Character> enemies, int index)
     {
+        Debug.Log($"=== OnAttackSelected() 呼ばれました。Index: {index}, TargetScope: {selectedSkill.targetScope}, canCombo: {selectedSkill.canCombo} ===");
+        
         // スキルウィンドウ表示
         skillSelectionUI.ShowSkillWindow(false);
 
         // 攻撃の範囲内かを確認
         if (index < 0 || index >= enemies.Count)
         {
+            Debug.LogWarning($"無効な敵インデックス: {index}");
             selectedCharacter.StatusFlag = StatusFlag.Attack;
             isActionPending = true;
             return;
@@ -324,6 +342,7 @@ public class PlayerManager : MonoBehaviour
         //MPが足りるかを確認
         if (selectedCharacter.mp < selectedSkill.mpCost)
         {
+            Debug.LogWarning($"MP不足: 必要 {selectedSkill.mpCost}, 現在 {selectedCharacter.mp}");
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
             return;
@@ -331,6 +350,7 @@ public class PlayerManager : MonoBehaviour
         // 全の攻撃スキルの場合、すべての敵に攻撃を適用
         if (selectedSkill.targetScope == TargetScope.All||selectedCharacter.AllAttack)
         {
+            Debug.Log("全体攻撃として処理します");
             selectedCharacter.mp -= selectedSkill.mpCost;
             foreach (var enemy in enemies)
             {
@@ -344,6 +364,14 @@ public class PlayerManager : MonoBehaviour
         {
             if (selectedSkill.canCombo)
             {
+                Debug.Log($"=== コンボスキル開始: {selectedSkill.skillName}, MaxCombo: {selectedSkill.maxcombo} ===");
+                
+                if (comboUI == null)
+                {
+                    Debug.LogError("PlayerManager: comboUI が null です！Inspectorで設定してください。");
+                    return;
+                }
+                
                 selectedCharacter.mp -= selectedSkill.mpCost;
                 comboCount = 0;
                 //コンボスキルの処理（成功時）
@@ -390,7 +418,7 @@ public class PlayerManager : MonoBehaviour
         comboCount++;
         int attackdamege = 0;
         if (comboCount != 0)
-            attackdamege =+ comboCount*selectedSkill.ComboDamage;
+            attackdamege += comboCount*selectedSkill.ComboDamage;
         var enemy = selectedEnemy;
         var enemysurvival =ApplyAttack(enemy, selectedSkill, attackdamege);
         return enemysurvival;
