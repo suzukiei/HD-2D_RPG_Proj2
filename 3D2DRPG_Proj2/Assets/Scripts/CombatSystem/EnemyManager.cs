@@ -27,6 +27,8 @@ public class EnemyManager : MonoBehaviour
     private List<GameObject> enemygameObjects = new List<GameObject>();
     [SerializeField]
     public Animator enemyAnimator;
+    [SerializeField]
+    private SkillSelectionUI skillSelectionUI; // スキル選択UIの参照(スキル名表示用)
 
     public List<GameObject> GetEnemyData() { return enemygameObjects; }
 
@@ -133,6 +135,11 @@ public class EnemyManager : MonoBehaviour
             {
                 chosenSkill = avail[UnityEngine.Random.Range(0, avail.Count)];
             }
+        }
+        if (chosenSkill)
+        {
+            skillSelectionUI.SetSkillWindowText(chosenSkill.skillName);
+            skillSelectionUI.ShowSkillWindow(true);
         }
 
         // ターゲット選択（優先: HPが低いプレイヤーを優先。ランダムフラグがtrueなら Random.Range を使用）

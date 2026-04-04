@@ -1977,6 +1977,7 @@ MonoBehaviour:
   thinkingTime: 1.5
   returnDuration: 1
   enemyAnimator: {fileID: 0}
+  skillSelectionUI: {fileID: 939627125}
 --- !u!4 &333137749
 Transform:
   m_ObjectHideFlags: 0
@@ -2052,7 +2053,8 @@ MonoBehaviour:
   m_text: '-'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f4e57cddc43d7647af16fe26ba2dd8c, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2952528811871794394, guid: 2f4e57cddc43d7647af16fe26ba2dd8c,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2115,7 +2117,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &334671012
@@ -4513,7 +4515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
+  m_EffectColor: {r: 0.2971698, g: 0.3152884, b: 1, a: 1}
   m_EffectDistance: {x: 5, y: 5}
   m_UseGraphicAlpha: 1
 --- !u!114 &1018319479
@@ -5358,6 +5360,16 @@ PrefabInstance:
       propertyPath: skillWindowPanel
       value: 
       objectReference: {fileID: 1018319476}
+    - target: {fileID: 1130825719547744967, guid: 7d1f71fb73f8ec64f8e3b815811f1dd9,
+        type: 3}
+      propertyPath: skillWindowTextE
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1130825719547744967, guid: 7d1f71fb73f8ec64f8e3b815811f1dd9,
+        type: 3}
+      propertyPath: skillWindowPanelE
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1553386324053615395, guid: 7d1f71fb73f8ec64f8e3b815811f1dd9,
         type: 3}
       propertyPath: m_AnchorMax.y
