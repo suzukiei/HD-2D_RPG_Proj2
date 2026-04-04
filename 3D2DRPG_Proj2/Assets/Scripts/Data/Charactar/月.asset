@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
-  m_Name: Character Data 2
+  m_Name: "\u6708"
   m_EditorClassIdentifier: 
   charactername: "\u6708"
   characterIcon: {fileID: 21300000, guid: 247a696d6a0c355439c9e8d6217b1ceb, type: 3}
   enemyCheckFlag: 0
-  hp: 100
-  mp: 100
+  hp: 300
+  mp: 200
   atk: 10
-  Int: 0
-  def: 100
-  spd: 150
-  maxHp: 100
-  maxMp: 100
-  exp: 1
-  level: 1
+  Int: 30
+  def: 20
+  spd: 10
+  maxHp: 300
+  maxMp: 200
+  exp: 0
+  level: 10
   CharacterObj: {fileID: 7333836060625140281, guid: eb0b17fc84f337546ae72afcd8386f75,
     type: 3}
   skills:

@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a92d8b73040e5b143bbd8be31623266c, type: 3}
-  m_Name: Reload
+  m_Name: "\u30D5\u30A1\u30B7\u30EA\u30C6\u30FC\u30B7\u30E7\u30F3"
   m_EditorClassIdentifier: 
-  skillName: "\u30EA\u30ED\u30FC\u30C9"
-  description: "\u30FB\u81EA\u5206\u81EA\u8EAB\u306E\u307F\n\u30FB\u6B21\u306E\u30BF\u30FC\u30F3\u306E\u901A\u5E38\u653B\u6483\u304C\u5168\u4F53\u653B\u6483\u306B\u306A\u308A\u3001\u30C0\u30E1\u30FC\u30B8\u304C50\uFF05\u4E0A\u6607\n\u30FB1\u30BF\u30FC\u30F3\u3067\u5207\u308C\u308B\n\u30FBMP
-    2\u6D88\u8CBB"
+  skillName: "\u30D5\u30A1\u30B7\u30EA\u30C6\u30FC\u30B7\u30E7\u30F3"
+  description: "\u30FB\u81EA\u5206\u4EE5\u5916\u306E\u5473\u65B9\u5168\u4F53\n\u30FBSPD\u306E\u5024\u306B+40\u3057\u3066HP10\uFF5E20\u56DE\u5FA9\u3059\u308B\n\u30FB5\u30BF\u30FC\u30F3\u3067\u5207\u308C\u308B\n\u30FBMP
+    30\u6D88\u8CBB"
   icon: {fileID: 0}
   soundEffect: {fileID: 0}
   vfxPrefab: {fileID: 0}
   animationName: 
   effectType: 2
-  power: 0
-  mpCost: 2
+  power: 15
+  mpCost: 30
   cooldown: 0
   hitCount: 1
   criticalRate: 0.1
   accuracy: 1
-  targetScope: 0
+  targetScope: 1
   statusEffect: 0
   canCombo: 0
   DamageUp: 0
@@ -39,6 +39,6 @@ MonoBehaviour:
   missCancel: 1
   statusChance: 0
   buffEffect:
-  - {fileID: 11400000, guid: c574ed739704f3d4488076ad8e90e61a, type: 2}
+  - {fileID: 11400000, guid: 935b4e7e9f6b1d8449c76df8bdcc5ecb, type: 2}
   buffValue: 0
   buffDuration: 0

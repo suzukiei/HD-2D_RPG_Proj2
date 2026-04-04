@@ -20,8 +20,6 @@ public class EnemyManager : MonoBehaviour
     private float forwardDistance = 2f;
     [SerializeField, Header("前に出る時間")]
     private float forwardDuration = 0.5f;
-    [SerializeField, Header("考える時間")]
-    private float thinkingTime = 1.5f;
     [SerializeField, Header("戻る時間")]
     private float returnDuration = 0.5f;
     private List<GameObject> enemygameObjects = new List<GameObject>();
@@ -189,13 +187,13 @@ public class EnemyManager : MonoBehaviour
             // 攻撃アニメーション再生
             enemyAnimator = actingEnemy.EnemyAnimator;
 
-            // 2. 考える時間を待つ
-            yield return new WaitForSeconds(thinkingTime);
             if (enemyAnimator != null)
                 enemyAnimator.SetTrigger("Attack");
-            yield return new WaitForSeconds(0.5f);
+
+            yield return new WaitForSeconds(0.3f);
+
             // 3. 攻撃処理を実行
-            if(chosenSkill != null && chosenSkill.effectType == SkillEffectType.ExtraAction)
+            if (chosenSkill != null && chosenSkill.effectType == SkillEffectType.ExtraAction)
             {
                 //なにもしない。下の追加処理で動くので
             }
@@ -282,9 +280,6 @@ public class EnemyManager : MonoBehaviour
                 Tween forwardTweenA = actingEnemy.transform.DOMove(forwardPosition, forwardDuration)
                     .SetEase(Ease.OutQuad);
                 yield return forwardTweenA.WaitForCompletion();
-
-                // 考える時間
-                yield return new WaitForSeconds(thinkingTime);
 
                 if (enemyAnimator != null)
                     enemyAnimator.SetTrigger("Attack");

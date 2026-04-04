@@ -314,7 +314,7 @@ public class PlayerManager : MonoBehaviour
                 if (selectedSkill.targetScope == TargetScope.All)
                     isActionPending = true;
                 //    //仮バフ効果適用
-                //    OnBuffSelected(null, 0, selectedSkill.buffEffect[0]);
+                 OnBuffSelected(null, 0, selectedSkill.buffEffect[0]);
                 break;
         }
         if(selectedSkill.targetScope != TargetScope.All)
