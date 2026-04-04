@@ -348,26 +348,26 @@ public class ConversationUI : MonoBehaviour
     /// <summary>
     /// CSVファイルを指定して会話を開始（Timeline用）
     /// </summary>
-    //public void StartDialogueWithCSV(string csvFile)
-    //{
-    //    Debug.Log($"========== StartDialogueWithCSV が呼ばれました！CSV: {csvFile} ==========");
-    //    csvFileName = csvFile;
-    //    currentPlayableDirector = null; // リセット
-    //    ReloadCSV();
-    //    StartDialogue();
-    //}
+    public void StartDialogueWithCSV(string csvFile)
+    {
+        Debug.Log($"========== StartDialogueWithCSV が呼ばれました！CSV: {csvFile} ==========");
+        csvFileName = csvFile;
+        currentPlayableDirector = null; // リセット
+        ReloadCSV();
+        StartDialogue();
+    }
 
     /// <summary>
     /// CSVファイルとPlayableDirectorを指定して会話を開始（Timeline用・拡張版）
     /// </summary>
-    //public void StartDialogueWithCSVAndTimeline(string csvFile, UnityEngine.Playables.PlayableDirector director)
-    //{
-    //    Debug.Log($"========== StartDialogueWithCSVAndTimeline が呼ばれました！CSV: {csvFile} ==========");
-    //    csvFileName = csvFile;
-    //    currentPlayableDirector = director;
-    //    ReloadCSV();
-    //    StartDialogue();
-    //}
+    public void StartDialogueWithCSVAndTimeline(string csvFile, UnityEngine.Playables.PlayableDirector director)
+    {
+        Debug.Log($"========== StartDialogueWithCSVAndTimeline が呼ばれました！CSV: {csvFile} ==========");
+        csvFileName = csvFile;
+        currentPlayableDirector = director;
+        ReloadCSV();
+        StartDialogue();
+    }
 
     void ShowDialogue(int index)
     {
