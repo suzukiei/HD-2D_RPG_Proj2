@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
@@ -227,17 +228,37 @@ public class SkillSelectionUI : MonoBehaviour
 
         // UI非表示
         HideSkillSelection();
-     
-        // 選択スキル名設定
-        skillWindowText.text = currentSkills[currentSelection].skillName;
+
+        SetSkillWindowText(currentSkills[currentSelection].skillName);
     }
 
-    public void ShowSkillWindow()
+    /// <summary>
+    /// 表示する技名の設定
+    /// </summary>
+    public void SetSkillWindowText(string skillname)
     {
-        StartCoroutine(SkillWindowCoroutine());
+        // 選択スキル名設定
+        skillWindowText.text = skillname;
     }
-    private IEnumerator SkillWindowCoroutine()
+    /// <summary>
+    /// 選択した技の表示
+    /// </summary>
+    public void ShowSkillWindow(bool isEnemy)
     {
+        StartCoroutine(SkillWindowCoroutine(isEnemy));
+    }
+    private IEnumerator SkillWindowCoroutine(bool isEnemy)
+    {
+
+        if (isEnemy)
+        {
+            skillWindowPanel.GetComponent<Outline>().effectColor = Color.red;
+        }
+        else
+        {
+            skillWindowPanel.GetComponent<Outline>().effectColor = Color.blue;
+        }
+
         skillWindowPanel.SetActive(true);
 
         yield return new WaitForSeconds(1.0f);
