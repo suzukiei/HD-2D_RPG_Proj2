@@ -61,6 +61,9 @@ public class PlayerManager : MonoBehaviour
     //コンボ数のcount
     private int comboCount = 0;
 
+    [SerializeField]
+    public Animator enemyAnimator;
+
     //Buffの管理用リスト
     public List<CharacterBuff>　characterBuffs = new List<CharacterBuff>();
 
@@ -558,6 +561,15 @@ public class PlayerManager : MonoBehaviour
         {
             DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, finalDamage);
         }
+
+        // 攻撃アニメーション再生
+        enemyAnimator = enemy.EnemyAnimator;
+
+        if (enemyAnimator != null)
+            enemyAnimator.SetTrigger("Diffence");
+
+        //アニメーションが流れるのを待つ
+        new WaitForSeconds(0.3f);
 
         if (enemy.hp <= 0)
         {
