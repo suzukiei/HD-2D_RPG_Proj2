@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8c7e589f7be97594e95103209fa446aa
+guid: ed7f61e4fe8ffb344b2f873a53051daf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CatPuppet_Green_0
+      name: Fanatic_Purple_0
       rect:
         serializedVersion: 2
-        x: 18
-        y: 325
-        width: 48
-        height: 48
+        x: 52
+        y: 641
+        width: 82
+        height: 98
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac3085d5f4f8ca94294cff1de5e32566
-      internalID: -932854111
+      spriteID: 52003fe029704f549beb2121a5e63fe2
+      internalID: 1163338956
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatPuppet_Green_1
+      name: Fanatic_Purple_1
       rect:
         serializedVersion: 2
-        x: 114
-        y: 326
-        width: 48
-        height: 48
+        x: 247
+        y: 641
+        width: 82
+        height: 99
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae6a85b0dd55ce545b1117f90730be60
-      internalID: -1552225474
+      spriteID: d19e8b744ab094147b3c2931d8127b27
+      internalID: -1374857029
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatPuppet_Green_2
+      name: Fanatic_Purple_2
       rect:
         serializedVersion: 2
-        x: 210
-        y: 327
-        width: 48
-        height: 48
+        x: 443
+        y: 641
+        width: 82
+        height: 100
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,20 +153,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: edd00e3a2a41b3e48895f8fec8bafc2e
-      internalID: 756052448
+      spriteID: 27fa2201cd1c4164fad7c53acb218426
+      internalID: 926326209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatPuppet_Green_3
+      name: Fanatic_Purple_3
       rect:
         serializedVersion: 2
-        x: 309
-        y: 322
-        width: 45
-        height: 51
+        x: 639
+        y: 641
+        width: 81
+        height: 99
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e64447a48087594097fb97fd7aa74f1
-      internalID: -628905341
+      spriteID: 343950f966ce87543b63c6bbafff4914
+      internalID: -1466219172
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatPuppet_Green_4
+      name: Fanatic_Purple_4
       rect:
         serializedVersion: 2
-        x: 404
-        y: 323
-        width: 46
-        height: 52
+        x: 835
+        y: 641
+        width: 82
+        height: 99
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -195,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7db71fa7e5a7b8a4e9f3fbcb4f3f7e3a
-      internalID: -381107817
+      spriteID: c5b164738c4f76b4bb044c899e13a880
+      internalID: -1515774326
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatPuppet_Green_5
+      name: Fanatic_Purple_5
       rect:
         serializedVersion: 2
-        x: 500
-        y: 324
-        width: 46
-        height: 52
+        x: 1031
+        y: 641
+        width: 83
+        height: 99
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,965 +216,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 271312e83abbfa5478eae55b1cb59a6c
-      internalID: -304591125
+      spriteID: 4373febd44f2ab34fad42a00291feffd
+      internalID: -1071629679
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatPuppet_Green_6
+      name: Fanatic_Purple_6
       rect:
         serializedVersion: 2
-        x: 603
-        y: 322
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a1321dde791baea48a60c39b986ded50
-      internalID: -669537764
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_7
-      rect:
-        serializedVersion: 2
-        x: 699
-        y: 322
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c756c2e4bd3aeb64499ee5d8c286fbb8
-      internalID: 205232415
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_8
-      rect:
-        serializedVersion: 2
-        x: 795
-        y: 322
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 555e989a01cce3c43bb19c1986c47cba
-      internalID: -333406834
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_9
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 261
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dee838764ff63564db2d134a4f355510
-      internalID: 1545464800
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_10
-      rect:
-        serializedVersion: 2
-        x: 114
-        y: 262
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0eca11141d03a9341a60eafd4f899190
-      internalID: -1521255208
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_11
-      rect:
-        serializedVersion: 2
-        x: 210
-        y: 263
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2d4d6159e17a09f4b93103d6573639aa
-      internalID: 431648070
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_12
-      rect:
-        serializedVersion: 2
-        x: 303
-        y: 262
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b47cd2fa4d8649444bf82de08240aaff
-      internalID: 493044807
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_13
-      rect:
-        serializedVersion: 2
-        x: 399
-        y: 262
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 27c44c049cd62854b848adcd36935081
-      internalID: 10390623
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_14
-      rect:
-        serializedVersion: 2
-        x: 495
-        y: 262
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0800a1c7eeb674143aed11e9b09bcf7d
-      internalID: -492920262
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_15
-      rect:
-        serializedVersion: 2
-        x: 594
-        y: 261
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d53d02a3ff8883341b77a3e8721c2b0e
-      internalID: -190663660
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_16
-      rect:
-        serializedVersion: 2
-        x: 690
-        y: 262
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 847685fcac745954d8dc5009e91cd600
-      internalID: -2013724651
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_17
-      rect:
-        serializedVersion: 2
-        x: 786
-        y: 263
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 034ee524b73ac4247a67fbdf24202e1f
-      internalID: -1915227446
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_18
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 197
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d3d32c6f175e05241925ae2373bbb9a2
-      internalID: -78411214
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_19
-      rect:
-        serializedVersion: 2
-        x: 114
-        y: 198
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ffb22293e301374a9bde09fa5da43bc
-      internalID: 1433133331
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_20
-      rect:
-        serializedVersion: 2
-        x: 210
-        y: 199
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a9c7adcad56f3364d874602843fecccf
-      internalID: 1139683778
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_21
-      rect:
-        serializedVersion: 2
-        x: 315
-        y: 194
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3143db6045ed3a94c8b7831fb17dc709
-      internalID: 359404500
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_22
-      rect:
-        serializedVersion: 2
-        x: 411
-        y: 194
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cd290faac3fa86e48a5c57ad83216adc
-      internalID: 220631328
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_23
-      rect:
-        serializedVersion: 2
-        x: 507
-        y: 194
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c44d2fa4223fd2e46ac351d5e8dfaa54
-      internalID: -1629842482
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_24
-      rect:
-        serializedVersion: 2
-        x: 594
-        y: 197
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e90020710f85d6243a0d593b0d13ff5b
-      internalID: -676117143
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_25
-      rect:
-        serializedVersion: 2
-        x: 690
-        y: 198
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 440ef19cc856ff840a8a3a28c230afff
-      internalID: 1532877300
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_26
-      rect:
-        serializedVersion: 2
-        x: 786
-        y: 199
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7aa8e63fe7b428d4ca0bb5043cc57cab
-      internalID: -1869086646
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_27
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 133
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 20793da6572ce1b479114b2c0cd48729
-      internalID: -1068977692
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_28
-      rect:
-        serializedVersion: 2
-        x: 114
-        y: 134
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 369e391ded2df2148b5302acc156750b
-      internalID: -370505467
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_29
-      rect:
-        serializedVersion: 2
-        x: 210
-        y: 135
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 754ab08f6271a5449ad391d10053c847
-      internalID: 47019840
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_30
-      rect:
-        serializedVersion: 2
-        x: 315
-        y: 130
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9242df085789a7c40b4868144a031edc
-      internalID: -2045122508
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_31
-      rect:
-        serializedVersion: 2
-        x: 411
-        y: 130
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 74ac46aa67617f341a28571bb14d005d
-      internalID: -2072657517
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_32
-      rect:
-        serializedVersion: 2
-        x: 507
-        y: 130
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: dbd110c68ea54d04ea8705f617851785
-      internalID: 568893958
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_33
-      rect:
-        serializedVersion: 2
-        x: 594
-        y: 133
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 72d6481a6086afd4ab5390b0e18d21db
-      internalID: -859695975
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_34
-      rect:
-        serializedVersion: 2
-        x: 690
-        y: 134
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fe106889c52e06e4b94247ec44b19ec8
-      internalID: -2119000948
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_35
-      rect:
-        serializedVersion: 2
-        x: 786
-        y: 135
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fabc9051a858d9d4c9ad00f6305f6f24
-      internalID: -1122134858
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_36
-      rect:
-        serializedVersion: 2
-        x: 22
-        y: 69
-        width: 39
-        height: 50
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 146fef5f2953e6046b982d95a0831b01
-      internalID: 129816107
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_37
-      rect:
-        serializedVersion: 2
-        x: 118
-        y: 69
-        width: 39
-        height: 50
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4b282caf803f2e142a6563e97dc6f3b8
-      internalID: -1590791727
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_38
-      rect:
-        serializedVersion: 2
-        x: 214
-        y: 69
-        width: 39
-        height: 50
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1ab24380d2914d24c863130660438bee
-      internalID: -903039078
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_39
-      rect:
-        serializedVersion: 2
-        x: 309
-        y: 66
-        width: 45
-        height: 51
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3612873cf8aff094ba9058268c452625
-      internalID: -348266577
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_40
-      rect:
-        serializedVersion: 2
-        x: 404
-        y: 67
-        width: 46
-        height: 52
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 791536ed7a76b0740a1dbbfb8700c841
-      internalID: 1156705268
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_41
-      rect:
-        serializedVersion: 2
-        x: 500
-        y: 68
-        width: 46
-        height: 52
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f70af402677b02146a5fed60e6c1e413
-      internalID: -1201993131
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_42
-      rect:
-        serializedVersion: 2
-        x: 594
-        y: 69
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3c4eefa86c62ed469da1a05838d0a32
-      internalID: 450993869
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_43
-      rect:
-        serializedVersion: 2
-        x: 690
-        y: 70
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 268f28bd02e89d34392014e6d7b895bf
-      internalID: 1606658672
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_44
-      rect:
-        serializedVersion: 2
-        x: 786
-        y: 71
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6fdab1f730adc1469fb852a0b924a3e
-      internalID: -1929073201
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_45
-      rect:
-        serializedVersion: 2
-        x: 27
-        y: 2
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2713dffa32cb2ae4381dc5d52c86c3bd
-      internalID: -1627742692
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_46
-      rect:
-        serializedVersion: 2
-        x: 123
-        y: 2
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 466c40ad07437a8498cecb5ed97a28a7
-      internalID: -1117049628
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_47
-      rect:
-        serializedVersion: 2
-        x: 219
-        y: 2
-        width: 38
-        height: 53
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f7595c41f5b27143a6d76e5b1682877
-      internalID: 547951336
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_48
-      rect:
-        serializedVersion: 2
-        x: 306
-        y: 7
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f38410e8221950f429c803dcde372671
-      internalID: 1277234542
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_49
-      rect:
-        serializedVersion: 2
-        x: 399
-        y: 6
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 277fe2e9947b9fd4a8afeeacaa2c46e2
-      internalID: 163923939
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_50
-      rect:
-        serializedVersion: 2
-        x: 495
-        y: 6
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b6e0539d55d6def4fa4d2a6fc9550d06
-      internalID: -679178971
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CatPuppet_Green_51
-      rect:
-        serializedVersion: 2
-        x: 598
-        y: 5
-        width: 39
-        height: 50
+        x: 1257
+        y: 641
+        width: 56
+        height: 98
       alignment: 9
       pivot: {x: 0.3, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1182,20 +237,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e462dbacc66b26847990237f5796dd4b
-      internalID: -434987148
+      spriteID: 2171c103b3762364ca897c3c020f43c9
+      internalID: 693311325
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatPuppet_Green_52
+      name: Fanatic_Purple_7
       rect:
         serializedVersion: 2
-        x: 694
-        y: 5
-        width: 39
-        height: 50
+        x: 1453
+        y: 641
+        width: 56
+        height: 98
       alignment: 9
       pivot: {x: 0.7, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1203,20 +258,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b9db562a8b8a0a448888e7d99e469e70
-      internalID: -1091563394
+      spriteID: aaa29221d22131746a53ba704ce09485
+      internalID: -1968472219
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CatPuppet_Green_53
+      name: Fanatic_Purple_8
       rect:
         serializedVersion: 2
-        x: 790
-        y: 5
-        width: 39
-        height: 50
+        x: 1649
+        y: 641
+        width: 56
+        height: 98
       alignment: 9
       pivot: {x: 0.3, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1224,8 +279,953 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1fb6c65d5eb4c23489d0eb6854e85140
-      internalID: -1791228123
+      spriteID: 0da81ffee181a714289ce79effeebb6a
+      internalID: -222360869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_9
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 512
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35f0fc6c3af97a04fa3e2248cf6e26a9
+      internalID: 1357051859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_10
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 513
+        width: 56
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0265cc6a14306bf4aa0a31224600307a
+      internalID: -399612289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_11
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 513
+        width: 56
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a998168bb6219974ca7b4394486eeabf
+      internalID: 713264049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_12
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 513
+        width: 81
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed982bef7ca91f54f90400a18d648358
+      internalID: -1123352654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_13
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 513
+        width: 82
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0825b4fb8921bd46bc704b07a983677
+      internalID: 1331573598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_14
+      rect:
+        serializedVersion: 2
+        x: 1031
+        y: 513
+        width: 83
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f30357689e943b043a8f3c6b1f81bf73
+      internalID: -222932468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_15
+      rect:
+        serializedVersion: 2
+        x: 1253
+        y: 513
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9def2d12891f5984cb1f416bec6aca82
+      internalID: -768045105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_16
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 513
+        width: 56
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b1b4c6ba2b6ff7499789212355b9931
+      internalID: 1393845597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_17
+      rect:
+        serializedVersion: 2
+        x: 1645
+        y: 513
+        width: 56
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e00cb41478b9b274a94643d845b36b24
+      internalID: 1272462319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_18
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 385
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82c82df8674f29a418dc8f3e3666f225
+      internalID: -2091529128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_19
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 385
+        width: 56
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9a8ee7b43ecc7f4f82c3ee3a041c9b2
+      internalID: -60416860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_20
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 385
+        width: 56
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d289a8fcdba132d46a687a4e9909c6b8
+      internalID: -737395005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_21
+      rect:
+        serializedVersion: 2
+        x: 645
+        y: 386
+        width: 83
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93423fa90d62c274bb5b1b95470278bc
+      internalID: 946983670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_22
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 386
+        width: 83
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ee98dde924390c4a959028e637c2380
+      internalID: -1978742040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_23
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 386
+        width: 83
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ec60054dd043ac4f9a51ad2b1f30473
+      internalID: 1332702933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_24
+      rect:
+        serializedVersion: 2
+        x: 1253
+        y: 385
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c34936af4a921f45ae7f8f8db5bce80
+      internalID: -1106318058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_25
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 385
+        width: 56
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee15a2a9990d8764896dc0b908a1e602
+      internalID: 206070943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_26
+      rect:
+        serializedVersion: 2
+        x: 1645
+        y: 385
+        width: 56
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9de8f3427cc0c34fb5a4d471906cb0f
+      internalID: 1151917172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_27
+      rect:
+        serializedVersion: 2
+        x: 77
+        y: 257
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bb043895e51b134fa28caedc84277ef
+      internalID: -1464555854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_28
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 257
+        width: 56
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ca5894f63a0627489a2c42c0ee55b88
+      internalID: -767926885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_29
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 257
+        width: 56
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7c4522ed3689a041b9ccbce14096939
+      internalID: -646382441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_30
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 257
+        width: 81
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 706998dfeeaa3e244855d000bed6dc13
+      internalID: 157290586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_31
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 257
+        width: 82
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f6c5c0a8ad6cfb43a379908223536bb
+      internalID: -1652429006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_32
+      rect:
+        serializedVersion: 2
+        x: 1031
+        y: 257
+        width: 83
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 136603ec55379384f84efb4584e76952
+      internalID: 1304066707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_33
+      rect:
+        serializedVersion: 2
+        x: 1253
+        y: 257
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edd55f25f79aa9e4095a17cc783fce2b
+      internalID: 86146934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_34
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 257
+        width: 56
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74d6da7b1af98294da97b95e6e1b6c1c
+      internalID: 671713077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_35
+      rect:
+        serializedVersion: 2
+        x: 1645
+        y: 257
+        width: 56
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6efcfe8af8f952243bf65b96e6741226
+      internalID: 1137774184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_36
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 128
+        width: 66
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ba052bd6b38d674783507d8b16d6beb
+      internalID: -482797461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_37
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 128
+        width: 66
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a3d3fea751fa3141a37edfcfdf05081
+      internalID: -313542558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_38
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 128
+        width: 66
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb121ca32ac0fd442a6bc3e1d3c4abc2
+      internalID: 1068418979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_39
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 129
+        width: 81
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57a1f311615b96f4ba71656f4c0ea84b
+      internalID: 832003604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_40
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 129
+        width: 82
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af1f760a4f7134b49b1e5b0d98df8dfe
+      internalID: -225481022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_41
+      rect:
+        serializedVersion: 2
+        x: 1031
+        y: 129
+        width: 83
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 557d2ddb280706e49a978fe76292c6c6
+      internalID: 1659865248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_42
+      rect:
+        serializedVersion: 2
+        x: 1253
+        y: 129
+        width: 57
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98d074db5694e6f4f89cc02508e95564
+      internalID: 2047941331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_43
+      rect:
+        serializedVersion: 2
+        x: 1449
+        y: 129
+        width: 56
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4919acc33336e33488d7c7d885ac8397
+      internalID: 484758207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_44
+      rect:
+        serializedVersion: 2
+        x: 1645
+        y: 129
+        width: 56
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0151a55677a055946bd7ffc37c7be7b1
+      internalID: -1026806610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_45
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 1
+        width: 56
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eee19618a53501944ae82b9bb9f23960
+      internalID: -607257981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_46
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 1
+        width: 56
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1f08a0166a2cfd4699de45275f00167
+      internalID: 906840873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_47
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 1
+        width: 56
+        height: 98
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cb18afec55791e4d835172f198b771f
+      internalID: 1983786358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_48
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 1
+        width: 81
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d650b20c05c53c4589cfc74e9888878
+      internalID: 257182027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_49
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 1
+        width: 82
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da0e96513a5aa854483325b2e24908b6
+      internalID: 1462128128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_50
+      rect:
+        serializedVersion: 2
+        x: 1031
+        y: 1
+        width: 83
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b85c8c7a741398049a5a32dce615ec44
+      internalID: -379007133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_51
+      rect:
+        serializedVersion: 2
+        x: 1245
+        y: 0
+        width: 66
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 959f6572ef616f64983fc6b7ad12303e
+      internalID: 1645969124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_52
+      rect:
+        serializedVersion: 2
+        x: 1441
+        y: 0
+        width: 66
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34a642713985f0a4ca32420364943b4e
+      internalID: -1307750418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fanatic_Purple_53
+      rect:
+        serializedVersion: 2
+        x: 1637
+        y: 0
+        width: 66
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30ebddc2ce3698746810773d62065705
+      internalID: -229023853
       vertices: []
       indices: 
       edges: []
@@ -1233,7 +1233,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: c68d4f7056b1dcb4d94bc40e3a605126
+    spriteID: 1b6d992f9fd327842b4ac056bba092a0
     internalID: 0
     vertices: []
     indices: 
@@ -1241,60 +1241,60 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      CatPuppet_Green_0: -932854111
-      CatPuppet_Green_1: -1552225474
-      CatPuppet_Green_10: -1521255208
-      CatPuppet_Green_11: 431648070
-      CatPuppet_Green_12: 493044807
-      CatPuppet_Green_13: 10390623
-      CatPuppet_Green_14: -492920262
-      CatPuppet_Green_15: -190663660
-      CatPuppet_Green_16: -2013724651
-      CatPuppet_Green_17: -1915227446
-      CatPuppet_Green_18: -78411214
-      CatPuppet_Green_19: 1433133331
-      CatPuppet_Green_2: 756052448
-      CatPuppet_Green_20: 1139683778
-      CatPuppet_Green_21: 359404500
-      CatPuppet_Green_22: 220631328
-      CatPuppet_Green_23: -1629842482
-      CatPuppet_Green_24: -676117143
-      CatPuppet_Green_25: 1532877300
-      CatPuppet_Green_26: -1869086646
-      CatPuppet_Green_27: -1068977692
-      CatPuppet_Green_28: -370505467
-      CatPuppet_Green_29: 47019840
-      CatPuppet_Green_3: -628905341
-      CatPuppet_Green_30: -2045122508
-      CatPuppet_Green_31: -2072657517
-      CatPuppet_Green_32: 568893958
-      CatPuppet_Green_33: -859695975
-      CatPuppet_Green_34: -2119000948
-      CatPuppet_Green_35: -1122134858
-      CatPuppet_Green_36: 129816107
-      CatPuppet_Green_37: -1590791727
-      CatPuppet_Green_38: -903039078
-      CatPuppet_Green_39: -348266577
-      CatPuppet_Green_4: -381107817
-      CatPuppet_Green_40: 1156705268
-      CatPuppet_Green_41: -1201993131
-      CatPuppet_Green_42: 450993869
-      CatPuppet_Green_43: 1606658672
-      CatPuppet_Green_44: -1929073201
-      CatPuppet_Green_45: -1627742692
-      CatPuppet_Green_46: -1117049628
-      CatPuppet_Green_47: 547951336
-      CatPuppet_Green_48: 1277234542
-      CatPuppet_Green_49: 163923939
-      CatPuppet_Green_5: -304591125
-      CatPuppet_Green_50: -679178971
-      CatPuppet_Green_51: -434987148
-      CatPuppet_Green_52: -1091563394
-      CatPuppet_Green_53: -1791228123
-      CatPuppet_Green_6: -669537764
-      CatPuppet_Green_7: 205232415
-      CatPuppet_Green_8: -333406834
-      CatPuppet_Green_9: 1545464800
+      Fanatic_Purple_0: 1163338956
+      Fanatic_Purple_1: -1374857029
+      Fanatic_Purple_10: -399612289
+      Fanatic_Purple_11: 713264049
+      Fanatic_Purple_12: -1123352654
+      Fanatic_Purple_13: 1331573598
+      Fanatic_Purple_14: -222932468
+      Fanatic_Purple_15: -768045105
+      Fanatic_Purple_16: 1393845597
+      Fanatic_Purple_17: 1272462319
+      Fanatic_Purple_18: -2091529128
+      Fanatic_Purple_19: -60416860
+      Fanatic_Purple_2: 926326209
+      Fanatic_Purple_20: -737395005
+      Fanatic_Purple_21: 946983670
+      Fanatic_Purple_22: -1978742040
+      Fanatic_Purple_23: 1332702933
+      Fanatic_Purple_24: -1106318058
+      Fanatic_Purple_25: 206070943
+      Fanatic_Purple_26: 1151917172
+      Fanatic_Purple_27: -1464555854
+      Fanatic_Purple_28: -767926885
+      Fanatic_Purple_29: -646382441
+      Fanatic_Purple_3: -1466219172
+      Fanatic_Purple_30: 157290586
+      Fanatic_Purple_31: -1652429006
+      Fanatic_Purple_32: 1304066707
+      Fanatic_Purple_33: 86146934
+      Fanatic_Purple_34: 671713077
+      Fanatic_Purple_35: 1137774184
+      Fanatic_Purple_36: -482797461
+      Fanatic_Purple_37: -313542558
+      Fanatic_Purple_38: 1068418979
+      Fanatic_Purple_39: 832003604
+      Fanatic_Purple_4: -1515774326
+      Fanatic_Purple_40: -225481022
+      Fanatic_Purple_41: 1659865248
+      Fanatic_Purple_42: 2047941331
+      Fanatic_Purple_43: 484758207
+      Fanatic_Purple_44: -1026806610
+      Fanatic_Purple_45: -607257981
+      Fanatic_Purple_46: 906840873
+      Fanatic_Purple_47: 1983786358
+      Fanatic_Purple_48: 257182027
+      Fanatic_Purple_49: 1462128128
+      Fanatic_Purple_5: -1071629679
+      Fanatic_Purple_50: -379007133
+      Fanatic_Purple_51: 1645969124
+      Fanatic_Purple_52: -1307750418
+      Fanatic_Purple_53: -229023853
+      Fanatic_Purple_6: 693311325
+      Fanatic_Purple_7: -1968472219
+      Fanatic_Purple_8: -222360869
+      Fanatic_Purple_9: 1357051859
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
