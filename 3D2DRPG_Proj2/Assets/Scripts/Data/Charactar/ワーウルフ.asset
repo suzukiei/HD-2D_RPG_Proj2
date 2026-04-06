@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
   m_Name: "\u30EF\u30FC\u30A6\u30EB\u30D5"
   m_EditorClassIdentifier: 
-  charactername: 
+  charactername: "\u30EF\u30FC\u30A6\u30EB\u30D5"
   characterIcon: {fileID: 0}
   enemyCheckFlag: 1
   hp: 120

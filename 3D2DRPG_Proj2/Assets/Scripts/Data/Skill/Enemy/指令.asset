@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a92d8b73040e5b143bbd8be31623266c, type: 3}
   m_Name: "\u6307\u4EE4"
   m_EditorClassIdentifier: 
-  skillName: 
+  skillName: "\u6307\u4EE4"
   description: 
   icon: {fileID: 0}
   soundEffect: {fileID: 0}
@@ -28,6 +28,8 @@ MonoBehaviour:
   targetScope: 1
   statusEffect: 0
   canCombo: 0
+  DamageUp: 0
+  ComboDamage: 0
   comboNextSkill: {fileID: 0}
   timingWindowStart: 0.3
   timingWindowEnd: 0.6
@@ -37,6 +39,7 @@ MonoBehaviour:
   statusChance: 0
   buffEffect:
   - {fileID: 11400000, guid: cf3130ba3d4226b44ac1cec374f5444b, type: 2}
+  buffValue: 0
   buffDuration: 0
   DamageBonusFlg: 0
   ZokuseiType: 0

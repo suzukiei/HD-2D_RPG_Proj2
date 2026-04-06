@@ -21,7 +21,7 @@ MonoBehaviour:
   vfxPrefab: {fileID: 0}
   animationName: 
   effectType: 0
-  power: 20
+  power: 1
   mpCost: 30
   cooldown: 0
   hitCount: 1

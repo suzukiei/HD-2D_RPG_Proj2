@@ -2999,6 +2999,7 @@ MonoBehaviour:
   - {fileID: 1455347933}
   ActionPosition: {x: 4, y: 0, z: 3}
   StartPosition: {x: 0, y: 0, z: 0}
+  enemyAnimator: {fileID: 0}
   characterBuffs: []
 --- !u!4 &745215965
 Transform:
@@ -5239,8 +5240,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2f4e57cddc43d7647af16fe26ba2dd8c, type: 2}
+  m_sharedMaterial: {fileID: 2952528811871794394, guid: 2f4e57cddc43d7647af16fe26ba2dd8c,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
