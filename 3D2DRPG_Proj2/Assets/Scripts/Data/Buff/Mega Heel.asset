@@ -15,9 +15,9 @@ MonoBehaviour:
   buffId: 
   buffName: "\u30D5\u30A1\u30B7\u30EA\u30C6\u30FC\u30B7\u30E7\u30F3"
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 9ac2bf51e24f6c04dad5e4278a751389, type: 3}
   buffType: 0
-  duration: 0
+  duration: 5
   buffRange: 3
   sourceCharacter: {fileID: 0}
   isSelfTarget: 0

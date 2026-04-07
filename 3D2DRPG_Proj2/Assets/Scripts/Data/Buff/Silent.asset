@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee7a19d33657924bb3aa768fef91dac, type: 3}
   m_Name: Silent
   m_EditorClassIdentifier: 
-  buffId: 
+  buffId: 6886e8fe-bfea-45c1-bf3f-fad4dcff1c89
   buffName: "\u30B5\u30A4\u30EC\u30F3\u30C8"
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ad807dba5ad5b0e4fae949c30b8269ea, type: 3}
   buffType: 0
   duration: 10
   buffRange: 1

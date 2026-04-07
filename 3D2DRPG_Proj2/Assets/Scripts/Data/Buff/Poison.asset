@@ -15,7 +15,7 @@ MonoBehaviour:
   buffId: 65aaaa4e-f65c-456f-97d6-315f31e2eb5f
   buffName: "\u6BD2"
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4580405a8a786094c813081cba9a4b57, type: 3}
   buffType: 2
   duration: 0
   buffRange: 1

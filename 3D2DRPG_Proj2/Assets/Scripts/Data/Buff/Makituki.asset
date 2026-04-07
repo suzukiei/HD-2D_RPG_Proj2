@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8c0858a44f10b143bc8937b498d9909, type: 3}
   m_Name: Makituki
   m_EditorClassIdentifier: 
-  buffId: 
+  buffId: 4b36a341-a83e-4652-8ec3-11216af81c3d
   buffName: "\u5DFB\u304D\u3064\u304D"
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c90dfbeff4ed4274cba7e9840b34c68c, type: 3}
   buffType: 2
   duration: 0
   buffRange: 1

@@ -100,6 +100,17 @@ public class PlayerManager : MonoBehaviour
             PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
             playerStatusPanel[i].UpdatePlayerStatus(playerData);
             
+            // CharacterBuffManagerとPlayerStatusPanelを接続
+            CharacterBuffManager buffManager = obj.GetComponent<CharacterBuffManager>();
+            if (buffManager != null && playerStatusPanel[i] != null)
+            {
+                buffManager.OnBuffsChanged.AddListener(playerStatusPanel[i].UpdateBuffIcons);
+                Debug.Log($"[PlayerManager] バフアイコン接続完了: {playerCharacters[i].charactername} → PlayerStatusPanel[{i}]");
+            }
+            else
+            {
+                Debug.LogWarning($"[PlayerManager] バフアイコン接続失敗: buffManager={buffManager}, panel={playerStatusPanel[i]}");
+            }
         }
     }
 
@@ -516,10 +527,31 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
+        
+        // MP消費処理
+        if (selectedSkill != null)
+        {
+            if (selectedCharacter.mp >= selectedSkill.mpCost)
+            {
+                selectedCharacter.mp -= selectedSkill.mpCost;
+                Debug.Log($"[PlayerManager] MP消費: {selectedCharacter.charactername} -{selectedSkill.mpCost}MP (残り: {selectedCharacter.mp})");
+            }
+            else
+            {
+                Debug.LogWarning($"[PlayerManager] MP不足: {selectedCharacter.charactername}");
+                selectedCharacter.StatusFlag = StatusFlag.End;
+                isActionPending = true;
+                return;
+            }
+        }
+        
         //通常スキルの処理
-        var character = new Character();
-        if (characters!=null)
-        { character = characters[index]; }
+        Character character = null;
+        if (characters != null && index >= 0 && index < characters.Count)
+        {
+            character = characters[index];
+        }
+        
         BuffInstance buff = new BuffInstance(buffBase);
         buff.baseData.sourceCharacter = selectedCharacter;
         buff.remainingTurns = buffBase.duration;

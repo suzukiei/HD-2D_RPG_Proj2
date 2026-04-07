@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// キャラクターごとのバフ管理クラス
@@ -9,6 +10,9 @@ public class CharacterBuffManager : MonoBehaviour
 {
     [Header("バフ管理")]
     [SerializeField] private List<BuffInstance> activeBuffs = new List<BuffInstance>();
+    
+    [Header("バフ変更イベント")]
+    public UnityEvent<List<BuffInstance>> OnBuffsChanged;
     
     private Character ownerCharacter;
     
@@ -28,6 +32,12 @@ public class CharacterBuffManager : MonoBehaviour
     public void Initialize(Character character)
     {
         ownerCharacter = character;
+        
+        // UnityEventの初期化
+        if (OnBuffsChanged == null)
+        {
+            OnBuffsChanged = new UnityEvent<List<BuffInstance>>();
+        }
         
         // ベースステータスを保存
         baseAtk = character.atk;
@@ -88,6 +98,10 @@ public class CharacterBuffManager : MonoBehaviour
         // ステータス修正値を再計算
         RecalculateStatModifiers();
         
+        // バフ変更イベントを発火
+        Debug.Log($"[CharacterBuffManager] OnBuffsChanged発火: {ownerCharacter.charactername}, バフ数={activeBuffs.Count}");
+        OnBuffsChanged?.Invoke(activeBuffs);
+        
         Debug.Log($"{ownerCharacter.charactername} にバフ '{buffInstance.buffName}' を適用しました");
         return true;
     }
@@ -99,6 +113,10 @@ public class CharacterBuffManager : MonoBehaviour
     {
         // 現在はスタック不可として、既存のバフを上書き（時間をリセット）
         existingBuff.remainingTurns = newBuff.remainingTurns;
+        
+        // バフ変更イベントを発火（ターン数が変わったので）
+        OnBuffsChanged?.Invoke(activeBuffs);
+        
         Debug.Log($"{ownerCharacter.charactername} のバフ '{existingBuff.buffName}' の持続時間をリセットしました");
         return true;
     }
@@ -120,6 +138,9 @@ public class CharacterBuffManager : MonoBehaviour
             
             // ステータス修正値を再計算
             RecalculateStatModifiers();
+            
+            // バフ変更イベントを発火
+            OnBuffsChanged?.Invoke(activeBuffs);
             
             Debug.Log($"{ownerCharacter.charactername} からバフ '{buffInstance.buffName}' を解除しました");
             return true;
@@ -156,12 +177,15 @@ public class CharacterBuffManager : MonoBehaviour
 
             //ターンを減らす
             buff.TickTurn();
-            buff.Apply(buff.targetCharacter);
+            // Note: buff.Apply()は最初の適用時のみ呼ばれるべき。毎ターン再適用すると効果が重複する
             if (buff.IsExpired())
             {
-                RemoveBuff(buff); //バフを削除する
+                RemoveBuff(buff); //バフを削除する（RemoveBuffの中でイベント発火される）
             }
         }
+        
+        // ターン経過後にもイベント発火（ターン数表示更新のため）
+        OnBuffsChanged?.Invoke(activeBuffs);
     }
     
     /// <summary>

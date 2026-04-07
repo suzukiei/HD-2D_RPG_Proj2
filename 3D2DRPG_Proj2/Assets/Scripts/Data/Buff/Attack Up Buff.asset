@@ -21,4 +21,5 @@ MonoBehaviour:
   buffRange: 0
   sourceCharacter: {fileID: 0}
   isSelfTarget: 1
+  statusEffect: 16
   attackMultiplier: 1.5
