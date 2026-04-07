@@ -208,4 +208,103 @@ public class DamageEffectUI : MonoBehaviour
             ShowDamageEffect(enemy.transform, damage);
         }
     }
+    
+    /// <summary>
+    /// 回復エフェクトを表示する
+    /// </summary>
+    public void ShowHealEffect(Transform targetTransform, float healAmount = 0)
+    {
+        if (targetTransform == null)
+        {
+            Debug.LogWarning("DamageEffectUI: ターゲットのTransformがnullです");
+            return;
+        }
+
+        // 回復テキストを表示（UI）
+        if (damageTextPrefab != null && healAmount > 0 && uiCanvas != null)
+        {
+            // ワールド座標をスクリーン座標に変換
+            Vector3 screenPosition = mainCamera != null ? mainCamera.WorldToScreenPoint(targetTransform.position) : Camera.main.WorldToScreenPoint(targetTransform.position);
+            
+            // スクリーン座標をUIキャンバスのローカル座標に変換
+            RectTransform canvasRect = uiCanvas.GetComponent<RectTransform>();
+            Vector2 localPoint;
+            Camera textCamera = uiCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : (mainCamera != null ? mainCamera : Camera.main);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRect, 
+                screenPosition, 
+                textCamera, 
+                out localPoint
+            );
+
+            ShowHealText(localPoint, healAmount);
+        }
+    }
+    
+    /// <summary>
+    /// 回復テキストを表示する（UI、緑色でプラス表記）
+    /// </summary>
+    private void ShowHealText(Vector2 uiPosition, float healAmount)
+    {
+        if (uiCanvas == null) return;
+
+        GameObject textObj = Instantiate(damageTextPrefab, uiCanvas.transform);
+        RectTransform textRect = textObj.GetComponent<RectTransform>();
+        if (textRect != null)
+        {
+            textRect.anchoredPosition = uiPosition;
+        }
+        else
+        {
+            textObj.transform.position = uiPosition;
+        }
+
+        // TextMeshProUGUIまたはTextコンポーネントを取得して回復値を設定
+        TextMeshProUGUI tmpText = textObj.GetComponent<TextMeshProUGUI>();
+        if (tmpText != null)
+        {
+            tmpText.text = $"+{healAmount:F0}";
+            tmpText.color = Color.green; // 緑色に変更
+        }
+        else
+        {
+            Text text = textObj.GetComponent<Text>();
+            if (text != null)
+            {
+                text.text = $"+{healAmount:F0}";
+                text.color = Color.green; // 緑色に変更
+            }
+        }
+
+        // テキストのアニメーション（上に移動しながらフェードアウト）
+        if (textRect != null)
+        {
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(textRect.DOAnchorPosY(uiPosition.y + 100, effectDuration).SetEase(Ease.OutQuad));
+            
+            CanvasGroup canvasGroup = textObj.GetComponent<CanvasGroup>();
+            if (canvasGroup == null)
+            {
+                canvasGroup = textObj.AddComponent<CanvasGroup>();
+            }
+            sequence.Join(canvasGroup.DOFade(0, effectDuration).SetEase(Ease.InQuad));
+            
+            sequence.OnComplete(() => Destroy(textObj));
+        }
+        else
+        {
+            StartCoroutine(DestroyEffectAfterDelay(textObj, effectDuration));
+        }
+    }
+    
+    /// <summary>
+    /// GameObjectから直接回復エフェクトを表示する（便利メソッド）
+    /// </summary>
+    public void ShowHealEffectOnCharacter(GameObject character, float healAmount = 0)
+    {
+        if (character != null)
+        {
+            ShowHealEffect(character.transform, healAmount);
+        }
+    }
 }

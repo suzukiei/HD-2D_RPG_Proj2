@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Mega Heel
   m_EditorClassIdentifier: 
   buffId: 
-  buffName: 
+  buffName: "\u30D5\u30A1\u30B7\u30EA\u30C6\u30FC\u30B7\u30E7\u30F3"
   description: 
   icon: {fileID: 0}
   buffType: 0
   duration: 0
   buffRange: 3
   sourceCharacter: {fileID: 0}
-  isSelfTarget: 1
-  heelMax: 0
-  heelMin: 0
-  spdUp: 0
+  isSelfTarget: 0
+  statusEffect: 10
+  heelMax: 20
+  heelMin: 10
+  spdUp: 40

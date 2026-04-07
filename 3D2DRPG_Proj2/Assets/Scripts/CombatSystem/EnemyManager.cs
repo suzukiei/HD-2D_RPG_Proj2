@@ -366,10 +366,28 @@ public class EnemyManager : MonoBehaviour
                 if (isHeal)
                 {
                     // 回復処理（使用者自身を回復）
+                    int beforeHp = attacker.hp;
                     attacker.hp += (int)power;
                     target.hp += (int)power;
                     if (attacker.hp > attacker.maxHp) attacker.hp = attacker.maxHp;
-                    Debug.Log($"{attacker.charactername}は{power}回復した！");
+                    
+                    // 実際の回復量
+                    int actualHealAmount = attacker.hp - beforeHp;
+                    
+                    Debug.Log($"{attacker.charactername}は{actualHealAmount}回復した！");
+                    
+                    // 回復エフェクトを再生
+                    if (VFXManager.Instance != null && attacker.CharacterObj != null)
+                    {
+                        VFXManager.Instance.PlayHealEffect(attacker.CharacterObj);
+                    }
+                    
+                    // 回復テキストを表示
+                    if (DamageEffectUI.Instance != null && attacker.CharacterObj != null && actualHealAmount > 0)
+                    {
+                        DamageEffectUI.Instance.ShowHealEffectOnCharacter(attacker.CharacterObj, actualHealAmount);
+                    }
+                    
                     return; // ここで処理終了
                 }
                 else
@@ -499,6 +517,11 @@ public class EnemyManager : MonoBehaviour
                         break;
                 }
                 target.ApplyBuff(buff, attacker);
+                // バフスキルの場合のみエフェクトを表示
+                if (skill.effectType == SkillEffectType.Buff)
+                {
+                    PlayBuffVFX(buff, target);
+                }
             }
         }
         Debug.Log($"{attacker.name} が {target.name} に {power} ダメージ。残りHP: {target.hp}");
@@ -602,6 +625,11 @@ public class EnemyManager : MonoBehaviour
                             if (UnityEngine.Random.value < successRate)
                             {
                                 chara.ApplyBuff(buff, attacker);
+                                // バフスキルの場合のみエフェクトを表示
+                                if (skill.effectType == SkillEffectType.Buff)
+                                {
+                                    PlayBuffVFX(buff, chara);
+                                }
                             }
    
                             break;
@@ -651,6 +679,9 @@ public class EnemyManager : MonoBehaviour
         if (skill == null || skill.buffEffect == null || skill.buffEffect.Count == 0)
             return;
 
+        // バフスキルかどうかをチェック（effectTypeがBuffの場合のみエフェクト表示）
+        bool isBuffSkill = skill.effectType == SkillEffectType.Buff;
+
         foreach (var buffBase in skill.buffEffect)
         {
             BuffInstance buff = new BuffInstance(buffBase);
@@ -666,6 +697,7 @@ public class EnemyManager : MonoBehaviour
                         case BuffRange.Self:
                             // 自分自身にバフ
                             target.ApplyBuff(buff, target);
+                            if (isBuffSkill) PlayBuffVFX(buff, target);
                             break;
 
                         case BuffRange.Ally:
@@ -675,6 +707,7 @@ public class EnemyManager : MonoBehaviour
                             {
                                 var ally = allies[UnityEngine.Random.Range(0, allies.Count)];
                                 ally.ApplyBuff(buff, target);
+                                if (isBuffSkill) PlayBuffVFX(buff, ally);
                             }
                             break;
 
@@ -686,6 +719,7 @@ public class EnemyManager : MonoBehaviour
                                 BuffInstance allyBuff = new BuffInstance(buffBase);
                                 allyBuff.remainingTurns = skill.buffDuration;
                                 ally.ApplyBuff(allyBuff, target);
+                                if (isBuffSkill) PlayBuffVFX(allyBuff, ally);
                             }
                             break;
                     }
@@ -713,6 +747,7 @@ public class EnemyManager : MonoBehaviour
                         }
 
                         enemy.ApplyBuff(buff, target);
+                        if (isBuffSkill) PlayBuffVFX(buff, enemy);
                     }
                     break;
 
@@ -722,6 +757,7 @@ public class EnemyManager : MonoBehaviour
                     {
                         case BuffRange.Self:
                             target.ApplyBuff(buff, target);
+                            if (isBuffSkill) PlayBuffVFX(buff, target);
                             Debug.Log($"{target.charactername}にマジックカウンター付与");
                             break;
                     }
@@ -733,6 +769,7 @@ public class EnemyManager : MonoBehaviour
                     {
                         case BuffRange.Self:
                             target.ApplyBuff(buff, target);
+                            if (isBuffSkill) PlayBuffVFX(buff, target);
                             break;
                         case BuffRange.AllEnemies:
 
@@ -740,6 +777,7 @@ public class EnemyManager : MonoBehaviour
                             foreach (var enemy in list)
                             {
                                 enemy.ApplyBuff(buff, target);
+                                if (isBuffSkill) PlayBuffVFX(buff, enemy);
                             }
                             break;
                     }
@@ -760,6 +798,7 @@ public class EnemyManager : MonoBehaviour
 
                                 // 自分自身にバフを適用
                                 target.ApplyBuff(buff, target);
+                                if (isBuffSkill) PlayBuffVFX(buff, target);
 
                                 Debug.Log($"{target.charactername}が{lockedEnemy.charactername}をロックオン");
                             }
@@ -775,6 +814,7 @@ public class EnemyManager : MonoBehaviour
                             buff.remainingTurns = 1;
                             // 自分自身にバフを適用
                             target.ApplyBuff(buff, target);
+                            if (isBuffSkill) PlayBuffVFX(buff, target);
                             break;
 
                     }
@@ -793,6 +833,7 @@ public class EnemyManager : MonoBehaviour
         {
             if (target == null) continue;
 
+            int beforeHp = target.hp;
             float healAmount = 0;
             healAmount = target.maxHp * skill.power; //割合で回復
             target.hp += (int)healAmount;
@@ -801,7 +842,21 @@ public class EnemyManager : MonoBehaviour
             {
                 target.hp = target.maxHp;
             }
-
+            
+            // 実際の回復量を計算
+            int actualHealAmount = target.hp - beforeHp;
+            
+            // 回復エフェクトを再生
+            if (VFXManager.Instance != null && target.CharacterObj != null)
+            {
+                VFXManager.Instance.PlayHealEffect(target.CharacterObj);
+            }
+            
+            // 回復テキストを表示
+            if (DamageEffectUI.Instance != null && target.CharacterObj != null && actualHealAmount > 0)
+            {
+                DamageEffectUI.Instance.ShowHealEffectOnCharacter(target.CharacterObj, actualHealAmount);
+            }
         }
 
         //一回限りならばもう使えないようにする
@@ -860,5 +915,51 @@ public class EnemyManager : MonoBehaviour
 
         }
         return Ltarget;
+    }
+    
+    /// <summary>
+    /// バフの種類に応じたVFXを再生
+    /// </summary>
+    private void PlayBuffVFX(BuffInstance buff, Character target)
+    {
+        if (VFXManager.Instance == null || target == null || target.CharacterObj == null) return;
+        
+        // StatusEffectの種類に応じてエフェクトを選択
+        switch (buff.baseData.statusEffect)
+        {
+            case StatusEffect.DamageUp:
+            case StatusEffect.DefenceUp:
+                VFXManager.Instance.PlayAttackUpEffect(target.CharacterObj);
+                break;
+                
+            case StatusEffect.SpdUp:
+            case StatusEffect.MagicCounter:
+                VFXManager.Instance.PlayBuffEffect(target.CharacterObj);
+                break;
+                
+            case StatusEffect.Poison:
+            case StatusEffect.Burn:
+                VFXManager.Instance.PlayPoisonEffect(target.CharacterObj);
+                break;
+                
+            case StatusEffect.SpdDown:
+            case StatusEffect.MagicDamageDown:
+            case StatusEffect.Silent:
+                VFXManager.Instance.PlayDebuffEffect(target.CharacterObj);
+                break;
+                
+            case StatusEffect.MPRecovery:
+                VFXManager.Instance.PlayHealEffect(target.CharacterObj);
+                break;
+                
+            case StatusEffect.LockIn:
+                VFXManager.Instance.PlayBuffEffect(target.CharacterObj);
+                break;
+                
+            default:
+                // デフォルトはバフエフェクト
+                VFXManager.Instance.PlayBuffEffect(target.CharacterObj);
+                break;
+        }
     }
 }

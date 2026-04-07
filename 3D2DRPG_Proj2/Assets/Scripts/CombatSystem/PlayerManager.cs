@@ -594,11 +594,28 @@ public class PlayerManager : MonoBehaviour
     private void ApplyHeal(Character character, SkillData skill)
     {
         if (character == null || skill == null) return; // nullチェック追加
+        
+        int beforeHp = character.hp;
         var hp = character.hp + skill.power;
         character.hp = (int)math.floor(hp);
         if (character.hp > character.maxHp)
         {
             character.hp = character.maxHp;
+        }
+        
+        // 実際の回復量を計算
+        int actualHealAmount = character.hp - beforeHp;
+        
+        // 回復エフェクトを再生
+        if (VFXManager.Instance != null && character.CharacterObj != null)
+        {
+            VFXManager.Instance.PlayHealEffect(character.CharacterObj);
+        }
+        
+        // 回復テキストを表示
+        if (DamageEffectUI.Instance != null && character.CharacterObj != null && actualHealAmount > 0)
+        {
+            DamageEffectUI.Instance.ShowHealEffectOnCharacter(character.CharacterObj, actualHealAmount);
         }
     }
 
@@ -615,6 +632,8 @@ public class PlayerManager : MonoBehaviour
             return;
         }
 
+        // バフスキルかどうかをチェック（effectTypeがBuffの場合のみエフェクト表示）
+        bool isBuffSkill = selectedSkill != null && selectedSkill.effectType == SkillEffectType.Buff;
         
         switch (buff.buffRange)
         {
@@ -623,6 +642,7 @@ public class PlayerManager : MonoBehaviour
                 if (target != null)
                 {
                     target.ApplyBuff(buff, selectedCharacter);
+                    if (isBuffSkill) PlayBuffVFX(buff, target);
                 }
                 break;
             case BuffRange.Ally:
@@ -631,6 +651,7 @@ public class PlayerManager : MonoBehaviour
                 if (target != null)
                 {
                     target.ApplyBuff(buff,target);
+                    if (isBuffSkill) PlayBuffVFX(buff, target);
                 }
                 break;
             case BuffRange.AllAllies:
@@ -646,6 +667,7 @@ public class PlayerManager : MonoBehaviour
                         BuffInstance playerBuff = new BuffInstance(buff.baseData);
                         playerBuff.remainingTurns = buff.remainingTurns;
                         player.ApplyBuff(playerBuff, player);
+                        if (isBuffSkill) PlayBuffVFX(buff, player);
                     }
                 }
                 break;
@@ -659,8 +681,49 @@ public class PlayerManager : MonoBehaviour
                         BuffInstance enemyBuff = new BuffInstance(buff.baseData);
                         enemyBuff.remainingTurns = buff.remainingTurns;
                         enemy.ApplyBuff(enemyBuff, enemy);
+                        if (isBuffSkill) PlayBuffVFX(buff, enemy);
                     }
                 }
+                break;
+        }
+    }
+    
+    /// <summary>
+    /// バフの種類に応じたVFXを再生
+    /// </summary>
+    private void PlayBuffVFX(BuffInstance buff, Character target)
+    {
+        if (VFXManager.Instance == null || target == null || target.CharacterObj == null) return;
+        
+        // StatusEffectの種類に応じてエフェクトを選択
+        switch (buff.baseData.statusEffect)
+        {
+            case StatusEffect.DamageUp:
+            case StatusEffect.DefenceUp:
+                VFXManager.Instance.PlayAttackUpEffect(target.CharacterObj);
+                break;
+                
+            case StatusEffect.SpdUp:
+                VFXManager.Instance.PlayBuffEffect(target.CharacterObj);
+                break;
+                
+            case StatusEffect.Poison:
+            case StatusEffect.Burn:
+                VFXManager.Instance.PlayPoisonEffect(target.CharacterObj);
+                break;
+                
+            case StatusEffect.SpdDown:
+            case StatusEffect.MagicDamageDown:
+                VFXManager.Instance.PlayDebuffEffect(target.CharacterObj);
+                break;
+                
+            case StatusEffect.MPRecovery:
+                VFXManager.Instance.PlayHealEffect(target.CharacterObj);
+                break;
+                
+            default:
+                // デフォルトはバフエフェクト
+                VFXManager.Instance.PlayBuffEffect(target.CharacterObj);
                 break;
         }
     }

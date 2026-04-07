@@ -18,10 +18,21 @@ public class MegaHeel : BuffBase
             target.hp = target.maxHp;
         target.spd+=spdUp;
 
+        // Remove時に元に戻せるように、適用した速度アップ値を保存
+        if (currentInstance != null)
+        {
+            currentInstance.buffValue = spdUp;
+        }
     }
 
     public override void Remove()
     {
-        throw new System.NotImplementedException();
+        // バフ終了時に速度を元に戻す
+        if (currentInstance != null && currentInstance.targetCharacter != null)
+        {
+            int spdToRemove = (int)currentInstance.buffValue;
+            currentInstance.targetCharacter.spd -= spdToRemove;
+            Debug.Log($"{currentInstance.targetCharacter.charactername} の速度が {spdToRemove} 低下（MegaHeelバフ解除）");
+        }
     }
 }

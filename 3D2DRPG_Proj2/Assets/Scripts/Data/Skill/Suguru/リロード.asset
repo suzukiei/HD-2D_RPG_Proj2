@@ -42,3 +42,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c574ed739704f3d4488076ad8e90e61a, type: 2}
   buffValue: 0
   buffDuration: 0
+  DamageBonusFlg: 0
+  ZokuseiType: 0
+  isRandomEffect: 0
+  isOnlyOnece: 0
+  attackCount: 1
+  isUltimateSkill: 0
+  hasExtraActions: 0
+  extraActionCount: 2
