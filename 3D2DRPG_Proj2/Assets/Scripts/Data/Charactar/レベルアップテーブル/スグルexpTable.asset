@@ -1,0 +1,276 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0011287a1201364ebea8c613cfc3998, type: 3}
+  m_Name: "\u30B9\u30B0\u30EBexpTable"
+  m_EditorClassIdentifier: 
+  characterName: "\u30B9\u30B0\u30EB"
+  levelUpTable:
+  - level: 11
+    hpGain:
+      diceCount: 1
+      diceSides: 6
+      fixedBonus: 0
+    mpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    atkGain:
+      diceCount: 1
+      diceSides: 2
+      fixedBonus: 0
+    defGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    spdGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    intGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    learnedSkill: {fileID: 0}
+  - level: 12
+    hpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    mpGain:
+      diceCount: 1
+      diceSides: 10
+      fixedBonus: 0
+    atkGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    defGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    spdGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    intGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    learnedSkill: {fileID: 0}
+  - level: 13
+    hpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    mpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    atkGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    defGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    spdGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    intGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    learnedSkill: {fileID: 11400000, guid: d3af36cc263dc974795e1215d63c6aa2, type: 2}
+  - level: 14
+    hpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    mpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    atkGain:
+      diceCount: 1
+      diceSides: 2
+      fixedBonus: 0
+    defGain:
+      diceCount: 1
+      diceSides: 2
+      fixedBonus: 0
+    spdGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    intGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    learnedSkill: {fileID: 0}
+  - level: 15
+    hpGain:
+      diceCount: 1
+      diceSides: 10
+      fixedBonus: 0
+    mpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    atkGain:
+      diceCount: 1
+      diceSides: 6
+      fixedBonus: 0
+    defGain:
+      diceCount: 1
+      diceSides: 3
+      fixedBonus: 0
+    spdGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    intGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    learnedSkill: {fileID: 0}
+  - level: 16
+    hpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    mpGain:
+      diceCount: 2
+      diceSides: 6
+      fixedBonus: 0
+    atkGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    defGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    spdGain:
+      diceCount: 2
+      diceSides: 2
+      fixedBonus: 0
+    intGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    learnedSkill: {fileID: 0}
+  - level: 17
+    hpGain:
+      diceCount: 2
+      diceSides: 6
+      fixedBonus: 0
+    mpGain:
+      diceCount: 2
+      diceSides: 2
+      fixedBonus: 0
+    atkGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    defGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    spdGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    intGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    learnedSkill: {fileID: 0}
+  - level: 18
+    hpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    mpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    atkGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    defGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    spdGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    intGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    learnedSkill: {fileID: 11400000, guid: 7ad96a3f3e31e27488a5775ec77a9ad5, type: 2}
+  - level: 19
+    hpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    mpGain:
+      diceCount: 2
+      diceSides: 6
+      fixedBonus: 0
+    atkGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    defGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    spdGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    intGain:
+      diceCount: 2
+      diceSides: 2
+      fixedBonus: 0
+    learnedSkill: {fileID: 0}
+  - level: 20
+    hpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 10
+    mpGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 10
+    atkGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    defGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    spdGain:
+      diceCount: 1
+      diceSides: 10
+      fixedBonus: 0
+    intGain:
+      diceCount: 0
+      diceSides: 0
+      fixedBonus: 0
+    learnedSkill: {fileID: 0}

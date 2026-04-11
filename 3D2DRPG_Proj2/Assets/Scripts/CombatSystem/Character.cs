@@ -10,7 +10,7 @@ public class Character: MonoBehaviour
     public string charactername;
     public Sprite characterIcon;
     public bool enemyCheckFlag;
-    public int hp, mp, atk, def, spd;
+    public int hp, mp, atk, def, spd, Int;
     public int maxHp, maxMp;
     public int exp, level;
     public GameObject CharacterObj;
@@ -46,6 +46,7 @@ public class Character: MonoBehaviour
         atk = characterData.atk;
         def = characterData.def;
         spd = characterData.spd;
+        Int = characterData.Int;
         maxHp = characterData.maxHp;
         maxMp = characterData.maxMp;
         exp = characterData.exp;

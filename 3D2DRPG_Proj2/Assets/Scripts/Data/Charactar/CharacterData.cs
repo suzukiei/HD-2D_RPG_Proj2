@@ -33,5 +33,8 @@ public class CharacterData : ScriptableObject
     public SkillData[] skills;
     public Vector3 CharacterTransfrom;
     public StatusFlag StatusFlag;
-   
+    
+    [Header("レベルアップテーブル")]
+    [Tooltip("キャラクター専用のレベルアップテーブル")]
+    public LevelUpTable levelUpTable;
 }

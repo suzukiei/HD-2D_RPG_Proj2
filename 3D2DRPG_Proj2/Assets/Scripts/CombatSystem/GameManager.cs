@@ -43,6 +43,20 @@ public class GameManager : MonoBehaviour
     // 戦闘履歴管理（倒した敵のIDを記録）
     [SerializeField, Header("戦闘履歴管理")]
     private SerializableStringHashSet defeatedEnemyIds = new SerializableStringHashSet();
+    
+    // 戦闘開始前のキャラクターステータス（経験値アニメーション用）
+    [System.Serializable]
+    public class PreBattleSnapshot
+    {
+        public string characterName;
+        public int level;
+        public int exp;
+        public int requiredExp;
+        public int totalExp; // 累積経験値（レベル1から現在までの合計）
+    }
+    
+    [NonSerialized]
+    public List<PreBattleSnapshot> preBattleSnapshots = new List<PreBattleSnapshot>();
 
     [NonSerialized]
     public bool BattleWin = false; // 既存の変数を保持
@@ -53,6 +67,9 @@ public class GameManager : MonoBehaviour
     private string EventIDName;
     [SerializeField]
     private bool EventFlag;
+
+    [Header("経験値・レベル管理")]
+    [SerializeField] private Dictionary<int, int> ExpTable = new Dictionary<int, int>();
 
     // プロパティ
     public static GameManager Instance
@@ -78,6 +95,8 @@ public class GameManager : MonoBehaviour
     {
         if (instance == null)
         {
+            InitializeExpTable();
+
             instance = this;
             DontDestroyOnLoad(this.gameObject);
 
@@ -244,6 +263,9 @@ public class GameManager : MonoBehaviour
 
         // フィールドでの最後の位置を記録
         lastFieldPosition = playerPosition;
+        
+        // 戦闘開始前のキャラクターステータスを記録
+        SavePreBattleSnapshots();
 
         if (showDebugLog)
         {
@@ -440,6 +462,214 @@ public class GameManager : MonoBehaviour
         OnBattleStart?.Invoke();
         StartCoroutine(TransitionToBattle());
     }
+
+    private void InitializeExpTable()
+    {
+        //レベルは[1]から11レべとする。
+        ExpTable[1] = 550;
+        ExpTable[2] = 600;
+        ExpTable[3] = 650;
+        ExpTable[4] = 700;
+        ExpTable[5] = 750;
+        ExpTable[6] = 800;
+        ExpTable[7] = 850;
+        ExpTable[8] = 900;
+        ExpTable[9] = 950;
+        ExpTable[10] = 1000;
+
+    }
+    /// <summary>
+    /// 経験値を付与してレベルアップ処理
+    /// </summary>
+    public void AddExperience(CharacterData character, int expAmount)
+    {
+        if (character == null || expAmount <= 0) return;
+        
+        character.exp += expAmount;
+        
+        if (showDebugLog)
+        {
+            Debug.Log($"[GameManager] {character.charactername} が {expAmount}EXP 獲得！ (合計: {character.exp}EXP)");
+        }
+
+        // レベルアップチェック
+        while (character.exp >= GetRequiredExp(character.level))
+        {
+            character.exp -= GetRequiredExp(character.level);
+            LevelUp(character);
+        }
+    }
+    
+    public int GetRequiredExp(int currentLevel)
+    {
+        return ExpTable.ContainsKey(currentLevel) ? ExpTable[currentLevel] : 999999;
+    }
+    
+    /// <summary>
+    /// レベルアップ処理（LevelUpTableを使用、なければデフォルト）
+    /// </summary>
+    private void LevelUp(CharacterData character)
+    {
+        character.level++;
+        
+        Debug.Log($"★ {character.charactername} がレベル {character.level} にアップ！ ★");
+        
+        // レベルアップテーブルが設定されていればダイスロールシステムを使用
+        if (character.levelUpTable != null)
+        {
+            var levelUpData = character.levelUpTable.GetLevelUpData(character.level);
+        
+            if (levelUpData != null)
+            {
+                // ステータス上昇（ダイスロール）
+                int hpGain = levelUpData.hpGain?.Roll() ?? 0;
+                int mpGain = levelUpData.mpGain?.Roll() ?? 0;
+                int atkGain = levelUpData.atkGain?.Roll() ?? 0;
+                int defGain = levelUpData.defGain?.Roll() ?? 0;
+                int spdGain = levelUpData.spdGain?.Roll() ?? 0;
+                int intGain = levelUpData.intGain?.Roll() ?? 0;
+                
+                // ステータスに加算
+                if (hpGain > 0)
+                {
+                    character.maxHp += hpGain;
+                    character.hp += hpGain; // 現在HPも回復
+                    Debug.Log($"  HP +{hpGain} (最大HP: {character.maxHp})");
+                }
+                
+                if (mpGain > 0)
+                {
+                    character.maxMp += mpGain;
+                    character.mp += mpGain; // 現在MPも回復
+                    Debug.Log($"  MP +{mpGain} (最大MP: {character.maxMp})");
+                }
+                
+                if (atkGain > 0)
+                {
+                    character.atk += atkGain;
+                    Debug.Log($"  STR(ATK) +{atkGain} (ATK: {character.atk})");
+                }
+                
+                if (defGain > 0)
+                {
+                    character.def += defGain;
+                    Debug.Log($"  DEF +{defGain} (DEF: {character.def})");
+                }
+                
+                if (spdGain > 0)
+                {
+                    character.spd += spdGain;
+                    Debug.Log($"  SPD +{spdGain} (SPD: {character.spd})");
+                }
+                
+                if (intGain > 0)
+                {
+                    character.Int += intGain;
+                    Debug.Log($"  INT +{intGain} (INT: {character.Int})");
+                }
+                
+                // スキル習得
+                if (levelUpData.learnedSkill != null)
+                {
+                    LearnSkill(character, levelUpData.learnedSkill);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"[GameManager] レベル{character.level}のLevelUpDataが見つかりません");
+            }
+        }
+        else
+        {
+            // LevelUpTableが設定されていない場合はデフォルト処理
+            Debug.LogWarning($"[GameManager] {character.charactername} のLevelUpTableが未設定。デフォルト成長を使用");
+            character.maxHp += 10;
+            character.hp += 10;
+            character.atk += 2;
+            character.def += 2;
+        }
+    }
+    
+    /// <summary>
+    /// スキル習得処理
+    /// </summary>
+    private void LearnSkill(CharacterData character, SkillData newSkill)
+    {
+        // 既に習得済みかチェック
+        foreach (var skill in character.skills)
+        {
+            if (skill == newSkill)
+            {
+                Debug.LogWarning($"[GameManager] {character.charactername} は既に {newSkill.skillName} を習得しています");
+                return;
+            }
+        }
+        
+        // スキル配列を拡張して追加
+        var skillList = new List<SkillData>(character.skills);
+        skillList.Add(newSkill);
+        character.skills = skillList.ToArray();
+        
+        Debug.Log($"★★ {character.charactername} は新しいスキル【{newSkill.skillName}】を習得した！ ★★");
+    }
+    
+    
+    #region 戦闘前スナップショット管理
+    
+    /// <summary>
+    /// 戦闘開始前のキャラクターステータスを保存
+    /// </summary>
+    private void SavePreBattleSnapshots()
+    {
+        preBattleSnapshots.Clear();
+        
+        foreach (var character in PlayerData)
+        {
+            if (character != null)
+            {
+                var snapshot = new PreBattleSnapshot
+                {
+                    characterName = character.charactername,
+                    level = character.level,
+                    exp = character.exp,
+                    requiredExp = GetRequiredExp(character.level),
+                    totalExp = CalculateTotalExp(character.level, character.exp)
+                };
+                preBattleSnapshots.Add(snapshot);
+                
+                if (showDebugLog)
+                {
+                    Debug.Log($"[GameManager] 戦闘前スナップショット: {snapshot.characterName} Lv.{snapshot.level} EXP:{snapshot.exp}/{snapshot.requiredExp} (累積:{snapshot.totalExp})");
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 累積経験値を計算（レベル1から現在までの合計経験値）
+    /// </summary>
+    public int CalculateTotalExp(int currentLevel, int currentExp)
+    {
+        int totalExp = currentExp; // 現在の経験値
+        
+        // レベル1→2, 2→3, ... currentLevel-1→currentLevel までの必要経験値を加算
+        for (int lv = 1; lv < currentLevel; lv++)
+        {
+            totalExp += GetRequiredExp(lv);
+        }
+        
+        return totalExp;
+    }
+    
+    /// <summary>
+    /// 戦闘前のスナップショットを取得
+    /// </summary>
+    public PreBattleSnapshot GetPreBattleSnapshot(string characterName)
+    {
+        return preBattleSnapshots.Find(s => s.characterName == characterName);
+    }
+    
+    #endregion
 }
 
 /// <summary>

@@ -34,3 +34,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d3af36cc263dc974795e1215d63c6aa2, type: 2}
   CharacterTransfrom: {x: 2, y: 0, z: -1.5}
   StatusFlag: 0
+  levelUpTable: {fileID: 11400000, guid: 8f145ecd96842a84e92a8ff996b356ed, type: 2}

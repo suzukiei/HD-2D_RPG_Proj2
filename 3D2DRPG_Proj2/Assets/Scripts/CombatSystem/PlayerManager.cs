@@ -610,8 +610,15 @@ public class PlayerManager : MonoBehaviour
             enemy.hp = 0;
             turnManager.enemys.Remove(enemy.gameObject);
             turnManager.turnList.Remove(enemy.gameObject);
+            
             //エネミーのGameObjectを削除
             Destroy(enemy.CharacterObj);
+
+            //経験値を付与する
+            foreach (var playerChar in GameManager.Instance.PlayerData)
+            {
+                GameManager.Instance.AddExperience(playerChar, enemy.exp); 
+            }
             return false;
         }
         else
