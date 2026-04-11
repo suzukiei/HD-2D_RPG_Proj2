@@ -40,7 +40,7 @@ MonoBehaviour:
   buffEffect:
   - {fileID: 11400000, guid: 913c532840c5bc74b82e2bd948e960ae, type: 2}
   buffValue: 0
-  buffDuration: 0
+  buffDuration: 5
   DamageBonusFlg: 0
   ZokuseiType: 0
   isRandomEffect: 0

@@ -601,7 +601,7 @@ public class PlayerManager : MonoBehaviour
             enemyAnimator.SetTrigger("Diffence");
 
         //アニメーションが流れるのを待つ
-        new WaitForSeconds(0.3f);
+        new WaitForSeconds(0.6f);
 
         if (enemy.hp <= 0)
         {

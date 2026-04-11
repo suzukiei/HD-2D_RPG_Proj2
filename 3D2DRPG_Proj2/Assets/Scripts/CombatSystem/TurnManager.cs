@@ -84,7 +84,16 @@ public class TurnManager : MonoBehaviour
         turnList.AddRange(players);
         turnList.AddRange(enemys);
         // SPD順にソート
-        turnList.Sort((a, b) => b.GetComponent<Character>().spd.CompareTo(a.GetComponent<Character>().spd)); // SPD降順でソート
+        turnList.Sort((a, b) => {
+            var charA = a.GetComponent<Character>();
+            var charB = b.GetComponent<Character>();
+
+            // バフマネージャーから有効なSPDを取得
+            int spdA = charA.GetBuffManager()?.GetEffectiveSpeed() ?? charA.spd;
+            int spdB = charB.GetBuffManager()?.GetEffectiveSpeed() ?? charB.spd;
+
+            return spdB.CompareTo(spdA); // SPD降順でソート
+        });
         nextTurnList = new List<GameObject>(turnList);
         sortedTurnList = new List<GameObject>(turnList);
         // Spd 降順でソート（降順）
@@ -146,30 +155,8 @@ public class TurnManager : MonoBehaviour
                 sortedTurnList[turnNumber] = null;
                 // ターンカウンター
                 turnNumber++;
-                if (turnNumber >= sortedTurnList.Count)
+                if (turnNumber < sortedTurnList.Count)
                 {
-                    turnNumber = 0;
-                    if (turnChangeFlag)
-                    {
-                        turnChangeFlag = false;
-                        // ターンリストを次のターン用リストで更新
-                        sortedTurnList.Clear();
-                        sortedTurnList.AddRange(nextTurnList);
-                        nextTurnList.Clear();
-                        nextTurnList.AddRange(turnList);
-                    }
-                    else
-                    {
-                        turnChangeFlag = false;
-                        sortedTurnList.Clear();
-                        // プレイヤーとエネミーをまとめてSPD順に並び替える
-                        sortedTurnList.AddRange(turnList);
-                    }
-                    UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
-                }
-                else
-                {
-                    //UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
                     UIManager.Instance.NextTurn();
                 }
 
@@ -217,7 +204,71 @@ public class TurnManager : MonoBehaviour
     //ターン開始してフラグ
     public void FlagChange()
     {
+        // 全員の行動が完了したかチェック
+        if (turnNumber >= sortedTurnList.Count)
+        {
+            // ラウンド終了処理
+            turnNumber = 0;
+
+            // 全キャラクターのバフターン経過処理
+            ProcessEndOfRoundBuffs();
+
+            // 次のラウンドのターンリストを生成
+            GenerateNextRoundTurnList();
+
+            // UI更新
+            UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
+        }
+
         turnFlag = true;
+    }
+
+    // 新規メソッド: ラウンド終了時のバフ処理
+    private void ProcessEndOfRoundBuffs()
+    {
+        foreach (var obj in turnList)
+        {
+            if (obj == null) continue;
+            var character = obj.GetComponent<Character>();
+            if (character != null)
+            {
+                var buffManager = character.GetBuffManager();
+                if (buffManager != null)
+                {
+                    buffManager.TickTurn(); // バフのターン経過処理
+                }
+            }
+        }
+    }
+
+    // 新規メソッド: 次ラウンドのターンリスト生成
+    private void GenerateNextRoundTurnList()
+    {
+        sortedTurnList.Clear();
+
+        if (turnChangeFlag)
+        {
+            turnChangeFlag = false;
+            // ターン順変更があった場合
+            sortedTurnList.AddRange(nextTurnList);
+            nextTurnList.Clear();
+            nextTurnList.AddRange(turnList);
+        }
+        else
+        {
+            // 通常の場合: SPD順（バフ考慮）でソート
+            sortedTurnList.AddRange(turnList);
+
+            sortedTurnList.Sort((a, b) => {
+                var charA = a.GetComponent<Character>();
+                var charB = b.GetComponent<Character>();
+
+                int spdA = charA.GetBuffManager()?.GetEffectiveSpeed() ?? charA.spd;
+                int spdB = charB.GetBuffManager()?.GetEffectiveSpeed() ?? charB.spd;
+
+                return spdB.CompareTo(spdA);
+            });
+        }
     }
     #endregion
 

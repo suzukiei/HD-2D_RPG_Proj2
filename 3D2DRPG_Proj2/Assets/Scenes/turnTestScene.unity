@@ -566,9 +566,9 @@ MonoBehaviour:
   isi: 0
   PlayerData: []
   EnemyData:
-  - {fileID: 11400000, guid: bfec58272500d874f9ca1d5248694896, type: 2}
-  - {fileID: 11400000, guid: bfec58272500d874f9ca1d5248694896, type: 2}
-  - {fileID: 11400000, guid: bfec58272500d874f9ca1d5248694896, type: 2}
+  - {fileID: 11400000, guid: 84df2b5d0217d6741a6295c84468a4f2, type: 2}
+  - {fileID: 11400000, guid: 84df2b5d0217d6741a6295c84468a4f2, type: 2}
+  - {fileID: 11400000, guid: 84df2b5d0217d6741a6295c84468a4f2, type: 2}
   defeatedEnemyIds:
     items: []
   EventIDName: 
@@ -1647,9 +1647,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData:
-  - {fileID: 11400000, guid: 8cdef13f5176d85439f5bd8b535dd680, type: 2}
-  - {fileID: 11400000, guid: c3e43bb82dd8f8d43b767c6dc1456d09, type: 2}
-  - {fileID: 11400000, guid: 3d8a2bcb8627c6c4f833b751a495801a, type: 2}
+  - {fileID: 11400000, guid: 84df2b5d0217d6741a6295c84468a4f2, type: 2}
+  - {fileID: 11400000, guid: 84df2b5d0217d6741a6295c84468a4f2, type: 2}
+  - {fileID: 11400000, guid: 84df2b5d0217d6741a6295c84468a4f2, type: 2}
   AttackRandamFlag: 1
   turnManager: {fileID: 1864808123}
   vector3s:
@@ -3213,7 +3213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1257309014
 Transform:
   m_ObjectHideFlags: 0
@@ -3514,8 +3514,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 64
+  m_fontSizeBase: 64
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4951,6 +4951,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Serpent
       objectReference: {fileID: 0}
+    - target: {fileID: 1247618720369381229, guid: e0e9ceea7bcad78498eda4764e28310d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5981298689774530654, guid: e0e9ceea7bcad78498eda4764e28310d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5667,6 +5672,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1822528919280975751, guid: 7779ca894834ca646a22b9e79cb914a8,
+        type: 3}
+      propertyPath: iconSize
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 3207938292248258004, guid: 7779ca894834ca646a22b9e79cb914a8,
+        type: 3}
+      propertyPath: iconSize
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 3351701114446532721, guid: 7779ca894834ca646a22b9e79cb914a8,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -5726,6 +5741,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691483705436972980, guid: 7779ca894834ca646a22b9e79cb914a8,
+        type: 3}
+      propertyPath: iconSize
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 5445515709620378783, guid: 7779ca894834ca646a22b9e79cb914a8,
         type: 3}

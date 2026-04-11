@@ -300,6 +300,8 @@ public class EnemyManager : MonoBehaviour
             }
         }
 
+        //元の位置に戻る前に、ちゃんと処理仕切れるを待つために0.6秒くらい待つ
+        yield return new WaitForSeconds(0.6f);
         // 4. 元の位置に戻る、トゥイーンアニメーション
         Tween returnTween = actingEnemy.transform.DOMove(originalPosition, returnDuration)
             .SetEase(Ease.InQuad);
@@ -466,6 +468,7 @@ public class EnemyManager : MonoBehaviour
                 switch (buffEffect.statusEffect)
                 {
                     case StatusEffect.Poison:
+                        Debug.Log("毒付与");
                         break;
                     case StatusEffect.Stun:
                         break;
@@ -676,6 +679,7 @@ public class EnemyManager : MonoBehaviour
 
     private void ApplyBuff(SkillData skill, Character target)
     {
+        Debug.Log("EnemyManager-ApplyBuffに入る。");
         if (skill == null || skill.buffEffect == null || skill.buffEffect.Count == 0)
             return;
 
@@ -686,6 +690,8 @@ public class EnemyManager : MonoBehaviour
         {
             BuffInstance buff = new BuffInstance(buffBase);
             buff.remainingTurns = skill.buffDuration;
+            
+            var Player = GetPlayers(); // プレイヤーリスト取得
 
             // statusEffectで大きく分岐（状態異常の種類ごと）
             switch (buffBase.statusEffect)
@@ -722,6 +728,30 @@ public class EnemyManager : MonoBehaviour
                                 if (isBuffSkill) PlayBuffVFX(allyBuff, ally);
                             }
                             break;
+                    }
+                    break;
+
+                case StatusEffect.Makituki:
+                    // 敵1人にデバフ
+
+                    if (Player.Count > 0)
+                    {
+                        var selectedPlayer = Player[UnityEngine.Random.Range(0, Player.Count)];
+
+                        selectedPlayer.ApplyBuff(buff, target);
+                        if (isBuffSkill) PlayBuffVFX(buff, selectedPlayer);
+                    }
+                    break;
+
+                case StatusEffect.Poison:
+                    // 敵1人にデバフ
+                   
+                    if (Player.Count > 0)
+                    {
+                        var selectedPlayer = Player[UnityEngine.Random.Range(0, Player.Count)];
+
+                        selectedPlayer.ApplyBuff(buff, target);
+                        if (isBuffSkill) PlayBuffVFX(buff, selectedPlayer);
                     }
                     break;
 
@@ -938,13 +968,13 @@ public class EnemyManager : MonoBehaviour
                 break;
                 
             case StatusEffect.Poison:
-            case StatusEffect.Burn:
                 VFXManager.Instance.PlayPoisonEffect(target.CharacterObj);
                 break;
                 
             case StatusEffect.SpdDown:
             case StatusEffect.MagicDamageDown:
             case StatusEffect.Silent:
+            case StatusEffect.Makituki:
                 VFXManager.Instance.PlayDebuffEffect(target.CharacterObj);
                 break;
                 
