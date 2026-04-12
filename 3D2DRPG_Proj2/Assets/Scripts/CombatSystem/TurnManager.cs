@@ -352,13 +352,7 @@ public class TurnManager : MonoBehaviour
     private int CalculateEnemyExp(CharacterData enemyData)
     {
         if (enemyData == null) return 0;
-
-        // 敵のレベルに基づいて経験値を計算
-        // 基本経験値 = 敵レベル × 50
         int baseExp = enemyData.exp;
-
-        // 敵の種類や強さに応じて調整可能
-        // 例: ボス敵の場合は倍率を上げるなど
 
         return baseExp;
     }
