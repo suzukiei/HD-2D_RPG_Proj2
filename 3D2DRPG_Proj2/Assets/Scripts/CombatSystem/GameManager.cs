@@ -465,25 +465,39 @@ public class GameManager : MonoBehaviour
 
     private void InitializeExpTable()
     {
-        //レベルは[1]から11レべとする。
-        ExpTable[1] = 550;
-        ExpTable[2] = 600;
-        ExpTable[3] = 650;
-        ExpTable[4] = 700;
-        ExpTable[5] = 750;
-        ExpTable[6] = 800;
-        ExpTable[7] = 850;
-        ExpTable[8] = 900;
-        ExpTable[9] = 950;
-        ExpTable[10] = 1000;
-
+        // レベル1-10
+        ExpTable[1] = 100;
+        ExpTable[2] = 150;
+        ExpTable[3] = 200;
+        ExpTable[4] = 250;
+        ExpTable[5] = 300;
+        ExpTable[6] = 350;
+        ExpTable[7] = 400;
+        ExpTable[8] = 450;
+        ExpTable[9] = 500;
+        ExpTable[10] = 550;
+        
+        // レベル11-20
+        ExpTable[11] = 600;
+        ExpTable[12] = 650;
+        ExpTable[13] = 700;
+        ExpTable[14] = 750;
+        ExpTable[15] = 800;
+        ExpTable[16] = 850;
+        ExpTable[17] = 900;
+        ExpTable[18] = 950;
+        ExpTable[19] = 1000;
+        ExpTable[20] = 1050;
     }
     /// <summary>
-    /// 経験値を付与してレベルアップ処理
+    /// 経験値を付与してレベルアップ処理（非推奨：代わりにCharacter.GainExp()を使用）
     /// </summary>
+    [System.Obsolete("Character.GainExp()を使用してください。このメソッドは後方互換性のために残されています。")]
     public void AddExperience(CharacterData character, int expAmount)
     {
         if (character == null || expAmount <= 0) return;
+        
+        Debug.LogWarning($"[GameManager] AddExperience()は非推奨です。Character.GainExp()を使用してください。");
         
         character.exp += expAmount;
         
@@ -508,7 +522,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// レベルアップ処理（LevelUpTableを使用、なければデフォルト）
     /// </summary>
-    private void LevelUp(CharacterData character)
+    public void LevelUp(CharacterData character)
     {
         character.level++;
         
@@ -619,9 +633,11 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 戦闘開始前のキャラクターステータスを保存
     /// </summary>
-    private void SavePreBattleSnapshots()
+    public void SavePreBattleSnapshots()
     {
         preBattleSnapshots.Clear();
+        
+        Debug.Log($"[GameManager] SavePreBattleSnapshots開始 PlayerData数: {PlayerData.Count}");
         
         foreach (var character in PlayerData)
         {
@@ -637,12 +653,15 @@ public class GameManager : MonoBehaviour
                 };
                 preBattleSnapshots.Add(snapshot);
                 
-                if (showDebugLog)
-                {
-                    Debug.Log($"[GameManager] 戦闘前スナップショット: {snapshot.characterName} Lv.{snapshot.level} EXP:{snapshot.exp}/{snapshot.requiredExp} (累積:{snapshot.totalExp})");
-                }
+                Debug.Log($"[GameManager] スナップショット保存: {snapshot.characterName} Lv.{snapshot.level} EXP:{snapshot.exp}/{snapshot.requiredExp} (累積:{snapshot.totalExp})");
+            }
+            else
+            {
+                Debug.LogWarning($"[GameManager] PlayerDataにnullキャラクターが含まれています");
             }
         }
+        
+        Debug.Log($"[GameManager] SavePreBattleSnapshots完了 保存数: {preBattleSnapshots.Count}");
     }
     
     /// <summary>

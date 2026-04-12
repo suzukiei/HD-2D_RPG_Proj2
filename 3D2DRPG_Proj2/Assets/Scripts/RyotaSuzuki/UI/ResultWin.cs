@@ -10,7 +10,6 @@ public class ResultWin : MonoBehaviour
     [SerializeField, Header("オブジェクト受け取り用のプレイヤーマネージャースクリプト")]
     private PlayerManager playerManager;
 
-    //プレイヤーのデータ
     private List<GameObject> players;
 
     [SerializeField, Header("UIプレハブ")]
@@ -34,65 +33,61 @@ public class ResultWin : MonoBehaviour
     [SerializeField] private float expAnimationDuration = 2f;
     [SerializeField] private Ease expAnimationEase = Ease.OutQuad;
 
-    // Start is called before the first frame update
     void Start()
     {
-        // プレイヤーを取得
         players = playerManager.GetPlayerCharacters();
-
-        ViewSet(players);
-        
-        // 経験値アニメーション開始
         StartCoroutine(AnimateExpGain());
     }
-    
-    public void ViewSet(List<GameObject> sortedTurnList)
+
+    private void Update()
     {
-        if (UIParent == null || UIPrefab == null)
-        {
-            Debug.LogWarning("TurnUIParentまたはTurnUIPrefabが設定されていません");
-            return;
-        }
-        // 新しいUI要素を作成
-        for (int i = 0; i < sortedTurnList.Count; i++)
-        {
-            if (sortedTurnList[i] == null)
-                continue;
-            GameObject turnUI = Instantiate(UIPrefab, UIParent);
-            // ターンUIの位置を設定（横並び）
-            turnUI.GetComponent<RectTransform>().anchoredPosition = new Vector2(i * 250, 0); // 250はアイコンの間隔
-            // キャラクターの情報を取得してUIに反映
-            Character character = sortedTurnList[i].GetComponent<Character>();
-            if (character != null)
-            {
-                // アイコンの設定
-                Image iconImage = turnUI.transform.Find("Icon").GetComponent<Image>();
-                iconImage.sprite = character.characterIcon;
-                // 名前の設定
-                TextMeshProUGUI nameText = turnUI.transform.Find("TextExp").GetComponent<TextMeshProUGUI>();
-                nameText.text = character.charactername; //ここにはEXPポイントが入る。
-            }
-        }
+        if (Input.GetKey(KeyCode.Space) || (Input.GetKey(KeyCode.Return))) 
+            GameManager.Instance.EndBattle();
     }
-    
-    /// <summary>
-    /// 経験値獲得アニメーション
-    /// </summary>
+
     private IEnumerator AnimateExpGain()
     {
-        // 少し待ってからアニメーション開始
+        Debug.Log("[ResultWin] 経験値アニメーション開始");
         yield return new WaitForSeconds(0.5f);
         
-        // GameManagerから戦闘前のスナップショットと現在のデータを取得
+        if (GameManager.Instance == null || GameManager.Instance.PlayerData == null)
+        {
+            Debug.LogError("[ResultWin] GameManagerまたはPlayerDataがnullです");
+            yield break;
+        }
+        
+        Debug.Log($"[ResultWin] GameManager.PlayerData数: {GameManager.Instance.PlayerData.Count}");
+        
         foreach (var playerChar in GameManager.Instance.PlayerData)
         {
             if (playerChar == null) continue;
             
-            // 戦闘前のスナップショットを取得
-            var snapshot = GameManager.Instance.GetPreBattleSnapshot(playerChar.charactername);
-            if (snapshot == null) continue;
+            Debug.Log($"[ResultWin] 処理中: {playerChar.charactername}");
             
-            // キャラクターに応じて経験値バーを選択
+            if (playerChar.charactername == "月")
+            {
+                Debug.Log($"[ResultWin] {playerChar.charactername} は経験値表示対象外のためスキップ");
+                continue;
+            }
+            
+            var snapshot = GameManager.Instance.GetPreBattleSnapshot(playerChar.charactername);
+            
+            if (snapshot == null)
+            {
+                Debug.LogWarning($"[ResultWin] {playerChar.charactername} のスナップショットが見つかりません。初回戦闘として処理します。");
+                
+                snapshot = new GameManager.PreBattleSnapshot
+                {
+                    characterName = playerChar.charactername,
+                    level = playerChar.level,
+                    exp = 0,
+                    requiredExp = GameManager.Instance.GetRequiredExp(playerChar.level),
+                    totalExp = GameManager.Instance.CalculateTotalExp(playerChar.level, 0)
+                };
+            }
+            
+            Debug.Log($"[ResultWin] スナップショット: {playerChar.charactername} Lv.{snapshot.level} {snapshot.exp}/{snapshot.requiredExp}");
+            
             Image expFill = null;
             TextMeshProUGUI expText = null;
             TextMeshProUGUI levelText = null;
@@ -112,15 +107,16 @@ public class ResultWin : MonoBehaviour
             
             if (expFill != null)
             {
-                // 経験値アニメーション開始
+                Debug.Log($"[ResultWin] アニメーション開始: {playerChar.charactername}");
                 StartCoroutine(AnimateExpForCharacter(playerChar, snapshot, expFill, expText, levelText));
+            }
+            else
+            {
+                Debug.LogWarning($"[ResultWin] {playerChar.charactername} の経験値バーがnullです");
             }
         }
     }
     
-    /// <summary>
-    /// 個別キャラクターの経験値アニメーション
-    /// </summary>
     private IEnumerator AnimateExpForCharacter(
         CharacterData character,
         GameManager.PreBattleSnapshot snapshot,
@@ -128,16 +124,15 @@ public class ResultWin : MonoBehaviour
         TextMeshProUGUI expText,
         TextMeshProUGUI levelText)
     {
-        // 戦闘前の状態を設定
         int currentLevel = snapshot.level;
         int currentExp = snapshot.exp;
         int requiredExp = snapshot.requiredExp;
         
-        // 獲得経験値を計算（戦闘後の累積経験値 - 戦闘前の累積経験値）
         int currentTotalExp = GameManager.Instance.CalculateTotalExp(character.level, character.exp);
         int gainedExp = currentTotalExp - snapshot.totalExp;
         
-        // 初期表示
+        Debug.Log($"[ResultWin] {character.charactername} 戦闘前: Lv.{currentLevel} {currentExp}/{requiredExp}EXP → 獲得: +{gainedExp}EXP (累積: {snapshot.totalExp}→{currentTotalExp})");
+        
         if (levelText != null)
         {
             levelText.text = $"Lv.{currentLevel}";
@@ -148,30 +143,34 @@ public class ResultWin : MonoBehaviour
             expText.text = $"{currentExp}/{requiredExp}";
         }
         
-        expFill.fillAmount = (float)currentExp / requiredExp;
+        if (requiredExp > 0)
+        {
+            expFill.fillAmount = (float)currentExp / requiredExp;
+        }
         
-        // 獲得経験値を加算
+        if (gainedExp <= 0)
+        {
+            Debug.Log($"[ResultWin] {character.charactername} 経験値獲得なし");
+            yield break;
+        }
+        
         int targetExp = currentExp + gainedExp;
         
-        Debug.Log($"[ResultWin] {character.charactername} 戦闘前: Lv.{currentLevel} {currentExp}/{requiredExp}EXP → 獲得: +{gainedExp}EXP (累積: {snapshot.totalExp}→{currentTotalExp})");
-        
-        // レベルアップを考慮しながらアニメーション
         while (targetExp > 0)
         {
             int expToGain = Mathf.Min(targetExp, requiredExp - currentExp);
             int finalExp = currentExp + expToGain;
-            float targetRatio = (float)finalExp / requiredExp;
+            float targetRatio = requiredExp > 0 ? (float)finalExp / requiredExp : 0;
             
-            // アニメーション実行
             float animDuration = expAnimationDuration * ((float)expToGain / Mathf.Max(gainedExp, 1));
             
-            // 経験値バーのアニメーション
+            Debug.Log($"[ResultWin] アニメーション実行: {currentExp} → {finalExp} / {requiredExp} (比率: {targetRatio:F2})");
+            
             yield return expFill.DOFillAmount(targetRatio, animDuration)
                 .SetEase(expAnimationEase)
                 .OnUpdate(() =>
                 {
-                    // アニメーション中も経験値テキストを更新
-                    if (expText != null)
+                    if (expText != null && requiredExp > 0)
                     {
                         int displayExp = Mathf.RoundToInt(expFill.fillAmount * requiredExp);
                         expText.text = $"{displayExp}/{requiredExp}";
@@ -182,29 +181,24 @@ public class ResultWin : MonoBehaviour
             currentExp = finalExp;
             targetExp -= expToGain;
             
-            // レベルアップチェック
             if (currentExp >= requiredExp)
             {
-                // レベルアップ！
                 currentLevel++;
                 currentExp -= requiredExp;
                 requiredExp = GameManager.Instance.GetRequiredExp(currentLevel);
                 
                 Debug.Log($"★ {character.charactername} がレベル {currentLevel} にアップ！");
                 
-                // レベルアップ演出
                 if (levelText != null)
                 {
                     levelText.text = $"Lv.{currentLevel}";
                     levelText.transform.DOPunchScale(Vector3.one * 0.3f, 0.5f);
                 }
                 
-                // バーをリセット
                 expFill.fillAmount = 0f;
                 yield return new WaitForSeconds(0.3f);
             }
             
-            // テキスト更新
             if (expText != null)
             {
                 expText.text = $"{currentExp}/{requiredExp}";

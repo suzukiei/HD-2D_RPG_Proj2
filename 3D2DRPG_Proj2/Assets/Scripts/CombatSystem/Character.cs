@@ -109,7 +109,7 @@ public class Character: MonoBehaviour
     }
 
     [Header("レベルアップ設定")]
-    public int maxLevel = 99; // 最大レベル
+    public int maxLevel = 20; // 最大レベル
     
     // レベルアップイベント（旧レベルを引数として渡す）
     public System.Action<int> OnLevelUp;
@@ -129,11 +129,24 @@ public class Character: MonoBehaviour
         
         exp += amount;
         
+        // CharacterDataも同期
+        if (characterData != null)
+        {
+            characterData.exp = exp;
+        }
+        
         // 連続レベルアップに対応
         while (exp >= ExpToLevelUp() && level < maxLevel)
         {
             int expNeeded = ExpToLevelUp();
             exp -= expNeeded;
+            
+            // CharacterDataの経験値も同期
+            if (characterData != null)
+            {
+                characterData.exp = exp;
+            }
+            
             LevelUp();
         }
         
@@ -141,61 +154,102 @@ public class Character: MonoBehaviour
         if (level >= maxLevel)
         {
             exp = 0;
+            if (characterData != null)
+            {
+                characterData.exp = 0;
+            }
         }
     }
     
     /// <summary>
     /// 次のレベルアップに必要な経験値を計算
-    /// 二次関数的な成長曲線を使用（よりバランスが良い）
+    /// GameManagerのExpTableを使用
     /// </summary>
     private int ExpToLevelUp()
     {
-        // オプション1: 二次関数的な成長（推奨）
+        if (GameManager.Instance != null)
+        {
+            return GameManager.Instance.GetRequiredExp(level);
+        }
+        
+        // フォールバック（GameManagerがない場合）
         return 100 + (level - 1) * (level - 1) * 50;
-        
-        // オプション2: 指数関数的な成長（コメントアウト）
-        // return (int)(100 * Mathf.Pow(1.5f, level - 1));
-        
-        // オプション3: 線形成長（コメントアウト）
-        // return level * 100;
     }
     
     /// <summary>
-    /// レベルアップ処理
+    /// レベルアップ処理（GameManagerのLevelUpTableシステムに委譲）
     /// </summary>
     private void LevelUp()
     {
         int oldLevel = level;
-        level++;
         
-        // ステータス上昇
-        maxHp += 10;
-        maxMp += 5;
-        atk += 2;
-        def += 2;
-        spd += 1;
-        
-        // ベースステータスを更新
-        baseAtk = atk;
-        baseDef = def;
-        baseSpd = spd;
-        baseMaxHp = maxHp;
-        baseMaxMp = maxMp;
-        
-        // バフマネージャーにベースステータスの更新を通知
-        if (buffManager != null)
+        // CharacterDataを通してGameManagerのレベルアップ処理を実行
+        if (characterData != null && GameManager.Instance != null)
         {
-            buffManager.UpdateBaseStats(baseAtk, baseDef, baseSpd, baseMaxHp, baseMaxMp);
+            GameManager.Instance.LevelUp(characterData);
+            
+            // GameManagerで更新されたCharacterDataをCharacterに反映
+            level = characterData.level;
+            maxHp = characterData.maxHp;
+            maxMp = characterData.maxMp;
+            atk = characterData.atk;
+            def = characterData.def;
+            spd = characterData.spd;
+            Int = characterData.Int;
+            
+            // ベースステータスを更新
+            baseAtk = atk;
+            baseDef = def;
+            baseSpd = spd;
+            baseMaxHp = maxHp;
+            baseMaxMp = maxMp;
+            
+            // バフマネージャーにベースステータスの更新を通知
+            if (buffManager != null)
+            {
+                buffManager.UpdateBaseStats(baseAtk, baseDef, baseSpd, baseMaxHp, baseMaxMp);
+            }
+            
+            // HP/MP全回復
+            hp = maxHp;
+            mp = maxMp;
+            
+            // スキル配列を同期
+            skills = characterData.skills;
+            
+            // レベルアップイベント発火
+            OnLevelUp?.Invoke(oldLevel);
+            
+            Debug.Log($"{charactername} がレベル {oldLevel} から {level} にレベルアップしました！");
         }
-        
-        // HP/MP全回復
-        hp = maxHp;
-        mp = maxMp;
-        
-        // レベルアップイベント発火
-        OnLevelUp?.Invoke(oldLevel);
-        
-        Debug.Log($"{charactername} がレベル {oldLevel} から {level} にレベルアップしました！");
+        else
+        {
+            // GameManagerがない場合はデフォルトのレベルアップ処理
+            level++;
+            maxHp += 10;
+            maxMp += 5;
+            atk += 2;
+            def += 2;
+            spd += 1;
+            
+            baseAtk = atk;
+            baseDef = def;
+            baseSpd = spd;
+            baseMaxHp = maxHp;
+            baseMaxMp = maxMp;
+            
+            if (buffManager != null)
+            {
+                buffManager.UpdateBaseStats(baseAtk, baseDef, baseSpd, baseMaxHp, baseMaxMp);
+            }
+            
+            hp = maxHp;
+            mp = maxMp;
+            
+            OnLevelUp?.Invoke(oldLevel);
+            
+            Debug.LogWarning($"{charactername} のレベルアップ: GameManagerまたはCharacterDataがないため、デフォルト処理を使用");
+        }
     }
     
     /// <summary>
@@ -219,29 +273,33 @@ public class Character: MonoBehaviour
 
     ///<summary>
     ///
-    /// CharacterDataを取得
+    /// CharacterDataを取得（元のScriptableObjectを更新して返す）
     ///
     ///</summary>
     public CharacterData GetCharacterData()
     {
-        CharacterData newCharacterData =new CharacterData();   
-        newCharacterData.charactername = charactername;
-        newCharacterData.characterIcon = characterIcon;
-        newCharacterData.enemyCheckFlag = enemyCheckFlag;
-        newCharacterData.hp = hp;
-        newCharacterData.mp = mp;
-        newCharacterData.atk = atk;
-        newCharacterData.def = def;
-        newCharacterData.spd = spd;
-        newCharacterData.maxHp = maxHp;
-        newCharacterData.maxMp = maxMp;
-        newCharacterData.exp = exp;
-        newCharacterData.level = level;
-        newCharacterData.CharacterObj = characterDataObj;
-        newCharacterData.skills = skills;
-        newCharacterData.CharacterTransfrom = CharacterTransfrom;
-        newCharacterData.StatusFlag = StatusFlag;
-        return newCharacterData;
+        // 元のcharacterData（ScriptableObject）を更新
+        if (characterData != null)
+        {
+            characterData.hp = hp;
+            characterData.mp = mp;
+            characterData.atk = atk;
+            characterData.def = def;
+            characterData.spd = spd;
+            characterData.Int = Int;
+            characterData.maxHp = maxHp;
+            characterData.maxMp = maxMp;
+            characterData.exp = exp;
+            characterData.level = level;
+            characterData.skills = skills;
+            characterData.CharacterTransfrom = CharacterTransfrom;
+            characterData.StatusFlag = StatusFlag;
+            
+            return characterData;
+        }
+        
+        Debug.LogWarning($"[Character] {charactername} のcharacterDataがnullです");
+        return null;
     }
     
     /// <summary>

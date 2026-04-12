@@ -15,15 +15,15 @@ MonoBehaviour:
   charactername: "\u7167"
   characterIcon: {fileID: 21300000, guid: 3d250f33c3a152b42a32f64527113ce7, type: 3}
   enemyCheckFlag: 0
-  hp: 200
-  mp: 200
+  hp: 211
+  mp: 214
   atk: 10
-  Int: 10
+  Int: 20
   def: 15
   spd: 20
-  maxHp: 200
-  maxMp: 200
-  exp: 0
+  maxHp: 211
+  maxMp: 214
+  exp: 5650
   level: 10
   CharacterObj: {fileID: 7333836060625140281, guid: 14e6c60294595ec46a7a94d30b985e89,
     type: 3}
@@ -32,6 +32,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1381c0e3658634d43a988d49085f68e8, type: 2}
   - {fileID: 11400000, guid: d286022fd6472e240b7489ed5fa9e994, type: 2}
   - {fileID: 11400000, guid: 6ca2043cbb898984298e0529d1e29d11, type: 2}
+  - {fileID: 11400000, guid: 6d8ead6b2db9d8644b2f6b61bad6c479, type: 2}
+  - {fileID: 11400000, guid: 3b3c5a625bfc3c24395691a3b0459720, type: 2}
   CharacterTransfrom: {x: 4, y: 0, z: 0}
-  StatusFlag: 2
+  StatusFlag: 0
   levelUpTable: {fileID: 11400000, guid: 8d7ea8cea5a108d4bb8b00222dd679aa, type: 2}

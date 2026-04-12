@@ -20,6 +20,8 @@ public class TurnManager : MonoBehaviour
     private List<GameObject> sortedTurnList = new List<GameObject>();// SPD順にソートされたリスト
     [SerializeField]
     private List<GameObject> nextTurnList = new List<GameObject>();// 次のターン用リスト
+    [SerializeField, Header("ResultWinキャンバス")]
+    public GameObject ResultWinCanvas; // 勝利時キャンバス
     //現在のターンオブジェクト
     public GameObject currentTurnObject;
     private bool turnChangeFlag = false; // ターン順変更フラグ
@@ -74,6 +76,17 @@ public class TurnManager : MonoBehaviour
     // 初期化処理
     private void Initialization()
     {
+        // 戦闘開始時にスナップショットを保存（まだ保存されていない場合）
+        if (GameManager.Instance != null)
+        {
+            // スナップショットリストが空なら保存
+            if (GameManager.Instance.preBattleSnapshots == null || GameManager.Instance.preBattleSnapshots.Count == 0)
+            {
+                Debug.Log("[TurnManager] 戦闘開始時にスナップショットを保存します");
+                GameManager.Instance.SavePreBattleSnapshots();
+            }
+        }
+        
         // プレイヤーを取得
         players = playerManager.GetPlayerCharacters();
         // エネミーを取得
@@ -299,6 +312,8 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log("勝利処理");
 
+        ResultWinCanvas.SetActive(true);
+
         GameManager.Instance.EnemyData.AddRange(enemyManager.enemyData);
 
         // 倒した敵を記録し、経験値を計算
@@ -323,8 +338,9 @@ public class TurnManager : MonoBehaviour
         {
             DistributeExperienceToPlayers(totalExp);
         }
-       
-        GameManager.Instance.EndBattle();
+
+        //遷移処理はResultWin.csへ移行
+
         //GameManager.Instance.EnemyDataClear();  
     }
 
@@ -339,7 +355,7 @@ public class TurnManager : MonoBehaviour
 
         // 敵のレベルに基づいて経験値を計算
         // 基本経験値 = 敵レベル × 50
-        int baseExp = enemyData.level * 50;
+        int baseExp = enemyData.exp;
 
         // 敵の種類や強さに応じて調整可能
         // 例: ボス敵の場合は倍率を上げるなど
