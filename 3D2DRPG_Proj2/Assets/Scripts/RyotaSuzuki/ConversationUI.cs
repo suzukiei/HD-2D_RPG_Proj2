@@ -92,6 +92,9 @@ public class ConversationUI : MonoBehaviour
     [TextArea(3, 10)]
     public List<string> testDialogues = new List<string>();
 
+    //ボス用のオブジェクトを格納する
+    [SerializeField] public GameObject BossObject;
+
     private List<DialogueData> dialogues = new List<DialogueData>();
     private List<DialogueLogEntry> dialogueLog = new List<DialogueLogEntry>();
     private int currentDialogueIndex = 0;
@@ -354,7 +357,7 @@ public class ConversationUI : MonoBehaviour
         csvFileName = csvFile;
         currentPlayableDirector = null; // リセット
         ReloadCSV();
-        StartDialogue();
+        StartDialogue(true);
     }
 
     /// <summary>
@@ -498,7 +501,50 @@ public class ConversationUI : MonoBehaviour
         
         // 会話終了イベントを発火
         onDialogueEnd?.Invoke();
-        
+
+        // デバッグ：現在のCSVファイル名を確認
+        Debug.Log($"[ConversationUI] 現在のcsvFileName: '{csvFileName}'");
+
+        //もしボス戦ならば
+        if (csvFileName == "EV-004.csv")
+        {
+            Debug.Log("[ConversationUI] ボス戦です");
+            if (GameManager.Instance != null && BossObject != null)
+            {
+                // BossObjectコンポーネントからエネミーデータを取得
+                BossObject bossScript = BossObject.GetComponent<BossObject>();
+                if (bossScript != null)
+                {
+                    var bossEnemyData = bossScript.GetEnemyData();
+                    if (bossEnemyData != null && bossEnemyData.Count > 0)
+                    {
+                        Debug.Log($"[ConversationUI] ボスエネミーデータ取得成功: {bossEnemyData.Count}体");
+                        // 専用のエネミーデータリストを渡してボス戦開始
+                        GameManager.Instance.StartBattleWithEnemyData(transform.position, bossEnemyData);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[ConversationUI] BossObjectにエネミーデータが設定されていません");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("[ConversationUI] BossObjectにBossObjectコンポーネントが見つかりません");
+                }
+            }
+            else
+            {
+                if (GameManager.Instance == null)
+                    Debug.LogWarning("[ConversationUI] GameManagerが見つかりません");
+                if (BossObject == null)
+                    Debug.LogWarning("[ConversationUI] BossObjectが設定されていません");
+            }
+        }
+        else
+        {
+            Debug.Log($"[ConversationUI] ボス戦ではありません（csvFileName: '{csvFileName}'）");
+        }
+
         // シーン遷移
         if (loadSceneOnEnd && !string.IsNullOrEmpty(nextSceneName))
         {
