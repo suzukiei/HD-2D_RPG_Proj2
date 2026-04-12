@@ -94,6 +94,21 @@ public class ConversationUI : MonoBehaviour
 
     //ボス用のオブジェクトを格納する
     [SerializeField] public GameObject BossObject;
+    
+    [System.Serializable]
+    public class BattleEventData
+    {
+        [Tooltip("会話CSV名（.csvなし）")]
+        public string dialogueCSV;
+        [Tooltip("戦闘後に再生する会話CSV（オプション）")] //.csvありで記入
+        public string postBattleDialogueCSV;
+        [Tooltip("このイベントがボス戦かどうか")]
+        public bool isBossBattle = true;
+    }
+    
+    [Header("戦闘イベント設定")]
+    [SerializeField, Tooltip("戦闘イベントのリスト")]
+    public List<BattleEventData> battleEvents = new List<BattleEventData>();
 
     private List<DialogueData> dialogues = new List<DialogueData>();
     private List<DialogueLogEntry> dialogueLog = new List<DialogueLogEntry>();
@@ -325,6 +340,13 @@ public class ConversationUI : MonoBehaviour
         }
 
         disabledEnemy = DisabledEnemyFlg;
+        
+        // プレイヤーと敵を無効化
+        if (DisabledEnemyFlg)
+        {
+            DisablePlayerControl();
+            DisableAllEnemies();
+        }
 
         ShowDialogue(currentDialogueIndex);
     }
@@ -512,45 +534,8 @@ public class ConversationUI : MonoBehaviour
         // デバッグ：現在のCSVファイル名を確認
         Debug.Log($"[ConversationUI] 現在のcsvFileName: '{csvFileName}'");
 
-        //もしボス戦ならば
-        if (csvFileName == "EV-004.csv")
-        {
-            Debug.Log("[ConversationUI] ボス戦です");
-            if (GameManager.Instance != null && BossObject != null)
-            {
-                // BossObjectコンポーネントからエネミーデータを取得
-                BossObject bossScript = BossObject.GetComponent<BossObject>();
-                if (bossScript != null)
-                {
-                    var bossEnemyData = bossScript.GetEnemyData();
-                    if (bossEnemyData != null && bossEnemyData.Count > 0)
-                    {
-                        Debug.Log($"[ConversationUI] ボスエネミーデータ取得成功: {bossEnemyData.Count}体");
-                        // 専用のエネミーデータリストを渡してボス戦開始
-                        GameManager.Instance.StartBattleWithEnemyData(transform.position, bossEnemyData);
-                    }
-                    else
-                    {
-                        Debug.LogWarning("[ConversationUI] BossObjectにエネミーデータが設定されていません");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning("[ConversationUI] BossObjectにBossObjectコンポーネントが見つかりません");
-                }
-            }
-            else
-            {
-                if (GameManager.Instance == null)
-                    Debug.LogWarning("[ConversationUI] GameManagerが見つかりません");
-                if (BossObject == null)
-                    Debug.LogWarning("[ConversationUI] BossObjectが設定されていません");
-            }
-        }
-        else
-        {
-            Debug.Log($"[ConversationUI] ボス戦ではありません（csvFileName: '{csvFileName}'）");
-        }
+        // 戦闘イベントをチェック
+        CheckAndStartBattleEvent();
 
         // シーン遷移
         if (loadSceneOnEnd && !string.IsNullOrEmpty(nextSceneName))
@@ -615,8 +600,91 @@ public class ConversationUI : MonoBehaviour
     /// <summary>
     /// プレイヤー操作を有効化
     /// </summary>
+    /// <summary>
+    /// プレイヤーの操作を無効化
+    /// </summary>
+    private void DisablePlayerControl()
+    {
+        if (playerObject == null)
+        {
+            // playerObjectがnullなら自動検索
+            playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject == null)
+            {
+                Debug.LogWarning("[ConversationUI] プレイヤーが見つかりません");
+                return;
+            }
+        }
+        
+        // MonoBehaviourコンポーネントを無効化
+        var scripts = playerObject.GetComponents<MonoBehaviour>();
+        foreach (var script in scripts)
+        {
+            if (script != null && script.enabled && script.GetType().Name.Contains("Player"))
+            {
+                script.enabled = false;
+                Debug.Log($"[ConversationUI] {script.GetType().Name} を無効化しました");
+            }
+        }
+        
+        // CharacterController
+        var characterController = playerObject.GetComponent<CharacterController>();
+        if (characterController != null)
+        {
+            characterController.enabled = false;
+        }
+        
+        // Rigidbody
+        var rb = playerObject.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+        
+        // AnimatorをIdleにする
+        SetPlayerAnimatorIdle();
+    }
+    
+    /// <summary>
+    /// プレイヤーのAnimatorをIdle状態にする
+    /// </summary>
+    private void SetPlayerAnimatorIdle()
+    {
+        if (playerObject == null) return;
+        
+        var animator = playerObject.GetComponent<Animator>();
+        if (animator == null) return;
+        
+        // isMovingパラメータをfalseにする（存在する場合）
+        foreach (var param in animator.parameters)
+        {
+            if (param.name == "isMoving" && param.type == AnimatorControllerParameterType.Bool)
+            {
+                animator.SetBool("isMoving", false);
+                Debug.Log($"[ConversationUI] Animator: isMoving を false に設定しました");
+            }
+            else if (param.name == "isDash" && param.type == AnimatorControllerParameterType.Bool)
+            {
+                animator.SetBool("isDash", false);
+            }
+            else if (param.name == "Speed" && param.type == AnimatorControllerParameterType.Float)
+            {
+                animator.SetFloat("Speed", 0f);
+            }
+            else if (param.name == "MoveSpeed" && param.type == AnimatorControllerParameterType.Float)
+            {
+                animator.SetFloat("MoveSpeed", 0f);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// プレイヤーの操作を有効化
+    /// </summary>
     private void EnablePlayerControl()
     {
+        if (playerObject == null) return;
+        
         // MonoBehaviourコンポーネントを有効化
         var scripts = playerObject.GetComponents<MonoBehaviour>();
         foreach (var script in scripts)
@@ -643,6 +711,29 @@ public class ConversationUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// フィールド上の全ての敵を停止&非表示
+    /// </summary>
+    private void DisableAllEnemies()
+    {
+        // 全てのEnemyWanderAIを検索
+        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>();
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                // 徘徊を停止
+                enemy.StopWandering();
+
+                // オブジェクトを非表示
+                enemy.gameObject.SetActive(false);
+
+                Debug.Log($"[ConversationUI] {enemy.gameObject.name} を停止&非表示にしました");
+            }
+        }
+    }
+    
     /// <summary>
     /// フィールド上の全ての敵を再開&表示
     /// </summary>
@@ -951,5 +1042,103 @@ public class ConversationUI : MonoBehaviour
     {
         dialogueLog.Clear();
         Debug.Log("ログをクリアしました。");
+    }
+    
+    /// <summary>
+    /// プレイヤーの位置を取得
+    /// </summary>
+    private Vector3 GetPlayerPosition()
+    {
+        // playerObjectが設定されている場合
+        if (playerObject != null)
+        {
+            return playerObject.transform.position;
+        }
+        
+        // playerObjectがnullの場合、自動検索
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            playerObject = player; // 次回のために保存
+            return player.transform.position;
+        }
+        
+        // プレイヤーが見つからない場合は原点を返す
+        Debug.LogWarning("[ConversationUI] プレイヤーが見つかりません。原点を使用します。");
+        return Vector3.zero;
+    }
+    
+    /// <summary>
+    /// 戦闘イベントをチェックして開始
+    /// </summary>
+    private void CheckAndStartBattleEvent()
+    {
+        // .csv拡張子を除去して正規化
+        string normalizedCSVName = csvFileName.Replace(".csv", "");
+        
+        // 戦闘イベントリストから該当するイベントを検索
+        BattleEventData battleEvent = battleEvents.Find(e => 
+            e.dialogueCSV == normalizedCSVName || 
+            e.dialogueCSV == csvFileName
+        );
+        
+        if (battleEvent != null && battleEvent.isBossBattle)
+        {
+            Debug.Log($"[ConversationUI] 戦闘イベント検出: {normalizedCSVName}");
+            
+            if (GameManager.Instance != null && BossObject != null)
+            {
+                // プレイヤーの位置を取得
+                Vector3 playerPosition = GetPlayerPosition();
+                Debug.Log($"[ConversationUI] プレイヤー位置: {playerPosition}");
+                
+                // BossObjectコンポーネントからエネミーデータを取得
+                BossObject bossScript = BossObject.GetComponent<BossObject>();
+                if (bossScript != null)
+                {
+                    var bossEnemyData = bossScript.GetEnemyData();
+                    if (bossEnemyData != null && bossEnemyData.Count > 0)
+                    {
+                        Debug.Log($"[ConversationUI] ボスエネミーデータ取得成功: {bossEnemyData.Count}体");
+                        
+                        // 戦闘後会話が設定されている場合
+                        if (!string.IsNullOrEmpty(battleEvent.postBattleDialogueCSV))
+                        {
+                            Debug.Log($"[ConversationUI] 戦闘後会話を設定: {battleEvent.postBattleDialogueCSV}");
+                            GameManager.Instance.StartBattleWithPostDialogue(
+                                playerPosition, 
+                                bossEnemyData, 
+                                battleEvent.postBattleDialogueCSV
+                            );
+                        }
+                        else
+                        {
+                            // 戦闘後会話なしの通常ボス戦
+                            Debug.Log($"[ConversationUI] 戦闘後会話なしのボス戦");
+                            GameManager.Instance.StartBattleWithEnemyData(playerPosition, bossEnemyData);
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[ConversationUI] BossObjectにエネミーデータが設定されていません");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("[ConversationUI] BossObjectにBossObjectコンポーネントが見つかりません");
+                }
+            }
+            else
+            {
+                if (GameManager.Instance == null)
+                    Debug.LogWarning("[ConversationUI] GameManagerが見つかりません");
+                if (BossObject == null)
+                    Debug.LogWarning("[ConversationUI] BossObjectが設定されていません");
+            }
+        }
+        else
+        {
+            Debug.Log($"[ConversationUI] 戦闘イベントではありません（csvFileName: '{normalizedCSVName}'）");
+        }
     }
 }

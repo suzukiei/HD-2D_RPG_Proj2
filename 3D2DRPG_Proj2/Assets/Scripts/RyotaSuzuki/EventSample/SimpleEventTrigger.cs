@@ -377,7 +377,7 @@ public class SimpleEventTrigger : MonoBehaviour
     /// <summary>
     /// フィールド上の全ての敵を停止&非表示
     /// </summary>
-    private void DisableAllEnemies()
+    public void DisableAllEnemies()
     {
         if (!disableEnemies) return;
 

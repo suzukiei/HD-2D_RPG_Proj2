@@ -68,6 +68,12 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool EventFlag;
 
+    [Header("戦闘後イベント")]
+    [NonSerialized]
+    public string postBattleDialogueCSV = ""; // 戦闘後に再生する会話CSV
+    [NonSerialized]
+    public bool hasPostBattleDialogue = false; // 戦闘後会話フラグ
+
     [Header("経験値・レベル管理")]
     [SerializeField] private Dictionary<int, int> ExpTable = new Dictionary<int, int>();
 
@@ -191,6 +197,44 @@ public class GameManager : MonoBehaviour
 
         // シーン名に基づいてゲーム状態を更新
         UpdateGameStateFromScene(scene.name);
+        
+        // GameFieldシーンに戻った時、戦闘後会話イベントをチェック
+        if (scene.name == gameFieldSceneName && hasPostBattleDialogue && !string.IsNullOrEmpty(postBattleDialogueCSV))
+        {
+            StartCoroutine(StartPostBattleDialogue());
+        }
+    }
+    
+    /// <summary>
+    /// 戦闘後の会話イベントを開始
+    /// </summary>
+    private IEnumerator StartPostBattleDialogue()
+    {
+        // シーン遷移のフェードイン完了を待つ
+        yield return new WaitForSeconds(1f);
+        
+        if (showDebugLog)
+        {
+            Debug.Log($"[GameManager] 戦闘後会話イベント開始: {postBattleDialogueCSV}");
+        }
+        //敵を停止させる。
+        SimpleEventTrigger simpleEventTrigger = new SimpleEventTrigger();
+        simpleEventTrigger.DisableAllEnemies();
+
+        // ConversationUIを探して会話開始
+        ConversationUI conversationUI = FindObjectOfType<ConversationUI>();
+        if (conversationUI != null)
+        {
+            conversationUI.StartDialogueWithCSV(postBattleDialogueCSV);
+        }
+        else
+        {
+            Debug.LogWarning("[GameManager] ConversationUIが見つかりません");
+        }
+        
+        // フラグをリセット
+        hasPostBattleDialogue = false;
+        postBattleDialogueCSV = "";
     }
 
     /// <summary>
@@ -461,6 +505,24 @@ public class GameManager : MonoBehaviour
 
         OnBattleStart?.Invoke();
         StartCoroutine(TransitionToBattle());
+    }
+    
+    /// <summary>
+    /// 戦闘後に会話イベントを発生させるバトル開始
+    /// </summary>
+    public void StartBattleWithPostDialogue(Vector3 playerPosition, List<CharacterData> enemyCharacterDataList, string dialogueCSV)
+    {
+        // 戦闘後会話を設定
+        postBattleDialogueCSV = dialogueCSV;
+        hasPostBattleDialogue = true;
+        
+        if (showDebugLog)
+        {
+            Debug.Log($"[GameManager] 戦闘後会話設定: {dialogueCSV}");
+        }
+        
+        // 通常の戦闘開始
+        StartBattleWithEnemyData(playerPosition, enemyCharacterDataList);
     }
 
     private void InitializeExpTable()

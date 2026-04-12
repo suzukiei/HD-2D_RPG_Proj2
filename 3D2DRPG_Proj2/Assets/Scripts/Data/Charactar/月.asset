@@ -16,7 +16,7 @@ MonoBehaviour:
   characterIcon: {fileID: 21300000, guid: 247a696d6a0c355439c9e8d6217b1ceb, type: 3}
   enemyCheckFlag: 0
   hp: 320
-  mp: 200
+  mp: 999
   atk: 14
   Int: 30
   def: 24
