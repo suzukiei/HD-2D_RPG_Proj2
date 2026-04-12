@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -121,7 +121,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "\u5929\u4F7F\u7ACB\u3061\u7D75_0"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1300
+        height: 1283
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44e45d447a9110a409368603b0de6da7
+      internalID: -1668698640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +153,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_0": -1668698640
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_1": -1205273771
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_2": 1905903873
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_3": 918053744
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_4": -312297920
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_5": 220397653
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_6": -1476726804
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_8": -310715240
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

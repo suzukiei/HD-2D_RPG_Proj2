@@ -25,7 +25,8 @@ MonoBehaviour:
   maxMp: 800
   exp: 1000
   level: 5
-  CharacterObj: {fileID: 0}
+  CharacterObj: {fileID: 3533095128167565586, guid: b4e3abb254a7df24a90863cea43795e0,
+    type: 3}
   skills:
   - {fileID: 11400000, guid: a3b4a8ceca94b1e4bb8b5b1e68c3ba25, type: 2}
   - {fileID: 11400000, guid: c75fc35dab151f344976783c22d7af6f, type: 2}

@@ -62,6 +62,18 @@ public class EnemyManager : MonoBehaviour
             var obj = Instantiate(enemyData[i].CharacterObj, vector3s[i] * 2, Quaternion.identity);
             obj.AddComponent<Character>().init(enemyData[i]);
             obj.transform.localRotation = Quaternion.Euler(0, -90, 0);
+
+            Debug.Log("★★★★★★★★★" + obj.name);
+            if(obj.name == "Tensi(Clone)")
+            {
+                obj.transform.localRotation = Quaternion.Euler(0, 134, 0);
+                obj.transform.localPosition = new Vector3(5, 5, 10);
+            }
+            if (obj.name == "Akuma(Clone)")
+            {
+                obj.transform.localRotation = Quaternion.Euler(0, 77, 0);
+            }
+            
             obj.transform.parent = this.gameObject.transform;
             enemygameObjects.Add(obj);
         }
