@@ -395,11 +395,17 @@ public class ConversationUI : MonoBehaviour
         // キャラクター画像設定
         if (characterImage != null && data.characterImage != null)
         {
+            characterImage.enabled = true;
+
             // アスペクト比調整
             AspectRatioFitter aspect = characterImage.GetComponent<AspectRatioFitter>();
             float ratio = (float)data.characterImage.rect.width / data.characterImage.rect.height;
             aspect.aspectRatio = ratio;
             characterImage.sprite = data.characterImage;
+        }
+        else
+        {
+            characterImage.enabled = false;
         }
 
             // テキストをタイプライター効果で表示
@@ -479,6 +485,7 @@ public class ConversationUI : MonoBehaviour
     /// </summary>
     void OnDialogueComplete()
     {
+
         Debug.Log("[ConversationUI] 会話が終了しました");
         
         // Timeline停止（設定されている場合）

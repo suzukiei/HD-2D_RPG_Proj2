@@ -716,9 +716,8 @@ MonoBehaviour:
   isi: 0
   PlayerData: []
   EnemyData:
-  - {fileID: 11400000, guid: 84df2b5d0217d6741a6295c84468a4f2, type: 2}
-  - {fileID: 11400000, guid: 84df2b5d0217d6741a6295c84468a4f2, type: 2}
-  - {fileID: 11400000, guid: 84df2b5d0217d6741a6295c84468a4f2, type: 2}
+  - {fileID: 11400000, guid: 190209b2aafa44241a39b825f1584248, type: 2}
+  - {fileID: 11400000, guid: 2438d3490d55bf74ba7ddce654188013, type: 2}
   defeatedEnemyIds:
     items: []
   EventIDName: 
