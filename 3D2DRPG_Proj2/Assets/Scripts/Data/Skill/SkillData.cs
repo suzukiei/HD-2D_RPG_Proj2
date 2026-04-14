@@ -35,6 +35,7 @@ public class SkillData : ScriptableObject
     public int hitCount = 1;
     [Range(0, 1)] public float criticalRate = 0.1f;
     [Range(0, 1)] public float accuracy = 1f;
+    public bool isIntSansyou = false;
 
     public TargetScope targetScope = TargetScope.Single;
     public StatusEffect statusEffect;

@@ -572,19 +572,27 @@ public class PlayerManager : MonoBehaviour
     {
         if (enemy == null || skill == null) return true; // nullチェック追加
 
-        //ダメージ乱数
-        float random = UnityEngine.Random.Range(10, 20);
-        random = random / 10;
-        Debug.Log("乱数:" + random);
-
         // バフ適用後の攻撃力と防御力を取得
-        int effectiveAtk = selectedCharacter.GetEffectiveAttack();
+        int effectiveAtk = selectedCharacter.GetEffectiveAttack(skill.isIntSansyou);
         int effectiveDef = enemy.GetEffectiveDefense();
 
-        //基本ダメージ計算（バフ適用後の攻撃力を使用）
-        var damage = effectiveAtk * random;
-        //最終計算（バフ適用後の防御力を使用）
-        var finalDamage = damage * skill.power + Attackbuff - effectiveDef;
+        float random = 0;
+        var finalDamage = 0;
+
+        finalDamage = (int)(skill.power + Attackbuff - effectiveDef);
+        //スキルがダメージボーナスを持つ場合
+        if (skill.DamageBonusFlg == true)
+        {
+            //ダメージ乱数
+            random = UnityEngine.Random.Range(1, effectiveAtk + 1);
+            random = random / 10;
+            Debug.Log("乱数:" + random);
+            //基本ダメージ計算（バフ適用後の攻撃力を使用）
+            var damage = effectiveAtk * random;
+            //最終計算（バフ適用後の防御力を使用）
+           finalDamage = (int)(damage * skill.power + Attackbuff - effectiveDef);
+        }
+              
         var hp = enemy.hp - finalDamage;
         enemy.hp = (int)math.floor(hp);
 
@@ -635,7 +643,18 @@ public class PlayerManager : MonoBehaviour
         if (character == null || skill == null) return; // nullチェック追加
         
         int beforeHp = character.hp;
-        var hp = character.hp + skill.power;
+        var hp = 0;
+        
+        //スキルがInt値を参照するならば
+        if (skill.isIntSansyou)
+        {
+            hp = (int)(character.hp + character.Int);
+        }
+        else
+        {
+            hp = (int)(character.hp + skill.power);
+        }
+        
         character.hp = (int)math.floor(hp);
         if (character.hp > character.maxHp)
         {

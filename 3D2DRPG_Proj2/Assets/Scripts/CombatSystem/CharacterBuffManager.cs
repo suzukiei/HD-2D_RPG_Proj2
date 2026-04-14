@@ -208,15 +208,24 @@ public class CharacterBuffManager : MonoBehaviour
     /// <summary>
     /// バフ適用後の攻撃力を取得
     /// </summary>
-    public int GetEffectiveAttack()
+    public int GetEffectiveAttack(bool IntSansyou)
     {
         if (ownerCharacter == null)
         {
             return 0;
         }
-        
+
+        float effectiveAtk = 0;
         // 現在のベース攻撃力を取得（レベルアップなどで変更されている可能性があるため）
-        float effectiveAtk = ownerCharacter.atk;
+        if (IntSansyou)
+        { //魔法攻撃の場合
+            effectiveAtk = ownerCharacter.Int;
+        }
+        else
+        { //物理攻撃の場合
+            effectiveAtk = ownerCharacter.atk;
+        }
+           
         
         // バフ効果を適用
         foreach (var buff in activeBuffs)

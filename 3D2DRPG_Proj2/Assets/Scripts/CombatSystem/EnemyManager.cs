@@ -588,7 +588,7 @@ public class EnemyManager : MonoBehaviour
         if (skill != null)
         {
             //バフがかかった状態のatkを参照しなければならない。
-            float attackerAtk = attacker != null ? attacker.GetEffectiveAttack() : 1;
+            float attackerAtk = attacker != null ? attacker.GetEffectiveAttack(skill.isIntSansyou) : 1;
 
             if (skill.DamageBonusFlg == true)
             {

@@ -15,23 +15,24 @@ MonoBehaviour:
   charactername: "\u7167"
   characterIcon: {fileID: 21300000, guid: 3d250f33c3a152b42a32f64527113ce7, type: 3}
   enemyCheckFlag: 0
-  hp: 211
-  mp: 999
+  hp: 221
+  mp: 231
   atk: 10
-  Int: 20
+  Int: 28
   def: 15
   spd: 20
-  maxHp: 211
-  maxMp: 214
-  exp: 5650
-  level: 10
+  maxHp: 221
+  maxMp: 231
+  exp: 233
+  level: 19
   CharacterObj: {fileID: 7333836060625140281, guid: 14e6c60294595ec46a7a94d30b985e89,
     type: 3}
   skills:
-  - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
-  - {fileID: 11400000, guid: 1381c0e3658634d43a988d49085f68e8, type: 2}
-  - {fileID: 11400000, guid: d286022fd6472e240b7489ed5fa9e994, type: 2}
-  - {fileID: 11400000, guid: 6ca2043cbb898984298e0529d1e29d11, type: 2}
+  - {fileID: 11400000, guid: 27fb4c2594ea2b84f8ea698725a4ab60, type: 2}
+  - {fileID: 11400000, guid: 9065693a5c114604a9851dd193684456, type: 2}
+  - {fileID: 11400000, guid: 21446906b948ef249b29470596c0eb82, type: 2}
+  - {fileID: 11400000, guid: b77759867ae03664b9e5545b6d0c56f0, type: 2}
+  - {fileID: 11400000, guid: 63f014edc5582434790c1662c04b61d1, type: 2}
   - {fileID: 11400000, guid: 6d8ead6b2db9d8644b2f6b61bad6c479, type: 2}
   - {fileID: 11400000, guid: 3b3c5a625bfc3c24395691a3b0459720, type: 2}
   CharacterTransfrom: {x: 4, y: 0, z: 0}
