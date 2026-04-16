@@ -434,7 +434,7 @@ public class PlayerManager : MonoBehaviour
         if (comboCount != 0)
             attackdamege += comboCount*selectedSkill.ComboDamage;
         var enemy = selectedEnemy;
-        var enemysurvival =ApplyAttack(enemy, selectedSkill, attackdamege);
+        var enemysurvival = ApplyAttack(enemy, selectedSkill, attackdamege);
         return enemysurvival;
         //selectedCharacter.mp -= selectedSkill.mpCost;
     }
@@ -564,6 +564,29 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region 行動処理の実装
+    
+    /// <summary>
+    /// 連撃ダメージを順次表示するコルーチン
+    /// </summary>
+    private IEnumerator ShowRengekiDamage(Character enemy, int damage, int hitCount)
+    {
+        for (int i = 0; i < hitCount; i++)
+        {
+            // 各ヒットの間に待機（連撃感を演出）
+            yield return new WaitForSeconds(0.15f);
+            
+            if (enemy != null && enemy.CharacterObj != null && DamageEffectUI.Instance != null)
+            {
+                Debug.Log($"連撃ダメージ処理 {i + 1}/{hitCount}");
+                DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, damage);
+                
+                // HPを減少
+                enemy.hp -= damage;
+                if (enemy.hp < 0) enemy.hp = 0;
+            }
+        }
+    }
+    
     /// <summary>
     /// 攻撃処理（ダメージ計算・撃破処理）
     /// true;敵が残っている、false:敵が撃破された
@@ -595,11 +618,18 @@ public class PlayerManager : MonoBehaviour
               
         var hp = enemy.hp - finalDamage;
         enemy.hp = (int)math.floor(hp);
-
+        
         // ダメージエフェクトを表示（敵の位置の前に表示）
         if (DamageEffectUI.Instance != null && enemy.CharacterObj != null)
         {
             DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, finalDamage);
+        }
+
+        // 連撃処理（コルーチンで遅延表示）
+        if (skill.rengeki == true)
+        {
+            Debug.Log("連撃ダメージ開始:連撃カウント:" + skill.rengekiCount);
+            StartCoroutine(ShowRengekiDamage(enemy, finalDamage, skill.rengekiCount));
         }
 
         // 攻撃アニメーション再生

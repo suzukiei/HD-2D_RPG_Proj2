@@ -54,6 +54,11 @@ public class SkillData : ScriptableObject
     public int maxcombo= 3;
     public bool missCancel = true;
 
+    [Header("連撃効果を持つ？")]
+    public bool rengeki = false;
+    [Header("連撃効果を持つ？")]
+    public int rengekiCount = 0;
+
     [Header("状態異常・効果")]
     [Header("")]
     //public StatusEffect inflictStatus;
