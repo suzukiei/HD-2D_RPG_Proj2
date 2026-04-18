@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction dashAction;
     private InputAction selectAction;
+
+    [Header("移動基準カメラ")]
+    [SerializeField] private Transform moveReferenceCamera;
     // Start is called before the first frame update
     void Start()
     {
@@ -75,38 +78,96 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
+    //void Update()
+    //{
+
+    //    Vector2 inputVector = moveAction.ReadValue<Vector2>();
+    //    // 移動方向を計算
+    //    Vector3 moveDirection = Vector3.zero;
+    //    bool isMoving = false;
+    //    bool isDash = false;
+    //    //PadTest(inputVector);
+
+    //    if (Input.GetKey(KeyCode.D) || inputVector.x > 0.5f)
+    //    {
+    //        moveDirection.z -= 1;
+    //        animator.SetInteger("direction", 3);
+    //        isMoving = true;
+    //    }
+    //    if (Input.GetKey(KeyCode.A) || inputVector.x < -0.5f)
+    //    {
+    //        moveDirection.z += 1;
+    //        animator.SetInteger("direction", 2);
+    //        isMoving = true;
+    //    }
+    //    if (Input.GetKey(KeyCode.W) || inputVector.y > 0.5f)
+    //    {
+    //        moveDirection.x += 1;
+    //        animator.SetInteger("direction", 0);
+    //        isMoving = true;
+    //    }
+    //    if (Input.GetKey(KeyCode.S) || inputVector.y < -0.5f)
+    //    {
+    //        moveDirection.x -= 1;
+    //        animator.SetInteger("direction", 1);
+    //        isMoving = true;
+    //    }
+
+    //    animator.SetBool("isMoving", isMoving);
+
+    //    // ダッシュ判定
+    //    float currentSpeed = Speed;
+    //    if (Input.GetKey(KeyCode.LeftShift) || dashAction.IsPressed())
+    //    {
+    //        currentSpeed *= DashSpeed;
+    //        isDash = true;
+
+    //    }
+
+    //    animator.SetBool("isDash", isDash);
+
+    //    // Rigidbodyで移動
+    //    if (rb != null && moveDirection != Vector3.zero)
+    //    {
+    //        Vector3 newPosition = rb.position + moveDirection.normalized * currentSpeed * Time.deltaTime;
+    //        rb.MovePosition(newPosition);
+    //    }
+    //}
     void Update()
     {
-
         Vector2 inputVector = moveAction.ReadValue<Vector2>();
-        // 移動方向を計算
-        Vector3 moveDirection = Vector3.zero;
+
+        // 移動方向を計算（カメラ基準）
+        Vector3 moveDirection = GetCameraRelativeMoveDirection(inputVector);
+
         bool isMoving = false;
         bool isDash = false;
-        //PadTest(inputVector);
 
+        // direction の更新は今まで通り入力ベース
         if (Input.GetKey(KeyCode.D) || inputVector.x > 0.5f)
         {
-            moveDirection.z -= 1;
             animator.SetInteger("direction", 3);
             isMoving = true;
         }
         if (Input.GetKey(KeyCode.A) || inputVector.x < -0.5f)
         {
-            moveDirection.z += 1;
             animator.SetInteger("direction", 2);
             isMoving = true;
         }
         if (Input.GetKey(KeyCode.W) || inputVector.y > 0.5f)
         {
-            moveDirection.x += 1;
             animator.SetInteger("direction", 0);
             isMoving = true;
         }
         if (Input.GetKey(KeyCode.S) || inputVector.y < -0.5f)
         {
-            moveDirection.x -= 1;
             animator.SetInteger("direction", 1);
+            isMoving = true;
+        }
+
+        // スティック入力だけでも移動扱いにする
+        if (moveDirection.sqrMagnitude > 0.0001f)
+        {
             isMoving = true;
         }
 
@@ -118,13 +179,12 @@ public class PlayerController : MonoBehaviour
         {
             currentSpeed *= DashSpeed;
             isDash = true;
-           
         }
 
         animator.SetBool("isDash", isDash);
 
         // Rigidbodyで移動
-        if (rb != null && moveDirection != Vector3.zero)
+        if (rb != null && moveDirection.sqrMagnitude > 0.0001f)
         {
             Vector3 newPosition = rb.position + moveDirection.normalized * currentSpeed * Time.deltaTime;
             rb.MovePosition(newPosition);
@@ -329,5 +389,51 @@ public class PlayerController : MonoBehaviour
             Debug.LogWarning("GameManagerが見つかりません。直接シーン遷移します。");
             SceneManager.LoadScene("turnTestScene");
         }
+    }
+
+    private Vector3 GetCameraRelativeMoveDirection(Vector2 inputVector)
+    {
+        // WASD単押しでも動くようにキーボード入力を補完
+        float x = inputVector.x;
+        float y = inputVector.y;
+
+        if (Input.GetKey(KeyCode.D)) x = 1f;
+        if (Input.GetKey(KeyCode.A)) x = -1f;
+        if (Input.GetKey(KeyCode.W)) y = 1f;
+        if (Input.GetKey(KeyCode.S)) y = -1f;
+
+        Vector2 finalInput = new Vector2(x, y);
+
+        if (finalInput.sqrMagnitude < 0.0001f)
+            return Vector3.zero;
+
+        Transform cam = moveReferenceCamera != null
+            ? moveReferenceCamera
+            : (Camera.main != null ? Camera.main.transform : null);
+
+        // カメラが見つからない場合は従来の向きにフォールバック
+        if (cam == null)
+        {
+            Vector3 fallback = Vector3.zero;
+            fallback.x = finalInput.y;
+            fallback.z = -finalInput.x;
+            return fallback;
+        }
+
+        Vector3 forward = cam.forward;
+        Vector3 right = cam.right;
+
+        // 地面に投影
+        forward.y = 0f;
+        right.y = 0f;
+
+        if (forward.sqrMagnitude <= 0.0001f || right.sqrMagnitude <= 0.0001f)
+            return Vector3.zero;
+
+        forward.Normalize();
+        right.Normalize();
+
+        // 上入力でカメラ前方、右入力でカメラ右方向へ進む
+        return forward * finalInput.y + right * finalInput.x;
     }
 }

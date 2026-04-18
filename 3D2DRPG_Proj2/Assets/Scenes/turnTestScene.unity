@@ -1336,6 +1336,7 @@ GameObject:
   - component: {fileID: 218251941}
   - component: {fileID: 218251940}
   - component: {fileID: 218251943}
+  - component: {fileID: 218251944}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1410,14 +1411,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 218251939}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.14900419, y: 0.67640495, z: -0.14254081, w: 0.70707583}
-  m_LocalPosition: {x: -9.87, y: 7.78, z: 5.16}
+  m_LocalRotation: {x: 0.06162845, y: 0.70441604, z: -0.06162845, w: 0.70441604}
+  m_LocalPosition: {x: -7, y: 3, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 865042657}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 23.8, y: 87.46, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 90, z: 0}
 --- !u!114 &218251943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1462,6 +1463,36 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &218251944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218251939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16788b0d06d3784a843084d11cf4dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useLocalTransform: 1
+  swayHorizontal: 2
+  swayVertical: 0.5
+  swaySpeedH: 0.35
+  swaySpeedV: 0.22
+  rollAmount: 0.5
+  rollSpeed: 0.18
+  focusDepthAmount: 1.2
+  focusSideAmount: 0.35
+  focusVerticalAmount: 0.05
+  focusTiltZ: 0
+  lookAtWeightYaw: 6
+  lookAtWeightPitch: 2
+  focusInDuration: 0.12
+  focusHoldDuration: 0.7
+  focusOutDuration: 0.2
+  freezeSwayWhileFocus: 1
+  restartFocusIfPlaying: 1
 --- !u!4 &221924918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4411782488372123865, guid: 160cd6f13985f4b488120954fc362c6a,
@@ -1931,6 +1962,7 @@ MonoBehaviour:
   returnDuration: 1
   enemyAnimator: {fileID: 0}
   skillSelectionUI: {fileID: 1130825720934652618}
+  battleCamera: {fileID: 218251944}
 --- !u!4 &333137749
 Transform:
   m_ObjectHideFlags: 0
@@ -2837,6 +2869,7 @@ MonoBehaviour:
   StartPosition: {x: 0, y: 0, z: 0}
   enemyAnimator: {fileID: 0}
   characterBuffs: []
+  battleCamera: {fileID: 218251944}
 --- !u!4 &745215965
 Transform:
   m_ObjectHideFlags: 0

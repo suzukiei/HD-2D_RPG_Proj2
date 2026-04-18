@@ -28,6 +28,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private SkillSelectionUI skillSelectionUI; // スキル選択UIの参照(スキル名表示用)
 
+    // 戦闘カメラ制御
+    [SerializeField] private BattleCameraController battleCamera;
+
     public List<GameObject> GetEnemyData() { return enemygameObjects; }
 
     //public enum StatusEffect
@@ -150,6 +153,8 @@ public class EnemyManager : MonoBehaviour
         {
             skillSelectionUI.SetSkillWindowText(chosenSkill.skillName);
             skillSelectionUI.ShowSkillWindow(true);
+
+            battleCamera.PlaySkillFocus(actingEnemy.CharacterTransfrom);
         }
 
         // ターゲット選択（優先: HPが低いプレイヤーを優先。ランダムフラグがtrueなら Random.Range を使用）

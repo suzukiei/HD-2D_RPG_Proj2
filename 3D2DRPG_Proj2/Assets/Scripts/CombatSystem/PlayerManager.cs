@@ -72,6 +72,9 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public List<GameObject> GetPlayerCharacters() => characterObjects;
 
+    // 戦闘カメラ制御
+    [SerializeField] private BattleCameraController battleCamera;
+
     #endregion
 
     #region 初期化と更新処理
@@ -344,6 +347,8 @@ public class PlayerManager : MonoBehaviour
         
         // スキルウィンドウ表示
         skillSelectionUI.ShowSkillWindow(false);
+
+        battleCamera.PlaySkillFocus(selectedCharacter.CharacterTransfrom);
 
         // 攻撃の範囲内かを確認
         if (index < 0 || index >= enemies.Count)
