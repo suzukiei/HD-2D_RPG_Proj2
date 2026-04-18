@@ -305,11 +305,11 @@ public class Character: MonoBehaviour
     /// <summary>
     /// バフ適用後の攻撃力を取得
     /// </summary>
-    public int GetEffectiveAttack()
+    public int GetEffectiveAttack(bool IntSansyou)
     {
         if (buffManager != null)
         {
-            return buffManager.GetEffectiveAttack();
+            return buffManager.GetEffectiveAttack(IntSansyou);
         }
         return atk;
     }

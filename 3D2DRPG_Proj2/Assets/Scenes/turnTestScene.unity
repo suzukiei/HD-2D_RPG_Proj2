@@ -295,6 +295,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].isBossBattle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7169094606273781605, guid: b66f9abf92c0c7b4da143dc906b13391,
         type: 3}
       propertyPath: m_Pivot.x

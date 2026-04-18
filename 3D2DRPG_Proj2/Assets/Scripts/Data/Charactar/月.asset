@@ -23,15 +23,18 @@ MonoBehaviour:
   spd: 10
   maxHp: 320
   maxMp: 200
-  exp: 12400
+  exp: 0
   level: 20
   CharacterObj: {fileID: 7333836060625140281, guid: eb0b17fc84f337546ae72afcd8386f75,
     type: 3}
   skills:
-  - {fileID: 11400000, guid: 2884b17760395c84f829aade5ec86835, type: 2}
-  - {fileID: 11400000, guid: 5c36067a0567caf4f966a3997357251e, type: 2}
-  - {fileID: 11400000, guid: cf742145683721b4db95ca293854ac34, type: 2}
-  - {fileID: 11400000, guid: d3af36cc263dc974795e1215d63c6aa2, type: 2}
+  - {fileID: 11400000, guid: e6a874f3269507d44b72be9454521b36, type: 2}
+  - {fileID: 11400000, guid: e7da4a5428fd30f4e939f312d6df9f7f, type: 2}
+  - {fileID: 11400000, guid: 485437a645b0d8b469a1ea60551f7fd4, type: 2}
+  - {fileID: 11400000, guid: cbb46efbaf8f1a544a06c5aed77c86f4, type: 2}
+  - {fileID: 11400000, guid: 9bea50b9f6c7d1b4e8a972b7c8492988, type: 2}
+  - {fileID: 11400000, guid: ffde4d3c45f86ab40baa2514fb890aee, type: 2}
+  - {fileID: 11400000, guid: e54b6487c8bda1943b945b878aaf85cc, type: 2}
   CharacterTransfrom: {x: 6, y: 0, z: 1.5}
   StatusFlag: 0
   levelUpTable: {fileID: 0}

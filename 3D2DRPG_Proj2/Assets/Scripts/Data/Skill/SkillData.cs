@@ -35,6 +35,7 @@ public class SkillData : ScriptableObject
     public int hitCount = 1;
     [Range(0, 1)] public float criticalRate = 0.1f;
     [Range(0, 1)] public float accuracy = 1f;
+    public bool isIntSansyou = false;
 
     public TargetScope targetScope = TargetScope.Single;
     public StatusEffect statusEffect;
@@ -52,6 +53,11 @@ public class SkillData : ScriptableObject
     public float comboDamageMultiplier = 1.2f;
     public int maxcombo= 3;
     public bool missCancel = true;
+
+    [Header("連撃効果を持つ？")]
+    public bool rengeki = false;
+    [Header("連撃効果を持つ？")]
+    public int rengekiCount = 0;
 
     [Header("状態異常・効果")]
     [Header("")]

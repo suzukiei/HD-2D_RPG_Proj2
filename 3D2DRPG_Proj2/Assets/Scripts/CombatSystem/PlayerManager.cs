@@ -439,7 +439,7 @@ public class PlayerManager : MonoBehaviour
         if (comboCount != 0)
             attackdamege += comboCount*selectedSkill.ComboDamage;
         var enemy = selectedEnemy;
-        var enemysurvival =ApplyAttack(enemy, selectedSkill, attackdamege);
+        var enemysurvival = ApplyAttack(enemy, selectedSkill, attackdamege);
         return enemysurvival;
         //selectedCharacter.mp -= selectedSkill.mpCost;
     }
@@ -569,6 +569,29 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region 行動処理の実装
+    
+    /// <summary>
+    /// 連撃ダメージを順次表示するコルーチン
+    /// </summary>
+    private IEnumerator ShowRengekiDamage(Character enemy, int damage, int hitCount)
+    {
+        for (int i = 0; i < hitCount; i++)
+        {
+            // 各ヒットの間に待機（連撃感を演出）
+            yield return new WaitForSeconds(0.15f);
+            
+            if (enemy != null && enemy.CharacterObj != null && DamageEffectUI.Instance != null)
+            {
+                Debug.Log($"連撃ダメージ処理 {i + 1}/{hitCount}");
+                DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, damage);
+                
+                // HPを減少
+                enemy.hp -= damage;
+                if (enemy.hp < 0) enemy.hp = 0;
+            }
+        }
+    }
+    
     /// <summary>
     /// 攻撃処理（ダメージ計算・撃破処理）
     /// true;敵が残っている、false:敵が撃破された
@@ -577,26 +600,41 @@ public class PlayerManager : MonoBehaviour
     {
         if (enemy == null || skill == null) return true; // nullチェック追加
 
-        //ダメージ乱数
-        float random = UnityEngine.Random.Range(10, 20);
-        random = random / 10;
-        Debug.Log("乱数:" + random);
-
         // バフ適用後の攻撃力と防御力を取得
-        int effectiveAtk = selectedCharacter.GetEffectiveAttack();
+        int effectiveAtk = selectedCharacter.GetEffectiveAttack(skill.isIntSansyou);
         int effectiveDef = enemy.GetEffectiveDefense();
 
-        //基本ダメージ計算（バフ適用後の攻撃力を使用）
-        var damage = effectiveAtk * random;
-        //最終計算（バフ適用後の防御力を使用）
-        var finalDamage = damage * skill.power + Attackbuff - effectiveDef;
+        float random = 0;
+        var finalDamage = 0;
+
+        finalDamage = (int)(skill.power + Attackbuff - effectiveDef);
+        //スキルがダメージボーナスを持つ場合
+        if (skill.DamageBonusFlg == true)
+        {
+            //ダメージ乱数
+            random = UnityEngine.Random.Range(1, effectiveAtk + 1);
+            random = random / 10;
+            Debug.Log("乱数:" + random);
+            //基本ダメージ計算（バフ適用後の攻撃力を使用）
+            var damage = effectiveAtk * random;
+            //最終計算（バフ適用後の防御力を使用）
+           finalDamage = (int)(damage * skill.power + Attackbuff - effectiveDef);
+        }
+              
         var hp = enemy.hp - finalDamage;
         enemy.hp = (int)math.floor(hp);
-
+        
         // ダメージエフェクトを表示（敵の位置の前に表示）
         if (DamageEffectUI.Instance != null && enemy.CharacterObj != null)
         {
             DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, finalDamage);
+        }
+
+        // 連撃処理（コルーチンで遅延表示）
+        if (skill.rengeki == true)
+        {
+            Debug.Log("連撃ダメージ開始:連撃カウント:" + skill.rengekiCount);
+            StartCoroutine(ShowRengekiDamage(enemy, finalDamage, skill.rengekiCount));
         }
 
         // 攻撃アニメーション再生
@@ -640,7 +678,18 @@ public class PlayerManager : MonoBehaviour
         if (character == null || skill == null) return; // nullチェック追加
         
         int beforeHp = character.hp;
-        var hp = character.hp + skill.power;
+        var hp = 0;
+        
+        //スキルがInt値を参照するならば
+        if (skill.isIntSansyou)
+        {
+            hp = (int)(character.hp + character.Int);
+        }
+        else
+        {
+            hp = (int)(character.hp + skill.power);
+        }
+        
         character.hp = (int)math.floor(hp);
         if (character.hp > character.maxHp)
         {
