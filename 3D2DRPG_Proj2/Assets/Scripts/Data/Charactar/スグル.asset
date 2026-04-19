@@ -15,8 +15,8 @@ MonoBehaviour:
   charactername: "\u30B9\u30B0\u30EB"
   characterIcon: {fileID: 21300000, guid: 2b40507cbc1c4144cb38c6c802fee20b, type: 3}
   enemyCheckFlag: 0
-  hp: 335
-  mp: 999999
+  hp: 9999
+  mp: 999489
   atk: 34
   Int: 16
   def: 26
