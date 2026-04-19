@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Opening.unity
     guid: 8ce1c20dcbb6a584da0dfd746a2d41b5
   - enabled: 1
+    path: Assets/Scenes/EV002AnimationScene.unity
+    guid: cf9300a2e21202344b0f6ed16d17d29f
+  - enabled: 1
     path: Assets/Scenes/GameField.unity
     guid: b054707bbd5418f43be6dbad6ff419fb
   - enabled: 1

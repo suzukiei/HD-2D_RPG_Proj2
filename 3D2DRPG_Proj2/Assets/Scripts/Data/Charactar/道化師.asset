@@ -25,10 +25,12 @@ MonoBehaviour:
   maxMp: 150
   exp: 150
   level: 2
-  CharacterObj: {fileID: 0}
+  CharacterObj: {fileID: 1502961626390778479, guid: 848159b0ae6cd754d8283471d52af5de,
+    type: 3}
   skills:
   - {fileID: 11400000, guid: d70e1b715df4f894a8016eb2fc572a5e, type: 2}
   - {fileID: 11400000, guid: 6d260412a30bc9547a68724e18d84cde, type: 2}
   - {fileID: 11400000, guid: 5136630a42a51654cb4524ce59f57db7, type: 2}
-  CharacterTransfrom: {x: 0, y: 0, z: 0}
+  CharacterTransfrom: {x: 1, y: 0, z: 5.5}
   StatusFlag: 0
+  levelUpTable: {fileID: 0}

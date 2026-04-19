@@ -57,13 +57,13 @@ public class Respawn : MonoBehaviour
     private void LoadCharacterDataCache()
     {
         #if UNITY_EDITOR
-        string[] guids = UnityEditor.AssetDatabase.FindAssets("t:CharacterData", new[] { "Assets/Scripts/Data/Character" });
+        string[] guids = UnityEditor.AssetDatabase.FindAssets("t:CharacterData", new[] { "Assets/Scripts/Data/Charactar" });
         
         foreach (string guid in guids)
         {
             string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
             CharacterData character = UnityEditor.AssetDatabase.LoadAssetAtPath<CharacterData>(path);
-            
+            Debug.Log("[LoadCharacterDataCache]" + character.name);
             if (character != null && !characterDataCache.ContainsKey(character.charactername))
             {
                 characterDataCache[character.charactername] = character;
