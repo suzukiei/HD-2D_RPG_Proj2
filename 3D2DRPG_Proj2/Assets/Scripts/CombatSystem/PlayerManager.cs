@@ -197,6 +197,15 @@ public class PlayerManager : MonoBehaviour
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
         }); ;
+
+        if (enemyManager != null)
+        {
+            Debug.Log("ボスイベントをチェックします");
+            enemyManager.CheckBossEvents();
+        }else
+        {
+            Debug.Log("enemyManagerがnullなのでチェックできません");
+        }
     }
     /// <summary>
     /// スキル選択処理
@@ -643,7 +652,12 @@ public class PlayerManager : MonoBehaviour
         // ダメージ適用後、ボスイベントをチェック
         if (enemyManager != null)
         {
+            Debug.Log("ボスイベントをチェックします");
             enemyManager.CheckBossEvents();
+        }
+        else
+        {
+            Debug.Log("enemyManagerがnullなのでチェックできません");
         }
 
         // 攻撃アニメーション再生
