@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("移動基準カメラ")]
     [SerializeField] private Transform moveReferenceCamera;
+
+    private static bool isFirstLoad = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -73,6 +75,14 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(device.name + ":" + device.GetType().Name);
             }
 
+        }
+
+        if (isFirstLoad)
+        {
+            Debug.Log("[PlayerController] : 初回位置調整");
+            // 初回だけ初期位置
+            transform.position = new Vector3(-202.44f, 1.52f, 3.11f);
+            isFirstLoad = false;
         }
 
     }
@@ -256,6 +266,7 @@ public class PlayerController : MonoBehaviour
                     
                     if (hasDefeatedGroup && quickTimeCombatUI != null)
                     {
+                        DisableAllEnemies();
                         Debug.Log($"[PlayerController] グループID={encounterGroupId}と戦ったことがある。クイックタイム戦闘開始");
                         // クイックタイム戦闘を開始
                         StartQuickTimeCombat(enemy, enemyDataList, encounterGroupId);
@@ -342,6 +353,8 @@ public class PlayerController : MonoBehaviour
                 StartNormalBattle(enemyObject, enemyDataList, encounterGroupId);
             }
         }, enemyObject);
+
+        EnableAllEnemies();
     }
 
     /// <summary>
@@ -447,5 +460,49 @@ public class PlayerController : MonoBehaviour
 
         // 上入力でカメラ前方、右入力でカメラ右方向へ進む
         return forward * finalInput.y + right * finalInput.x;
+    }
+
+    /// <summary>
+    /// フィールド上の全ての敵を停止&非表示
+    /// </summary>
+    private void DisableAllEnemies()
+    {
+        // 全てのEnemyWanderAIを検索
+        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>();
+        Debug.Log("[PlayerController] : DisableAllEnemies");
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                // 徘徊を停止
+                enemy.StopWandering();
+
+                // オブジェクトを非表示
+                enemy.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// フィールド上の全ての敵を再開&表示
+    /// </summary>
+    public void EnableAllEnemies()
+    {
+
+        // 非表示の敵を含めて全てを検索（includeInactive: true）
+        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>(true);
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                // オブジェクトを表示
+                enemy.gameObject.SetActive(true);
+
+                // 徘徊を再開
+                enemy.ResumeWandering();
+
+            }
+        }
     }
 }

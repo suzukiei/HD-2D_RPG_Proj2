@@ -178,6 +178,9 @@ public class SceneTransitionManager : MonoBehaviour
             return;
         }
         
+        Vector3 vector3 = new Vector3(-202.44f, 1.52f, 3.11f);
+        GameManager.Instance.SetLastFieldPosition(vector3); 
+
         // turnTestSceneの場合は斜めワイプ
         if (sceneName == "turnTestScene")
         {

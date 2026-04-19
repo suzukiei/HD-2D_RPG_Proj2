@@ -63,7 +63,7 @@ public class Respawn : MonoBehaviour
         {
             string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
             CharacterData character = UnityEditor.AssetDatabase.LoadAssetAtPath<CharacterData>(path);
-            Debug.Log("[LoadCharacterDataCache]" + character.name);
+            
             if (character != null && !characterDataCache.ContainsKey(character.charactername))
             {
                 characterDataCache[character.charactername] = character;
@@ -138,6 +138,8 @@ public class Respawn : MonoBehaviour
 
     private IEnumerator InitialSpawn()
     {
+        Debug.Log("InitialSpawn�Ă΂ꂽ");
+
         yield return new WaitForSeconds(initialSpawnDelay);
         
         if (enableDebugLog)

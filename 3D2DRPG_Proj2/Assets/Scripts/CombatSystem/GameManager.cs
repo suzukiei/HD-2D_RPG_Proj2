@@ -124,7 +124,6 @@ public class GameManager : MonoBehaviour
     // 内部変数
     private Vector3 lastFieldPosition;
     private bool isTransitioning = false;
-
     private void Awake()
     {
         if (instance == null)
@@ -450,6 +449,11 @@ public class GameManager : MonoBehaviour
     public Vector3 GetLastFieldPosition()
     {
         return lastFieldPosition;
+    }
+
+    public void SetLastFieldPosition(Vector3 vec3)
+    {
+        lastFieldPosition = vec3;
     }
 
     /// <summary>
