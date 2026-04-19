@@ -1,11 +1,12 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
 using DG.Tweening;
-using Unity.VisualScripting;
-using Unity.Mathematics;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.TextCore.Text;
 
 //バフ効果
 public enum buffEffect
@@ -37,6 +38,8 @@ public class PlayerManager : MonoBehaviour
     private SkillSelectionUI skillSelectionUI; // スキル選択UIの参照
     [SerializeField, Header("ターン管理")]
     private TurnManager turnManager; // ターン管理の参照
+    [SerializeField, Header("エネミー管理")]
+    private EnemyManager enemyManager; // エネミー管理の参照
     [SerializeField, Header("プレイヤーキャラクターリスト")]
     private List<CharacterData> playerCharacters; // プレイヤーキャラクターデータのリスト
     [SerializeField, Header("キャラクターの生成配置座標")]
@@ -636,6 +639,12 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("連撃ダメージ開始:連撃カウント:" + skill.rengekiCount);
             StartCoroutine(ShowRengekiDamage(enemy, finalDamage, skill.rengekiCount));
         }
+        
+        // ダメージ適用後、ボスイベントをチェック
+        if (enemyManager != null)
+        {
+            enemyManager.CheckBossEvents();
+        }
 
         // 攻撃アニメーション再生
         enemyAnimator = enemy.EnemyAnimator;
@@ -645,6 +654,41 @@ public class PlayerManager : MonoBehaviour
 
         //アニメーションが流れるのを待つ
         new WaitForSeconds(0.6f);
+
+        // 攻撃後自己回復
+        if(skill.atkAftHeal == true && skill.wariai > 0)
+        {
+            // 与えたダメージの一定割合を回復量として計算
+            int healAmount = Mathf.RoundToInt(finalDamage / skill.wariai);
+            skill.wariaiHeal = healAmount;
+            
+            if (selectedCharacter != null && healAmount > 0)
+            {
+                int beforeHp = selectedCharacter.hp;
+                selectedCharacter.hp += healAmount;
+                
+                // 最大HPを超えないように制限
+                if (selectedCharacter.hp > selectedCharacter.maxHp)
+                {
+                    selectedCharacter.hp = selectedCharacter.maxHp;
+                }
+                
+                int actualHeal = selectedCharacter.hp - beforeHp;
+                Debug.Log($"[吸血] {selectedCharacter.charactername} が {actualHeal}HP 回復！");
+                
+                // 回復エフェクトを表示
+                if (VFXManager.Instance != null && selectedCharacter.CharacterObj != null)
+                {
+                    VFXManager.Instance.PlayHealEffect(selectedCharacter.CharacterObj);
+                }
+                
+                // 回復テキストを表示
+                if (DamageEffectUI.Instance != null && selectedCharacter.CharacterObj != null)
+                {
+                    DamageEffectUI.Instance.ShowHealEffectOnCharacter(selectedCharacter.CharacterObj, actualHeal);
+                }
+            }
+        }
 
         if (enemy.hp <= 0)
         {

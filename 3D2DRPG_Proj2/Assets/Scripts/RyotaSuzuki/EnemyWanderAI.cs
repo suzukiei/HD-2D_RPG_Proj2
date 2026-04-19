@@ -37,6 +37,7 @@ public class EnemyWanderAI : MonoBehaviour
 
     [Header("エネミー情報")]
     [SerializeField] private List<CharacterData> enemyData;    // エネミーデータリスト
+    [SerializeField] private int encounterGroupId = -1;        // エンカウントグループID
 
     [Header("イベントフラグ")]
     [SerializeField]private string detectionFlagName = "EnemyDetectedPlayer"; // プレイヤー検知フラグ名
@@ -131,6 +132,30 @@ public class EnemyWanderAI : MonoBehaviour
     public List<CharacterData> GetEnemyData()
     {
         return enemyData;
+    }
+
+    /// <summary>
+    /// エンカウントグループIDを取得
+    /// </summary>
+    public int GetEncounterGroupId()
+    {
+        return encounterGroupId;
+    }
+
+    /// <summary>
+    /// エンカウントグループIDを設定（Respawnから呼ばれる）
+    /// </summary>
+    public void SetEncounterGroupId(int groupId)
+    {
+        encounterGroupId = groupId;
+    }
+
+    /// <summary>
+    /// エネミーデータを設定（Respawnから呼ばれる）
+    /// </summary>
+    public void SetEnemyData(List<CharacterData> data)
+    {
+        enemyData = data;
     }
 
 

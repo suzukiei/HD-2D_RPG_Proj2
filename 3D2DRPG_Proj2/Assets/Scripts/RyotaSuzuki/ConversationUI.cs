@@ -63,7 +63,7 @@ public class ConversationUI : MonoBehaviour
     [SerializeField, Header("遷移先のシーン名")] private string nextSceneName = "Map";
     
     [Header("会話終了イベント")]
-    [SerializeField, Header("会話終了時に実行するイベント")] private UnityEvent onDialogueEnd;
+    [SerializeField, Header("会話終了時に実行するイベント")] public UnityEvent onDialogueEnd;
     
     [Header("プレイヤー制御")]
     [SerializeField, Tooltip("会話終了時にプレイヤー操作を再開するか")]
@@ -100,10 +100,14 @@ public class ConversationUI : MonoBehaviour
     {
         [Tooltip("会話CSV名（.csvなし）")]
         public string dialogueCSV;
-        [Tooltip("戦闘後に再生する会話CSV（オプション）")] //.csvありで記入
+        [Tooltip("戦闘後に再生する会話CSV（オプション）")]
         public string postBattleDialogueCSV;
         [Tooltip("このイベントがボス戦かどうか")]
         public bool isBossBattle = true;
+        
+        [Header("戦闘中イベント")]
+        [Tooltip("戦闘中に発生するイベント")]
+        public List<GameManager.BattleMidEvent> battleMidEvents = new List<GameManager.BattleMidEvent>();
     }
     
     [Header("戦闘イベント設定")]
@@ -1100,23 +1104,15 @@ public class ConversationUI : MonoBehaviour
                     if (bossEnemyData != null && bossEnemyData.Count > 0)
                     {
                         Debug.Log($"[ConversationUI] ボスエネミーデータ取得成功: {bossEnemyData.Count}体");
+                        Debug.Log($"[ConversationUI] 戦闘中イベント数: {battleEvent.battleMidEvents.Count}");
                         
-                        // 戦闘後会話が設定されている場合
-                        if (!string.IsNullOrEmpty(battleEvent.postBattleDialogueCSV))
-                        {
-                            Debug.Log($"[ConversationUI] 戦闘後会話を設定: {battleEvent.postBattleDialogueCSV}");
-                            GameManager.Instance.StartBattleWithPostDialogue(
-                                playerPosition, 
-                                bossEnemyData, 
-                                battleEvent.postBattleDialogueCSV
-                            );
-                        }
-                        else
-                        {
-                            // 戦闘後会話なしの通常ボス戦
-                            Debug.Log($"[ConversationUI] 戦闘後会話なしのボス戦");
-                            GameManager.Instance.StartBattleWithEnemyData(playerPosition, bossEnemyData);
-                        }
+                        // ボス戦として開始（戦闘中イベント付き）
+                        GameManager.Instance.StartBossBattle(
+                            playerPosition,
+                            bossEnemyData,
+                            battleEvent.battleMidEvents,
+                            battleEvent.postBattleDialogueCSV
+                        );
                     }
                     else
                     {

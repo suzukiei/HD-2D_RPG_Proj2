@@ -298,11 +298,71 @@ PrefabInstance:
     - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
         type: 3}
       propertyPath: battleEvents.Array.size
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].dialogueCSV
+      value: EV-007
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[1].dialogueCSV
+      value: EV-007
       objectReference: {fileID: 0}
     - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
         type: 3}
       propertyPath: battleEvents.Array.data[0].isBossBattle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[1].isBossBattle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].postBattleDialogueCSV
+      value: EV-008
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[1].postBattleDialogueCSV
+      value: EV-008
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].battleMidEvents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].battleMidEvents.Array.data[0].dialogueCSV
+      value: EVB-002-1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].battleMidEvents.Array.data[0].hpThreshold
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].battleMidEvents.Array.data[0].pauseBattle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].battleMidEvents.Array.data[1].dialogueCSV
+      value: EVB-002-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].battleMidEvents.Array.data[1].hpThreshold
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: battleEvents.Array.data[0].battleMidEvents.Array.data[1].pauseBattle
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7169094606273781605, guid: b66f9abf92c0c7b4da143dc906b13391,
@@ -410,6 +470,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b66f9abf92c0c7b4da143dc906b13391, type: 3}
+--- !u!114 &56454068 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
+    type: 3}
+  m_PrefabInstance: {fileID: 56454067}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bba35c1efed01b349ad1673b87787ba1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &63822265
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1492,6 +1564,8 @@ MonoBehaviour:
   swaySpeedV: 0.22
   rollAmount: 0.5
   rollSpeed: 0.18
+  swayFadeOutDuration: 0.1
+  swayFadeInDuration: 0.2
   focusDepthAmount: 1.2
   focusSideAmount: 0.35
   focusVerticalAmount: 0.05
@@ -1501,7 +1575,6 @@ MonoBehaviour:
   focusInDuration: 0.12
   focusHoldDuration: 0.7
   focusOutDuration: 0.2
-  freezeSwayWhileFocus: 1
   restartFocusIfPlaying: 1
 --- !u!4 &221924918 stripped
 Transform:
@@ -2863,6 +2936,7 @@ MonoBehaviour:
   comboUI: {fileID: 1818976196}
   skillSelectionUI: {fileID: 1130825720934652618}
   turnManager: {fileID: 1864808123}
+  enemyManager: {fileID: 0}
   playerCharacters:
   - {fileID: 11400000, guid: fdfc2772cdd97584f9b41ecffe093f82, type: 2}
   - {fileID: 11400000, guid: a8840a6132af079479d5a4e77446714a, type: 2}
@@ -6279,6 +6353,52 @@ Transform:
   - {fileID: 295664677}
   m_Father: {fileID: 1566565443}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2134159176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2134159177}
+  - component: {fileID: 2134159178}
+  m_Layer: 0
+  m_Name: BossEventTriggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2134159177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134159176}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -37.95354, y: -0.17889738, z: 12.592843}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2134159178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134159176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32d3f3dd792a954b9305e43dfb044c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conversationUI: {fileID: 56454068}
+  turnManager: {fileID: 1864808123}
 --- !u!1 &2138502467
 GameObject:
   m_ObjectHideFlags: 0
@@ -6848,3 +6968,4 @@ SceneRoots:
   - {fileID: 106495799}
   - {fileID: 183424821}
   - {fileID: 81586623}
+  - {fileID: 2134159177}

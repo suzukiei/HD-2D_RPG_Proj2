@@ -27,6 +27,9 @@ public class TurnManager : MonoBehaviour
     private bool turnChangeFlag = false; // ターン順変更フラグ
     private int turnNumber = 0; // 現在のターン数
     private bool turnFlag; // ターン開始していいかどうかのフラグ
+    
+    [Header("戦闘中イベント")]
+    private bool battlePaused = false; // 戦闘一時停止フラグ
 
     //シングルトンパターン
     private static TurnManager instance;
@@ -217,6 +220,13 @@ public class TurnManager : MonoBehaviour
     //ターン開始してフラグ
     public void FlagChange()
     {
+        // 戦闘が一時停止中は処理しない
+        if (battlePaused)
+        {
+            Debug.Log("[TurnManager] 戦闘一時停止中のため、ターン進行を停止します");
+            return;
+        }
+        
         // 全員の行動が完了したかチェック
         if (turnNumber >= sortedTurnList.Count)
         {
@@ -234,6 +244,35 @@ public class TurnManager : MonoBehaviour
         }
 
         turnFlag = true;
+    }
+    
+    /// <summary>
+    /// 戦闘を一時停止
+    /// </summary>
+    public void PauseBattle()
+    {
+        battlePaused = true;
+        Debug.Log("[TurnManager] 戦闘を一時停止しました");
+    }
+    
+    /// <summary>
+    /// 戦闘を再開
+    /// </summary>
+    public void ResumeBattle()
+    {
+        battlePaused = false;
+        Debug.Log("[TurnManager] 戦闘を再開しました");
+        
+        // 次のターンに進む
+        FlagChange();
+    }
+    
+    /// <summary>
+    /// 戦闘が一時停止中かどうか
+    /// </summary>
+    public bool IsBattlePaused()
+    {
+        return battlePaused;
     }
 
     // 新規メソッド: ラウンド終了時のバフ処理

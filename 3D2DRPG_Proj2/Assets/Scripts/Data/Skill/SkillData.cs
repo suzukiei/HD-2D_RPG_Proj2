@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 
@@ -59,8 +60,12 @@ public class SkillData : ScriptableObject
     [Header("連撃効果を持つ？")]
     public int rengekiCount = 0;
 
+    [Header("攻撃後、割合で回復するか？")]
+    public bool atkAftHeal = false;
+    public float wariaiHeal = 0f;
+    public float wariai = 0f;
+
     [Header("状態異常・効果")]
-    [Header("")]
     //public StatusEffect inflictStatus;
     public float statusChance = 0f;
     [Header("バフの管理スクリプト")]
