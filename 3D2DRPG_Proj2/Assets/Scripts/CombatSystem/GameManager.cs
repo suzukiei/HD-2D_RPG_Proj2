@@ -35,8 +35,12 @@ public class GameManager : MonoBehaviour
     public int isi = 1; // 既存の変数を保持
 
     [Header("バトルデータ")]
-    [SerializeField, Header("プレイヤー")]
-    public List<CharacterData> PlayerData; // 既存の変数を保持
+    [SerializeField, Header("全キャラクターマスターデータ")]
+    public List<CharacterData> AllCharacterData; // 全キャラクターのマスターデータ（デバッグ用）
+    
+    [SerializeField, Header("現在のパーティーメンバー")]
+    public List<CharacterData> PlayerData; // 現在パーティーに加入しているキャラクター
+    
     [SerializeField, Header("エネミー")]
     public List<CharacterData> EnemyData; // 既存の変数を保持
 
@@ -159,6 +163,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         EventFlag = false;
+        
+        // PlayerDataが未初期化の場合は空リストを作成
+        if (PlayerData == null)
+        {
+            PlayerData = new List<CharacterData>();
+        }
     }
     public void PlayerDataSetStatus(List<CharacterData> characterData)
     {
@@ -836,6 +846,131 @@ public class GameManager : MonoBehaviour
         Debug.Log($"★★ {character.charactername} は新しいスキル【{newSkill.skillName}】を習得した！ ★★");
     }
     
+    
+    #region パーティーメンバー管理
+    
+    /// <summary>
+    /// パーティーにキャラクターを加入させる
+    /// </summary>
+    public void AddPartyMember(CharacterData character)
+    {
+        if (character == null)
+        {
+            Debug.LogError("[GameManager] 加入させるキャラクターがnullです");
+            return;
+        }
+        
+        // 既にパーティーに加入しているかチェック
+        if (PlayerData.Contains(character))
+        {
+            Debug.LogWarning($"[GameManager] {character.charactername} は既にパーティーに加入しています");
+            return;
+        }
+        
+        PlayerData.Add(character);
+        
+        if (showDebugLog)
+        {
+            Debug.Log($"[GameManager] {character.charactername} がパーティーに加入しました！ (現在のメンバー: {PlayerData.Count}人)");
+        }
+    }
+    
+    /// <summary>
+    /// パーティーからキャラクターを離脱させる
+    /// </summary>
+    public void RemovePartyMember(CharacterData character)
+    {
+        if (character == null)
+        {
+            Debug.LogError("[GameManager] 離脱させるキャラクターがnullです");
+            return;
+        }
+        
+        if (!PlayerData.Contains(character))
+        {
+            Debug.LogWarning($"[GameManager] {character.charactername} はパーティーに加入していません");
+            return;
+        }
+        
+        PlayerData.Remove(character);
+        
+        if (showDebugLog)
+        {
+            Debug.Log($"[GameManager] {character.charactername} がパーティーから離脱しました (現在のメンバー: {PlayerData.Count}人)");
+        }
+    }
+    
+    /// <summary>
+    /// 名前でキャラクターを検索してパーティーに加入させる
+    /// </summary>
+    public void AddPartyMemberByName(string characterName)
+    {
+        if (AllCharacterData == null || AllCharacterData.Count == 0)
+        {
+            Debug.LogError("[GameManager] AllCharacterDataが設定されていません");
+            return;
+        }
+        
+        CharacterData character = AllCharacterData.Find(c => c.charactername == characterName);
+        
+        if (character == null)
+        {
+            Debug.LogError($"[GameManager] キャラクター '{characterName}' が見つかりません");
+            return;
+        }
+        
+        AddPartyMember(character);
+    }
+    
+    /// <summary>
+    /// 名前でキャラクターを検索してパーティーから離脱させる
+    /// </summary>
+    public void RemovePartyMemberByName(string characterName)
+    {
+        CharacterData character = PlayerData.Find(c => c.charactername == characterName);
+        
+        if (character == null)
+        {
+            Debug.LogError($"[GameManager] パーティーにキャラクター '{characterName}' が見つかりません");
+            return;
+        }
+        
+        RemovePartyMember(character);
+    }
+    
+    /// <summary>
+    /// キャラクターがパーティーに加入しているかチェック
+    /// </summary>
+    public bool IsInParty(CharacterData character)
+    {
+        return character != null && PlayerData.Contains(character);
+    }
+    
+    /// <summary>
+    /// キャラクターがパーティーに加入しているかチェック（名前で検索）
+    /// </summary>
+    public bool IsInPartyByName(string characterName)
+    {
+        return PlayerData.Exists(c => c.charactername == characterName);
+    }
+    
+    /// <summary>
+    /// 現在のパーティーメンバー数を取得
+    /// </summary>
+    public int GetPartyMemberCount()
+    {
+        return PlayerData != null ? PlayerData.Count : 0;
+    }
+    
+    /// <summary>
+    /// 現在のパーティーメンバーリストを取得（読み取り専用）
+    /// </summary>
+    public List<CharacterData> GetActivePartyMembers()
+    {
+        return new List<CharacterData>(PlayerData);
+    }
+    
+    #endregion
     
     #region 戦闘前スナップショット管理
     

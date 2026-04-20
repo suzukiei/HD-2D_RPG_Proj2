@@ -86,14 +86,45 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if (GameManager.Instance != null && GameManager.Instance.PlayerData.Count!=0)
+        if (GameManager.Instance != null && GameManager.Instance.PlayerData != null && GameManager.Instance.PlayerData.Count > 0)
         {
             playerCharacters.Clear();
             playerCharacters.AddRange(GameManager.Instance.PlayerData);
         }
+        
+        // パーティーメンバーが0人の場合は警告を表示して処理をスキップ
+        if (playerCharacters == null || playerCharacters.Count == 0)
+        {
+            Debug.LogWarning("[PlayerManager] パーティーメンバーが0人です。戦闘を開始できません。");
+            return;
+        }
+        
         isActionPending = false;
+        
+        // 全てのステータスパネルを一旦非表示にする
+        foreach (var panel in playerStatusPanel)
+        {
+            if (panel != null)
+            {
+                panel.gameObject.SetActive(false);
+            }
+        }
+        
         for (int i = 0; i < playerCharacters.Count; i++)
         {
+            // スポーン位置が足りない場合は警告
+            if (i >= spawnPositions.Count)
+            {
+                Debug.LogError($"[PlayerManager] スポーン位置が不足しています。{i + 1}人目のキャラクターを配置できません。");
+                break;
+            }
+            
+            // ステータスパネルが足りない場合は警告
+            if (i >= playerStatusPanel.Count || playerStatusPanel[i] == null)
+            {
+                Debug.LogWarning($"[PlayerManager] ステータスパネルが不足しています。{i + 1}人目のキャラクターのUIを表示できません。");
+            }
+            
             // キャラクターの座標をセット
             playerCharacters[i].CharacterTransfrom = spawnPositions[i];
             // キャラクターのGameObjectを作成
@@ -101,23 +132,29 @@ public class PlayerManager : MonoBehaviour
             obj.AddComponent<Character>().init(playerCharacters[i]);
             obj.transform.parent = transform;
             characterObjects.Add(obj);
-            // ターン管理にキャラクターを登録
-            playerStatusPanel[i].gameObject.SetActive(true);
-            PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
-            playerStatusPanel[i].UpdatePlayerStatus(playerData);
             
-            // CharacterBuffManagerとPlayerStatusPanelを接続
-            CharacterBuffManager buffManager = obj.GetComponent<CharacterBuffManager>();
-            if (buffManager != null && playerStatusPanel[i] != null)
+            // ステータスパネルの設定
+            if (i < playerStatusPanel.Count && playerStatusPanel[i] != null)
             {
-                buffManager.OnBuffsChanged.AddListener(playerStatusPanel[i].UpdateBuffIcons);
-                Debug.Log($"[PlayerManager] バフアイコン接続完了: {playerCharacters[i].charactername} → PlayerStatusPanel[{i}]");
-            }
-            else
-            {
-                Debug.LogWarning($"[PlayerManager] バフアイコン接続失敗: buffManager={buffManager}, panel={playerStatusPanel[i]}");
+                playerStatusPanel[i].gameObject.SetActive(true);
+                PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
+                playerStatusPanel[i].UpdatePlayerStatus(playerData);
+                
+                // CharacterBuffManagerとPlayerStatusPanelを接続
+                CharacterBuffManager buffManager = obj.GetComponent<CharacterBuffManager>();
+                if (buffManager != null)
+                {
+                    buffManager.OnBuffsChanged.AddListener(playerStatusPanel[i].UpdateBuffIcons);
+                    Debug.Log($"[PlayerManager] バフアイコン接続完了: {playerCharacters[i].charactername} → PlayerStatusPanel[{i}]");
+                }
+                else
+                {
+                    Debug.LogWarning($"[PlayerManager] バフアイコン接続失敗: buffManager={buffManager}");
+                }
             }
         }
+        
+        Debug.Log($"[PlayerManager] {playerCharacters.Count}人のキャラクターを戦闘に配置しました");
     }
 
     

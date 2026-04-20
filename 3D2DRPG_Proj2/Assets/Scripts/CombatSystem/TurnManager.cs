@@ -95,6 +95,29 @@ public class TurnManager : MonoBehaviour
         // エネミーを取得
         enemys = enemyManager.GetEnemyData();
 
+        // パーティーメンバーが0人の場合はエラー
+        if (players == null || players.Count == 0)
+        {
+            Debug.LogError("[TurnManager] パーティーメンバーが0人です。戦闘を開始できません。");
+            // 戦闘を終了してフィールドに戻る
+            if (GameManager.Instance != null)
+            {
+                StartCoroutine(ReturnToFieldAfterError());
+            }
+            return;
+        }
+        
+        // 敵がいない場合もエラー
+        if (enemys == null || enemys.Count == 0)
+        {
+            Debug.LogError("[TurnManager] 敵が0体です。戦闘を開始できません。");
+            if (GameManager.Instance != null)
+            {
+                StartCoroutine(ReturnToFieldAfterError());
+            }
+            return;
+        }
+
         // プレイヤーとエネミーをまとめてSPD順に並び替える
         turnList.Clear();
         turnList.AddRange(players);
@@ -465,6 +488,22 @@ public class TurnManager : MonoBehaviour
         }
         GameManager.Instance.PlayerDataSetStatus(playerDataList);
     }
+    
+    /// <summary>
+    /// エラー時にフィールドに戻る
+    /// </summary>
+    private IEnumerator ReturnToFieldAfterError()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        Debug.Log("[TurnManager] エラーが発生したためフィールドに戻ります");
+        
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.EndBattle();
+        }
+    }
+    
     //End of TurnManager
     #endregion
 }

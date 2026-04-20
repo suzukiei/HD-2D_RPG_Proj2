@@ -241,6 +241,13 @@ public class ConversationUI : MonoBehaviour
             string name = fields[0].Replace("\"", ""); // クォートを削除
             string dialogue = fields[1].Replace("\"", ""); // クォートを削除
             
+            // 特殊コマンドのチェック
+            if (name.StartsWith("@"))
+            {
+                ProcessDialogueCommand(name, dialogue);
+                return null; // コマンド行は会話データとして扱わない
+            }
+            
             // \nを実際の改行に変換
             dialogue = dialogue.Replace("\\n", "\n");
             
@@ -254,6 +261,58 @@ public class ConversationUI : MonoBehaviour
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 会話イベント内の特殊コマンドを処理
+    /// </summary>
+    void ProcessDialogueCommand(string command, string parameter)
+    {
+        command = command.ToUpper().Trim();
+        parameter = parameter.Trim();
+        
+        switch (command)
+        {
+            case "@ADD_MEMBER":
+                // キャラクター加入
+                if (!string.IsNullOrEmpty(parameter))
+                {
+                    GameManager.Instance.AddPartyMemberByName(parameter);
+                    Debug.Log($"[ConversationUI] コマンド実行: {parameter} をパーティーに加入させました");
+                }
+                else
+                {
+                    Debug.LogWarning("[ConversationUI] @ADD_MEMBERコマンドにキャラクター名が指定されていません");
+                }
+                break;
+                
+            case "@REMOVE_MEMBER":
+                // キャラクター離脱
+                if (!string.IsNullOrEmpty(parameter))
+                {
+                    GameManager.Instance.RemovePartyMemberByName(parameter);
+                    Debug.Log($"[ConversationUI] コマンド実行: {parameter} をパーティーから離脱させました");
+                }
+                else
+                {
+                    Debug.LogWarning("[ConversationUI] @REMOVE_MEMBERコマンドにキャラクター名が指定されていません");
+                }
+                break;
+                
+            case "@CLEAR_PARTY":
+                // パーティー全員離脱
+                if (GameManager.Instance != null && GameManager.Instance.PlayerData != null)
+                {
+                    int count = GameManager.Instance.PlayerData.Count;
+                    GameManager.Instance.PlayerData.Clear();
+                    Debug.Log($"[ConversationUI] コマンド実行: パーティーメンバーを全員離脱させました ({count}人)");
+                }
+                break;
+                
+            default:
+                Debug.LogWarning($"[ConversationUI] 未知のコマンド: {command}");
+                break;
+        }
     }
 
     /// <summary>
