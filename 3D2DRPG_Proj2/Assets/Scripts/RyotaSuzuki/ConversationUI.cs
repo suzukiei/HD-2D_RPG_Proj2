@@ -123,6 +123,8 @@ public class ConversationUI : MonoBehaviour
 
     private bool disabledEnemy; //SimpleEventTriggerから引数を受けつぐ
 
+    private bool sceneChangeFlg = false;
+    private string sceneChangeParam = "";
     void Start()
     {
         // 初期化
@@ -308,7 +310,16 @@ public class ConversationUI : MonoBehaviour
                     Debug.Log($"[ConversationUI] コマンド実行: パーティーメンバーを全員離脱させました ({count}人)");
                 }
                 break;
-                
+
+            case "@SCENE_CHANGE":
+                //シーンチェンジ
+                new WaitForSeconds(2f);
+
+                sceneChangeFlg = true;
+                sceneChangeParam = parameter;
+
+                break;
+
             default:
                 Debug.LogWarning($"[ConversationUI] 未知のコマンド: {command}");
                 break;
@@ -601,6 +612,9 @@ public class ConversationUI : MonoBehaviour
         CheckAndStartBattleEvent();
 
         // シーン遷移
+        if(sceneChangeFlg) //csvコマンドでSCENE_CHANGEコマンドがある場合
+            SceneManager.LoadScene(sceneChangeParam);
+
         if (loadSceneOnEnd && !string.IsNullOrEmpty(nextSceneName))
         {
             Debug.Log($"会話終了。シーン遷移: {nextSceneName}");
