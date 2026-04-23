@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d5c3473584a75d46b6d787a5a8a7527, type: 3}
+  m_Name: "\u30B9\u30B0\u30EB"
+  m_EditorClassIdentifier: 
+  charactername: "\u30B9\u30B0\u30EB"
+  characterIcon: {fileID: 21300000, guid: 2b40507cbc1c4144cb38c6c802fee20b, type: 3}
+  enemyCheckFlag: 0
+  hp: 9999
+  mp: 998889
+  atk: 34
+  Int: 16
+  def: 26
+  spd: 53
+  maxHp: 347
+  maxMp: 160
+  exp: 0
+  level: 20
+  CharacterObj: {fileID: 7333836060625140281, guid: 13802adbece5a754f9a5c305138d6630,
+    type: 3}
+  skills:
+  - {fileID: 11400000, guid: a31b3bd179ab12347aaf624051706e44, type: 2}
+  - {fileID: 11400000, guid: 6ca2043cbb898984298e0529d1e29d11, type: 2}
+  - {fileID: 11400000, guid: 851eca6ae872a7a4399d866ec7b47c8b, type: 2}
+  - {fileID: 11400000, guid: 345941754ce052948a4d54cf3e7545d7, type: 2}
+  - {fileID: 11400000, guid: d3af36cc263dc974795e1215d63c6aa2, type: 2}
+  - {fileID: 11400000, guid: 7ad96a3f3e31e27488a5775ec77a9ad5, type: 2}
+  CharacterTransfrom: {x: 2, y: 0, z: -1.5}
+  StatusFlag: 0
+  levelUpTable: {fileID: 11400000, guid: 8f145ecd96842a84e92a8ff996b356ed, type: 2}

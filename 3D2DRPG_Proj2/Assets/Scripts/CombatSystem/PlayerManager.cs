@@ -67,6 +67,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     public Animator enemyAnimator;
 
+    public AudioSource seSource;
+
     //Buffの管理用リスト
     public List<CharacterBuff>　characterBuffs = new List<CharacterBuff>();
 
@@ -176,6 +178,7 @@ public class PlayerManager : MonoBehaviour
         // UIのプレイヤーステータスパネル更新
         PlayerUIUpdate();
         if (!isActionPending) return;
+
         // キャラクターの状態に応じて処理を分岐
         PlayerUpdate();
         // 行動処理のフラグをリセット
@@ -226,6 +229,8 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void PlayerMove()
     {
+
+
         //開始位置を保存
         StartPosition = selectedCharacter.CharacterObj.transform.position;
         // キャラクターを行動位置に移動
@@ -235,14 +240,7 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
         }); ;
 
-        if (enemyManager != null)
-        {
-            Debug.Log("ボスイベントをチェックします");
-            enemyManager.CheckBossEvents();
-        }else
-        {
-            Debug.Log("enemyManagerがnullなのでチェックできません");
-        }
+        
     }
     /// <summary>
     /// スキル選択処理
@@ -415,6 +413,7 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
+
         // 全の攻撃スキルの場合、すべての敵に攻撃を適用
         if (selectedSkill.targetScope == TargetScope.All||selectedCharacter.AllAttack)
         {
@@ -529,6 +528,12 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
+        //SEならす
+        if (selectedSkill.soundEffect != null)
+        {
+            seSource.PlayOneShot(selectedSkill.soundEffect);
+        }
+
         //すべての味方を対象
         if (selectedSkill.targetScope == TargetScope.All)
         {
@@ -598,7 +603,12 @@ public class PlayerManager : MonoBehaviour
                 return;
             }
         }
-        
+        //SEならす
+        if (selectedSkill.soundEffect != null)
+        {
+            seSource.PlayOneShot(selectedSkill.soundEffect);
+        }
+
         //通常スキルの処理
         Character character = null;
         if (characters != null && index >= 0 && index < characters.Count)
@@ -677,6 +687,14 @@ public class PlayerManager : MonoBehaviour
         if (DamageEffectUI.Instance != null && enemy.CharacterObj != null)
         {
             DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, finalDamage);
+        }
+
+        //SEならす
+        if (selectedSkill.soundEffect != null)
+        {
+            Debug.Log(selectedSkill);
+            Debug.Log(selectedSkill?.soundEffect);
+            seSource.PlayOneShot(selectedSkill.soundEffect);
         }
 
         // 連撃処理（コルーチンで遅延表示）

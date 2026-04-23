@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class TurnManager : MonoBehaviour
 {
@@ -72,6 +73,18 @@ public class TurnManager : MonoBehaviour
         turnFlag = true;
         turnNumber = 0;
         turnChangeFlag = false;
+
+        //初めから会話イベントを起こしたい場合()
+        if (enemyManager != null)
+        {
+            Debug.Log("ボスイベントをチェックします");
+            enemyManager.CheckBossEvents();
+        }
+        else
+        {
+            Debug.Log("enemyManagerがnullなのでチェックできません");
+        }
+
         // 初期化
         Initialization();
     }
