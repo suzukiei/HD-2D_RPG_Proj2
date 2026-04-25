@@ -16,7 +16,7 @@ MonoBehaviour:
   description: "\u30FB\u81EA\u5206\u81EA\u8EAB\u306E\u307F\n\u30FB\u6B21\u306E\u30BF\u30FC\u30F3\u306E\u901A\u5E38\u653B\u6483\u304C\u5168\u4F53\u653B\u6483\u306B\u306A\u308A\u3001\u30C0\u30E1\u30FC\u30B8\u304C50\uFF05\u4E0A\u6607\n\u30FB1\u30BF\u30FC\u30F3\u3067\u5207\u308C\u308B\n\u30FBMP
     2\u6D88\u8CBB"
   icon: {fileID: 0}
-  soundEffect: {fileID: 0}
+  soundEffect: {fileID: 8300000, guid: 79c37ab7e85c2c942a2f1de1b3a596d9, type: 3}
   vfxPrefab: {fileID: 0}
   animationName: 
   effectType: 2
@@ -26,6 +26,7 @@ MonoBehaviour:
   hitCount: 1
   criticalRate: 0.1
   accuracy: 1
+  isIntSansyou: 0
   targetScope: 0
   statusEffect: 0
   canCombo: 0
@@ -37,6 +38,11 @@ MonoBehaviour:
   comboDamageMultiplier: 1.2
   maxcombo: 3
   missCancel: 1
+  rengeki: 0
+  rengekiCount: 0
+  atkAftHeal: 0
+  wariaiHeal: 0
+  wariai: 0
   statusChance: 0
   buffEffect:
   - {fileID: 11400000, guid: c574ed739704f3d4488076ad8e90e61a, type: 2}

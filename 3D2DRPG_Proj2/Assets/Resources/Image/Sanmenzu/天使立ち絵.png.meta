@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1afbcedc55a6b304da6e390f1b155d7e
+guid: 2187f6efe4d7f9142b041b298326e272
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -126,10 +126,31 @@ TextureImporter:
       name: "\u5929\u4F7F\u7ACB\u3061\u7D75_0"
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1297
         y: 0
-        width: 1300
-        height: 1283
+        width: 1114
+        height: 2894
+      alignment: 9
+      pivot: {x: 0.22722128, y: 0.74245906}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b4820c6ef2da144dbdc3fa1e7d612e0
+      internalID: -1507938053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u5929\u4F7F\u7ACB\u3061\u7D75_1"
+      rect:
+        serializedVersion: 2
+        x: 2757
+        y: 0
+        width: 1336
+        height: 2894
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,8 +158,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44e45d447a9110a409368603b0de6da7
-      internalID: -1668698640
+      spriteID: a989389875a948648a22b3ea2c8128fa
+      internalID: -1449453161
       vertices: []
       indices: 
       edges: []
@@ -146,7 +167,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 6c4f2e56fa1e1f84391ce3d3bb31764e
     internalID: 0
     vertices: []
     indices: 
@@ -154,14 +175,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\u5929\u4F7F\u7ACB\u3061\u7D75_0": -1668698640
-      "\u5929\u4F7F\u7ACB\u3061\u7D75_1": -1205273771
-      "\u5929\u4F7F\u7ACB\u3061\u7D75_2": 1905903873
-      "\u5929\u4F7F\u7ACB\u3061\u7D75_3": 918053744
-      "\u5929\u4F7F\u7ACB\u3061\u7D75_4": -312297920
-      "\u5929\u4F7F\u7ACB\u3061\u7D75_5": 220397653
-      "\u5929\u4F7F\u7ACB\u3061\u7D75_6": -1476726804
-      "\u5929\u4F7F\u7ACB\u3061\u7D75_8": -310715240
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_0": -1507938053
+      "\u5929\u4F7F\u7ACB\u3061\u7D75_1": -1449453161
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
