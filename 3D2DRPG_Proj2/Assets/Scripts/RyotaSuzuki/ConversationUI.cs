@@ -63,7 +63,7 @@ public class ConversationUI : MonoBehaviour
     [SerializeField, Header("遷移先のシーン名")] private string nextSceneName = "Map";
     
     [Header("会話終了イベント")]
-    [SerializeField, Header("会話終了時に実行するイベント")] private UnityEvent onDialogueEnd;
+    [SerializeField, Header("会話終了時に実行するイベント")] public UnityEvent onDialogueEnd;
     
     [Header("プレイヤー制御")]
     [SerializeField, Tooltip("会話終了時にプレイヤー操作を再開するか")]
@@ -100,10 +100,14 @@ public class ConversationUI : MonoBehaviour
     {
         [Tooltip("会話CSV名（.csvなし）")]
         public string dialogueCSV;
-        [Tooltip("戦闘後に再生する会話CSV（オプション）")] //.csvありで記入
+        [Tooltip("戦闘後に再生する会話CSV（オプション）")]
         public string postBattleDialogueCSV;
         [Tooltip("このイベントがボス戦かどうか")]
         public bool isBossBattle = true;
+        
+        [Header("戦闘中イベント")]
+        [Tooltip("戦闘中に発生するイベント")]
+        public List<GameManager.BattleMidEvent> battleMidEvents = new List<GameManager.BattleMidEvent>();
     }
     
     [Header("戦闘イベント設定")]
@@ -119,6 +123,8 @@ public class ConversationUI : MonoBehaviour
 
     private bool disabledEnemy; //SimpleEventTriggerから引数を受けつぐ
 
+    private bool sceneChangeFlg = false;
+    private string sceneChangeParam = "";
     void Start()
     {
         // 初期化
@@ -237,6 +243,13 @@ public class ConversationUI : MonoBehaviour
             string name = fields[0].Replace("\"", ""); // クォートを削除
             string dialogue = fields[1].Replace("\"", ""); // クォートを削除
             
+            // 特殊コマンドのチェック
+            if (name.StartsWith("@"))
+            {
+                ProcessDialogueCommand(name, dialogue);
+                return null; // コマンド行は会話データとして扱わない
+            }
+            
             // \nを実際の改行に変換
             dialogue = dialogue.Replace("\\n", "\n");
             
@@ -250,6 +263,67 @@ public class ConversationUI : MonoBehaviour
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 会話イベント内の特殊コマンドを処理
+    /// </summary>
+    void ProcessDialogueCommand(string command, string parameter)
+    {
+        command = command.ToUpper().Trim();
+        parameter = parameter.Trim();
+        
+        switch (command)
+        {
+            case "@ADD_MEMBER":
+                // キャラクター加入
+                if (!string.IsNullOrEmpty(parameter))
+                {
+                    GameManager.Instance.AddPartyMemberByName(parameter);
+                    Debug.Log($"[ConversationUI] コマンド実行: {parameter} をパーティーに加入させました");
+                }
+                else
+                {
+                    Debug.LogWarning("[ConversationUI] @ADD_MEMBERコマンドにキャラクター名が指定されていません");
+                }
+                break;
+                
+            case "@REMOVE_MEMBER":
+                // キャラクター離脱
+                if (!string.IsNullOrEmpty(parameter))
+                {
+                    GameManager.Instance.RemovePartyMemberByName(parameter);
+                    Debug.Log($"[ConversationUI] コマンド実行: {parameter} をパーティーから離脱させました");
+                }
+                else
+                {
+                    Debug.LogWarning("[ConversationUI] @REMOVE_MEMBERコマンドにキャラクター名が指定されていません");
+                }
+                break;
+                
+            case "@CLEAR_PARTY":
+                // パーティー全員離脱
+                if (GameManager.Instance != null && GameManager.Instance.PlayerData != null)
+                {
+                    int count = GameManager.Instance.PlayerData.Count;
+                    GameManager.Instance.PlayerData.Clear();
+                    Debug.Log($"[ConversationUI] コマンド実行: パーティーメンバーを全員離脱させました ({count}人)");
+                }
+                break;
+
+            case "@SCENE_CHANGE":
+                //シーンチェンジ
+                new WaitForSeconds(2f);
+
+                sceneChangeFlg = true;
+                sceneChangeParam = parameter;
+
+                break;
+
+            default:
+                Debug.LogWarning($"[ConversationUI] 未知のコマンド: {command}");
+                break;
+        }
     }
 
     /// <summary>
@@ -538,6 +612,9 @@ public class ConversationUI : MonoBehaviour
         CheckAndStartBattleEvent();
 
         // シーン遷移
+        if(sceneChangeFlg) //csvコマンドでSCENE_CHANGEコマンドがある場合
+            SceneManager.LoadScene(sceneChangeParam);
+
         if (loadSceneOnEnd && !string.IsNullOrEmpty(nextSceneName))
         {
             Debug.Log($"会話終了。シーン遷移: {nextSceneName}");
@@ -1100,23 +1177,15 @@ public class ConversationUI : MonoBehaviour
                     if (bossEnemyData != null && bossEnemyData.Count > 0)
                     {
                         Debug.Log($"[ConversationUI] ボスエネミーデータ取得成功: {bossEnemyData.Count}体");
+                        Debug.Log($"[ConversationUI] 戦闘中イベント数: {battleEvent.battleMidEvents.Count}");
                         
-                        // 戦闘後会話が設定されている場合
-                        if (!string.IsNullOrEmpty(battleEvent.postBattleDialogueCSV))
-                        {
-                            Debug.Log($"[ConversationUI] 戦闘後会話を設定: {battleEvent.postBattleDialogueCSV}");
-                            GameManager.Instance.StartBattleWithPostDialogue(
-                                playerPosition, 
-                                bossEnemyData, 
-                                battleEvent.postBattleDialogueCSV
-                            );
-                        }
-                        else
-                        {
-                            // 戦闘後会話なしの通常ボス戦
-                            Debug.Log($"[ConversationUI] 戦闘後会話なしのボス戦");
-                            GameManager.Instance.StartBattleWithEnemyData(playerPosition, bossEnemyData);
-                        }
+                        // ボス戦として開始（戦闘中イベント付き）
+                        GameManager.Instance.StartBossBattle(
+                            playerPosition,
+                            bossEnemyData,
+                            battleEvent.battleMidEvents,
+                            battleEvent.postBattleDialogueCSV
+                        );
                     }
                     else
                     {

@@ -30,6 +30,9 @@ public class EnemyManager : MonoBehaviour
 
     // 戦闘カメラ制御
     [SerializeField] private BattleCameraController battleCamera;
+    
+    // ボスイベントトリガー
+    private BossEventTrigger bossEventTrigger;
 
     public List<GameObject> GetEnemyData() { return enemygameObjects; }
 
@@ -59,32 +62,64 @@ public class EnemyManager : MonoBehaviour
             enemyData.Clear();
             enemyData.AddRange(GameManager.Instance.EnemyData);
         }
-        for (int i = 0; i < enemyData.Count; i++)
+        
+        // enemyDataが空の場合は敵を生成しない
+        if (enemyData != null && enemyData.Count > 0)
         {
-            enemyData[i].CharacterTransfrom = vector3s[i];
-            var obj = Instantiate(enemyData[i].CharacterObj, vector3s[i] * 2, Quaternion.identity);
-            obj.AddComponent<Character>().init(enemyData[i]);
-            obj.transform.localRotation = Quaternion.Euler(0, -90, 0);
+            for (int i = 0; i < enemyData.Count; i++)
+            {
+                enemyData[i].CharacterTransfrom = vector3s[i];
+                var obj = Instantiate(enemyData[i].CharacterObj, vector3s[i] * 2, Quaternion.identity);
+                obj.AddComponent<Character>().init(enemyData[i]);
+                obj.transform.localRotation = Quaternion.Euler(0, -90, 0);
 
-            Debug.Log("★★★★★★★★★" + obj.name);
-            if(obj.name == "Tensi(Clone)")
-            {
-                obj.transform.localRotation = Quaternion.Euler(0, 134, 0);
-                obj.transform.localPosition = new Vector3(5, 5, 10);
+                Debug.Log("★★★★★★★★★" + obj.name);
+                if(obj.name == "Tensi(Clone)")
+                {
+                    obj.transform.localRotation = Quaternion.Euler(0, 134, 0);
+                    obj.transform.localPosition = new Vector3(5, 5, 10);
+                }
+                if (obj.name == "Akuma(Clone)")
+                {
+                    obj.transform.localRotation = Quaternion.Euler(0, 77, 0);
+                }
+                
+                obj.transform.parent = this.gameObject.transform;
+                enemygameObjects.Add(obj);
             }
-            if (obj.name == "Akuma(Clone)")
+        }
+        else
+        {
+            Debug.LogWarning("[EnemyManager] enemyDataが空です。敵を生成しません。");
+        }
+        
+        // ボスイベントトリガーを検索して初期化
+        bossEventTrigger = FindObjectOfType<BossEventTrigger>();
+        if (bossEventTrigger != null && enemygameObjects.Count > 0)
+        {
+            // 最初の敵をボスとして設定
+            var bossChar = enemygameObjects[0].GetComponent<Character>();
+            if (bossChar != null)
             {
-                obj.transform.localRotation = Quaternion.Euler(0, 77, 0);
+                bossEventTrigger.Initialize(bossChar);
             }
-            
-            obj.transform.parent = this.gameObject.transform;
-            enemygameObjects.Add(obj);
         }
     }
     public void Test()
     {
         //EnemyChange
         turnManager.FlagChange();
+    }
+    
+    /// <summary>
+    /// ボスイベントをチェック
+    /// </summary>
+    public void CheckBossEvents()
+    {
+        if (bossEventTrigger != null)
+        {
+            bossEventTrigger.CheckEvents();
+        }
     }
 
     /// <summary>

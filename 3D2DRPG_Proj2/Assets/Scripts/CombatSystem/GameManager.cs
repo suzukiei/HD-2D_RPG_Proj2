@@ -35,14 +35,26 @@ public class GameManager : MonoBehaviour
     public int isi = 1; // 既存の変数を保持
 
     [Header("バトルデータ")]
-    [SerializeField, Header("プレイヤー")]
-    public List<CharacterData> PlayerData; // 既存の変数を保持
+    [SerializeField, Header("全キャラクターマスターデータ")]
+    public List<CharacterData> AllCharacterData; // 全キャラクターのマスターデータ（デバッグ用）
+    
+    [SerializeField, Header("現在のパーティーメンバー")]
+    public List<CharacterData> PlayerData; // 現在パーティーに加入しているキャラクター
+    
     [SerializeField, Header("エネミー")]
     public List<CharacterData> EnemyData; // 既存の変数を保持
 
     // 戦闘履歴管理（倒した敵のIDを記録）
     [SerializeField, Header("戦闘履歴管理")]
     private SerializableStringHashSet defeatedEnemyIds = new SerializableStringHashSet();
+    
+    // グループID単位の戦闘履歴管理
+    [SerializeField, Header("エンカウントグループ戦闘履歴")]
+    private HashSet<int> defeatedEncounterGroups = new HashSet<int>();
+    
+    // 戦闘開始時の敵オブジェクト参照
+    [NonSerialized]
+    public GameObject currentBattleEnemy = null;
     
     // 戦闘開始前のキャラクターステータス（経験値アニメーション用）
     [System.Serializable]
@@ -74,6 +86,26 @@ public class GameManager : MonoBehaviour
     [NonSerialized]
     public bool hasPostBattleDialogue = false; // 戦闘後会話フラグ
 
+    [System.Serializable]
+    public class BattleMidEvent
+    {
+        [Tooltip("HP閾値（％）")]
+        [Range(0, 100)]
+        public int hpThreshold = 50;
+        
+        [Tooltip("再生する会話CSV")]
+        public string dialogueCSV;
+        
+        [Tooltip("会話中に戦闘を一時停止するか")]
+        public bool pauseBattle = true;
+    }
+
+    [Header("戦闘中イベント")]
+    [NonSerialized]
+    public bool isBossBattle = false;  // ボス戦フラグ
+    [NonSerialized]
+    public List<BattleMidEvent> battleMidEvents = new List<BattleMidEvent>();
+
     [Header("経験値・レベル管理")]
     [SerializeField] private Dictionary<int, int> ExpTable = new Dictionary<int, int>();
 
@@ -96,7 +128,6 @@ public class GameManager : MonoBehaviour
     // 内部変数
     private Vector3 lastFieldPosition;
     private bool isTransitioning = false;
-
     private void Awake()
     {
         if (instance == null)
@@ -108,6 +139,16 @@ public class GameManager : MonoBehaviour
 
             // シーン変更時のイベント登録
             SceneManager.sceneLoaded += OnSceneLoaded;
+            
+            // EnemyDataを初期化（エディタで設定されているデータをクリア）
+            if (EnemyData == null)
+            {
+                EnemyData = new List<CharacterData>();
+            }
+            else
+            {
+                EnemyData.Clear();
+            }
 
             if (showDebugLog)
             {
@@ -121,11 +162,13 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        //プレイヤー
-        //PlayerData.Clear();
-        //エネミー
-        //EnemyData.Clear();
-        EventFlag=false;
+        EventFlag = false;
+        
+        // PlayerDataが未初期化の場合は空リストを作成
+        if (PlayerData == null)
+        {
+            PlayerData = new List<CharacterData>();
+        }
     }
     public void PlayerDataSetStatus(List<CharacterData> characterData)
     {
@@ -198,10 +241,26 @@ public class GameManager : MonoBehaviour
         // シーン名に基づいてゲーム状態を更新
         UpdateGameStateFromScene(scene.name);
         
-        // GameFieldシーンに戻った時、戦闘後会話イベントをチェック
-        if (scene.name == gameFieldSceneName && hasPostBattleDialogue && !string.IsNullOrEmpty(postBattleDialogueCSV))
+        // GameFieldシーンに戻った時の処理
+        if (scene.name == gameFieldSceneName)
         {
-            StartCoroutine(StartPostBattleDialogue());
+            // 戦闘勝利後、敵オブジェクトを削除
+            if (BattleWin && currentBattleEnemy != null)
+            {
+                if (showDebugLog)
+                {
+                    Debug.Log($"[GameManager] 戦闘勝利後、フィールドに復帰: 敵オブジェクトを削除 {currentBattleEnemy.name}");
+                }
+                
+                Destroy(currentBattleEnemy);
+                currentBattleEnemy = null;
+            }
+            
+            // 戦闘後会話イベントをチェック
+            if (hasPostBattleDialogue && !string.IsNullOrEmpty(postBattleDialogueCSV))
+            {
+                StartCoroutine(StartPostBattleDialogue());
+            }
         }
     }
     
@@ -339,8 +398,21 @@ public class GameManager : MonoBehaviour
 
         // バトル終了イベントを発火
         OnBattleEnd?.Invoke();
+        
+        // ボス戦データをクリア
+        ClearBossBattleData();
 
         BattleWin = true;
+        
+        // 戦闘勝利時、フィールドに戻る前に敵オブジェクトを削除予約
+        if (currentBattleEnemy != null)
+        {
+            if (showDebugLog)
+            {
+                Debug.Log($"[GameManager] 戦闘勝利: 敵オブジェクトを削除予約 {currentBattleEnemy.name}");
+            }
+        }
+        
         // フィールドに戻る
         StartCoroutine(TransitionToGameField());
     }
@@ -387,6 +459,11 @@ public class GameManager : MonoBehaviour
     public Vector3 GetLastFieldPosition()
     {
         return lastFieldPosition;
+    }
+
+    public void SetLastFieldPosition(Vector3 vec3)
+    {
+        lastFieldPosition = vec3;
     }
 
     /// <summary>
@@ -483,6 +560,37 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// エンカウントグループを倒したことを記録
+    /// </summary>
+    public void RecordGroupDefeat(int groupId)
+    {
+        if (!defeatedEncounterGroups.Contains(groupId))
+        {
+            defeatedEncounterGroups.Add(groupId);
+            if (showDebugLog)
+            {
+                Debug.Log($"[GameManager] エンカウントグループ撃破記録: グループID={groupId}");
+            }
+        }
+    }
+
+    /// <summary>
+    /// エンカウントグループを倒したことがあるかチェック
+    /// </summary>
+    public bool HasDefeatedGroup(int groupId)
+    {
+        return defeatedEncounterGroups.Contains(groupId);
+    }
+
+    /// <summary>
+    /// 戦闘開始時に敵オブジェクトを記録
+    /// </summary>
+    public void SetCurrentBattleEnemy(GameObject enemy)
+    {
+        currentBattleEnemy = enemy;
+    }
+
+    /// <summary>
     /// バトル開始（CharacterDataを受け取るオーバーロード）
     /// </summary>
     public void StartBattleWithEnemyData(Vector3 playerPosition, List<CharacterData> enemyCharacterDataList)
@@ -523,6 +631,55 @@ public class GameManager : MonoBehaviour
         
         // 通常の戦闘開始
         StartBattleWithEnemyData(playerPosition, enemyCharacterDataList);
+    }
+    
+    /// <summary>
+    /// ボス戦を開始（戦闘中イベント付き）
+    /// </summary>
+    public void StartBossBattle(
+        Vector3 playerPosition, 
+        List<CharacterData> enemyData, 
+        List<BattleMidEvent> midEvents = null,
+        string postBattleDialogue = "")
+    {
+        // ボス戦フラグを設定
+        isBossBattle = true;
+        
+        // 戦闘中イベントを設定
+        battleMidEvents.Clear();
+        if (midEvents != null)
+        {
+            battleMidEvents.AddRange(midEvents);
+        }
+        
+        // 戦闘後会話を設定
+        if (!string.IsNullOrEmpty(postBattleDialogue))
+        {
+            postBattleDialogueCSV = postBattleDialogue;
+            hasPostBattleDialogue = true;
+        }
+        
+        if (showDebugLog)
+        {
+            Debug.Log($"[GameManager] ボス戦開始: 戦闘中イベント{battleMidEvents.Count}個, 戦闘後会話: {postBattleDialogue}");
+        }
+        
+        // 通常の戦闘開始処理
+        StartBattleWithEnemyData(playerPosition, enemyData);
+    }
+    
+    /// <summary>
+    /// 戦闘終了時にボス戦フラグをリセット
+    /// </summary>
+    public void ClearBossBattleData()
+    {
+        isBossBattle = false;
+        battleMidEvents.Clear();
+        
+        if (showDebugLog)
+        {
+            Debug.Log("[GameManager] ボス戦データをクリアしました");
+        }
     }
 
     private void InitializeExpTable()
@@ -689,6 +846,131 @@ public class GameManager : MonoBehaviour
         Debug.Log($"★★ {character.charactername} は新しいスキル【{newSkill.skillName}】を習得した！ ★★");
     }
     
+    
+    #region パーティーメンバー管理
+    
+    /// <summary>
+    /// パーティーにキャラクターを加入させる
+    /// </summary>
+    public void AddPartyMember(CharacterData character)
+    {
+        if (character == null)
+        {
+            Debug.LogError("[GameManager] 加入させるキャラクターがnullです");
+            return;
+        }
+        
+        // 既にパーティーに加入しているかチェック
+        if (PlayerData.Contains(character))
+        {
+            Debug.LogWarning($"[GameManager] {character.charactername} は既にパーティーに加入しています");
+            return;
+        }
+        
+        PlayerData.Add(character);
+        
+        if (showDebugLog)
+        {
+            Debug.Log($"[GameManager] {character.charactername} がパーティーに加入しました！ (現在のメンバー: {PlayerData.Count}人)");
+        }
+    }
+    
+    /// <summary>
+    /// パーティーからキャラクターを離脱させる
+    /// </summary>
+    public void RemovePartyMember(CharacterData character)
+    {
+        if (character == null)
+        {
+            Debug.LogError("[GameManager] 離脱させるキャラクターがnullです");
+            return;
+        }
+        
+        if (!PlayerData.Contains(character))
+        {
+            Debug.LogWarning($"[GameManager] {character.charactername} はパーティーに加入していません");
+            return;
+        }
+        
+        PlayerData.Remove(character);
+        
+        if (showDebugLog)
+        {
+            Debug.Log($"[GameManager] {character.charactername} がパーティーから離脱しました (現在のメンバー: {PlayerData.Count}人)");
+        }
+    }
+    
+    /// <summary>
+    /// 名前でキャラクターを検索してパーティーに加入させる
+    /// </summary>
+    public void AddPartyMemberByName(string characterName)
+    {
+        if (AllCharacterData == null || AllCharacterData.Count == 0)
+        {
+            Debug.LogError("[GameManager] AllCharacterDataが設定されていません");
+            return;
+        }
+        
+        CharacterData character = AllCharacterData.Find(c => c.charactername == characterName);
+        
+        if (character == null)
+        {
+            Debug.LogError($"[GameManager] キャラクター '{characterName}' が見つかりません");
+            return;
+        }
+        
+        AddPartyMember(character);
+    }
+    
+    /// <summary>
+    /// 名前でキャラクターを検索してパーティーから離脱させる
+    /// </summary>
+    public void RemovePartyMemberByName(string characterName)
+    {
+        CharacterData character = PlayerData.Find(c => c.charactername == characterName);
+        
+        if (character == null)
+        {
+            Debug.LogError($"[GameManager] パーティーにキャラクター '{characterName}' が見つかりません");
+            return;
+        }
+        
+        RemovePartyMember(character);
+    }
+    
+    /// <summary>
+    /// キャラクターがパーティーに加入しているかチェック
+    /// </summary>
+    public bool IsInParty(CharacterData character)
+    {
+        return character != null && PlayerData.Contains(character);
+    }
+    
+    /// <summary>
+    /// キャラクターがパーティーに加入しているかチェック（名前で検索）
+    /// </summary>
+    public bool IsInPartyByName(string characterName)
+    {
+        return PlayerData.Exists(c => c.charactername == characterName);
+    }
+    
+    /// <summary>
+    /// 現在のパーティーメンバー数を取得
+    /// </summary>
+    public int GetPartyMemberCount()
+    {
+        return PlayerData != null ? PlayerData.Count : 0;
+    }
+    
+    /// <summary>
+    /// 現在のパーティーメンバーリストを取得（読み取り専用）
+    /// </summary>
+    public List<CharacterData> GetActivePartyMembers()
+    {
+        return new List<CharacterData>(PlayerData);
+    }
+    
+    #endregion
     
     #region 戦闘前スナップショット管理
     

@@ -48,10 +48,8 @@ public class PrologueSystem : MonoBehaviour
     [SerializeField] 
     private List<string> testTexts = new List<string>
     {
-        "遠い昔、この世界には光と闇が共存していた。",
-        "人々は平和に暮らしていた。",
-        "しかし、ある日――",
-        "全てが変わってしまった。"
+        "プレイいただきありがとうございました。",
+        "エンター又はスペースキーでゲーム画面へ戻ります。"
     };
 
     [Header("開始設定")]

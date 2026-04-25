@@ -1,11 +1,12 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
 using DG.Tweening;
-using Unity.VisualScripting;
-using Unity.Mathematics;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.TextCore.Text;
 
 //バフ効果
 public enum buffEffect
@@ -37,6 +38,8 @@ public class PlayerManager : MonoBehaviour
     private SkillSelectionUI skillSelectionUI; // スキル選択UIの参照
     [SerializeField, Header("ターン管理")]
     private TurnManager turnManager; // ターン管理の参照
+    [SerializeField, Header("エネミー管理")]
+    private EnemyManager enemyManager; // エネミー管理の参照
     [SerializeField, Header("プレイヤーキャラクターリスト")]
     private List<CharacterData> playerCharacters; // プレイヤーキャラクターデータのリスト
     [SerializeField, Header("キャラクターの生成配置座標")]
@@ -64,6 +67,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     public Animator enemyAnimator;
 
+    public AudioSource seSource;
+
     //Buffの管理用リスト
     public List<CharacterBuff>　characterBuffs = new List<CharacterBuff>();
 
@@ -83,14 +88,45 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        if (GameManager.Instance != null && GameManager.Instance.PlayerData.Count!=0)
+        if (GameManager.Instance != null && GameManager.Instance.PlayerData != null && GameManager.Instance.PlayerData.Count > 0)
         {
             playerCharacters.Clear();
             playerCharacters.AddRange(GameManager.Instance.PlayerData);
         }
+        
+        // パーティーメンバーが0人の場合は警告を表示して処理をスキップ
+        if (playerCharacters == null || playerCharacters.Count == 0)
+        {
+            Debug.LogWarning("[PlayerManager] パーティーメンバーが0人です。戦闘を開始できません。");
+            return;
+        }
+        
         isActionPending = false;
+        
+        // 全てのステータスパネルを一旦非表示にする
+        foreach (var panel in playerStatusPanel)
+        {
+            if (panel != null)
+            {
+                panel.gameObject.SetActive(false);
+            }
+        }
+        
         for (int i = 0; i < playerCharacters.Count; i++)
         {
+            // スポーン位置が足りない場合は警告
+            if (i >= spawnPositions.Count)
+            {
+                Debug.LogError($"[PlayerManager] スポーン位置が不足しています。{i + 1}人目のキャラクターを配置できません。");
+                break;
+            }
+            
+            // ステータスパネルが足りない場合は警告
+            if (i >= playerStatusPanel.Count || playerStatusPanel[i] == null)
+            {
+                Debug.LogWarning($"[PlayerManager] ステータスパネルが不足しています。{i + 1}人目のキャラクターのUIを表示できません。");
+            }
+            
             // キャラクターの座標をセット
             playerCharacters[i].CharacterTransfrom = spawnPositions[i];
             // キャラクターのGameObjectを作成
@@ -98,23 +134,29 @@ public class PlayerManager : MonoBehaviour
             obj.AddComponent<Character>().init(playerCharacters[i]);
             obj.transform.parent = transform;
             characterObjects.Add(obj);
-            // ターン管理にキャラクターを登録
-            playerStatusPanel[i].gameObject.SetActive(true);
-            PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
-            playerStatusPanel[i].UpdatePlayerStatus(playerData);
             
-            // CharacterBuffManagerとPlayerStatusPanelを接続
-            CharacterBuffManager buffManager = obj.GetComponent<CharacterBuffManager>();
-            if (buffManager != null && playerStatusPanel[i] != null)
+            // ステータスパネルの設定
+            if (i < playerStatusPanel.Count && playerStatusPanel[i] != null)
             {
-                buffManager.OnBuffsChanged.AddListener(playerStatusPanel[i].UpdateBuffIcons);
-                Debug.Log($"[PlayerManager] バフアイコン接続完了: {playerCharacters[i].charactername} → PlayerStatusPanel[{i}]");
-            }
-            else
-            {
-                Debug.LogWarning($"[PlayerManager] バフアイコン接続失敗: buffManager={buffManager}, panel={playerStatusPanel[i]}");
+                playerStatusPanel[i].gameObject.SetActive(true);
+                PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
+                playerStatusPanel[i].UpdatePlayerStatus(playerData);
+                
+                // CharacterBuffManagerとPlayerStatusPanelを接続
+                CharacterBuffManager buffManager = obj.GetComponent<CharacterBuffManager>();
+                if (buffManager != null)
+                {
+                    buffManager.OnBuffsChanged.AddListener(playerStatusPanel[i].UpdateBuffIcons);
+                    Debug.Log($"[PlayerManager] バフアイコン接続完了: {playerCharacters[i].charactername} → PlayerStatusPanel[{i}]");
+                }
+                else
+                {
+                    Debug.LogWarning($"[PlayerManager] バフアイコン接続失敗: buffManager={buffManager}");
+                }
             }
         }
+        
+        Debug.Log($"[PlayerManager] {playerCharacters.Count}人のキャラクターを戦闘に配置しました");
     }
 
     
@@ -136,6 +178,7 @@ public class PlayerManager : MonoBehaviour
         // UIのプレイヤーステータスパネル更新
         PlayerUIUpdate();
         if (!isActionPending) return;
+
         // キャラクターの状態に応じて処理を分岐
         PlayerUpdate();
         // 行動処理のフラグをリセット
@@ -186,6 +229,8 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void PlayerMove()
     {
+
+
         //開始位置を保存
         StartPosition = selectedCharacter.CharacterObj.transform.position;
         // キャラクターを行動位置に移動
@@ -194,6 +239,8 @@ public class PlayerManager : MonoBehaviour
             selectedCharacter.StatusFlag = StatusFlag.Select;
             isActionPending = true;
         }); ;
+
+        
     }
     /// <summary>
     /// スキル選択処理
@@ -366,6 +413,7 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
+
         // 全の攻撃スキルの場合、すべての敵に攻撃を適用
         if (selectedSkill.targetScope == TargetScope.All||selectedCharacter.AllAttack)
         {
@@ -480,6 +528,12 @@ public class PlayerManager : MonoBehaviour
             isActionPending = true;
             return;
         }
+        //SEならす
+        if (selectedSkill.soundEffect != null)
+        {
+            seSource.PlayOneShot(selectedSkill.soundEffect);
+        }
+
         //すべての味方を対象
         if (selectedSkill.targetScope == TargetScope.All)
         {
@@ -549,7 +603,12 @@ public class PlayerManager : MonoBehaviour
                 return;
             }
         }
-        
+        //SEならす
+        if (selectedSkill.soundEffect != null)
+        {
+            seSource.PlayOneShot(selectedSkill.soundEffect);
+        }
+
         //通常スキルの処理
         Character character = null;
         if (characters != null && index >= 0 && index < characters.Count)
@@ -630,11 +689,30 @@ public class PlayerManager : MonoBehaviour
             DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, finalDamage);
         }
 
+        //SEならす
+        if (selectedSkill.soundEffect != null)
+        {
+            Debug.Log(selectedSkill);
+            Debug.Log(selectedSkill?.soundEffect);
+            seSource.PlayOneShot(selectedSkill.soundEffect);
+        }
+
         // 連撃処理（コルーチンで遅延表示）
         if (skill.rengeki == true)
         {
             Debug.Log("連撃ダメージ開始:連撃カウント:" + skill.rengekiCount);
             StartCoroutine(ShowRengekiDamage(enemy, finalDamage, skill.rengekiCount));
+        }
+        
+        // ダメージ適用後、ボスイベントをチェック
+        if (enemyManager != null)
+        {
+            Debug.Log("ボスイベントをチェックします");
+            enemyManager.CheckBossEvents();
+        }
+        else
+        {
+            Debug.Log("enemyManagerがnullなのでチェックできません");
         }
 
         // 攻撃アニメーション再生
@@ -645,6 +723,41 @@ public class PlayerManager : MonoBehaviour
 
         //アニメーションが流れるのを待つ
         new WaitForSeconds(0.6f);
+
+        // 攻撃後自己回復
+        if(skill.atkAftHeal == true && skill.wariai > 0)
+        {
+            // 与えたダメージの一定割合を回復量として計算
+            int healAmount = Mathf.RoundToInt(finalDamage / skill.wariai);
+            skill.wariaiHeal = healAmount;
+            
+            if (selectedCharacter != null && healAmount > 0)
+            {
+                int beforeHp = selectedCharacter.hp;
+                selectedCharacter.hp += healAmount;
+                
+                // 最大HPを超えないように制限
+                if (selectedCharacter.hp > selectedCharacter.maxHp)
+                {
+                    selectedCharacter.hp = selectedCharacter.maxHp;
+                }
+                
+                int actualHeal = selectedCharacter.hp - beforeHp;
+                Debug.Log($"[吸血] {selectedCharacter.charactername} が {actualHeal}HP 回復！");
+                
+                // 回復エフェクトを表示
+                if (VFXManager.Instance != null && selectedCharacter.CharacterObj != null)
+                {
+                    VFXManager.Instance.PlayHealEffect(selectedCharacter.CharacterObj);
+                }
+                
+                // 回復テキストを表示
+                if (DamageEffectUI.Instance != null && selectedCharacter.CharacterObj != null)
+                {
+                    DamageEffectUI.Instance.ShowHealEffectOnCharacter(selectedCharacter.CharacterObj, actualHeal);
+                }
+            }
+        }
 
         if (enemy.hp <= 0)
         {

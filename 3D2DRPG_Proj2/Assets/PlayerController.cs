@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("移動基準カメラ")]
     [SerializeField] private Transform moveReferenceCamera;
+
+    private static bool isFirstLoad = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -73,6 +75,14 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(device.name + ":" + device.GetType().Name);
             }
 
+        }
+
+        if (isFirstLoad)
+        {
+            Debug.Log("[PlayerController] : 初回位置調整");
+            // 初回だけ初期位置
+            transform.position = new Vector3(-202.44f, 1.52f, 3.11f);
+            isFirstLoad = false;
         }
 
     }
@@ -247,23 +257,25 @@ public class PlayerController : MonoBehaviour
             if (enemyAI != null)
             {
                 var enemyDataList = enemyAI.GetEnemyData();
+                int encounterGroupId = enemyAI.GetEncounterGroupId();
                 
-                if (enemyDataList != null && enemyDataList.Count > 0)
+                if (enemyDataList != null && enemyDataList.Count > 0 && encounterGroupId >= 0)
                 {
-                    // 戦ったことがあるかチェック（すべての敵を倒したことがある場合）
-                    bool hasDefeatedAll = GameManager.Instance.HasDefeatedAllEnemies(enemyDataList);
+                    // グループIDで戦ったことがあるかチェック
+                    bool hasDefeatedGroup = GameManager.Instance.HasDefeatedGroup(encounterGroupId);
                     
-                    if (hasDefeatedAll && quickTimeCombatUI != null)
+                    if (hasDefeatedGroup && quickTimeCombatUI != null)
                     {
-                        Debug.Log("敵と戦ったことがある。");
+                        DisableAllEnemies();
+                        Debug.Log($"[PlayerController] グループID={encounterGroupId}と戦ったことがある。クイックタイム戦闘開始");
                         // クイックタイム戦闘を開始
-                        StartQuickTimeCombat(enemy, enemyDataList);
+                        StartQuickTimeCombat(enemy, enemyDataList, encounterGroupId);
                     }
                     else
                     {
-                        Debug.Log("敵と戦ったことがないので通常戦闘シーンへ遷移。");
+                        Debug.Log($"[PlayerController] グループID={encounterGroupId}は初遭遇。通常戦闘シーンへ遷移");
                         // 通常の戦闘シーンに移動
-                        StartNormalBattle(enemy, enemyDataList);
+                        StartNormalBattle(enemy, enemyDataList, encounterGroupId);
                     }
                 }
                 else
@@ -305,12 +317,12 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// クイックタイム戦闘を開始
     /// </summary>
-    private void StartQuickTimeCombat(GameObject enemyObject, List<CharacterData> enemyDataList)
+    private void StartQuickTimeCombat(GameObject enemyObject, List<CharacterData> enemyDataList, int encounterGroupId)
     {
         if (quickTimeCombatUI == null)
         {
             Debug.LogWarning("QuickTimeCombatUIが設定されていません。通常戦闘に移行します。");
-            StartNormalBattle(enemyObject, enemyDataList);
+            StartNormalBattle(enemyObject, enemyDataList, encounterGroupId);
             return;
         }
         
@@ -333,22 +345,27 @@ public class PlayerController : MonoBehaviour
             if (success)
             {
                 // タイミング成功：敵を倒す（演出後に呼ばれる）
-                OnQuickTimeCombatSuccess(enemyObject, enemyDataList);
+                OnQuickTimeCombatSuccess(enemyObject, enemyDataList, encounterGroupId);
             }
             else
             {
                 // タイミング失敗：通常戦闘に移行
-                StartNormalBattle(enemyObject, enemyDataList);
+                StartNormalBattle(enemyObject, enemyDataList, encounterGroupId);
             }
         }, enemyObject);
+
+        EnableAllEnemies();
     }
 
     /// <summary>
     /// クイックタイム戦闘成功時の処理
     /// </summary>
-    private void OnQuickTimeCombatSuccess(GameObject enemyObject, List<CharacterData> enemyDataList)
+    private void OnQuickTimeCombatSuccess(GameObject enemyObject, List<CharacterData> enemyDataList, int encounterGroupId)
     {
-        // 敵を倒した記録
+        // グループIDを記録（すでに記録済みのはず）
+        GameManager.Instance.RecordGroupDefeat(encounterGroupId);
+        
+        // 敵を倒した記録（旧システム互換のため）
         if (enemyDataList != null)
         {
             foreach (var enemyData in enemyDataList)
@@ -363,7 +380,7 @@ public class PlayerController : MonoBehaviour
         // 敵を削除
         Destroy(enemyObject);
         
-        Debug.Log($"クイックタイム戦闘成功！敵を倒しました。");
+        Debug.Log($"[PlayerController] クイックタイム戦闘成功！グループID={encounterGroupId}の敵を倒しました。");
         
         // ここに経験値獲得などの処理を追加可能
     }
@@ -371,7 +388,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// 通常の戦闘を開始
     /// </summary>
-    private void StartNormalBattle(GameObject enemyObject, List<CharacterData> enemyDataList)
+    private void StartNormalBattle(GameObject enemyObject, List<CharacterData> enemyDataList, int encounterGroupId)
     {
         if (GameManager.Instance != null)
         {
@@ -381,6 +398,14 @@ public class PlayerController : MonoBehaviour
             {
                 GameManager.Instance.EnemyData.AddRange(enemyDataList);
             }
+            
+            // 敵オブジェクトを記録（戦闘勝利後に削除するため）
+            GameManager.Instance.SetCurrentBattleEnemy(enemyObject);
+            
+            // グループIDを記録（初遭遇時に記録）
+            GameManager.Instance.RecordGroupDefeat(encounterGroupId);
+            
+            Debug.Log($"[PlayerController] 通常戦闘開始: グループID={encounterGroupId}");
             
             GameManager.Instance.StartBattle(transform.position, enemyObject);
         }
@@ -435,5 +460,49 @@ public class PlayerController : MonoBehaviour
 
         // 上入力でカメラ前方、右入力でカメラ右方向へ進む
         return forward * finalInput.y + right * finalInput.x;
+    }
+
+    /// <summary>
+    /// フィールド上の全ての敵を停止&非表示
+    /// </summary>
+    private void DisableAllEnemies()
+    {
+        // 全てのEnemyWanderAIを検索
+        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>();
+        Debug.Log("[PlayerController] : DisableAllEnemies");
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                // 徘徊を停止
+                enemy.StopWandering();
+
+                // オブジェクトを非表示
+                enemy.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// フィールド上の全ての敵を再開&表示
+    /// </summary>
+    public void EnableAllEnemies()
+    {
+
+        // 非表示の敵を含めて全てを検索（includeInactive: true）
+        EnemyWanderAI[] enemies = FindObjectsOfType<EnemyWanderAI>(true);
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                // オブジェクトを表示
+                enemy.gameObject.SetActive(true);
+
+                // 徘徊を再開
+                enemy.ResumeWandering();
+
+            }
+        }
     }
 }

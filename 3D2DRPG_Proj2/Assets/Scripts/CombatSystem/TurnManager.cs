@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 public class TurnManager : MonoBehaviour
 {
@@ -27,6 +28,9 @@ public class TurnManager : MonoBehaviour
     private bool turnChangeFlag = false; // ターン順変更フラグ
     private int turnNumber = 0; // 現在のターン数
     private bool turnFlag; // ターン開始していいかどうかのフラグ
+    
+    [Header("戦闘中イベント")]
+    private bool battlePaused = false; // 戦闘一時停止フラグ
 
     //シングルトンパターン
     private static TurnManager instance;
@@ -69,6 +73,18 @@ public class TurnManager : MonoBehaviour
         turnFlag = true;
         turnNumber = 0;
         turnChangeFlag = false;
+
+        //初めから会話イベントを起こしたい場合()
+        if (enemyManager != null)
+        {
+            Debug.Log("ボスイベントをチェックします");
+            enemyManager.CheckBossEvents();
+        }
+        else
+        {
+            Debug.Log("enemyManagerがnullなのでチェックできません");
+        }
+
         // 初期化
         Initialization();
     }
@@ -91,6 +107,29 @@ public class TurnManager : MonoBehaviour
         players = playerManager.GetPlayerCharacters();
         // エネミーを取得
         enemys = enemyManager.GetEnemyData();
+
+        // パーティーメンバーが0人の場合はエラー
+        if (players == null || players.Count == 0)
+        {
+            Debug.LogError("[TurnManager] パーティーメンバーが0人です。戦闘を開始できません。");
+            // 戦闘を終了してフィールドに戻る
+            if (GameManager.Instance != null)
+            {
+                StartCoroutine(ReturnToFieldAfterError());
+            }
+            return;
+        }
+        
+        // 敵がいない場合もエラー
+        if (enemys == null || enemys.Count == 0)
+        {
+            Debug.LogError("[TurnManager] 敵が0体です。戦闘を開始できません。");
+            if (GameManager.Instance != null)
+            {
+                StartCoroutine(ReturnToFieldAfterError());
+            }
+            return;
+        }
 
         // プレイヤーとエネミーをまとめてSPD順に並び替える
         turnList.Clear();
@@ -217,6 +256,13 @@ public class TurnManager : MonoBehaviour
     //ターン開始してフラグ
     public void FlagChange()
     {
+        // 戦闘が一時停止中は処理しない
+        if (battlePaused)
+        {
+            Debug.Log("[TurnManager] 戦闘一時停止中のため、ターン進行を停止します");
+            return;
+        }
+        
         // 全員の行動が完了したかチェック
         if (turnNumber >= sortedTurnList.Count)
         {
@@ -234,6 +280,35 @@ public class TurnManager : MonoBehaviour
         }
 
         turnFlag = true;
+    }
+    
+    /// <summary>
+    /// 戦闘を一時停止
+    /// </summary>
+    public void PauseBattle()
+    {
+        battlePaused = true;
+        Debug.Log("[TurnManager] 戦闘を一時停止しました");
+    }
+    
+    /// <summary>
+    /// 戦闘を再開
+    /// </summary>
+    public void ResumeBattle()
+    {
+        battlePaused = false;
+        Debug.Log("[TurnManager] 戦闘を再開しました");
+        
+        // 次のターンに進む
+        FlagChange();
+    }
+    
+    /// <summary>
+    /// 戦闘が一時停止中かどうか
+    /// </summary>
+    public bool IsBattlePaused()
+    {
+        return battlePaused;
     }
 
     // 新規メソッド: ラウンド終了時のバフ処理
@@ -426,6 +501,22 @@ public class TurnManager : MonoBehaviour
         }
         GameManager.Instance.PlayerDataSetStatus(playerDataList);
     }
+    
+    /// <summary>
+    /// エラー時にフィールドに戻る
+    /// </summary>
+    private IEnumerator ReturnToFieldAfterError()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        Debug.Log("[TurnManager] エラーが発生したためフィールドに戻ります");
+        
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.EndBattle();
+        }
+    }
+    
     //End of TurnManager
     #endregion
 }
