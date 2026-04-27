@@ -64,8 +64,10 @@ public class PlayerManager : MonoBehaviour
     //コンボ数のcount
     private int comboCount = 0;
 
+    //アニメーション用
     [SerializeField]
     public Animator enemyAnimator;
+    private Animator playerSideAnimator;
 
     public AudioSource seSource;
 
@@ -659,6 +661,13 @@ public class PlayerManager : MonoBehaviour
     {
         if (enemy == null || skill == null) return true; // nullチェック追加
 
+        // 攻撃アニメーション再生
+        playerSideAnimator = selectedCharacter.PlayerAnimator;
+        if (playerSideAnimator != null)
+        {
+            playerSideAnimator.SetTrigger("Attack");
+        }
+
         // バフ適用後の攻撃力と防御力を取得
         int effectiveAtk = selectedCharacter.GetEffectiveAttack(skill.isIntSansyou);
         int effectiveDef = enemy.GetEffectiveDefense();
@@ -666,7 +675,7 @@ public class PlayerManager : MonoBehaviour
         float random = 0;
         var finalDamage = 0;
 
-        finalDamage = (int)(skill.power + Attackbuff - effectiveDef);
+            finalDamage = (int)(skill.power + Attackbuff - effectiveDef);
         //スキルがダメージボーナスを持つ場合
         if (skill.DamageBonusFlg == true)
         {

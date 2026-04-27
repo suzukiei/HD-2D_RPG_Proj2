@@ -20,6 +20,7 @@ public class Character: MonoBehaviour
     private GameObject characterDataObj;
     [SerializeField]
     private Animator enemyAnimator;
+    private Animator playerAnimator;
     
     // バフ管理
     private CharacterBuffManager buffManager;
@@ -56,11 +57,21 @@ public class Character: MonoBehaviour
         skills = characterData.skills;
         CharacterTransfrom= characterData.CharacterTransfrom;
         StatusFlag= characterData.StatusFlag;
-        if (this.transform.Find("BlockWolfAnimation"))
-        enemyAnimator = this.transform.Find("BlockWolfAnimation").GetComponent<Animator>();
         
-        // ベースステータスを保存
-        baseAtk = atk;
+        //敵のアニメーションを探す
+        if (this.transform.Find("BlockWolfAnimation"))
+        {
+            enemyAnimator = this.transform.Find("BlockWolfAnimation").GetComponent<Animator>();
+
+        }
+        else
+        {
+            //MaterialFileにある味方サイドのキャラ達の配下にあるGameObjectの中のAnimatorコンポネントを探して取ってくる
+            playerAnimator = this.transform.Find("GameObject").GetComponent<Animator>();
+        }
+
+            // ベースステータスを保存
+            baseAtk = atk;
         baseDef = def;
         baseSpd = spd;
         baseMaxHp = maxHp;
@@ -118,6 +129,12 @@ public class Character: MonoBehaviour
     {
         get { return enemyAnimator; }
     }
+
+    public Animator PlayerAnimator
+    {
+        get { return playerAnimator; }
+    }
+
     // 経験値アップ
     public void GainExp(int amount)
     {

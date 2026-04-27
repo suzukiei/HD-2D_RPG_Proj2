@@ -15,8 +15,8 @@ MonoBehaviour:
   charactername: "\u6708"
   characterIcon: {fileID: 21300000, guid: 247a696d6a0c355439c9e8d6217b1ceb, type: 3}
   enemyCheckFlag: 0
-  hp: 320
-  mp: 999
+  hp: 200
+  mp: 200
   atk: 14
   Int: 30
   def: 24
@@ -25,7 +25,7 @@ MonoBehaviour:
   maxMp: 200
   exp: 0
   level: 20
-  CharacterObj: {fileID: 7333836060625140281, guid: eb0b17fc84f337546ae72afcd8386f75,
+  CharacterObj: {fileID: 7207077761812904133, guid: eb776c5e51a4523489704828fcf76d95,
     type: 3}
   skills:
   - {fileID: 11400000, guid: e6a874f3269507d44b72be9454521b36, type: 2}

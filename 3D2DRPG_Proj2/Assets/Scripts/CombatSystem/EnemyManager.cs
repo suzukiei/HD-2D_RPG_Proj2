@@ -25,6 +25,7 @@ public class EnemyManager : MonoBehaviour
     private List<GameObject> enemygameObjects = new List<GameObject>();
     [SerializeField]
     public Animator enemyAnimator;
+    private Animator playerSideAnimator;
     [SerializeField]
     private SkillSelectionUI skillSelectionUI; // スキル選択UIの参照(スキル名表示用)
 
@@ -451,6 +452,9 @@ public class EnemyManager : MonoBehaviour
                     var Playerhp = target.hp - power;
                     target.hp = (int)math.floor(Playerhp);
 
+                    // 被弾アニメーション再生
+                    playerDamageAnimation(target);
+
                     //もしこの攻撃で死んだら
                     if (target.hp <= 0)
                     {
@@ -653,6 +657,9 @@ public class EnemyManager : MonoBehaviour
             chara.hp = (int)math.floor(targethp);
             Debug.Log($"{attacker.name} が {chara.name} に {power} ダメージ。残りHP: {chara.hp}");
 
+            // 被弾アニメーション再生
+            playerDamageAnimation(chara);
+
             //スキルにバフがあるなら適用させる。
             if (skill != null && skill.buffEffect != null && skill.buffEffect.Count > 0)
             {
@@ -792,7 +799,9 @@ public class EnemyManager : MonoBehaviour
 
                         selectedPlayer.ApplyBuff(buff, target);
                         if (isBuffSkill) PlayBuffVFX(buff, selectedPlayer);
+                        playerDamageAnimation(selectedPlayer);
                     }
+                    
                     break;
 
                 case StatusEffect.Poison:
@@ -804,7 +813,9 @@ public class EnemyManager : MonoBehaviour
 
                         selectedPlayer.ApplyBuff(buff, target);
                         if (isBuffSkill) PlayBuffVFX(buff, selectedPlayer);
+                        playerDamageAnimation(selectedPlayer);
                     }
+                    
                     break;
 
                 case StatusEffect.Silent:
@@ -830,7 +841,9 @@ public class EnemyManager : MonoBehaviour
 
                         enemy.ApplyBuff(buff, target);
                         if (isBuffSkill) PlayBuffVFX(buff, enemy);
+                        playerDamageAnimation(enemy);
                     }
+                    
                     break;
 
                 case StatusEffect.MagicCounter:
@@ -1042,6 +1055,26 @@ public class EnemyManager : MonoBehaviour
                 // デフォルトはバフエフェクト
                 VFXManager.Instance.PlayBuffEffect(target.CharacterObj);
                 break;
+        }
+    }
+
+    /// <summary>
+    /// 汎用アニメ再生
+    /// </summary>
+    /// <param name="target"></param>
+    private void playerDamageAnimation(Character target)
+    {
+        Debug.Log("playerDamageAnimationに入った。");
+        // 攻撃アニメーション再生
+        playerSideAnimator = target.PlayerAnimator;
+        if (playerSideAnimator != null)
+        {
+            playerSideAnimator.SetTrigger("Damage");
+            Debug.Log(target.charactername + "★PlayerにDamageをSet");
+        }
+        else
+        {
+            Debug.Log("playerDamagerAnimation:" + target.charactername + "はnull");
         }
     }
 }
