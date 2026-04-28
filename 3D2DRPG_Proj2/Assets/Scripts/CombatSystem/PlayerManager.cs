@@ -372,7 +372,7 @@ public class PlayerManager : MonoBehaviour
                 Debug.Log("StatusFlag.Healに移行");
                 selectedCharacter.StatusFlag = StatusFlag.Heal;
                 if (selectedSkill.targetScope == TargetScope.All)
-                    OnHealSelected(null, 0); 
+                    OnHealSelected(getPlayer(), 0); 
                 break;
             case SkillEffectType.Buff:
                 Debug.Log("StatusFlag.Buffに移行");
@@ -380,7 +380,7 @@ public class PlayerManager : MonoBehaviour
                 if (selectedSkill.targetScope == TargetScope.All)
                     isActionPending = true;
                 //    //仮バフ効果適用
-                 OnBuffSelected(null, 0, selectedSkill.buffEffect[0]);
+                OnBuffSelected(getPlayer(), 0, selectedSkill.buffEffect[0]);
                 break;
         }
         if(selectedSkill.targetScope != TargetScope.All)
@@ -516,6 +516,11 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void OnHealSelected(List<Character> characters, int index)
     {
+        Debug.Log(selectedCharacter == null ? "selectedCharacter NULL" : "selectedCharacter OK");
+        Debug.Log(selectedSkill == null ? "selectedSkill NULL" : "selectedSkill OK");
+        Debug.Log(characters == null ? "characters NULL" : "characters OK");
+        Debug.Log(seSource == null ? "seSource NULL" : "seSource OK");
+
         // 対象の範囲内かを確認
         if (index < 0 || index >= characters.Count)
         {

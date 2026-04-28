@@ -104,6 +104,7 @@ public class ConversationUI : MonoBehaviour
         public string postBattleDialogueCSV;
         [Tooltip("このイベントがボス戦かどうか")]
         public bool isBossBattle = true;
+        public bool isMidBossBattle = false;
         
         [Header("戦闘中イベント")]
         [Tooltip("戦闘中に発生するイベント")]
@@ -1159,7 +1160,7 @@ public class ConversationUI : MonoBehaviour
             e.dialogueCSV == csvFileName
         );
         
-        if (battleEvent != null && battleEvent.isBossBattle)
+        if (battleEvent != null && battleEvent.isBossBattle || battleEvent != null && battleEvent.isMidBossBattle )
         {
             Debug.Log($"[ConversationUI] 戦闘イベント検出: {normalizedCSVName}");
             
@@ -1174,6 +1175,13 @@ public class ConversationUI : MonoBehaviour
                 if (bossScript != null)
                 {
                     var bossEnemyData = bossScript.GetEnemyData();
+                    
+                    //中ボスだったら中ボスのデータを入れる。
+                    if (battleEvent.isMidBossBattle)
+                    {
+                        bossEnemyData = bossScript.GetMidEnemyData();
+                    }
+                        
                     if (bossEnemyData != null && bossEnemyData.Count > 0)
                     {
                         Debug.Log($"[ConversationUI] ボスエネミーデータ取得成功: {bossEnemyData.Count}体");

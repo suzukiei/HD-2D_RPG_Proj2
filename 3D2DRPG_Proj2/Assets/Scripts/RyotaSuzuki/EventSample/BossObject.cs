@@ -6,6 +6,7 @@ public class BossObject : MonoBehaviour
 {
     [Header("エネミー情報")]
     [SerializeField] private List<CharacterData> enemyData;    // エネミーデータリスト
+    [SerializeField] private List<CharacterData> midBossEnemyData;    // エネミーデータリスト
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +21,18 @@ public class BossObject : MonoBehaviour
     }
 
     /// <summary>
-    /// エネミーデータを設定を取得
+    /// 最終ボスエネミーデータを設定を取得
     /// </summary>
     public List<CharacterData> GetEnemyData()
     {
         return enemyData;
+    }
+
+    /// <summary>
+    /// 中間ボスエネミーデータを設定を取得
+    /// </summary>
+    public List<CharacterData> GetMidEnemyData()
+    {
+        return midBossEnemyData;
     }
 }
