@@ -8,6 +8,8 @@ public class TimingUI : MonoBehaviour
     [SerializeField] private float speed = 2.0f;
     [SerializeField] private KeyCode attackKey = KeyCode.Space;
 
+    [SerializeField] private Image timingMarker;
+
     [Header("成功ゾーン設定")]
     [SerializeField] private RectTransform successZone; // SuccessZoneのImage
     [SerializeField, Range(0f, 1f)] private float successZoneCenter = 0.5f; // 中心位置（0～1）
@@ -152,5 +154,36 @@ public class TimingUI : MonoBehaviour
         // エディタでの変更時のみ実行
         if (Application.isPlaying) return;
         UpdateSuccessZonePosition();
+    }
+
+    public void SetMarker(bool isActive)
+    {
+        if (isActive)
+        {
+            timingMarker.color = Color.green;
+        }
+        else
+        {
+            timingMarker.color = Color.red;
+        }
+    }
+    public bool CheckTimingSuccess()
+    {
+        bool rslt;
+
+        // 成功範囲の計算（UIのSuccessZoneと同じ範囲）
+        float minSuccess = successZoneCenter - successZoneHalfWidth;
+        float maxSuccess = successZoneCenter + successZoneHalfWidth;
+
+        if (timingBar.value >= minSuccess && timingBar.value <= maxSuccess)
+        {
+            rslt = true; // 成功
+        }
+        else
+        {
+            rslt = false; // 失敗
+        }
+        return rslt;
+
     }
 }

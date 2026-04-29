@@ -218,7 +218,7 @@ public class TurnManager : MonoBehaviour
                     //Debug.Log("StartPlayer");
                 }
                 //現在のターンのリストから削除
-                sortedTurnList[turnNumber] = null;
+                //sortedTurnList[turnNumber] = null;
                 // ターンカウンター
                 turnNumber++;
                 if (turnNumber < sortedTurnList.Count)

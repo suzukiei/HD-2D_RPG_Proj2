@@ -14,6 +14,7 @@ public class PlayerStatusPanel : MonoBehaviour
     [Header("基本情報UI")]
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private Image playerIcon;
 
     [Header("HP表示")]
     [SerializeField] private TextMeshProUGUI hpText;
@@ -82,7 +83,7 @@ public class PlayerStatusPanel : MonoBehaviour
             hpBarFill.color = hpColor;
             hpBarFill.fillAmount = 1f;
             hpBarFill.type = Image.Type.Filled;
-            hpBarFill.fillMethod = Image.FillMethod.Horizontal;
+            hpBarFill.fillMethod = Image.FillMethod.Radial360;
         }
 
         // MPバーの初期化
@@ -145,6 +146,9 @@ public class PlayerStatusPanel : MonoBehaviour
 
         if (levelText != null)
             levelText.text = $"Lv.{currentPlayerData.level}";
+
+        if (playerIcon != null)
+            playerIcon.sprite = currentPlayerData.playerIcon;
     }
 
     /// <summary>

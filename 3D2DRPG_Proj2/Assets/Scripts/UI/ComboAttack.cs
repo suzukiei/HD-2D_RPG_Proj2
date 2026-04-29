@@ -23,6 +23,7 @@ public class ComboAttack : MonoBehaviour
         if (canInput)
         {
             var testing = timingUI.IsTimingSuccess();
+            timingUI.SetMarker(timingUI.CheckTimingSuccess());
             // UŒ‚“ü—Í
             if (testing)
             {

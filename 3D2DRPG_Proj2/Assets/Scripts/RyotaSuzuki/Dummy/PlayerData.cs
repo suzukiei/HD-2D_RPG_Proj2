@@ -8,6 +8,7 @@ public class PlayerData
     [Header("基本情報")]
     public string playerName = "プレイヤー";
     public int level = 1;
+    public Sprite playerIcon;
     
     [Header("ステータス")]
     public int currentHP = 100;
@@ -65,6 +66,7 @@ public class PlayerData
         speed = characterData.spd;
         currentEXP = characterData.exp;
         nextLevelEXP = characterData.level * 100; // 仮の計算式
+        playerIcon = characterData.characterIcon;
     }
     /// <summary>
     /// ダミーデータを生成
