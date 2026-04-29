@@ -73,17 +73,7 @@ public class TurnManager : MonoBehaviour
         turnFlag = true;
         turnNumber = 0;
         turnChangeFlag = false;
-
-        //初めから会話イベントを起こしたい場合()
-        if (enemyManager != null)
-        {
-            Debug.Log("ボスイベントをチェックします");
-            enemyManager.CheckBossEvents();
-        }
-        else
-        {
-            Debug.Log("enemyManagerがnullなのでチェックできません");
-        }
+        battlePaused = false;
 
         // 初期化
         Initialization();
@@ -155,13 +145,28 @@ public class TurnManager : MonoBehaviour
         UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
         // 状態のデータをUIに渡す
         
+        // ターン処理をスタート（コルーチンで非同期実行）
+        StartCoroutine(InitializeBattle());
+    }
+
+    /// <summary>
+    /// 戦闘開始処理（HP100%イベント対応）
+    /// </summary>
+    private IEnumerator InitializeBattle()
+    {
         // ボスイベントをチェック（戦闘開始時、HP100%のイベント用）
         if (enemyManager != null)
         {
             enemyManager.CheckBossEvents();
         }
         
-        // ターン処理をスタート
+        // 戦闘が一時停止中の場合は、再開されるまで待機
+        while (battlePaused)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        // ターン処理を開始
         StartCoroutine(TurnController());
     }
 
@@ -188,6 +193,12 @@ public class TurnManager : MonoBehaviour
                 if (enemyManager != null)
                 {
                     enemyManager.CheckBossEvents();
+                }
+                
+                // イベントで戦闘が一時停止された場合は待機
+                while (battlePaused)
+                {
+                    yield return new WaitForSeconds(0.1f);
                 }
                 
                 // フラグを立てる
@@ -312,9 +323,7 @@ public class TurnManager : MonoBehaviour
     {
         battlePaused = false;
         Debug.Log("[TurnManager] 戦闘を再開しました");
-        
-        // 次のターンに進む
-        FlagChange();
+        // FlagChange()は呼ばない（イベント前の状態から継続する）
     }
     
     /// <summary>
@@ -401,6 +410,31 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log("勝利処理");
 
+        // 敵全滅時のイベントをチェック（HP 0%イベント）
+        bool hasZeroPercentEvent = false;
+        if (enemyManager != null)
+        {
+            hasZeroPercentEvent = enemyManager.CheckEnemyDefeatedEvent(() =>
+            {
+                // 0%イベント終了後にResultUIと経験値処理を実行
+                ShowResultAndCalculateExp();
+            });
+        }
+
+        // 0%イベントがない場合は即座にResultUIを表示
+        if (!hasZeroPercentEvent)
+        {
+            ShowResultAndCalculateExp();
+        }
+    }
+
+    /// <summary>
+    /// 勝利結果UIを表示し、経験値を計算
+    /// </summary>
+    private void ShowResultAndCalculateExp()
+    {
+        Debug.Log("勝利結果を表示します");
+        
         ResultWinCanvas.SetActive(true);
 
         GameManager.Instance.EnemyData.AddRange(enemyManager.enemyData);

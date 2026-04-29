@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u60AA\u9B54"
   m_EditorClassIdentifier: 
   charactername: "\u60AA\u9B54"
-  characterIcon: {fileID: 0}
+  characterIcon: {fileID: 21300000, guid: 6487addb9cdf4b846b8fb4ea7c5dd9cf, type: 3}
   enemyCheckFlag: 1
   hp: 800
   mp: 800
@@ -32,5 +32,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c75fc35dab151f344976783c22d7af6f, type: 2}
   - {fileID: 11400000, guid: ad5dcef6596c5f1469170279a92a6351, type: 2}
   - {fileID: 11400000, guid: 33e0cb507fea51a4e987a66ef6dce1fd, type: 2}
-  CharacterTransfrom: {x: 0, y: 0, z: 0}
+  CharacterTransfrom: {x: 2, y: 0, z: 5}
   StatusFlag: 0
+  levelUpTable: {fileID: 0}

@@ -298,12 +298,22 @@ PrefabInstance:
     - target: {fileID: 731922017747109863, guid: b66f9abf92c0c7b4da143dc906b13391,
         type: 3}
       propertyPath: m_margin.z
-      value: 811.4426
+      value: 735.28064
+      objectReference: {fileID: 0}
+    - target: {fileID: 731922017747109863, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_overflowMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 731922017747109863, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1103572123280850400, guid: b66f9abf92c0c7b4da143dc906b13391,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1365247416124607728, guid: b66f9abf92c0c7b4da143dc906b13391,
         type: 3}
@@ -3119,7 +3129,6 @@ MonoBehaviour:
   playerCharacters:
   - {fileID: 11400000, guid: fdfc2772cdd97584f9b41ecffe093f82, type: 2}
   - {fileID: 11400000, guid: a8840a6132af079479d5a4e77446714a, type: 2}
-  - {fileID: 11400000, guid: ce69fe77855455e499efed043eb05095, type: 2}
   spawnPositions:
   - {x: 2, y: 0, z: -1.5}
   - {x: 4, y: 0, z: 0}
@@ -3176,7 +3185,7 @@ MonoBehaviour:
   OnBuffsChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1483150833}
+      - m_Target: {fileID: 1483150834}
         m_TargetAssemblyTypeName: PlayerStatusPanel, Assembly-CSharp
         m_MethodName: UpdateBuffIcons
         m_Mode: 0
@@ -3188,7 +3197,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 861085506}
+      - m_Target: {fileID: 861085507}
         m_TargetAssemblyTypeName: PlayerStatusPanel, Assembly-CSharp
         m_MethodName: UpdateBuffIcons
         m_Mode: 0
@@ -3200,7 +3209,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 202600897}
+      - m_Target: {fileID: 202600898}
         m_TargetAssemblyTypeName: PlayerStatusPanel, Assembly-CSharp
         m_MethodName: UpdateBuffIcons
         m_Mode: 0
@@ -3821,19 +3830,13 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830881175}
   m_CullTransparentMesh: 1
---- !u!1 &861085506 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6218468954841605457, guid: 7779ca894834ca646a22b9e79cb914a8,
-    type: 3}
-  m_PrefabInstance: {fileID: 7546881535548892444}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &861085507 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2387111379419251907, guid: 7779ca894834ca646a22b9e79cb914a8,
     type: 3}
   m_PrefabInstance: {fileID: 7546881535548892444}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861085506}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78b72b49aa9cf2d47843a98405b09898, type: 3}
@@ -5454,19 +5457,13 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 976839330}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1483150833 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7450554128246927807, guid: 7779ca894834ca646a22b9e79cb914a8,
-    type: 3}
-  m_PrefabInstance: {fileID: 7546881535548892444}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1483150834 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1155567165744173101, guid: 7779ca894834ca646a22b9e79cb914a8,
     type: 3}
   m_PrefabInstance: {fileID: 7546881535548892444}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1483150833}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78b72b49aa9cf2d47843a98405b09898, type: 3}

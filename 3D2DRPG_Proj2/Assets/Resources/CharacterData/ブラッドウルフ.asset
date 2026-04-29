@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u30D6\u30E9\u30C3\u30C9\u30A6\u30EB\u30D5"
   m_EditorClassIdentifier: 
   charactername: "\u30D6\u30E9\u30C3\u30C9\u30A6\u30EB\u30D5"
-  characterIcon: {fileID: 0}
+  characterIcon: {fileID: 21300000, guid: 6a9abe6ed7120ad4fb4d92349984615b, type: 3}
   enemyCheckFlag: 1
   hp: 1
   mp: 100

@@ -57,6 +57,9 @@ public class BossEventTrigger : MonoBehaviour
     {
         if (!GameManager.Instance.isBossBattle || events == null || events.Count == 0)
             return;
+        
+        // HP 0%のイベントは除外（全滅時に発動させる）
+        var nonZeroEvents = events.Where(e => e.hpThreshold > 0).ToList();
 
         // EnemyManagerから全敵を取得
         if (enemyManager == null)
@@ -103,10 +106,16 @@ public class BossEventTrigger : MonoBehaviour
 
             float hpPercentage = (float)enemy.hp / enemy.maxHp * 100f;
 
-            // HP閾値に達したイベントをチェック
+            // HP閾値に達したイベントをチェック（HP 0%を除く）
             for (int i = events.Count - 1; i >= 0; i--)
             {
                 var evt = events[i];
+
+                // HP 0%のイベントはスキップ（全滅時に発動させる）
+                if (evt.hpThreshold == 0)
+                {
+                    continue;
+                }
 
                 // 既に発動済みの閾値はスキップ
                 if (triggeredThresholds.Contains(evt.hpThreshold))
@@ -129,9 +138,45 @@ public class BossEventTrigger : MonoBehaviour
     }
 
     /// <summary>
+    /// 敵全滅時のイベントをチェック（HP 0%イベント）
+    /// </summary>
+    /// <param name="onEventEnd">イベント終了後のコールバック</param>
+    /// <returns>0%イベントが発動したかどうか</returns>
+    public bool CheckEnemyDefeatedEvent(System.Action onEventEnd = null)
+    {
+        if (!GameManager.Instance.isBossBattle || events == null || events.Count == 0)
+            return false;
+
+        // HP 0%のイベントを検索
+        for (int i = events.Count - 1; i >= 0; i--)
+        {
+            var evt = events[i];
+
+            if (evt.hpThreshold == 0)
+            {
+                // 既に発動済みかチェック
+                if (triggeredThresholds.Contains(0))
+                {
+                    continue;
+                }
+
+                Debug.Log($"[BossEventTrigger] 敵全滅イベント発動: {evt.dialogueCSV}");
+                
+                TriggerEvent(evt, onEventEnd);
+                triggeredThresholds.Add(0);
+                events.RemoveAt(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// イベントを発動
     /// </summary>
-    private void TriggerEvent(GameManager.BattleMidEvent evt)
+    /// <param name="evt">発動するイベント</param>
+    /// <param name="onEventEnd">イベント終了後に実行する追加コールバック</param>
+    private void TriggerEvent(GameManager.BattleMidEvent evt, System.Action onEventEnd = null)
     {
         Debug.Log($"[BossEventTrigger] ★イベント発動★ {evt.dialogueCSV} (HP{evt.hpThreshold}%以下)");
 
@@ -156,6 +201,11 @@ public class BossEventTrigger : MonoBehaviour
                     if (turnManager != null)
                     {
                         turnManager.ResumeBattle();
+                    }
+                    // 追加のコールバックを実行
+                    if (onEventEnd != null)
+                    {
+                        onEventEnd.Invoke();
                     }
                     // 一度実行したらリスナーを削除
                     conversationUI.onDialogueEnd.RemoveListener(resumeAction);

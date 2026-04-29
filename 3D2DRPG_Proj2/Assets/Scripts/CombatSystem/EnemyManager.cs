@@ -124,6 +124,20 @@ public class EnemyManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 敵全滅時のイベントをチェック（HP 0%イベント）
+    /// </summary>
+    /// <param name="onEventEnd">イベント終了後のコールバック</param>
+    /// <returns>0%イベントが発動したかどうか</returns>
+    public bool CheckEnemyDefeatedEvent(System.Action onEventEnd = null)
+    {
+        if (bossEventTrigger != null)
+        {
+            return bossEventTrigger.CheckEnemyDefeatedEvent(onEventEnd);
+        }
+        return false;
+    }
+
+    /// <summary>
     /// Enemy の行動処理（簡単AI: スキルがあれば使用、なければプレイヤーを攻撃）
     /// TurnManager から呼び出される。プレイヤーの Character を攻撃する
     /// </summary>

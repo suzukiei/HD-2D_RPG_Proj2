@@ -53,6 +53,8 @@ public class PlayerManager : MonoBehaviour
     private Vector3 StartPosition;
     // キャラクターのGameObject保存用
     private List<GameObject> characterObjects = new List<GameObject>();
+    // キャラクターとパネルの紐付け（キャラクターGameObject -> パネルIndex）
+    private Dictionary<GameObject, int> characterToPanelIndex = new Dictionary<GameObject, int>();
     // 現在選択中のキャラクター
     private Character selectedCharacter;
     // 現在選択中のスキル
@@ -137,6 +139,9 @@ public class PlayerManager : MonoBehaviour
             obj.transform.parent = transform;
             characterObjects.Add(obj);
             
+            // キャラクターとパネルの紐付けを記録
+            characterToPanelIndex[obj] = i;
+            
             // ステータスパネルの設定
             if (i < playerStatusPanel.Count && playerStatusPanel[i] != null)
             {
@@ -205,10 +210,57 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     private void PlayerUIUpdate()
     {
-        for (int i = 0; i < characterObjects.Count; i++)
+        // 全てのキャラクターをチェック（倒されたキャラクターも含む）
+        foreach (var kvp in characterToPanelIndex)
         {
-            PlayerData playerData = new PlayerData(characterObjects[i].GetComponent<Character>());
-            playerStatusPanel[i].UpdatePlayerStatus(playerData);
+            GameObject characterObj = kvp.Key;
+            int panelIndex = kvp.Value;
+            
+            // パネルインデックスが範囲外の場合はスキップ
+            if (panelIndex < 0 || panelIndex >= playerStatusPanel.Count)
+            {
+                continue;
+            }
+            
+            // キャラクターオブジェクトがnull（撃破されて削除された）場合はパネルを非表示
+            if (characterObj == null)
+            {
+                if (playerStatusPanel[panelIndex] != null)
+                {
+                    playerStatusPanel[panelIndex].gameObject.SetActive(false);
+                }
+                continue;
+            }
+            
+            var character = characterObj.GetComponent<Character>();
+            if (character == null)
+            {
+                // キャラクターコンポーネントがない場合もパネルを非表示
+                if (playerStatusPanel[panelIndex] != null)
+                {
+                    playerStatusPanel[panelIndex].gameObject.SetActive(false);
+                }
+                continue;
+            }
+            
+            // キャラクターが倒されている場合はパネルを非表示
+            if (character.hp <= 0)
+            {
+                if (playerStatusPanel[panelIndex] != null)
+                {
+                    playerStatusPanel[panelIndex].gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                // キャラクターが生きている場合はパネルを更新
+                if (playerStatusPanel[panelIndex] != null)
+                {
+                    playerStatusPanel[panelIndex].gameObject.SetActive(true);
+                    PlayerData playerData = new PlayerData(character);
+                    playerStatusPanel[panelIndex].UpdatePlayerStatus(playerData);
+                }
+            }
         }
     }
 
@@ -685,6 +737,8 @@ public class PlayerManager : MonoBehaviour
         {
             playerSideAnimator.SetTrigger("Attack");
         }
+        //アニメーションが流れるのを待つ
+        new WaitForSeconds(0.6f);
 
         // バフ適用後の攻撃力と防御力を取得
         int effectiveAtk = selectedCharacter.GetEffectiveAttack(skill.isIntSansyou);
