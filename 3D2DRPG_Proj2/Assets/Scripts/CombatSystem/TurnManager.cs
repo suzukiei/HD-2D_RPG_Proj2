@@ -154,6 +154,13 @@ public class TurnManager : MonoBehaviour
         // UIに現在のターン順の状態を表示する
         UIManager.Instance.UpdateTurnUI(sortedTurnList, turnNumber);
         // 状態のデータをUIに渡す
+        
+        // ボスイベントをチェック（戦闘開始時、HP100%のイベント用）
+        if (enemyManager != null)
+        {
+            enemyManager.CheckBossEvents();
+        }
+        
         // ターン処理をスタート
         StartCoroutine(TurnController());
     }
@@ -176,6 +183,13 @@ public class TurnManager : MonoBehaviour
                     //break;
                 }
                 //Debug.Log("ターン開始:" + turnNumber);
+                
+                // ボスイベントをチェック（ターン開始時）
+                if (enemyManager != null)
+                {
+                    enemyManager.CheckBossEvents();
+                }
+                
                 // フラグを立てる
                 turnFlag = false;
                 // Turnリストを取得

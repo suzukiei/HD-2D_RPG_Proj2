@@ -167,6 +167,12 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void StartPlayerAction(Character character)
     {
+        // 戦闘が一時停止中の場合は行動開始しない
+        if (turnManager != null && turnManager.IsBattlePaused())
+        {
+            Debug.Log("[PlayerManager] 戦闘が一時停止中のため、プレイヤーの行動を開始できません");
+            return;
+        }
 
         selectedCharacter = character;
         selectedCharacter.StatusFlag = StatusFlag.Move;
@@ -179,6 +185,13 @@ public class PlayerManager : MonoBehaviour
     {
         // UIのプレイヤーステータスパネル更新
         PlayerUIUpdate();
+        
+        // 戦闘が一時停止中の場合は行動処理をスキップ
+        if (turnManager != null && turnManager.IsBattlePaused())
+        {
+            return;
+        }
+        
         if (!isActionPending) return;
 
         // キャラクターの状態に応じて処理を分岐

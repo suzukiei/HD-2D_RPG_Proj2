@@ -295,10 +295,55 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 731922017747109863, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_margin.z
+      value: 811.4426
+      objectReference: {fileID: 0}
+    - target: {fileID: 1103572123280850400, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1365247416124607728, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3480074546929034522, guid: b66f9abf92c0c7b4da143dc906b13391,
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5212937508927974028, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5212937508927974028, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5212937508927974028, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5212937508927974028, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 747.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5212937508927974028, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -641.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5680372461618818702, guid: b66f9abf92c0c7b4da143dc906b13391,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1762.18
       objectReference: {fileID: 0}
     - target: {fileID: 7125455048425464962, guid: b66f9abf92c0c7b4da143dc906b13391,
         type: 3}
@@ -2644,8 +2689,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4015,8 +4060,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4607,8 +4652,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4741,8 +4786,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4881,8 +4926,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -6568,6 +6613,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   conversationUI: {fileID: 56454068}
   turnManager: {fileID: 1864808123}
+  enemyManager: {fileID: 0}
 --- !u!1 &2138502467
 GameObject:
   m_ObjectHideFlags: 0

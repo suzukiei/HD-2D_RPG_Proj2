@@ -96,7 +96,7 @@ public class TimingUI : MonoBehaviour
         timingBar.value = Mathf.PingPong(value, 1f);
 
         // 入力範囲でキーを押したら判定
-        if (Input.GetKeyDown(attackKey))
+        if (Input.GetKeyDown(attackKey) || Input.GetKeyDown(KeyCode.Return))
         {
             Debug.Log($"Timing Key Pressed at: {timingBar.value}");
             

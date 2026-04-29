@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// ボス戦中のイベントを管理するクラス
@@ -9,9 +10,11 @@ public class BossEventTrigger : MonoBehaviour
     [Header("参照")]
     [SerializeField] private ConversationUI conversationUI;
     [SerializeField] private TurnManager turnManager;
+    [SerializeField] private EnemyManager enemyManager;
 
-    private Character bossCharacter;
+    private List<Character> allEnemies = new List<Character>();
     private List<GameManager.BattleMidEvent> events;
+    private HashSet<int> triggeredThresholds = new HashSet<int>(); // 発動済み閾値を記録
 
     void Start()
     {
@@ -28,6 +31,9 @@ public class BossEventTrigger : MonoBehaviour
             {
                 Debug.Log($"  - HP{evt.hpThreshold}%: {evt.dialogueCSV}");
             }
+            
+            // 戦闘開始時にHP100%のイベントをチェック
+            CheckEvents();
         }
         else
         {
@@ -36,11 +42,11 @@ public class BossEventTrigger : MonoBehaviour
     }
 
     /// <summary>
-    /// ボスキャラクターを設定
+    /// 敵キャラクターリストを設定
     /// </summary>
     public void Initialize(Character boss)
     {
-        bossCharacter = boss;
+        // 互換性のため残す（1体のみの場合）
         Debug.Log($"[BossEventTrigger] ボスキャラクター設定: {boss.charactername}");
     }
 
@@ -49,23 +55,75 @@ public class BossEventTrigger : MonoBehaviour
     /// </summary>
     public void CheckEvents()
     {
-        if (!GameManager.Instance.isBossBattle || bossCharacter == null || events == null || events.Count == 0)
+        if (!GameManager.Instance.isBossBattle || events == null || events.Count == 0)
             return;
 
-        float hpPercentage = (float)bossCharacter.hp / bossCharacter.maxHp * 100f;
-
-        Debug.Log($"[BossEventTrigger] HP確認: {bossCharacter.hp}/{bossCharacter.maxHp} ({hpPercentage:F1}%)");
-
-        // HP閾値に達したイベントをチェック
-        for (int i = events.Count - 1; i >= 0; i--)
+        // EnemyManagerから全敵を取得
+        if (enemyManager == null)
         {
-            var evt = events[i];
+            enemyManager = FindObjectOfType<EnemyManager>();
+        }
 
-            if (hpPercentage <= evt.hpThreshold)
+        if (enemyManager == null)
+        {
+            Debug.LogWarning("[BossEventTrigger] EnemyManagerが見つかりません");
+            return;
+        }
+
+        // 全敵のGameObjectを取得
+        var enemyObjects = enemyManager.GetEnemyData();
+        if (enemyObjects == null || enemyObjects.Count == 0)
+        {
+            return;
+        }
+
+        // 全敵のCharacterコンポーネントを取得
+        allEnemies.Clear();
+        foreach (var enemyObj in enemyObjects)
+        {
+            if (enemyObj != null)
             {
-                TriggerEvent(evt);
-                events.RemoveAt(i);  // 発動済みイベントを削除
-                break;  // 1度に1つのイベントのみ発動
+                var character = enemyObj.GetComponent<Character>();
+                if (character != null)
+                {
+                    allEnemies.Add(character);
+                }
+            }
+        }
+
+        if (allEnemies.Count == 0)
+        {
+            return;
+        }
+
+        // 各敵のHP%を確認
+        foreach (var enemy in allEnemies)
+        {
+            if (enemy == null || enemy.maxHp <= 0) continue;
+
+            float hpPercentage = (float)enemy.hp / enemy.maxHp * 100f;
+
+            // HP閾値に達したイベントをチェック
+            for (int i = events.Count - 1; i >= 0; i--)
+            {
+                var evt = events[i];
+
+                // 既に発動済みの閾値はスキップ
+                if (triggeredThresholds.Contains(evt.hpThreshold))
+                {
+                    continue;
+                }
+
+                // HP閾値に達しているかチェック（以下の場合に発動）
+                if (hpPercentage <= evt.hpThreshold)
+                {
+                    Debug.Log($"[BossEventTrigger] {enemy.charactername} HP確認: {enemy.hp}/{enemy.maxHp} ({hpPercentage:F1}%) - 閾値{evt.hpThreshold}%に達しました");
+                    
+                    TriggerEvent(evt);
+                    triggeredThresholds.Add(evt.hpThreshold); // 発動済みとしてマーク
+                    events.RemoveAt(i);  // 発動済みイベントを削除
+                    return;  // 1度に1つのイベントのみ発動
+                }
             }
         }
     }

@@ -159,20 +159,79 @@ public class CharacterBuffManager : MonoBehaviour
             var buff = activeBuffs[i];
 
             // ターン終了時ダメージ処理
+            int damage = 0;
+            string damageType = "";
+            
             if (buff.baseData is Poison poisonBuff)
             {
-                ownerCharacter.hp -= poisonBuff.damagePerTurn;
-                Debug.Log($"{ownerCharacter.charactername}は毒で{poisonBuff.damagePerTurn}ダメージを受けた");
+                damage = poisonBuff.damagePerTurn;
+                damageType = "毒";
+                ownerCharacter.hp -= damage;
+                Debug.Log($"{ownerCharacter.charactername}は毒で{damage}ダメージを受けた");
             }
             else if (buff.baseData is Burn burnBuff)
             {
-                ownerCharacter.hp -= burnBuff.damagePerTurn;
-                Debug.Log($"{ownerCharacter.charactername}はやけどで{burnBuff.damagePerTurn}ダメージを受けた");
+                damage = burnBuff.damagePerTurn;
+                damageType = "やけど";
+                ownerCharacter.hp -= damage;
+                Debug.Log($"{ownerCharacter.charactername}はやけどで{damage}ダメージを受けた");
             }
             else if (buff.baseData is Makituki makitukiBuff)
             {
-                ownerCharacter.hp -= makitukiBuff.damagePerTurn;
-                Debug.Log($"{ownerCharacter.charactername}は巻きつきで{makitukiBuff.damagePerTurn}ダメージを受けた");
+                damage = makitukiBuff.damagePerTurn;
+                damageType = "巻きつき";
+                ownerCharacter.hp -= damage;
+                Debug.Log($"{ownerCharacter.charactername}は巻きつきで{damage}ダメージを受けた");
+            }
+            
+            // ダメージテキストを表示
+            if (damage > 0 && ownerCharacter != null && ownerCharacter.CharacterObj != null)
+            {
+                if (DamageEffectUI.Instance != null)
+                {
+                    DamageEffectUI.Instance.ShowDamageEffectOnEnemy(ownerCharacter.CharacterObj, damage);
+                    Debug.Log($"[CharacterBuffManager] {damageType}の継続ダメージテキストを表示: {damage}");
+                }
+                else
+                {
+                    Debug.LogWarning("[CharacterBuffManager] DamageEffectUI.Instanceが見つかりません");
+                }
+            }
+            
+            // HPが0以下になった場合の処理
+            if (ownerCharacter.hp <= 0)
+            {
+                ownerCharacter.hp = 0;
+                
+                // 継続ダメージで敵が倒れた場合の処理
+                if (ownerCharacter.enemyCheckFlag)
+                {
+                    Debug.Log($"[CharacterBuffManager] {ownerCharacter.charactername} が{damageType}の継続ダメージで倒れました");
+                    
+                    // TurnManagerから削除
+                    var turnManager = FindObjectOfType<TurnManager>();
+                    if (turnManager != null)
+                    {
+                        if (turnManager.enemys.Contains(ownerCharacter.gameObject))
+                        {
+                            turnManager.enemys.Remove(ownerCharacter.gameObject);
+                        }
+                        if (turnManager.turnList.Contains(ownerCharacter.gameObject))
+                        {
+                            turnManager.turnList.Remove(ownerCharacter.gameObject);
+                        }
+                    }
+                    
+                    // GameObject削除（次のフレームで削除）
+                    if (ownerCharacter.CharacterObj != null)
+                    {
+                        Destroy(ownerCharacter.CharacterObj);
+                    }
+                    else
+                    {
+                        Destroy(ownerCharacter.gameObject);
+                    }
+                }
             }
 
             //ターンを減らす

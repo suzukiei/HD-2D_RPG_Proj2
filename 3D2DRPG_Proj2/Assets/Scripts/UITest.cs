@@ -31,17 +31,17 @@ public class UITest : MonoBehaviour
             yield return null;
 
             // iÇÃílÇ…âûÇ∂ÇƒâüÇπÇÈÉLÅ[Çêßå‰
-            if (Input.GetKeyDown(KeyCode.W) && inputFlag)
+            if (Input.GetKeyDown(KeyCode.W) && inputFlag || Input.GetKeyDown(KeyCode.UpArrow) && inputFlag)
             {
                 inputFlag = false;
                 ChengePoint(1);
             }
-            if (Input.GetKeyDown(KeyCode.S) && inputFlag)
+            if (Input.GetKeyDown(KeyCode.S) && inputFlag || Input.GetKeyDown(KeyCode.DownArrow) && inputFlag)
             {
                 inputFlag = false;
                 ChengePoint(-1);
             }
-            if (Input.GetKeyDown(KeyCode.Space) && inputFlag)
+            if (Input.GetKeyDown(KeyCode.Space) && inputFlag || Input.GetKeyDown(KeyCode.Return) && inputFlag)
             {
                 inputFlag = false;
                 unityEvent.Invoke(index);
