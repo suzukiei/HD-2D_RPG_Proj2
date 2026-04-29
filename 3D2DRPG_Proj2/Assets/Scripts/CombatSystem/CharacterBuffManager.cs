@@ -279,10 +279,12 @@ public class CharacterBuffManager : MonoBehaviour
         if (IntSansyou)
         { //魔法攻撃の場合
             effectiveAtk = ownerCharacter.Int;
+            Debug.Log(ownerCharacter.charactername + "のIntは:" + effectiveAtk);
         }
         else
         { //物理攻撃の場合
             effectiveAtk = ownerCharacter.atk;
+            Debug.Log(ownerCharacter.charactername + "のAtkは:" + effectiveAtk);
         }
            
         

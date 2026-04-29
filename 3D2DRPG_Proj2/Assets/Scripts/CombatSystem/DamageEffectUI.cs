@@ -307,4 +307,30 @@ public class DamageEffectUI : MonoBehaviour
             ShowHealEffect(character.transform, healAmount);
         }
     }
+    
+    /// <summary>
+    /// スキルのVFXを対象に発火する
+    /// </summary>
+    /// <param name="skill">使用するスキル</param>
+    /// <param name="target">対象のGameObject</param>
+    public void PlaySkillVFX(SkillData skill, GameObject target)
+    {
+        if (skill == null || target == null)
+        {
+            return;
+        }
+
+        // スキルにVFXが設定されている場合のみ発火
+        if (skill.vfxPrefab != null)
+        {
+            if (VFXManager.Instance != null)
+            {
+                VFXManager.Instance.PlayVFXOnTarget(skill.vfxPrefab, target);
+            }
+            else
+            {
+                Debug.LogWarning("DamageEffectUI: VFXManagerが見つかりません");
+            }
+        }
+    }
 }

@@ -604,6 +604,12 @@ public class EnemyManager : MonoBehaviour
         if (DamageEffectUI.Instance != null && target.CharacterObj != null)
         {
             DamageEffectUI.Instance.ShowDamageEffectOnEnemy(target.CharacterObj, power);
+            
+            // スキルのVFXを発火
+            if (skill != null)
+            {
+                DamageEffectUI.Instance.PlaySkillVFX(skill, target.CharacterObj);
+            }
         }
 
         if (target.hp <= 0)
@@ -720,6 +726,12 @@ public class EnemyManager : MonoBehaviour
             if (DamageEffectUI.Instance != null && chara.CharacterObj != null)
             {
                 DamageEffectUI.Instance.ShowDamageEffectOnEnemy(chara.CharacterObj, power);
+                
+                // スキルのVFXを発火
+                if (skill != null)
+                {
+                    DamageEffectUI.Instance.PlaySkillVFX(skill, chara.CharacterObj);
+                }
             }
 
             if (chara.hp <= 0)

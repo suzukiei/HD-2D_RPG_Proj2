@@ -24,7 +24,7 @@ MonoBehaviour:
   maxHp: 221
   maxMp: 231
   exp: 233
-  level: 19
+  level: 10
   CharacterObj: {fileID: 7333836060625140281, guid: 14e6c60294595ec46a7a94d30b985e89,
     type: 3}
   skills:

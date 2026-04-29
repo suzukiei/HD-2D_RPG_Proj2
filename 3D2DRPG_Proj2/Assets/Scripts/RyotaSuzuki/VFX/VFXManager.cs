@@ -84,6 +84,40 @@ public class VFXManager : MonoBehaviour
     }
 
     /// <summary>
+    /// GameObjectタイプのVFXを再生（SkillDataのvfxPrefab用）
+    /// </summary>
+    /// <param name="vfxPrefab">VFXプレハブ（GameObject）</param>
+    /// <param name="target">対象のGameObject</param>
+    /// <param name="offset">位置オフセット（デフォルトはeffectOffset）</param>
+    /// <param name="duration">エフェクトの表示時間（0の場合は自動計算）</param>
+    public void PlayVFXOnTarget(GameObject vfxPrefab, GameObject target, Vector3 offset = default, float duration = 2f)
+    {
+        if (vfxPrefab == null || target == null)
+        {
+            Debug.LogWarning("VFXManager: vfxPrefabまたはtargetがnullです");
+            return;
+        }
+
+        Vector3 spawnPos = target.transform.position + (offset == default ? effectOffset : offset) + Vector3.up * 1.5f;
+        GameObject vfxInstance = Instantiate(vfxPrefab, spawnPos, Quaternion.identity);
+
+        // ParticleSystemがあれば自動再生
+        ParticleSystem ps = vfxInstance.GetComponent<ParticleSystem>();
+        if (ps != null)
+        {
+            ps.Play();
+            // ParticleSystemの場合は自動で時間を計算
+            float particleDuration = ps.main.duration + ps.main.startLifetime.constantMax;
+            Destroy(vfxInstance, particleDuration);
+        }
+        else
+        {
+            // ParticleSystemがない場合は指定時間後に削除
+            Destroy(vfxInstance, duration);
+        }
+    }
+
+    /// <summary>
     /// 回復エフェクトを再生
     /// </summary>
     public void PlayHealEffect(GameObject target, Vector3 offset = default)

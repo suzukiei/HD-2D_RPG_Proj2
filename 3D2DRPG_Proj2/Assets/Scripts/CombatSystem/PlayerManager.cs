@@ -747,7 +747,10 @@ public class PlayerManager : MonoBehaviour
         float random = 0;
         var finalDamage = 0;
 
-            finalDamage = (int)(skill.power + Attackbuff - effectiveDef);
+            finalDamage = (int)(effectiveAtk - effectiveDef);
+
+        Debug.Log(skill.skillName + "のatk - def計算ダメージ★" + finalDamage);
+
         //スキルがダメージボーナスを持つ場合
         if (skill.DamageBonusFlg == true)
         {
@@ -758,8 +761,12 @@ public class PlayerManager : MonoBehaviour
             //基本ダメージ計算（バフ適用後の攻撃力を使用）
             var damage = effectiveAtk * random;
             //最終計算（バフ適用後の防御力を使用）
-           finalDamage = (int)(damage * skill.power + Attackbuff - effectiveDef);
+           finalDamage = (int)(damage - effectiveDef);
+
+            Debug.Log(skill.skillName + "のDB後最終ダメージ★" + finalDamage);
         }
+
+        Debug.Log(skill.skillName + "の最終ダメージ★" + finalDamage);
               
         var hp = enemy.hp - finalDamage;
         enemy.hp = (int)math.floor(hp);
@@ -768,6 +775,9 @@ public class PlayerManager : MonoBehaviour
         if (DamageEffectUI.Instance != null && enemy.CharacterObj != null)
         {
             DamageEffectUI.Instance.ShowDamageEffectOnEnemy(enemy.CharacterObj, finalDamage);
+            
+            // スキルのVFXを発火
+            DamageEffectUI.Instance.PlaySkillVFX(skill, enemy.CharacterObj);
         }
 
         //SEならす
@@ -903,6 +913,9 @@ public class PlayerManager : MonoBehaviour
         if (DamageEffectUI.Instance != null && character.CharacterObj != null && actualHealAmount > 0)
         {
             DamageEffectUI.Instance.ShowHealEffectOnCharacter(character.CharacterObj, actualHealAmount);
+            
+            // スキルのVFXを発火
+            DamageEffectUI.Instance.PlaySkillVFX(skill, character.CharacterObj);
         }
     }
 
