@@ -25,6 +25,7 @@ public class CharacterData : ScriptableObject
 {
     public string charactername;
     public Sprite characterIcon;
+    public Sprite standingImage; // 立ち絵
     public bool enemyCheckFlag;
     public int hp, mp, atk,Int, def, spd;
     public int maxHp, maxMp;

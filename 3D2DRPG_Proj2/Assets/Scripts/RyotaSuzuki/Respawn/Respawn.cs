@@ -12,7 +12,8 @@ public class Respawn : MonoBehaviour
     [SerializeField] float spawnRadius = 20f;
     [SerializeField] float respawnInterval = 2f;
     [SerializeField] float initialSpawnDelay = 2f;
-    [SerializeField] float minDistanceFromPlayer = 5f;
+    [SerializeField] float minDistanceFromPlayer = 5f;// 敵とプレイヤーのスポーン間隔を調整する。
+    [SerializeField] float minDistanceFromEnemies = 8f; // 敵と敵のスポーン間隔を調整する。
     [SerializeField] bool enableDebugLog = true;
     
     private const string csvName = "エンカウントテーブル";
@@ -42,7 +43,9 @@ public class Respawn : MonoBehaviour
     {
         CleanupEnemyList();
         
-        if (enemyList.Count < maxEnemies)
+        
+        int currentCount = enemyList.Count;
+        if (currentCount < maxEnemies)
         {
             respawnTimer += Time.deltaTime;
             
@@ -83,7 +86,7 @@ public class Respawn : MonoBehaviour
         
         if (enableDebugLog)
         {
-            Debug.Log($"[Respawn] CharacterDataキャッシュ読み込み完了: {characterDataCache.Count}件");
+            Debug.Log($"[Respawn] CharacterData: {characterDataCache.Count}");
         }
     }
 
@@ -93,7 +96,7 @@ public class Respawn : MonoBehaviour
         
         if (!File.Exists(csvPath))
         {
-            Debug.LogError($"[Respawn] CSVファイルが見つかりません: {csvPath}");
+            Debug.LogError($"[Respawn] CSVが読み込めません: {csvPath}");
             return;
         }
         
@@ -130,33 +133,38 @@ public class Respawn : MonoBehaviour
             }
         }
         
-        if (enableDebugLog)
-        {
-            Debug.Log($"[Respawn] エンカウントテーブル読み込み完了: {encounterTable.Count}グループ");
-        }
     }
 
     private IEnumerator InitialSpawn()
     {
-        Debug.Log("InitialSpawn呼ばれた");
 
         yield return new WaitForSeconds(initialSpawnDelay);
         
-        if (enableDebugLog)
+        
+        int spawnedCount = 0;
+        int maxAttempts = maxEnemies * 3;
+        int attempts = 0;
+        
+        while (spawnedCount < maxEnemies && attempts < maxAttempts)
         {
-            Debug.Log($"[Respawn] 初期スポーン開始: {maxEnemies}体");
+            CleanupEnemyList();
+            
+            if (enemyList.Count < maxEnemies)
+            {
+                SpawnEnemy();
+                spawnedCount++;
+                yield return new WaitForSeconds(0.2f);
+            }
+            else
+            {
+                break;
+            }
+            
+            attempts++;
         }
         
-        for (int i = 0; i < maxEnemies; i++)
-        {
-            SpawnEnemy();
-            yield return new WaitForSeconds(0.1f);
-        }
+        CleanupEnemyList();
         
-        if (enableDebugLog)
-        {
-            Debug.Log($"[Respawn] 初期スポーン完了: {enemyList.Count}体");
-        }
     }
 
     private void CleanupEnemyList()
@@ -190,7 +198,6 @@ public class Respawn : MonoBehaviour
             }
         }
         
-        Debug.LogWarning($"[Respawn] NavMesh上の有効な位置が見つかりませんでした");
         return center;
     }
 
@@ -206,11 +213,20 @@ public class Respawn : MonoBehaviour
             float distanceToPlayer = Vector3.Distance(position, player.transform.position);
             if (distanceToPlayer < minDistanceFromPlayer)
             {
-                if (enableDebugLog)
-                {
-                    Debug.Log($"[Respawn] スポーン位置がプレイヤーに近すぎます: {distanceToPlayer}m");
-                }
                 return false;
+            }
+        }
+        
+        // ????G???????`?F?b?N
+        foreach (GameObject enemy in enemyList)
+        {
+            if (enemy != null)
+            {
+                float distanceToEnemy = Vector3.Distance(position, enemy.transform.position);
+                if (distanceToEnemy < minDistanceFromEnemies)
+                {
+                    return false;
+                }
             }
         }
         
@@ -221,7 +237,6 @@ public class Respawn : MonoBehaviour
     {
         if (encounterTable.Count == 0)
         {
-            Debug.LogWarning("[Respawn] エンカウントテーブルが空です");
             return;
         }
         
@@ -243,20 +258,15 @@ public class Respawn : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning($"[Respawn] CharacterDataが見つかりません: {enemyName}");
+                   
                 }
             }
             
             enemyAI.SetEnemyData(enemyDataList);
-            
-            if (enableDebugLog)
-            {
-                Debug.Log($"[Respawn] 敵スポーン: グループID={selectedGroup.no}, 敵数={enemyDataList.Count}");
-            }
         }
         else
         {
-            Debug.LogError("[Respawn] EnemyWanderAIコンポーネントが見つかりません");
+            Debug.LogError("[Respawn] EnemyWanderAIをもつ敵がいません");
         }
         
         enemyList.Add(enemy);
@@ -268,10 +278,6 @@ public class Respawn : MonoBehaviour
         {
             enemyList.Remove(enemy);
             
-            if (enableDebugLog)
-            {
-                Debug.Log($"[Respawn] 敵を削除: 残り{enemyList.Count}体");
-            }
         }
     }
 

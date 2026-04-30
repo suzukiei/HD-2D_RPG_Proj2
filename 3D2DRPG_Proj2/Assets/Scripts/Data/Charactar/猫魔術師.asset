@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u732B\u9B54\u8853\u5E2B"
   m_EditorClassIdentifier: 
   charactername: "\u732B\u9B54\u8853\u5E2B"
-  characterIcon: {fileID: 0}
+  characterIcon: {fileID: 21300000, guid: b730d7114394b794d8662f7fd836be25, type: 3}
   enemyCheckFlag: 1
   hp: 110
   mp: 100

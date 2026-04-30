@@ -23,6 +23,10 @@ public class TurnManager : MonoBehaviour
     private List<GameObject> nextTurnList = new List<GameObject>();// 次のターン用リスト
     [SerializeField, Header("ResultWinキャンバス")]
     public GameObject ResultWinCanvas; // 勝利時キャンバス
+    
+    [SerializeField, Header("勝利演出")]
+    public UnityEngine.UI.Image victoryCharacterImage; // Canvas/Panel/Image（立ち絵表示用）
+    
     //現在のターンオブジェクト
     public GameObject currentTurnObject;
     private bool turnChangeFlag = false; // ターン順変更フラグ
@@ -31,6 +35,9 @@ public class TurnManager : MonoBehaviour
     
     [Header("戦闘中イベント")]
     private bool battlePaused = false; // 戦闘一時停止フラグ
+    
+    [Header("最後に行動したキャラ")]
+    private Character lastActionCharacter = null; // 最後に行動したプレイヤーキャラ
 
     //シングルトンパターン
     private static TurnManager instance;
@@ -224,8 +231,13 @@ public class TurnManager : MonoBehaviour
                 else
                 {
                     // Player処理
-                    nextCharacterStatus.GetComponent<Character>().StatusFlag = StatusFlag.Move;
-                    playerManager.StartPlayerAction(nextCharacterStatus.GetComponent<Character>());
+                    Character playerCharacter = nextCharacterStatus.GetComponent<Character>();
+                    playerCharacter.StatusFlag = StatusFlag.Move;
+                    
+                    // 最後に行動したプレイヤーキャラを記録
+                    lastActionCharacter = playerCharacter;
+                    
+                    playerManager.StartPlayerAction(playerCharacter);
                     //Debug.Log("StartPlayer");
                 }
                 //現在のターンのリストから削除
@@ -410,6 +422,9 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log("勝利処理");
 
+        // 最後に行動したプレイヤーキャラの立ち絵を設定
+        SetVictoryCharacterImage();
+
         // 敵全滅時のイベントをチェック（HP 0%イベント）
         bool hasZeroPercentEvent = false;
         if (enemyManager != null)
@@ -425,6 +440,32 @@ public class TurnManager : MonoBehaviour
         if (!hasZeroPercentEvent)
         {
             ShowResultAndCalculateExp();
+        }
+    }
+
+    /// <summary>
+    /// 最後に行動したキャラの立ち絵を設定
+    /// </summary>
+    private void SetVictoryCharacterImage()
+    {
+        // 最後に行動したプレイヤーキャラがいる場合のみ立ち絵を設定
+        if (lastActionCharacter != null && victoryCharacterImage != null)
+        {
+            // キャラクターデータを取得
+            CharacterData characterData = GameManager.Instance.PlayerData.Find(c => c.charactername == lastActionCharacter.charactername);
+            
+            if (characterData != null && characterData.standingImage != null)
+            {
+                Debug.Log($"[TurnManager] 勝利立ち絵設定: {characterData.charactername}");
+                
+                // 立ち絵を設定
+                victoryCharacterImage.sprite = characterData.standingImage;
+                victoryCharacterImage.enabled = true;
+            }
+            else
+            {
+                Debug.LogWarning($"[TurnManager] 立ち絵が設定されていません: {lastActionCharacter.charactername}");
+            }
         }
     }
 

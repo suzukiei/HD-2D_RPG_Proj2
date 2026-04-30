@@ -352,9 +352,10 @@ public class PlayerController : MonoBehaviour
                 // タイミング失敗：通常戦闘に移行
                 StartNormalBattle(enemyObject, enemyDataList, encounterGroupId);
             }
+            
+            // クイックタイム戦闘終了後に全ての敵を再開
+            EnableAllEnemies();
         }, enemyObject);
-
-        EnableAllEnemies();
     }
 
     /// <summary>

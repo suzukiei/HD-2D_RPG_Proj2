@@ -23,7 +23,7 @@ MonoBehaviour:
   spd: 29
   maxHp: 100
   maxMp: 150
-  exp: 150
+  exp: 300
   level: 2
   CharacterObj: {fileID: 3533095128167565586, guid: b4e3abb254a7df24a90863cea43795e0,
     type: 3}

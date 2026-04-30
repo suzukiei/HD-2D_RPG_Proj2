@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: "\u30B5\u30FC\u30DA\u30F3\u30C8"
   m_EditorClassIdentifier: 
   charactername: "\u30B5\u30FC\u30DA\u30F3\u30C8"
-  characterIcon: {fileID: 0}
+  characterIcon: {fileID: 21300000, guid: 88de6bda1f201754491e9bd966c40791, type: 3}
   enemyCheckFlag: 1
   hp: 120
   mp: 30
@@ -31,5 +31,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 648b2edbcc7612d4997e9c7a3c0281ee, type: 2}
   - {fileID: 11400000, guid: d04c4cffd78dc8049939724b4788a2b5, type: 2}
   - {fileID: 11400000, guid: d754379a787664e4e899d82aa104f385, type: 2}
-  CharacterTransfrom: {x: 1, y: 0, z: 5.5}
+  CharacterTransfrom: {x: 3, y: 0, z: 4.5}
   StatusFlag: 0
+  levelUpTable: {fileID: 0}

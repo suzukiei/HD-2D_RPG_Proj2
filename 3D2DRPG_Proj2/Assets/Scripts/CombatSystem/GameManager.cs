@@ -766,14 +766,14 @@ public class GameManager : MonoBehaviour
                 if (hpGain > 0)
                 {
                     character.maxHp += hpGain;
-                    character.hp += hpGain; // 現在HPも回復
+                    character.hp = character.maxHp; // 現在HPも回復
                     Debug.Log($"  HP +{hpGain} (最大HP: {character.maxHp})");
                 }
                 
                 if (mpGain > 0)
                 {
                     character.maxMp += mpGain;
-                    character.mp += mpGain; // 現在MPも回復
+                    character.mp = character.maxMp; // 現在MPも回復
                     Debug.Log($"  MP +{mpGain} (最大MP: {character.maxMp})");
                 }
                 

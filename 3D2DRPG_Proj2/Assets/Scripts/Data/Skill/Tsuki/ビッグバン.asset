@@ -33,7 +33,7 @@ MonoBehaviour:
   ComboDamage: 10
   comboNextSkill: {fileID: 11400000}
   timingWindowStart: 0.3
-  timingWindowEnd: 0.6
+  timingWindowEnd: 10
   comboDamageMultiplier: 1.5
   maxcombo: 20
   missCancel: 1
