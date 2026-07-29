@@ -465,7 +465,11 @@ public class ConversationUI : MonoBehaviour
         // プレイヤーと敵を無効化
         if (DisabledEnemyFlg)
         {
-            DisablePlayerControl();
+            bool isSev001 = csvFileName != null && csvFileName.Replace(".csv", "").Equals("SEV-001", System.StringComparison.OrdinalIgnoreCase);
+            if (!isSev001)
+            {
+                DisablePlayerControl();
+            }
             DisableAllEnemies();
         }
 
@@ -653,6 +657,8 @@ public class ConversationUI : MonoBehaviour
 
     void EndDialogue()
     {
+        bool isSev001 = csvFileName != null && csvFileName.Replace(".csv", "").Equals("SEV-001", System.StringComparison.OrdinalIgnoreCase);
+
         // パネルをフェードアウト
         CanvasGroup canvasGroup = dialoguePanel.GetComponent<CanvasGroup>();
         if (canvasGroup != null)
@@ -663,12 +669,18 @@ public class ConversationUI : MonoBehaviour
                     OnDialogueComplete();
                 });
 
-            characterImage.enabled = false;
+            if (!isSev001)
+            {
+                characterImage.enabled = false;
+            }
         }
         else
         {
             dialoguePanel.SetActive(false);
-            characterImage.enabled = false;
+            if (!isSev001)
+            {
+                characterImage.enabled = false;
+            }
             OnDialogueComplete();
         }
     }

@@ -488,8 +488,11 @@ namespace RyotaSuzuki.UI
         /// </summary>
         public void SelectNextCharacter()
         {
-            SEPlayManager.Instance.PlaySE(SEPlayManager.SE.Select);
             int nextIndex = (currentCharacterIndex + 1) % characterDataList.Count;
+            if (nextIndex != 1)
+            {
+                SEPlayManager.Instance.PlaySE(SEPlayManager.SE.Select);
+            }
             SelectCharacter(nextIndex);
         }
         
@@ -498,8 +501,11 @@ namespace RyotaSuzuki.UI
         /// </summary>
         public void SelectPreviousCharacter()
         {
-            SEPlayManager.Instance.PlaySE(SEPlayManager.SE.Select);
             int prevIndex = (currentCharacterIndex - 1 + characterDataList.Count) % characterDataList.Count;
+            if (prevIndex != 1)
+            {
+                SEPlayManager.Instance.PlaySE(SEPlayManager.SE.Select);
+            }
             SelectCharacter(prevIndex);
         }
         

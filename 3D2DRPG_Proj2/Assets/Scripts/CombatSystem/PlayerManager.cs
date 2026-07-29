@@ -762,7 +762,14 @@ public class PlayerManager : MonoBehaviour
                 var attackEnd = new UnityEvent<int>();
                 attackEnd.AddListener((index) => OnComboEnd());
                 selectedEnemy = enemies[index];
-                comboUI.AttackTiming(selectedSkill.timingWindowStart, selectedSkill.timingWindowEnd);
+                if (selectedCharacter.charactername == "照" && selectedSkill.skillName == "通常攻撃")
+                {
+                    comboUI.AttackTiming(selectedSkill.timingWindowStart, selectedSkill.timingWindowStart + 0.15f);
+                }
+                else
+                {
+                    comboUI.AttackTiming(selectedSkill.timingWindowStart, selectedSkill.timingWindowEnd);
+                }
                 comboUI.Inputs(attackEvent, attackEnd, selectedSkill.maxcombo, selectedEnemy);
             }
             else
@@ -1252,6 +1259,11 @@ public class PlayerManager : MonoBehaviour
             if (Attackbuff > 0)
             {
                 finalDamage += Attackbuff;
+            }
+
+            if (skill.skillName == "一閃")
+            {
+                finalDamage = 5;
             }
         }
 

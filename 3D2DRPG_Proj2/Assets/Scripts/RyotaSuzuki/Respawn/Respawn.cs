@@ -191,6 +191,25 @@ public class Respawn : MonoBehaviour
         
         CleanupEnemyList();
         
+        SpawnLeftoverTestEnemy();
+    }
+
+    private void SpawnLeftoverTestEnemy()
+    {
+        if (enemyPrefab == null)
+        {
+            return;
+        }
+
+        Vector3 pos = transform.position + new Vector3(45f, 0f, 45f);
+        if (NavMesh.SamplePosition(pos, out NavMeshHit hit, 15f, NavMesh.AllAreas))
+        {
+            pos = hit.position;
+        }
+
+        GameObject enemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
+        enemy.name = "TestEnemy_Leftover";
+        enemyList.Add(enemy);
     }
 
     private void CleanupEnemyList()

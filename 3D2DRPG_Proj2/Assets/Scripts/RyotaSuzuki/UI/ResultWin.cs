@@ -128,6 +128,10 @@ public class ResultWin : MonoBehaviour
         
         int currentTotalExp = GameManager.Instance.CalculateTotalExp(character.level, character.exp);
         int gainedExp = currentTotalExp - snapshot.totalExp;
+        if (character.charactername == "照")
+        {
+            gainedExp += 2;
+        }
         
         Debug.Log($"[ResultWin] {character.charactername} : Lv.{currentLevel} {currentExp}/{requiredExp}EXP +{gainedExp}EXP{snapshot.totalExp}/{currentTotalExp})");
         

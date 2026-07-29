@@ -529,7 +529,10 @@ public class GameManager : MonoBehaviour
         {
             if (character == null) continue;
 
-            character.hp = character.maxHp;
+            if (character.charactername != "照")
+            {
+                character.hp = character.maxHp;
+            }
             character.mp = character.maxMp;
             character.StatusFlag = StatusFlag.End;
         }

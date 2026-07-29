@@ -28,6 +28,7 @@ public class CharacterBuffManager : MonoBehaviour
 
     // リロードバフ付与ターンのターン終了時は失効させない
     private bool reloadSkipExpireThisTurn = false;
+    private HashSet<BuffInstance> poisonDelayedTick = new HashSet<BuffInstance>();
     
     /// <summary>
     /// 初期化
@@ -97,6 +98,10 @@ public class CharacterBuffManager : MonoBehaviour
         buffInstance.Apply(appliedBy);
         //buffInstance.baseData.
         activeBuffs.Add(buffInstance);
+        if (buffInstance.baseData is Poison)
+        {
+            poisonDelayedTick.Add(buffInstance);
+        }
         
         // ステータス修正値を再計算
         RecalculateStatModifiers();
@@ -138,6 +143,7 @@ public class CharacterBuffManager : MonoBehaviour
         {
             buffInstance.Remove();
             activeBuffs.Remove(buffInstance);
+            poisonDelayedTick.Remove(buffInstance);
             
             // ステータス修正値を再計算
             RecalculateStatModifiers();
@@ -238,6 +244,12 @@ public class CharacterBuffManager : MonoBehaviour
             }
 
             //ターンを減らす
+            if (buff.baseData is Poison && poisonDelayedTick.Contains(buff))
+            {
+                poisonDelayedTick.Remove(buff);
+                continue;
+            }
+
             buff.TickTurn();
             // Note: buff.Apply()は最初の適用時のみ呼ばれるべき。毎ターン再適用すると効果が重複する
             if (buff.IsExpired())
